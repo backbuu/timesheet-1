@@ -2,6 +2,7 @@ package timesheet_test
 
 import (
 	"testing"
+	"time"
 	"timesheet/internal/model"
 	. "timesheet/internal/timesheet"
 
@@ -305,41 +306,27 @@ func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingP
 }
 
 func Test_CalculateTotalHour_Input_Incomes_Should_Be_Time_18_0_0(t *testing.T) {
+	startTimeAM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 09:00:00")
+	endTimeAM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 12:00:00")
+	startTimePM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 13:00:00")
+	endTimePM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 18:00:00")
 	expected := model.Time{
-		Hours:   18,
-		Minutes: 0,
-		Seconds: 0,
+		Hours: 18,
 	}
 	incomes := []model.Incomes{
 		{
-			StartTimeAMHours:   9,
-			StartTimeAMMinutes: 0,
-			StartTimeAMSeconds: 0,
-			EndTimeAMHours:     12,
-			EndTimeAMMinutes:   0,
-			EndTimeAMSeconds:   0,
-			StartTimePMHours:   13,
-			StartTimePMMinutes: 0,
-			StartTimePMSeconds: 0,
-			EndTimePMHours:     18,
-			EndTimePMMinutes:   30,
-			EndTimePMSeconds:   0,
-			Overtime:           0,
+			StartTimeAM: startTimeAM,
+			EndTimeAM:   endTimeAM,
+			StartTimePM: startTimePM,
+			EndTimePM:   endTimePM,
+			Overtime:    0,
 		},
 		{
-			StartTimeAMHours:   9,
-			StartTimeAMMinutes: 0,
-			StartTimeAMSeconds: 0,
-			EndTimeAMHours:     12,
-			EndTimeAMMinutes:   0,
-			EndTimeAMSeconds:   0,
-			StartTimePMHours:   13,
-			StartTimePMMinutes: 0,
-			StartTimePMSeconds: 0,
-			EndTimePMHours:     18,
-			EndTimePMMinutes:   30,
-			EndTimePMSeconds:   0,
-			Overtime:           1,
+			StartTimeAM: startTimeAM,
+			EndTimeAM:   endTimeAM,
+			StartTimePM: startTimePM,
+			EndTimePM:   endTimePM,
+			Overtime:    2,
 		},
 	}
 
