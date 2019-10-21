@@ -3,6 +3,7 @@ package repository_test
 import (
 	"database/sql"
 	"testing"
+	"time"
 	"timesheet/internal/model"
 	. "timesheet/internal/repository"
 
@@ -53,27 +54,22 @@ func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *
 }
 
 func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No_Error(t *testing.T) {
+	startTimeAM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 09:00:00")
+	endTimeAM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 12:00:00")
+	startTimePM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 13:00:00")
+	endTimePM, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 18:00:00")
+	totalHours, _ := time.Parse("2018-01-01 15:04:05", "2018-12-01 08:00:00")
 	year := 2017
 	month := 12
 	memberID := "001"
 	incomes := model.Incomes{
 		Day:                      28,
-		StartTimeAMHours:         9,
-		StartTimeAMMinutes:       0,
-		StartTimeAMSeconds:       0,
-		EndTimeAMHours:           12,
-		EndTimeAMMinutes:         0,
-		EndTimeAMSeconds:         0,
-		StartTimePMHours:         13,
-		StartTimePMMinutes:       0,
-		StartTimePMSeconds:       0,
-		EndTimePMHours:           18,
-		EndTimePMMinutes:         0,
-		EndTimePMSeconds:         0,
+		StartTimeAM:              startTimeAM,
+		EndTimeAM:                endTimeAM,
+		StartTimePM:              startTimePM,
+		EndTimePM:                endTimePM,
 		Overtime:                 0,
-		TotalHoursHours:          8,
-		TotalHoursMinutes:        0,
-		TotalHoursSeconds:        0,
+		TotalHours:               totalHours,
 		CoachingCustomerCharging: 15000.00,
 		CoachingPaymentRate:      10000.00,
 		TrainingWage:             0.00,
@@ -144,6 +140,11 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 }
 
 func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day_11_And_12(t *testing.T) {
+	startTimeAM, _ := time.Parse("0000-01-01 15:04:05", "0000-01-01 09:00:00")
+	endTimeAM, _ := time.Parse("0000-01-01 15:04:05", "0000-01-01 12:00:00")
+	startTimePM, _ := time.Parse("0000-01-01 15:04:05", "0000-01-01 13:00:00")
+	endTimePM, _ := time.Parse("0000-01-01 15:04:05", "0000-01-01 18:00:00")
+	totalHours, _ := time.Parse("0000-01-01 15:04:05", "0000-01-01 08:00:00")
 	expected := []model.Incomes{
 		{
 			ID:                       58,
@@ -151,22 +152,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day
 			Month:                    12,
 			Year:                     2019,
 			Day:                      11,
-			StartTimeAMHours:         9,
-			StartTimeAMMinutes:       0,
-			StartTimeAMSeconds:       0,
-			EndTimeAMHours:           12,
-			EndTimeAMMinutes:         0,
-			EndTimeAMSeconds:         0,
-			StartTimePMHours:         13,
-			StartTimePMMinutes:       0,
-			StartTimePMSeconds:       0,
-			EndTimePMHours:           18,
-			EndTimePMMinutes:         0,
-			EndTimePMSeconds:         0,
+			StartTimeAM:              startTimeAM,
+			EndTimeAM:                endTimeAM,
+			StartTimePM:              startTimePM,
+			EndTimePM:                endTimePM,
 			Overtime:                 0,
-			TotalHoursHours:          8,
-			TotalHoursMinutes:        0,
-			TotalHoursSeconds:        0,
+			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
@@ -179,22 +170,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day
 			Month:                    12,
 			Year:                     2019,
 			Day:                      12,
-			StartTimeAMHours:         9,
-			StartTimeAMMinutes:       0,
-			StartTimeAMSeconds:       0,
-			EndTimeAMHours:           12,
-			EndTimeAMMinutes:         0,
-			EndTimeAMSeconds:         0,
-			StartTimePMHours:         13,
-			StartTimePMMinutes:       0,
-			StartTimePMSeconds:       0,
-			EndTimePMHours:           18,
-			EndTimePMMinutes:         0,
-			EndTimePMSeconds:         0,
+			StartTimeAM:              startTimeAM,
+			EndTimeAM:                endTimeAM,
+			StartTimePM:              startTimePM,
+			EndTimePM:                endTimePM,
 			Overtime:                 0,
-			TotalHoursHours:          8,
-			TotalHoursMinutes:        0,
-			TotalHoursSeconds:        0,
+			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
