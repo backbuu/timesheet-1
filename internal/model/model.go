@@ -53,9 +53,7 @@ type Payment struct {
 	MemberID                      string  `json:"member_id"`
 	Month                         int     `json:"month"`
 	Year                          int     `json:"year"`
-	TotalHoursHours               int     `json:"total_hours_hours"`
-	TotalHoursMinutes             int     `json:"total_hours_sinutes"`
-	TotalHoursSeconds             int     `json:"total_hours_seconds"`
+	TotalHours                    string  `json:"total_hours_hours"`
 	TotalCoachingCustomerCharging float64 `json:"total_coaching_customer_charging"`
 	TotalCoachingPaymentRate      float64 `json:"total_coaching_payment_rate"`
 	TotalTrainigWage              float64 `json:"total_trainig_wage"`
