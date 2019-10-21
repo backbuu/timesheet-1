@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"strconv"
 	"timesheet/internal/model"
 )
 
@@ -11,8 +10,6 @@ type TimesheetRepositoryGateways interface {
 	GetMemberByID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
-	VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error
-	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 }
 
 type TimesheetRepository struct {
@@ -169,16 +166,6 @@ func (repository TimesheetRepository) GetIncomes(memberID string, year, month in
 	return incomeList, nil
 }
 
-func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
-	for _, transactionTimesheet := range transactionTimesheet {
-		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
-		if repository.CreateTransactionTimsheet(transactionTimesheet, transactionID) != nil {
-			_ = repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
-		}
-	}
-	return nil
-}
-
 func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
 	statement, err := repository.DatabaseConnection.Prepare(`INSERT INTO transactions (id, member_id, month, year, company, member_name_th, coaching, training, other, total_incomes, salary, income_tax_1, social_security, net_salary, wage, income_tax_53_percentage, income_tax_53, net_wage, net_transfer) VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? , ? )`)
 	if err != nil {
@@ -229,14 +216,6 @@ func (repository TimesheetRepository) UpdateTransactionTimsheet(transactionTimes
 		transactionID)
 	if err != nil {
 		return err
-	}
-	return nil
-}
-
-func (repository TimesheetRepository) VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error {
-	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
-	if repository.CreateTimesheet(payment, timesheetID, memberID, year, month) != nil {
-		return repository.UpdateTimesheet(payment, timesheetID)
 	}
 	return nil
 }

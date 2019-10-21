@@ -66,9 +66,9 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	payments := api.Timesheet.CalculatePayment([]model.Incomes{})
+	payments := api.Timesheet.CalculatePayment(incomes)
 
-	err = api.TimesheetRepository.VerifyTimesheet(payments, request.MemberID, request.Year, request.Month)
+	err = api.Timesheet.VerifyTimesheet(payments, request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
@@ -80,7 +80,7 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 
 	transactionTimesheet := api.Timesheet.CalculatePaymentSummary(members, incomes, request.Year, request.Month)
 
-	err = api.TimesheetRepository.VerifyTransactionTimsheet(transactionTimesheet)
+	err = api.Timesheet.VerifyTransactionTimsheet(transactionTimesheet)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}

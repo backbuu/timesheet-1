@@ -1,6 +1,10 @@
 package timesheet
 
-import "timesheet/internal/model"
+import (
+	"strconv"
+	"timesheet/internal/model"
+	"timesheet/internal/repository"
+)
 
 const (
 	SiamChamnankitCompany = "siam_chamnankit"
@@ -12,9 +16,12 @@ const (
 type TimesheetGateways interface {
 	CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
 	CalculatePayment(incomes []model.Incomes) model.Payment
+	VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error
+	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 }
 
 type Timesheet struct {
+	Repository repository.TimesheetRepository
 }
 
 func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
@@ -73,6 +80,27 @@ func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Payme
 		TotalOtherWage:                totalOtherWage,
 		PaymentWage:                   paymentWage,
 	}
+}
+
+func (timesheet Timesheet) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
+	for _, transactionTimesheet := range transactionTimesheet {
+		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
+		if timesheet.Repository.CreateTransactionTimsheet(transactionTimesheet, transactionID) != nil {
+			err := timesheet.Repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (timesheet Timesheet) VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error {
+	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
+	if timesheet.Repository.CreateTimesheet(payment, timesheetID, memberID, year, month) != nil {
+		return timesheet.Repository.UpdateTimesheet(payment, timesheetID)
+	}
+	return nil
 }
 
 func CalculateTotalHour(incomes []model.Incomes) model.Time {
