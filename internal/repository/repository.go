@@ -31,10 +31,10 @@ func (repository TimesheetRepository) GetSummary(year, month int) ([]model.Trans
 }
 
 func (repository TimesheetRepository) CreateIncome(year, month int, memberID string, income model.Incomes) error {
-	query := `INSERT INTO incomes (member_id, month, year, day, start_time_am, 
-		end_time_am, start_time_pm, end_time_pm, overtime, total_hours, 
-		coaching_customer_charging, coaching_payment_rate, 
-		training_wage, other_wage, company, description) 
+	query := `INSERT INTO incomes (member_id, month, year, day, start_time_am,
+		end_time_am, start_time_pm, end_time_pm, overtime, total_hours,
+		coaching_customer_charging, coaching_payment_rate,
+		training_wage, other_wage, company, description)
 		VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? )`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAM,
