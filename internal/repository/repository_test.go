@@ -75,7 +75,7 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 		Company:                  "siam_chamnankit",
 		Description:              "[KBTG] 2 Days Agile Project Management",
 	}
-	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
@@ -142,12 +142,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	expected := []model.Incomes{
 		{
-			ID:       58,
-			MemberID: "006",
-			Month:    12,
-			Year:     2019,
-			Day:      11,
-			// StartTimeAM:              startTimeAM,
+			ID:                       58,
+			MemberID:                 "006",
+			Month:                    12,
+			Year:                     2019,
+			Day:                      11,
+			StartTimeAM:              startTimeAM,
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
@@ -182,7 +182,7 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day
 	memberID := "006"
 	month := 12
 	year := 2019
-	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,

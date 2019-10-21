@@ -16,7 +16,7 @@ type DatabaseConfig struct {
 }
 
 func (databaseConfig DatabaseConfig) GetURI() string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", databaseConfig.Username, databaseConfig.Password, databaseConfig.Host, databaseConfig.Port, databaseConfig.Database)
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", databaseConfig.Username, databaseConfig.Password, databaseConfig.Host, databaseConfig.Port, databaseConfig.Database)
 }
 
 func SetupDatabaseConfig(databaseConfigPath string) (DatabaseConfig, error) {
