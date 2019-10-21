@@ -1,8 +1,9 @@
 package repository
 
 import (
-	"database/sql"
 	"timesheet/internal/model"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type TimesheetRepositoryGateways interface {
@@ -13,49 +14,15 @@ type TimesheetRepositoryGateways interface {
 }
 
 type TimesheetRepository struct {
-	DatabaseConnection *sql.DB
+	DatabaseConnection *sqlx.DB
 }
 
 func (repository TimesheetRepository) GetSummary(year, month int) ([]model.TransactionTimesheet, error) {
 	var transactionTimesheetList []model.TransactionTimesheet
-	var transactionTimesheet model.TransactionTimesheet
-	statement, err := repository.DatabaseConnection.Prepare(`SELECT * FROM timesheet.transactions WHERE year = ? AND month = ? ORDER BY member_id ASC, company DESC`)
+	query := `SELECT * FROM timesheet.transactions WHERE year = ? AND month = ? ORDER BY member_id ASC, company DESC`
+	err := repository.DatabaseConnection.Select(&transactionTimesheetList, query, year, month)
 	if err != nil {
-		return transactionTimesheetList, err
-	}
-	row, err := statement.Query(year, month)
-	if err != nil {
-		return transactionTimesheetList, err
-	}
-	for row.Next() {
-		err = row.Scan(
-			&transactionTimesheet.ID,
-			&transactionTimesheet.MemberID,
-			&transactionTimesheet.Month,
-			&transactionTimesheet.Year,
-			&transactionTimesheet.Company,
-			&transactionTimesheet.MemberNameTH,
-			&transactionTimesheet.Coaching,
-			&transactionTimesheet.Training,
-			&transactionTimesheet.Other,
-			&transactionTimesheet.TotalIncomes,
-			&transactionTimesheet.Salary,
-			&transactionTimesheet.IncomeTax1,
-			&transactionTimesheet.SocialSecurity,
-			&transactionTimesheet.NetSalary,
-			&transactionTimesheet.Wage,
-			&transactionTimesheet.IncomeTax53Percentage,
-			&transactionTimesheet.IncomeTax53,
-			&transactionTimesheet.NetWage,
-			&transactionTimesheet.NetTransfer,
-			&transactionTimesheet.StatusCheckingTransfer,
-			&transactionTimesheet.DateTransfer,
-			&transactionTimesheet.Comment,
-		)
-		if row.Err() != nil {
-			return nil, err
-		}
-		transactionTimesheetList = append(transactionTimesheetList, transactionTimesheet)
+		return []model.TransactionTimesheet{}, err
 	}
 	return transactionTimesheetList, nil
 }
