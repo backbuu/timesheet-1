@@ -91,7 +91,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_UpdateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Should_Be_Status_200(t *testing.T) {
+func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Should_Be_Status_200(t *testing.T) {
 	expectedStatus := http.StatusOK
 	requestIncome := IncomeRequest{
 		Year:     2018,
@@ -99,22 +99,12 @@ func Test_UpdateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 		MemberID: "001",
 		Incomes: model.Incomes{
 			Day:                      28,
-			StartTimeAMHours:         9,
-			StartTimeAMMinutes:       0,
-			StartTimeAMSeconds:       0,
-			EndTimeAMHours:           12,
-			EndTimeAMMinutes:         0,
-			EndTimeAMSeconds:         0,
-			StartTimePMHours:         13,
-			StartTimePMMinutes:       0,
-			StartTimePMSeconds:       0,
-			EndTimePMHours:           18,
-			EndTimePMMinutes:         0,
-			EndTimePMSeconds:         0,
+			StartTimeAM:              startTimeAM,
+			EndTimeAM:                endTimeAM,
+			StartTimePM:              startTimePM,
+			EndTimePM:                endTimePM,
 			Overtime:                 0,
-			TotalHoursHours:          8,
-			TotalHoursMinutes:        0,
-			TotalHoursSeconds:        0,
+			TotalHours:               totalHours,
 			CoachingCustomerCharging: 15000.00,
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
@@ -159,7 +149,7 @@ func Test_UpdateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	}
 
 	testRoute := gin.Default()
-	testRoute.POST("/addIncomeItem", api.UpdateIncomeHandler)
+	testRoute.POST("/addIncomeItem", api.CreateIncomeHandler)
 	testRoute.ServeHTTP(writer, request)
 
 	response := writer.Result()
