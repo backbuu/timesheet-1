@@ -108,23 +108,14 @@ func (repository TimesheetRepository) UpdateTransactionTimsheet(transactionTimes
 }
 
 func (repository TimesheetRepository) CreateTimesheet(payment model.Payment, timesheetID, memberID string, year int, month int) error {
-	statement, err := repository.DatabaseConnection.Prepare(`INSERT INTO timesheets (id, member_id, month, year, total_hours_hours, total_hours_minutes, total_hours_seconds, total_coaching_customer_charging, total_coaching_payment_rate, total_training_wage, total_other_wage, payment_wage) VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? )`)
-	if err != nil {
-		return err
-	}
-	_, err = statement.Exec(
-		timesheetID,
-		memberID,
-		month,
-		year,
-		payment.TotalHoursHours,
-		payment.TotalHoursMinutes,
-		payment.TotalHoursSeconds,
-		payment.TotalCoachingCustomerCharging,
-		payment.TotalCoachingPaymentRate,
-		payment.TotalTrainigWage,
-		payment.TotalOtherWage,
-		payment.PaymentWage)
+	query := `INSERT INTO timesheets (id, member_id, month, year, total_hours_hours, total_hours_minutes, 
+		total_hours_seconds, total_coaching_customer_charging, total_coaching_payment_rate, total_training_wage, 
+		total_other_wage, payment_wage) VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? )`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, timesheetID, memberID, month, year, payment.TotalHoursHours, payment.TotalHoursMinutes,
+		payment.TotalHoursSeconds, payment.TotalCoachingCustomerCharging, payment.TotalCoachingPaymentRate,
+		payment.TotalTrainigWage, payment.TotalOtherWage, payment.PaymentWage)
+	err := transaction.Commit()
 	if err != nil {
 		return err
 	}
