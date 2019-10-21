@@ -247,40 +247,37 @@ func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_
 	assert.Equal(t, nil, err)
 }
 
-// func Test_UpdateTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_No_Error(t *testing.T) {
-// 	transactionID := "001201911shuhari"
-// 	transactionTimesheet := model.TransactionTimesheet{
-// 		MemberID:               "001",
-// 		Month:                  11,
-// 		Year:                   2019,
-// 		Company:                "shuhari",
-// 		Coaching:               10000.00,
-// 		Training:               10000.00,
-// 		Other:                  6500.00,
-// 		TotalIncomes:           6500.00,
-// 		Salary:                 25000.00,
-// 		IncomeTax1:             1000.00,
-// 		SocialSecurity:         750.00,
-// 		NetSalary:              24250.00,
-// 		Wage:                   6500.00,
-// 		IncomeTax53Percentage:  5,
-// 		IncomeTax53:            325.00,
-// 		NetWage:                6175.00,
-// 		NetTransfer:            30425.00,
-// 		StatusCheckingTransfer: "รอการตรวจสอบ",
-// 		DateTransfer:           "",
-// 		Comment:                "",
-// 	}
-// 	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
-// 	defer databaseConnection.Close()
-// 	repository := TimesheetRepository{
-// 		DatabaseConnection: databaseConnection,
-// 	}
+func Test_UpdateTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_No_Error(t *testing.T) {
+	transactionID := "001201911shuhari"
+	transactionTimesheet := model.TransactionTimesheet{
+		MemberID:              "001",
+		Month:                 11,
+		Year:                  2019,
+		Company:               "shuhari",
+		Coaching:              10000.00,
+		Training:              10000.00,
+		Other:                 6500.00,
+		TotalIncomes:          6500.00,
+		Salary:                25000.00,
+		IncomeTax1:            1000.00,
+		SocialSecurity:        750.00,
+		NetSalary:             24250.00,
+		Wage:                  6500.00,
+		IncomeTax53Percentage: 5,
+		IncomeTax53:           325.00,
+		NetWage:               6175.00,
+		NetTransfer:           30425.00,
+	}
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
 
-// 	err := repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
+	err := repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
 
-// 	assert.Equal(t, nil, err)
-// }
+	assert.Equal(t, nil, err)
+}
 
 // func Test_CreateTimsheet_Input_Payment_MemberID_006_Should_Be_No_Error(t *testing.T) {
 // 	timesheetID := "006201912"
