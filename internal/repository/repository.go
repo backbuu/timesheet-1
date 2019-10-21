@@ -123,20 +123,14 @@ func (repository TimesheetRepository) CreateTimesheet(payment model.Payment, tim
 }
 
 func (repository TimesheetRepository) UpdateTimesheet(payment model.Payment, timesheetID string) error {
-	statement, err := repository.DatabaseConnection.Prepare(`UPDATE timesheets SET total_hours_hours = ?, total_hours_minutes = ?, total_hours_seconds = ?, total_coaching_customer_charging = ?, total_coaching_payment_rate = ?, total_training_wage = ?, total_other_wage = ?, payment_wage = ? WHERE id = ?`)
-	if err != nil {
-		return err
-	}
-	_, err = statement.Exec(
-		payment.TotalHoursHours,
-		payment.TotalHoursMinutes,
-		payment.TotalHoursSeconds,
-		payment.TotalCoachingCustomerCharging,
-		payment.TotalCoachingPaymentRate,
-		payment.TotalTrainigWage,
-		payment.TotalOtherWage,
-		payment.PaymentWage,
-		timesheetID)
+	query := `UPDATE timesheets SET total_hours_hours = ?, total_hours_minutes = ?, total_hours_seconds = ?, 
+	total_coaching_customer_charging = ?, total_coaching_payment_rate = ?, total_training_wage = ?, 
+	total_other_wage = ?, payment_wage = ? WHERE id = ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, payment.TotalHoursHours, payment.TotalHoursMinutes, payment.TotalHoursSeconds,
+		payment.TotalCoachingCustomerCharging, payment.TotalCoachingPaymentRate, payment.TotalTrainigWage,
+		payment.TotalOtherWage, payment.PaymentWage, timesheetID)
+	err := transaction.Commit()
 	if err != nil {
 		return err
 	}
