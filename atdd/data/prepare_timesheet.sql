@@ -1,8 +1,8 @@
--- MariaDB dump 10.17  Distrib 10.4.7-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.17  Distrib 10.4.8-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: timesheet
 -- ------------------------------------------------------
--- Server version	10.4.7-MariaDB-1:10.4.7+maria~bionic
+-- Server version	10.4.8-MariaDB-1:10.4.8+maria~bionic
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -103,9 +103,7 @@ CREATE TABLE `timesheets` (
   `member_id` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `month` int(11) DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
-  `total_hours_hours` int(11) DEFAULT NULL,
-  `total_hours_minutes` int(11) DEFAULT NULL,
-  `total_hours_seconds` int(11) DEFAULT NULL,
+  `total_hours` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `total_coaching_customer_charging` float DEFAULT NULL,
   `total_coaching_payment_rate` float DEFAULT NULL,
   `total_training_wage` float DEFAULT NULL,
@@ -121,7 +119,7 @@ CREATE TABLE `timesheets` (
 
 LOCK TABLES `timesheets` WRITE;
 /*!40000 ALTER TABLE `timesheets` DISABLE KEYS */;
-INSERT INTO `timesheets` VALUES ('003201712','003',12,2017,88,0,0,0,0,120000,0,120000),('006201812','006',12,2018,0,0,0,0,0,0,0,0),('007201911','007',11,2019,0,0,0,0,0,0,0,0),('007201912','007',12,2019,0,0,0,0,0,0,0,0);
+INSERT INTO `timesheets` VALUES ('003201712','003',12,2017,'88:00:00',0,0,120000,0,120000),('006201812','006',12,2018,'00:00:00',0,0,0,0,0),('007201911','007',11,2019,'00:00:00',0,0,0,0,0),('007201912','007',12,2019,'00:00:00',0,0,0,0,0);
 /*!40000 ALTER TABLE `timesheets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-21  3:17:25
+-- Dump completed on 2019-10-21 10:16:48
