@@ -266,9 +266,7 @@ func Test_CreateTimsheet_Input_Payment_MemberID_006_Should_Be_No_Error(t *testin
 	month := 12
 	year := 2019
 	payment := model.Payment{
-		TotalHoursHours:               120,
-		TotalHoursMinutes:             0,
-		TotalHoursSeconds:             0,
+		TotalHours:                    "120:00:00",
 		TotalCoachingCustomerCharging: 30000.00,
 		TotalCoachingPaymentRate:      20000.00,
 		TotalTrainigWage:              10000.00,
@@ -290,9 +288,7 @@ func Test_CreateTimsheet_Input_Payment_MemberID_006_Should_Be_No_Error(t *testin
 func Test_UpdateTimsheet_Input_Payment_MemberID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
 	timesheetID := "007201912"
 	payment := model.Payment{
-		TotalHoursHours:               120,
-		TotalHoursMinutes:             30,
-		TotalHoursSeconds:             30,
+		TotalHours:                    "120:30:30",
 		TotalCoachingCustomerCharging: 90000.00,
 		TotalCoachingPaymentRate:      10000.00,
 		TotalTrainigWage:              20000.00,
@@ -316,9 +312,7 @@ func Test_VerifyTimsheet_Input_Payment_MemberID_006_Year_2019_Month_11_Should_Be
 	month := 2019
 	year := 11
 	payment := model.Payment{
-		TotalHoursHours:               120,
-		TotalHoursMinutes:             0,
-		TotalHoursSeconds:             0,
+		TotalHours:                    "120:00:00",
 		TotalCoachingCustomerCharging: 0.00,
 		TotalCoachingPaymentRate:      0.00,
 		TotalTrainigWage:              0.00,
@@ -341,9 +335,7 @@ func Test_VerifyTimsheet_Input_Payment_MemberID_007_Year_2019_Month_11_Should_Be
 	month := 11
 	year := 2019
 	payment := model.Payment{
-		TotalHoursHours:               11,
-		TotalHoursMinutes:             30,
-		TotalHoursSeconds:             30,
+		TotalHours:                    "11:30:30",
 		TotalCoachingCustomerCharging: 15000.00,
 		TotalCoachingPaymentRate:      10000.00,
 		TotalTrainigWage:              10000.00,

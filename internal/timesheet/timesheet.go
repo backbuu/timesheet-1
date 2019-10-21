@@ -1,6 +1,9 @@
 package timesheet
 
 import (
+	"fmt"
+	"math"
+	"time"
 	"timesheet/internal/model"
 )
 
@@ -64,16 +67,14 @@ func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, income
 }
 
 func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Payment {
-	totalHour := calculateTotalHour(incomes)
+	totalHour := calculateTotalHours(incomes)
 	totalCoachingCustomerCharging := calculateTotalCoachingCustomerCharging(incomes)
 	totalCoachingPaymentRate := calculateTotalCoachingPaymentRate(incomes, "")
 	totalTrainingWage := calculateTotalTrainingWage(incomes, "")
 	totalOtherWage := calculateTotalOtherWage(incomes, "", 0.00)
 	paymentWage := calculateTotalPaymentWage(totalCoachingPaymentRate, totalTrainingWage, totalOtherWage)
 	return model.Payment{
-		TotalHoursHours:               totalHour.Hours,
-		TotalHoursMinutes:             totalHour.Minutes,
-		TotalHoursSeconds:             totalHour.Seconds,
+		TotalHours:                    totalHour,
 		TotalCoachingCustomerCharging: totalCoachingCustomerCharging,
 		TotalCoachingPaymentRate:      totalCoachingPaymentRate,
 		TotalTrainigWage:              totalTrainingWage,
@@ -82,17 +83,20 @@ func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Payme
 	}
 }
 
-func CalculateTotalHour(incomes []model.Incomes) model.Time {
-	var hours int
+func calculateTotalHours(incomes []model.Incomes) string {
+	var toltalHours time.Duration
+	var overtime int
 	for _, income := range incomes {
-		hours += int(income.EndTimeAM.Sub(income.StartTimeAM))
-		hours += int(income.EndTimePM.Sub(income.StartTimePM))
-		hours += income.Overtime
+		toltalHours += income.EndTimeAM.Sub(income.StartTimeAM)
+		toltalHours += income.EndTimePM.Sub(income.StartTimePM)
+		overtime += income.Overtime
 	}
-
-	return model.Time{
-		Hours: hours,
+	hours := toltalHours.Hours() + float64(overtime)
+	minutes := math.Mod(toltalHours.Minutes(), OneHour)
+	if minutes != 0 {
+		return fmt.Sprintf("%.0f:%2.0f:00", hours, minutes)
 	}
+	return fmt.Sprintf("%.0f:00:00", hours)
 }
 
 func calculateTotalPaymentWage(coachingPaymentRate, trainingWage, otherWage float64) float64 {
