@@ -1,9 +1,7 @@
 package timesheet
 
 import (
-	"strconv"
 	"timesheet/internal/model"
-	"timesheet/internal/repository"
 )
 
 const (
@@ -16,12 +14,9 @@ const (
 type TimesheetGateways interface {
 	CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
 	CalculatePayment(incomes []model.Incomes) model.Payment
-	VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error
-	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 }
 
 type Timesheet struct {
-	Repository repository.TimesheetRepository
 }
 
 func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
@@ -32,9 +27,9 @@ func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, income
 		totalOtherWage := CalculateTotalOtherWage(incomes, member.Company, member.TravelExpense)
 		paymentWage := CalculateTotalPaymentWage(totalCoachingPaymentRate, totalTrainingWage, totalOtherWage)
 		netSalary := CalculateNetSalary(member.Salary, member.IncomeTax1, member.SocialSecurity)
-		wage := CalculateWage(paymentWage, member.Salary, member.Status)
+		wage := CalculateWage(paymentWage, member.Salary)
 		incomeTax53 := CalculateIncomeTax53(wage, member.IncomeTax53Percentage)
-		netWage := CalculateNetWage(member.IncomeTax53Percentage, paymentWage, member.Salary, member.Status)
+		netWage := CalculateNetWage(member.IncomeTax53Percentage, paymentWage, member.Salary)
 		netTransfer := CalculateNetTransfer(netSalary, netWage)
 		transactionTimesheet := model.TransactionTimesheet{
 			MemberID:              member.MemberID,
@@ -82,27 +77,6 @@ func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Payme
 	}
 }
 
-func (timesheet Timesheet) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
-	for _, transactionTimesheet := range transactionTimesheet {
-		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
-		if timesheet.Repository.CreateTransactionTimsheet(transactionTimesheet, transactionID) != nil {
-			err := timesheet.Repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
-			if err != nil {
-				return err
-			}
-		}
-	}
-	return nil
-}
-
-func (timesheet Timesheet) VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error {
-	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
-	if timesheet.Repository.CreateTimesheet(payment, timesheetID, memberID, year, month) != nil {
-		return timesheet.Repository.UpdateTimesheet(payment, timesheetID)
-	}
-	return nil
-}
-
 func CalculateTotalHour(incomes []model.Incomes) model.Time {
 	var hours, minutes, seconds int
 	for _, income := range incomes {
@@ -137,14 +111,14 @@ func CalculateNetSalary(salary, incomeTax1, socialSecurity float64) float64 {
 	return salary - incomeTax1 - socialSecurity
 }
 
-func CalculateNetWage(incomeTax53Percentage int, paymentWage, salary float64, status string) float64 {
-	wage := CalculateWage(paymentWage, salary, status)
+func CalculateNetWage(incomeTax53Percentage int, paymentWage, salary float64) float64 {
+	wage := CalculateWage(paymentWage, salary)
 	incomeTax53 := CalculateIncomeTax53(wage, incomeTax53Percentage)
 	return wage - incomeTax53
 }
 
-func CalculateWage(paymentWage, salary float64, status string) float64 {
-	if status != "salary" {
+func CalculateWage(paymentWage, salary float64) float64 {
+	if paymentWage >= salary {
 		return paymentWage - salary
 	}
 	return paymentWage

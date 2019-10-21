@@ -17,7 +17,7 @@ import (
 )
 
 func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *testing.T) {
-	expected := `[{"id":"001201812siam_chamnankit","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"001201812shuhari","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shuhari","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
+	expected := `[{"id":"001201812siam_chamnankit","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":null,"comment":null},{"id":"001201812shuhari","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shuhari","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":null,"comment":null}]`
 	date := Date{
 		Year:  2018,
 		Month: 12,
@@ -49,8 +49,6 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 			NetWage:                67500.00,
 			NetTransfer:            142500.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
-			DateTransfer:           "",
-			Comment:                "",
 		}, {
 			ID:                     "001201812shuhari",
 			MemberID:               "001",
@@ -72,8 +70,6 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 			NetWage:                36000.00,
 			NetTransfer:            36000.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
-			DateTransfer:           "",
-			Comment:                "",
 		},
 	}, nil)
 
@@ -244,7 +240,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		PaymentWage:                   195000.00,
 	})
 
-	mockTimesheet.On("VerifyTimesheet", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	mockRepository.On("VerifyTimesheet", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil)
 
 	mockRepository.On("GetMemberByID", "001").Return([]model.Member{
 		{
@@ -261,7 +257,6 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			IncomeTax1:            5000.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 		{
@@ -278,7 +273,6 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			IncomeTax1:            0.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 	}, nil)
@@ -325,7 +319,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		},
 	})
 
-	mockTimesheet.On("VerifyTransactionTimsheet", mock.Anything).Return(nil)
+	mockRepository.On("VerifyTransactionTimsheet", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{
 		Timesheet:           mockTimesheet,

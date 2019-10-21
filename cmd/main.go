@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"flag"
 	"log"
 	"net/http"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
 func main() {
@@ -24,20 +24,17 @@ func main() {
 		log.Fatal("Cannot read config", err.Error())
 	}
 
-	databaseConnection, err := sql.Open("mysql", databaseConfig.GetURI())
+	databaseConnection, err := sqlx.Connect("mysql", databaseConfig.GetURI())
 	if err != nil {
 		log.Fatal("Cannot connect database", err.Error())
 	}
 	defer databaseConnection.Close()
 
-	repository := repository.TimesheetRepository{
-		DatabaseConnection: databaseConnection,
-	}
 	api := handler.TimesheetAPI{
-		Timesheet: timesheet.Timesheet{
-			Repository: repository,
+		Timesheet: timesheet.Timesheet{},
+		TimesheetRepository: repository.TimesheetRepository{
+			DatabaseConnection: databaseConnection,
 		},
-		TimesheetRepository: repository,
 	}
 
 	router := gin.Default()
