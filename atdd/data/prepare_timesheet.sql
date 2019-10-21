@@ -103,7 +103,7 @@ CREATE TABLE `timesheets` (
   `member_id` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `month` int(11) DEFAULT NULL,
   `year` int(11) DEFAULT NULL,
-  `total_hours` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `total_hours` varchar(9) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `total_coaching_customer_charging` float DEFAULT NULL,
   `total_coaching_payment_rate` float DEFAULT NULL,
   `total_training_wage` float DEFAULT NULL,
@@ -176,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-21 10:16:48
+-- Dump completed on 2019-10-21 10:33:45
