@@ -1,13 +1,9 @@
 package timesheet_test
 
 import (
-	"database/sql"
 	"testing"
 	"timesheet/internal/model"
-	"timesheet/internal/repository"
 	. "timesheet/internal/timesheet"
-
-	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -69,7 +65,6 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			IncomeTax1:            5000.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 		{
@@ -85,7 +80,6 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			IncomeTax1:            0.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 	}
@@ -187,7 +181,6 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 			IncomeTax1:            5000.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 		{
@@ -203,7 +196,6 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 			IncomeTax1:            0.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 	}
@@ -312,124 +304,6 @@ func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingP
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
-	transactionTimesheet := []model.TransactionTimesheet{
-		{
-			MemberID:               "001",
-			Month:                  12,
-			Year:                   2019,
-			Company:                "shuhari",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
-			Coaching:               30000.00,
-			Training:               0.00,
-			Other:                  6500.00,
-			TotalIncomes:           6500.00,
-			Salary:                 25000.00,
-			IncomeTax1:             0.00,
-			SocialSecurity:         750.00,
-			NetSalary:              24250.00,
-			Wage:                   6500.00,
-			IncomeTax53Percentage:  5,
-			IncomeTax53:            325.00,
-			NetWage:                6175.00,
-			NetTransfer:            30425.00,
-			StatusCheckingTransfer: "รอการตรวจสอบ",
-			DateTransfer:           "",
-			Comment:                "",
-		},
-		{
-			MemberID:               "001",
-			Month:                  12,
-			Year:                   2019,
-			Company:                "siam_chamnankit",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
-			Coaching:               30000.00,
-			Training:               0.00,
-			Other:                  6500.00,
-			TotalIncomes:           6500.00,
-			Salary:                 25000.00,
-			IncomeTax1:             0.00,
-			SocialSecurity:         750.00,
-			NetSalary:              24250.00,
-			Wage:                   6500.00,
-			IncomeTax53Percentage:  5,
-			IncomeTax53:            325.00,
-			NetWage:                6175.00,
-			NetTransfer:            30425.00,
-			StatusCheckingTransfer: "รอการตรวจสอบ",
-			DateTransfer:           "",
-			Comment:                "",
-		},
-	}
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
-	defer databaseConnection.Close()
-	timesheet := Timesheet{
-		Repository: repository.TimesheetRepository{
-			DatabaseConnection: databaseConnection,
-		},
-	}
-
-	err := timesheet.VerifyTransactionTimsheet(transactionTimesheet)
-
-	assert.Equal(t, nil, err)
-}
-
-func Test_VerifyTimsheet_Input_Payment_MemberID_006_Year_2019_Month_11_Should_Be_Create_Timesheet(t *testing.T) {
-	memberID := "006"
-	month := 2019
-	year := 11
-	payment := model.Payment{
-		TotalHoursHours:               120,
-		TotalHoursMinutes:             0,
-		TotalHoursSeconds:             0,
-		TotalCoachingCustomerCharging: 0.00,
-		TotalCoachingPaymentRate:      0.00,
-		TotalTrainigWage:              0.00,
-		TotalOtherWage:                0.00,
-		PaymentWage:                   0.00,
-	}
-
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
-	defer databaseConnection.Close()
-	timesheet := Timesheet{
-		Repository: repository.TimesheetRepository{
-			DatabaseConnection: databaseConnection,
-		},
-	}
-
-	err := timesheet.VerifyTimesheet(payment, memberID, year, month)
-
-	assert.Equal(t, nil, err)
-}
-
-func Test_VerifyTimsheet_Input_Payment_MemberID_007_Year_2019_Month_11_Should_Be_Update_Timesheet(t *testing.T) {
-	memberID := "007"
-	month := 11
-	year := 2019
-	payment := model.Payment{
-		TotalHoursHours:               11,
-		TotalHoursMinutes:             30,
-		TotalHoursSeconds:             30,
-		TotalCoachingCustomerCharging: 15000.00,
-		TotalCoachingPaymentRate:      10000.00,
-		TotalTrainigWage:              10000.00,
-		TotalOtherWage:                0.00,
-		PaymentWage:                   20000.00,
-	}
-
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
-	defer databaseConnection.Close()
-	timesheet := Timesheet{
-		Repository: repository.TimesheetRepository{
-			DatabaseConnection: databaseConnection,
-		},
-	}
-
-	err := timesheet.VerifyTimesheet(payment, memberID, year, month)
-
-	assert.Equal(t, nil, err)
-}
-
 func Test_CalculateTotalHour_Input_Incomes_Should_Be_Time_18_0_0(t *testing.T) {
 	expected := model.Time{
 		Hours:   18,
@@ -490,9 +364,8 @@ func Test_CalculateNetWage_Input_IncomeTax53Percentage_10_PaymentWage_155000_Sal
 	incomeTax53Percentage := 10
 	salary := 80000.00
 	paymentWage := 155000.00
-	status := ""
 
-	actual := CalculateNetWage(incomeTax53Percentage, paymentWage, salary, status)
+	actual := CalculateNetWage(incomeTax53Percentage, paymentWage, salary)
 
 	assert.Equal(t, expected, actual)
 }
@@ -511,20 +384,18 @@ func Test_CalculateWage_Input_PaymentWage_155000_Salary_80000_Should_Be_750000(t
 	expected := 75000.00
 	paymentWage := 155000.00
 	salary := 80000.00
-	status := ""
 
-	actual := CalculateWage(paymentWage, salary, status)
+	actual := CalculateWage(paymentWage, salary)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateWage_Input_PaymentWage_155000_Salary_80000_Status_Salary_Should_Be_155000(t *testing.T) {
-	expected := 155000.00
+func Test_CalculateWage_Input_PaymentWage_155000_Salary_80000_Should_Be_155000(t *testing.T) {
+	expected := 75000.00
 	paymentWage := 155000.00
 	salary := 80000.00
-	status := "salary"
 
-	actual := CalculateWage(paymentWage, salary, status)
+	actual := CalculateWage(paymentWage, salary)
 
 	assert.Equal(t, expected, actual)
 }

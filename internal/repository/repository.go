@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"strconv"
 	"timesheet/internal/model"
 
 	"github.com/jmoiron/sqlx"
@@ -11,6 +12,8 @@ type TimesheetRepositoryGateways interface {
 	GetMemberByID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
+	VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error
+	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 }
 
 type TimesheetRepository struct {
@@ -130,4 +133,41 @@ func (repository TimesheetRepository) UpdateTimesheet(payment model.Payment, tim
 		return err
 	}
 	return nil
+}
+
+func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
+	for _, transactionTimesheet := range transactionTimesheet {
+		query := `SELECT COUNT(id) FROM timesheet.transactions WHERE id LIKE ?`
+		var count int
+		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
+		err := repository.DatabaseConnection.Get(&count, query, transactionID)
+		if err != nil {
+			return err
+		}
+		if count == 0 {
+			err = repository.CreateTransactionTimsheet(transactionTimesheet, transactionID)
+			if err != nil {
+				return err
+			}
+		}
+		err = repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (repository TimesheetRepository) VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error {
+	query := `SELECT COUNT(id) FROM timesheet.timesheets WHERE id LIKE ?`
+	var count int
+	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
+	err := repository.DatabaseConnection.Get(&count, query, timesheetID)
+	if err != nil {
+		return err
+	}
+	if count == 0 {
+		return repository.CreateTimesheet(payment, timesheetID, memberID, year, month)
+	}
+	return repository.UpdateTimesheet(payment, timesheetID)
 }
