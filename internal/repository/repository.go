@@ -19,7 +19,7 @@ type TimesheetRepository struct {
 
 func (repository TimesheetRepository) GetSummary(year, month int) ([]model.TransactionTimesheet, error) {
 	var transactionTimesheetList []model.TransactionTimesheet
-	query := `SELECT * FROM timesheet.transactions WHERE year = ? AND month = ? ORDER BY member_id ASC, company DESC`
+	query := `SELECT * FROM transactions WHERE year = ? AND month = ? ORDER BY member_id ASC, company DESC`
 	err := repository.DatabaseConnection.Select(&transactionTimesheetList, query, year, month)
 	if err != nil {
 		return []model.TransactionTimesheet{}, err
@@ -28,19 +28,17 @@ func (repository TimesheetRepository) GetSummary(year, month int) ([]model.Trans
 }
 
 func (repository TimesheetRepository) CreateIncome(year, month int, memberID string, income model.Incomes) error {
-	statement, err := repository.DatabaseConnection.Prepare(
-		`INSERT INTO incomes (member_id, month, year, day, start_time_am_hours, 
+	query := `INSERT INTO incomes (member_id, month, year, day, start_time_am_hours, 
 		start_time_am_minutes, start_time_am_seconds, end_time_am_hours, end_time_am_minutes, 
 		end_time_am_seconds, start_time_pm_hours, start_time_pm_minutes, start_time_pm_seconds, 
 		end_time_pm_hours, end_time_pm_minutes, end_time_pm_seconds, overtime, total_hours_hours, 
 		total_hours_minutes, total_hours_seconds, coaching_customer_charging, coaching_payment_rate, 
 		training_wage, other_wage, company, description) 
 		VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , 
-			?, ? , ? , ?, ? , ? , ?, ? , ? , ?, ? )`)
-	if err != nil {
-		return err
-	}
-	_, err = statement.Exec(memberID, month, year, income.Day, income.StartTimeAMHours, income.StartTimeAMMinutes, income.StartTimeAMSeconds, income.EndTimeAMHours, income.EndTimeAMMinutes, income.EndTimeAMSeconds, income.StartTimePMHours, income.StartTimePMMinutes, income.StartTimePMSeconds, income.EndTimePMHours, income.EndTimePMMinutes, income.EndTimePMSeconds, income.Overtime, income.TotalHoursHours, income.TotalHoursMinutes, income.TotalHoursSeconds, income.CoachingCustomerCharging, income.CoachingPaymentRate, income.TrainingWage, income.OtherWage, income.Company, income.Description)
+			?, ? , ? , ?, ? , ? , ?, ? , ? , ?, ? )`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAMHours, income.StartTimeAMMinutes, income.StartTimeAMSeconds, income.EndTimeAMHours, income.EndTimeAMMinutes, income.EndTimeAMSeconds, income.StartTimePMHours, income.StartTimePMMinutes, income.StartTimePMSeconds, income.EndTimePMHours, income.EndTimePMMinutes, income.EndTimePMSeconds, income.Overtime, income.TotalHoursHours, income.TotalHoursMinutes, income.TotalHoursSeconds, income.CoachingCustomerCharging, income.CoachingPaymentRate, income.TrainingWage, income.OtherWage, income.Company, income.Description)
+	err := transaction.Commit()
 	if err != nil {
 		return err
 	}
