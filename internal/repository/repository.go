@@ -47,37 +47,10 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 
 func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Member, error) {
 	var memberList []model.Member
-	var member model.Member
-	statement, err := repository.DatabaseConnection.Prepare(`SELECT * FROM timesheet.members WHERE member_id = ?`)
+	query := `SELECT * FROM timesheet.members WHERE member_id = ?`
+	err := repository.DatabaseConnection.Select(&memberList, query, memberID)
 	if err != nil {
-		return memberList, err
-	}
-	row, err := statement.Query(memberID)
-	if err != nil {
-		return memberList, err
-	}
-	for row.Next() {
-		err = row.Scan(
-			&member.ID,
-			&member.MemberID,
-			&member.Company,
-			&member.MemberNameTH,
-			&member.MemberNameENG,
-			&member.Email,
-			&member.OvertimeRate,
-			&member.RatePerDay,
-			&member.RatePerHour,
-			&member.Salary,
-			&member.IncomeTax1,
-			&member.IncomeTax53Percentage,
-			&member.SocialSecurity,
-			&member.Status,
-			&member.TravelExpense,
-		)
-		if row.Err() != nil {
-			return nil, err
-		}
-		memberList = append(memberList, member)
+		return []model.Member{}, err
 	}
 	return memberList, nil
 }

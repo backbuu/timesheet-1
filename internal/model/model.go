@@ -71,20 +71,20 @@ type Payment struct {
 
 type Member struct {
 	ID                    int     `json:"id"`
-	MemberID              string  `json:"member_id"`
-	Company               string  `json:"company"`
-	MemberNameTH          string  `json:"member_name_th"`
-	MemberNameENG         string  `json:"member_name_eng"`
-	Email                 string  `json:"email"`
-	OvertimeRate          float64 `json:"overtime_rate"`
-	RatePerDay            float64 `json:"rate_per_day"`
-	RatePerHour           float64 `json:"rate_per_hour"`
-	Salary                float64 `json:"salary"`
-	IncomeTax1            float64 `json:"income_tax_1"`
-	SocialSecurity        float64 `json:"social_security"`
-	IncomeTax53Percentage int     `json:"income_tax_53_percentage"`
-	Status                string  `json:"status"`
-	TravelExpense         float64 `json:"travel_expense"`
+	MemberID              string  `db:"member_id" json:"member_id"`
+	Company               string  `db:"company" json:"company"`
+	MemberNameTH          string  `db:"member_name_th" json:"member_name_th"`
+	MemberNameENG         string  `db:"member_name_eng" json:"member_name_eng"`
+	Email                 string  `db:"email" json:"email"`
+	OvertimeRate          float64 `db:"overtime_rate" json:"overtime_rate"`
+	RatePerDay            float64 `db:"rate_per_day" json:"rate_per_day"`
+	RatePerHour           float64 `db:"rate_per_hour" json:"rate_per_hour"`
+	Salary                float64 `db:"salary" json:"salary"`
+	IncomeTax1            float64 `db:"income_tax_1" json:"income_tax_1"`
+	SocialSecurity        float64 `db:"social_security" json:"social_security"`
+	IncomeTax53Percentage int     `db:"income_tax_53_percentage" json:"income_tax_53_percentage"`
+	Status                *string `db:"status" json:"status"`
+	TravelExpense         float64 `db:"travel_expense" json:"travel_expense"`
 }
 
 type Time struct {

@@ -90,55 +90,53 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 	assert.Equal(t, nil, err)
 }
 
-// func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
-// 	expected := []model.Member{
-// 		{
-// 			ID:                    1,
-// 			MemberID:              "001",
-// 			Company:               "siam_chamnankit",
-// 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-// 			MemberNameENG:         "Prathan Dansakulcharoenkit",
-// 			Email:                 "prathan@scrum123.com",
-// 			OvertimeRate:          0.00,
-// 			RatePerDay:            15000.00,
-// 			RatePerHour:           1875.00,
-// 			Salary:                80000.00,
-// 			IncomeTax1:            5000.00,
-// 			SocialSecurity:        0.00,
-// 			IncomeTax53Percentage: 10,
-// 			Status:                "",
-// 			TravelExpense:         0.00,
-// 		},
-// 		{
-// 			ID:                    2,
-// 			MemberID:              "001",
-// 			Company:               "shuhari",
-// 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-// 			MemberNameENG:         "Prathan Dansakulcharoenkit",
-// 			Email:                 "prathan@scrum123.com",
-// 			OvertimeRate:          0.00,
-// 			RatePerDay:            15000.00,
-// 			RatePerHour:           1875.00,
-// 			Salary:                0.00,
-// 			IncomeTax1:            0.00,
-// 			SocialSecurity:        0.00,
-// 			IncomeTax53Percentage: 10,
-// 			Status:                "",
-// 			TravelExpense:         0.00,
-// 		},
-// 	}
-// 	memberID := "001"
-// 	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
-// 	defer databaseConnection.Close()
-// 	repository := TimesheetRepository{
-// 		DatabaseConnection: databaseConnection,
-// 	}
+func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
+	expected := []model.Member{
+		{
+			ID:                    1,
+			MemberID:              "001",
+			Company:               "siam_chamnankit",
+			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			Email:                 "prathan@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                80000.00,
+			IncomeTax1:            5000.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 10,
+			TravelExpense:         0.00,
+		},
+		{
+			ID:                    2,
+			MemberID:              "001",
+			Company:               "shuhari",
+			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			Email:                 "prathan@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                0.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 10,
+			TravelExpense:         0.00,
+		},
+	}
+	memberID := "001"
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
 
-// 	actual, err := repository.GetMemberByID(memberID)
+	actual, err := repository.GetMemberByID(memberID)
 
-// 	assert.Equal(t, nil, err)
-// 	assert.Equal(t, expected, actual)
-// }
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
 
 // func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day_11_And_12(t *testing.T) {
 // 	expected := []model.Incomes{
