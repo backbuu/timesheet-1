@@ -88,7 +88,10 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 }
 
 func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Should_Be_Status_200(t *testing.T) {
+<<<<<<< HEAD
 	expectedStatus := http.StatusOK
+=======
+>>>>>>> eb1e70fa15456d16e56539319ea93d1b8f1558f8
 	requestIncome := IncomeRequest{
 		Year:     2018,
 		Month:    12,
@@ -150,7 +153,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 
 	response := writer.Result()
 
-	assert.Equal(t, expectedStatus, response.StatusCode)
+	assert.Equal(t, http.StatusCreated, response.StatusCode)
 }
 
 func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_Be_200(t *testing.T) {

@@ -53,6 +53,7 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
+	context.Status(http.StatusCreated)
 }
 
 func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
@@ -84,4 +85,6 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
+
+	context.Status(http.StatusOK)
 }

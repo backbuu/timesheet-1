@@ -335,15 +335,41 @@ func Test_CalculateTotalHour_Input_Incomes_Should_Be_Time_18_0_0(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateNetSalary_Input_Salary_80000_IncomeTax1_5000_SocialSecurity_0_Should_Be_75000(t *testing.T) {
-	expected := 75000.00
+func Test_CalculateNetSalary_Input_PaymentWage_155000_Salary_80000_IncomeTax1_5000_SocialSecurity_0_Should_Be_NetSalary_75000(t *testing.T) {
+	expectedSalary := 80000.00
+	expectedIncomeTax1 := 5000.00
+	expectedSocialSecurity := 0.00
+	expectedNetSalary := 75000.00
+
+	paymentWage := 155000.00
 	salary := 80000.00
 	incomeTax1 := 5000.00
 	socialSecurity := 0.00
 
-	actual := CalculateNetSalary(salary, incomeTax1, socialSecurity)
+	actualSalary, actualIncomeTax1, actualSocialSecurity, actualNetSalary := CalculateNetSalary(paymentWage, salary, incomeTax1, socialSecurity)
 
-	assert.Equal(t, expected, actual)
+	assert.Equal(t, expectedSalary, actualSalary)
+	assert.Equal(t, expectedIncomeTax1, actualIncomeTax1)
+	assert.Equal(t, expectedSocialSecurity, actualSocialSecurity)
+	assert.Equal(t, expectedNetSalary, actualNetSalary)
+}
+
+func Test_CalculateNetSalary_Input_PaymentWage_10000_Salary_40000_IncomeTax1_5000_SocialSecurity_750_Should_Be_NetSalary_0(t *testing.T) {
+	expectedSalary := 0.00
+	expectedIncomeTax1 := 0.00
+	expectedSocialSecurity := 0.00
+	expectedNetSalary := 0.00
+	paymentWage := 10000.00
+	salary := 40000.00
+	incomeTax1 := 5000.00
+	socialSecurity := 750.00
+
+	actualSalary, actualIncomeTax1, actualSocialSecurity, actualNetSalary := CalculateNetSalary(paymentWage, salary, incomeTax1, socialSecurity)
+
+	assert.Equal(t, expectedSalary, actualSalary)
+	assert.Equal(t, expectedIncomeTax1, actualIncomeTax1)
+	assert.Equal(t, expectedSocialSecurity, actualSocialSecurity)
+	assert.Equal(t, expectedNetSalary, actualNetSalary)
 }
 
 func Test_CalculateNetWage_Input_IncomeTax53Percentage_10_PaymentWage_155000_Salary_80000_Should_Be_67500(t *testing.T) {

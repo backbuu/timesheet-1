@@ -30,6 +30,7 @@ type TransactionTimesheet struct {
 }
 
 type Incomes struct {
+<<<<<<< HEAD
 	ID                       int       `json:"id"`
 	MemberID                 string    `db:"member_id" json:"member_id"`
 	Month                    int       `db:"month" json:"month"`
@@ -47,6 +48,35 @@ type Incomes struct {
 	OtherWage                float64   `db:"other_wage" json:"other_wage"`
 	Company                  string    `db:"company" json:"company"`
 	Description              string    `db:"description" json:"description"`
+=======
+	ID                       int     `json:"id"`
+	MemberID                 string  `db:"member_id" json:"member_id"`
+	Month                    int     `db:"month" json:"month"`
+	Year                     int     `db:"year" json:"year"`
+	Day                      int     `db:"day" json:"day"`
+	StartTimeAMHours         int     `db:"start_time_am_hours" json:"start_time_am_hours"`
+	StartTimeAMMinutes       int     `db:"start_time_am_minutes" json:"start_time_am_minutes"`
+	StartTimeAMSeconds       int     `db:"start_time_am_seconds" json:"start_time_am_seconds"`
+	EndTimeAMHours           int     `db:"end_time_am_hours" json:"end_time_am_hours"`
+	EndTimeAMMinutes         int     `db:"end_time_am_minutes" json:"end_time_am_minutes"`
+	EndTimeAMSeconds         int     `db:"end_time_am_seconds" json:"end_time_am_seconds"`
+	StartTimePMHours         int     `db:"start_time_pm_hours" json:"start_time_pm_hours"`
+	StartTimePMMinutes       int     `db:"start_time_pm_minutes" json:"start_time_pm_minutes"`
+	StartTimePMSeconds       int     `db:"start_time_pm_seconds" json:"start_time_pm_seconds"`
+	EndTimePMHours           int     `db:"end_time_pm_hours" json:"end_time_pm_hours"`
+	EndTimePMMinutes         int     `db:"end_time_pm_minutes" json:"end_time_pm_minutes"`
+	EndTimePMSeconds         int     `db:"end_time_pm_seconds" json:"end_time_pm_seconds"`
+	Overtime                 int     `db:"overtime" json:"overtime"`
+	TotalHoursHours          int     `db:"total_hours_hours" json:"total_hours_hours"`
+	TotalHoursMinutes        int     `db:"total_hours_minutes" json:"total_hours_minutes"`
+	TotalHoursSeconds        int     `db:"total_hours_seconds" json:"total_hours_seconds"`
+	CoachingCustomerCharging float64 `db:"coaching_customer_charging" json:"coaching_customer_charging"`
+	CoachingPaymentRate      float64 `db:"coaching_payment_rate" json:"coaching_payment_rate"`
+	TrainingWage             float64 `db:"training_wage" json:"training_wage"`
+	OtherWage                float64 `db:"other_wage" json:"other_wage"`
+	Company                  string  `db:"company" json:"company"`
+	Description              string  `db:"description" json:"description"`
+>>>>>>> eb1e70fa15456d16e56539319ea93d1b8f1558f8
 }
 
 type Payment struct {
