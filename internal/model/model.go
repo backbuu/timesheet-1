@@ -4,6 +4,23 @@ import (
 	"time"
 )
 
+type Timesheet struct {
+	MemberNameENG                 string    `db:"member_name_eng" json:"member_name_eng"`
+	Email                         string    `db:"email" json:"email"`
+	OvertimeRate                  float64   `db:"overtime_rate" json:"overtime_rate"`
+	RatePerDay                    float64   `db:"rate_per_day" json:"rate_per_day"`
+	RatePerHour                   float64   `db:"rate_per_hour" json:"rate_per_hour"`
+	Month                         int       `db:"month" json:"month"`
+	Year                          int       `db:"year" json:"year"`
+	TotalHoursPerMonth            time.Time `db:"total_hours_per_month" json:"total_hours_per_month"`
+	TotalCoachingCustomerCharging float64   `db:"total_coaching_customer_charging" json:"total_coaching_customer_charging"`
+	TotalCoachingPaymentRate      float64   `db:"total_coaching_payment_rate" json:"total_coaching_payment_rate"`
+	TotalTrainigWage              float64   `db:"total_training_wage" json:"total_training_wage"`
+	TotalOtherWage                float64   `db:"total_other_wage" json:"total_other_wage"`
+	PaymentWage                   float64   `db:"total_payment_wage" json:"total_payment_wage"`
+	Incomes                       []Incomes `db:"incomes" json:"incomes"`
+}
+
 type TransactionTimesheet struct {
 	ID                     string  `json:"id"`
 	MemberID               string  `db:"member_id" json:"member_id"`
