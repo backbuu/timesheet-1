@@ -138,80 +138,80 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-// func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day_11_And_12(t *testing.T) {
-// 	expected := []model.Incomes{
-// 		{
-// 			ID:                       58,
-// 			MemberID:                 "006",
-// 			Month:                    12,
-// 			Year:                     2019,
-// 			Day:                      11,
-// 			StartTimeAMHours:         9,
-// 			StartTimeAMMinutes:       0,
-// 			StartTimeAMSeconds:       0,
-// 			EndTimeAMHours:           12,
-// 			EndTimeAMMinutes:         0,
-// 			EndTimeAMSeconds:         0,
-// 			StartTimePMHours:         13,
-// 			StartTimePMMinutes:       0,
-// 			StartTimePMSeconds:       0,
-// 			EndTimePMHours:           18,
-// 			EndTimePMMinutes:         0,
-// 			EndTimePMSeconds:         0,
-// 			Overtime:                 0,
-// 			TotalHoursHours:          8,
-// 			TotalHoursMinutes:        0,
-// 			TotalHoursSeconds:        0,
-// 			CoachingCustomerCharging: 0.00,
-// 			CoachingPaymentRate:      0.00,
-// 			TrainingWage:             0.00,
-// 			OtherWage:                0.00,
-// 			Company:                  "shuhari",
-// 			Description:              "work at TN",
-// 		}, {
-// 			ID:                       59,
-// 			MemberID:                 "006",
-// 			Month:                    12,
-// 			Year:                     2019,
-// 			Day:                      12,
-// 			StartTimeAMHours:         9,
-// 			StartTimeAMMinutes:       0,
-// 			StartTimeAMSeconds:       0,
-// 			EndTimeAMHours:           12,
-// 			EndTimeAMMinutes:         0,
-// 			EndTimeAMSeconds:         0,
-// 			StartTimePMHours:         13,
-// 			StartTimePMMinutes:       0,
-// 			StartTimePMSeconds:       0,
-// 			EndTimePMHours:           18,
-// 			EndTimePMMinutes:         0,
-// 			EndTimePMSeconds:         0,
-// 			Overtime:                 0,
-// 			TotalHoursHours:          8,
-// 			TotalHoursMinutes:        0,
-// 			TotalHoursSeconds:        0,
-// 			CoachingCustomerCharging: 0.00,
-// 			CoachingPaymentRate:      0.00,
-// 			TrainingWage:             0.00,
-// 			OtherWage:                0.00,
-// 			Company:                  "shuhari",
-// 			Description:              "work at TN",
-// 		},
-// 	}
-// 	memberID := "006"
-// 	month := 12
-// 	year := 2019
-// 	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
-// 	defer databaseConnection.Close()
-// 	repository := TimesheetRepository{
-// 		DatabaseConnection: databaseConnection,
-// 	}
+func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day_11_And_12(t *testing.T) {
+	expected := []model.Incomes{
+		{
+			ID:                       58,
+			MemberID:                 "006",
+			Month:                    12,
+			Year:                     2019,
+			Day:                      11,
+			StartTimeAMHours:         9,
+			StartTimeAMMinutes:       0,
+			StartTimeAMSeconds:       0,
+			EndTimeAMHours:           12,
+			EndTimeAMMinutes:         0,
+			EndTimeAMSeconds:         0,
+			StartTimePMHours:         13,
+			StartTimePMMinutes:       0,
+			StartTimePMSeconds:       0,
+			EndTimePMHours:           18,
+			EndTimePMMinutes:         0,
+			EndTimePMSeconds:         0,
+			Overtime:                 0,
+			TotalHoursHours:          8,
+			TotalHoursMinutes:        0,
+			TotalHoursSeconds:        0,
+			CoachingCustomerCharging: 0.00,
+			CoachingPaymentRate:      0.00,
+			TrainingWage:             0.00,
+			OtherWage:                0.00,
+			Company:                  "shuhari",
+			Description:              "work at TN",
+		}, {
+			ID:                       59,
+			MemberID:                 "006",
+			Month:                    12,
+			Year:                     2019,
+			Day:                      12,
+			StartTimeAMHours:         9,
+			StartTimeAMMinutes:       0,
+			StartTimeAMSeconds:       0,
+			EndTimeAMHours:           12,
+			EndTimeAMMinutes:         0,
+			EndTimeAMSeconds:         0,
+			StartTimePMHours:         13,
+			StartTimePMMinutes:       0,
+			StartTimePMSeconds:       0,
+			EndTimePMHours:           18,
+			EndTimePMMinutes:         0,
+			EndTimePMSeconds:         0,
+			Overtime:                 0,
+			TotalHoursHours:          8,
+			TotalHoursMinutes:        0,
+			TotalHoursSeconds:        0,
+			CoachingCustomerCharging: 0.00,
+			CoachingPaymentRate:      0.00,
+			TrainingWage:             0.00,
+			OtherWage:                0.00,
+			Company:                  "shuhari",
+			Description:              "work at TN",
+		},
+	}
+	memberID := "006"
+	month := 12
+	year := 2019
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
 
-// 	actual, err := repository.GetIncomes(memberID, year, month)
+	actual, err := repository.GetIncomes(memberID, year, month)
 
-// 	assert.Equal(t, nil, err)
-// 	assert.Equal(t, expected, actual)
-// }
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
 
 // func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_Error(t *testing.T) {
 // 	transactionID := "006201912shuhari"

@@ -57,49 +57,10 @@ func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Me
 
 func (repository TimesheetRepository) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
 	var incomeList []model.Incomes
-	var income model.Incomes
-	statement, err := repository.DatabaseConnection.Prepare(`SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ?`)
+	query := `SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ?`
+	err := repository.DatabaseConnection.Select(&incomeList, query, memberID, year, month)
 	if err != nil {
-		return nil, err
-	}
-	row, err := statement.Query(memberID, year, month)
-	if err != nil {
-		return nil, err
-	}
-	for row.Next() {
-		err = row.Scan(
-			&income.ID,
-			&income.MemberID,
-			&income.Month,
-			&income.Year,
-			&income.Day,
-			&income.StartTimeAMHours,
-			&income.StartTimeAMMinutes,
-			&income.StartTimeAMSeconds,
-			&income.EndTimeAMHours,
-			&income.EndTimeAMMinutes,
-			&income.EndTimeAMSeconds,
-			&income.StartTimePMHours,
-			&income.StartTimePMMinutes,
-			&income.StartTimePMSeconds,
-			&income.EndTimePMHours,
-			&income.EndTimePMMinutes,
-			&income.EndTimePMSeconds,
-			&income.Overtime,
-			&income.TotalHoursHours,
-			&income.TotalHoursMinutes,
-			&income.TotalHoursSeconds,
-			&income.CoachingCustomerCharging,
-			&income.CoachingPaymentRate,
-			&income.TrainingWage,
-			&income.OtherWage,
-			&income.Company,
-			&income.Description,
-		)
-		if row.Err() != nil {
-			return nil, err
-		}
-		incomeList = append(incomeList, income)
+		return []model.Incomes{}, err
 	}
 	return incomeList, nil
 }
