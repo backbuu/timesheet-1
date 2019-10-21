@@ -37,7 +37,12 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 		VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , 
 			?, ? , ? , ?, ? , ? , ?, ? , ? , ?, ? )`
 	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAMHours, income.StartTimeAMMinutes, income.StartTimeAMSeconds, income.EndTimeAMHours, income.EndTimeAMMinutes, income.EndTimeAMSeconds, income.StartTimePMHours, income.StartTimePMMinutes, income.StartTimePMSeconds, income.EndTimePMHours, income.EndTimePMMinutes, income.EndTimePMSeconds, income.Overtime, income.TotalHoursHours, income.TotalHoursMinutes, income.TotalHoursSeconds, income.CoachingCustomerCharging, income.CoachingPaymentRate, income.TrainingWage, income.OtherWage, income.Company, income.Description)
+	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAMHours,
+		income.StartTimeAMMinutes, income.StartTimeAMSeconds, income.EndTimeAMHours, income.EndTimeAMMinutes,
+		income.EndTimeAMSeconds, income.StartTimePMHours, income.StartTimePMMinutes, income.StartTimePMSeconds,
+		income.EndTimePMHours, income.EndTimePMMinutes, income.EndTimePMSeconds, income.Overtime,
+		income.TotalHoursHours, income.TotalHoursMinutes, income.TotalHoursSeconds, income.CoachingCustomerCharging,
+		income.CoachingPaymentRate, income.TrainingWage, income.OtherWage, income.Company, income.Description)
 	err := transaction.Commit()
 	if err != nil {
 		return err
@@ -66,31 +71,23 @@ func (repository TimesheetRepository) GetIncomes(memberID string, year, month in
 }
 
 func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
-	statement, err := repository.DatabaseConnection.Prepare(`INSERT INTO transactions (id, member_id, month, year, company, member_name_th, coaching, training, other, total_incomes, salary, income_tax_1, social_security, net_salary, wage, income_tax_53_percentage, income_tax_53, net_wage, net_transfer) VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? , ? )`)
+	query := `INSERT INTO transactions (id, member_id, month, year, company, member_name_th, coaching, 
+		training, other, total_incomes, salary, income_tax_1, social_security, net_salary, wage, 
+		income_tax_53_percentage, income_tax_53, net_wage, net_transfer, status_checking_transfer) 
+		VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? , ? , ?)`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, transactionID, transactionTimesheet.MemberID, transactionTimesheet.Month,
+		transactionTimesheet.Year, transactionTimesheet.Company, transactionTimesheet.MemberNameTH,
+		transactionTimesheet.Coaching, transactionTimesheet.Training, transactionTimesheet.Other,
+		transactionTimesheet.TotalIncomes, transactionTimesheet.Salary, transactionTimesheet.IncomeTax1,
+		transactionTimesheet.SocialSecurity, transactionTimesheet.NetSalary, transactionTimesheet.Wage,
+		transactionTimesheet.IncomeTax53Percentage, transactionTimesheet.IncomeTax53, transactionTimesheet.NetWage,
+		transactionTimesheet.NetTransfer, transactionTimesheet.StatusCheckingTransfer)
+	err := transaction.Commit()
 	if err != nil {
 		return err
 	}
-	_, err = statement.Exec(
-		transactionID,
-		transactionTimesheet.MemberID,
-		transactionTimesheet.Month,
-		transactionTimesheet.Year,
-		transactionTimesheet.Company,
-		transactionTimesheet.MemberNameTH,
-		transactionTimesheet.Coaching,
-		transactionTimesheet.Training,
-		transactionTimesheet.Other,
-		transactionTimesheet.TotalIncomes,
-		transactionTimesheet.Salary,
-		transactionTimesheet.IncomeTax1,
-		transactionTimesheet.SocialSecurity,
-		transactionTimesheet.NetSalary,
-		transactionTimesheet.Wage,
-		transactionTimesheet.IncomeTax53Percentage,
-		transactionTimesheet.IncomeTax53,
-		transactionTimesheet.NetWage,
-		transactionTimesheet.NetTransfer)
-	return err
+	return nil
 }
 
 func (repository TimesheetRepository) UpdateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
