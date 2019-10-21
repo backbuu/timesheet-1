@@ -78,28 +78,15 @@ func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Payme
 }
 
 func CalculateTotalHour(incomes []model.Incomes) model.Time {
-	var hours, minutes, seconds int
+	var hours int
 	for _, income := range incomes {
-		hours += income.EndTimeAMHours - income.StartTimeAMHours
-		hours += income.EndTimePMHours - income.StartTimePMHours
+		hours += int(income.EndTimeAM.Sub(income.StartTimeAM))
+		hours += int(income.EndTimePM.Sub(income.StartTimePM))
 		hours += income.Overtime
-		minutes += income.EndTimeAMMinutes - income.StartTimeAMMinutes
-		minutes += income.EndTimePMMinutes - income.StartTimePMMinutes
-		seconds += income.EndTimeAMSeconds - income.StartTimeAMSeconds
-		seconds += income.EndTimePMSeconds - income.StartTimePMSeconds
 	}
-	if seconds >= OneMinute {
-		minutes += seconds / OneMinute
-		seconds %= OneMinute
-	}
-	if minutes >= OneHour {
-		hours += minutes / OneHour
-		minutes %= OneHour
-	}
+
 	return model.Time{
-		Hours:   hours,
-		Minutes: minutes,
-		Seconds: seconds,
+		Hours: hours,
 	}
 }
 
