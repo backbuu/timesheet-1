@@ -41,10 +41,10 @@ type Incomes struct {
 	EndTimePM                time.Time `db:"end_time_pm" json:"end_time_pm"`
 	Overtime                 int       `db:"overtime" json:"overtime"`
 	TotalHours               time.Time `db:"total_hours" json:"total_hours"`
-	CoachingCustomerCharging int       `db:"coaching_customer_charging" json:"coaching_customer_charging"`
-	CoachingPaymentRate      int       `db:"coaching_payment_rate" json:"coaching_payment_rate"`
-	TrainingWage             int       `db:"training_wage" json:"training_wage"`
-	OtherWage                int       `db:"other_wage" json:"other_wage"`
+	CoachingCustomerCharging float64   `db:"coaching_customer_charging" json:"coaching_customer_charging"`
+	CoachingPaymentRate      float64   `db:"coaching_payment_rate" json:"coaching_payment_rate"`
+	TrainingWage             float64   `db:"training_wage" json:"training_wage"`
+	OtherWage                float64   `db:"other_wage" json:"other_wage"`
 	Company                  string    `db:"company" json:"company"`
 	Description              string    `db:"description" json:"description"`
 }
