@@ -1,13 +1,13 @@
 package repository_test
 
 import (
-	"database/sql"
 	"testing"
 	"time"
 	"timesheet/internal/model"
 	. "timesheet/internal/repository"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -35,17 +35,15 @@ func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *
 			NetWage:                67500.00,
 			NetTransfer:            142500.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
-			DateTransfer:           "",
-			Comment:                "",
 		},
 	}
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
-	year := 2017
-	month := 12
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
+	year := 2017
+	month := 12
 
 	actual, err := repository.GetSummary(year, month)
 
@@ -77,9 +75,8 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 		Company:                  "siam_chamnankit",
 		Description:              "[KBTG] 2 Days Agile Project Management",
 	}
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
-
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
@@ -105,7 +102,6 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 			IncomeTax1:            5000.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 		{
@@ -122,12 +118,11 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 			IncomeTax1:            0.00,
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
-			Status:                "",
 			TravelExpense:         0.00,
 		},
 	}
 	memberID := "001"
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
@@ -187,7 +182,7 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day
 	memberID := "006"
 	month := 12
 	year := 2019
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
@@ -221,10 +216,8 @@ func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_
 		NetWage:                6175.00,
 		NetTransfer:            30425.00,
 		StatusCheckingTransfer: "รอการตรวจสอบ",
-		DateTransfer:           "",
-		Comment:                "",
 	}
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
@@ -238,28 +231,25 @@ func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_
 func Test_UpdateTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_No_Error(t *testing.T) {
 	transactionID := "001201911shuhari"
 	transactionTimesheet := model.TransactionTimesheet{
-		MemberID:               "001",
-		Month:                  11,
-		Year:                   2019,
-		Company:                "shuhari",
-		Coaching:               10000.00,
-		Training:               10000.00,
-		Other:                  6500.00,
-		TotalIncomes:           6500.00,
-		Salary:                 25000.00,
-		IncomeTax1:             1000.00,
-		SocialSecurity:         750.00,
-		NetSalary:              24250.00,
-		Wage:                   6500.00,
-		IncomeTax53Percentage:  5,
-		IncomeTax53:            325.00,
-		NetWage:                6175.00,
-		NetTransfer:            30425.00,
-		StatusCheckingTransfer: "รอการตรวจสอบ",
-		DateTransfer:           "",
-		Comment:                "",
+		MemberID:              "001",
+		Month:                 11,
+		Year:                  2019,
+		Company:               "shuhari",
+		Coaching:              10000.00,
+		Training:              10000.00,
+		Other:                 6500.00,
+		TotalIncomes:          6500.00,
+		Salary:                25000.00,
+		IncomeTax1:            1000.00,
+		SocialSecurity:        750.00,
+		NetSalary:             24250.00,
+		Wage:                  6500.00,
+		IncomeTax53Percentage: 5,
+		IncomeTax53:           325.00,
+		NetWage:               6175.00,
+		NetTransfer:           30425.00,
 	}
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
@@ -279,14 +269,14 @@ func Test_CreateTimsheet_Input_Payment_MemberID_006_Should_Be_No_Error(t *testin
 		TotalHoursHours:               120,
 		TotalHoursMinutes:             0,
 		TotalHoursSeconds:             0,
-		TotalCoachingCustomerCharging: 0.00,
-		TotalCoachingPaymentRate:      0.00,
-		TotalTrainigWage:              0.00,
-		TotalOtherWage:                0.00,
-		PaymentWage:                   0.00,
+		TotalCoachingCustomerCharging: 30000.00,
+		TotalCoachingPaymentRate:      20000.00,
+		TotalTrainigWage:              10000.00,
+		TotalOtherWage:                10000.00,
+		PaymentWage:                   40000.00,
 	}
 
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
@@ -310,7 +300,7 @@ func Test_UpdateTimsheet_Input_Payment_MemberID_007_Year_2019_Month_12_Should_Be
 		PaymentWage:                   60000.00,
 	}
 
-	databaseConnection, _ := sql.Open("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
