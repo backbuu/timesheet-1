@@ -242,15 +242,17 @@ function showSummaryByID() {
             var totalOtherWage = json.total_other_wage;
             var paymentWage = json.payment_wage;
             var incomeList = "";
+            
+            
             for (var i = 0; i < json.incomes.length; i++) {
                 incomeList += "<tr>";
                 incomeList += "<td>"+json.incomes[i].day+"</td>";
-                incomeList += "<td>"+json.incomes[i].start_time_am+"</td>";
-                incomeList += "<td>"+json.incomes[i].end_time_am+"</td>";
-                incomeList += "<td>"+json.incomes[i].start_time_pm+"</td>";
-                incomeList += "<td>"+json.incomes[i].end_time_pm+"</td>";
+                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_am)+"</td>";
+                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_am)+"</td>";
+                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_pm)+"</td>";
+                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_pm)+"</td>";
                 incomeList += "<td>"+json.incomes[i].overtime+"</td>";
-                incomeList += "<td>"+json.incomes[i].total_hours+"</td>";
+                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].total_hours)+"</td>";
                 incomeList += "<td>"+json.incomes[i].coaching_customer_charging+"</td>";
                 incomeList += "<td>"+json.incomes[i].coaching_payment_rate+"</td>";
                 incomeList += "<td>"+json.incomes[i].training_wage+"</td>";
@@ -279,4 +281,11 @@ function showSummaryByID() {
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
     request.send(data);   
+}
+
+function convertTimestampToTime(timestamp){
+    var date = new Date(timestamp);
+    datetext = date.toUTCString();
+    datetext = datetext.split(' ')[4];
+    return datetext
 }
