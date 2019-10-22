@@ -194,6 +194,62 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day
 	assert.Equal(t, expected, actual)
 }
 
+func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
+	transactionTimesheet := []model.TransactionTimesheet{
+		{
+			MemberID:               "001",
+			Month:                  12,
+			Year:                   2019,
+			Company:                "shuhari",
+			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			Coaching:               20000.00,
+			Training:               0.00,
+			Other:                  6500.00,
+			TotalIncomes:           6500.00,
+			Salary:                 25000.00,
+			IncomeTax1:             0.00,
+			SocialSecurity:         750.00,
+			NetSalary:              24250.00,
+			Wage:                   6500.00,
+			IncomeTax53Percentage:  5,
+			IncomeTax53:            325.00,
+			NetWage:                6175.00,
+			NetTransfer:            30425.00,
+			StatusCheckingTransfer: "รอการตรวจสอบ",
+		},
+		{
+			MemberID:               "001",
+			Month:                  12,
+			Year:                   2019,
+			Company:                "siam_chamnankit",
+			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			Coaching:               30000.00,
+			Training:               0.00,
+			Other:                  6500.00,
+			TotalIncomes:           6500.00,
+			Salary:                 25000.00,
+			IncomeTax1:             0.00,
+			SocialSecurity:         750.00,
+			NetSalary:              24250.00,
+			Wage:                   6500.00,
+			IncomeTax53Percentage:  5,
+			IncomeTax53:            325.00,
+			NetWage:                6175.00,
+			NetTransfer:            30425.00,
+			StatusCheckingTransfer: "รอการตรวจสอบ",
+		},
+	}
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	err := repository.VerifyTransactionTimsheet(transactionTimesheet)
+
+	assert.Equal(t, nil, err)
+}
+
 func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_Error(t *testing.T) {
 	transactionID := "006201912shuhari"
 	transactionTimesheet := model.TransactionTimesheet{
@@ -260,58 +316,34 @@ func Test_UpdateTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_No_
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTimsheet_Input_Payment_MemberID_006_Should_Be_No_Error(t *testing.T) {
-	timesheetID := "006201912"
-	memberID := "006"
-	month := 12
+func Test_VerifyTimsheet_Input_Timesheet_MemberID_007_Year_2019_Month_11_Should_Be_Update_Timesheet(t *testing.T) {
+	memberID := "007"
+	month := 11
 	year := 2019
-	payment := model.Payment{
-		TotalHours:                    "120:00:00",
-		TotalCoachingCustomerCharging: 30000.00,
-		TotalCoachingPaymentRate:      20000.00,
-		TotalTrainigWage:              10000.00,
-		TotalOtherWage:                10000.00,
-		PaymentWage:                   40000.00,
-	}
-
-	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
-	defer databaseConnection.Close()
-	repository := TimesheetRepository{
-		DatabaseConnection: databaseConnection,
-	}
-
-	err := repository.CreateTimesheet(payment, timesheetID, memberID, year, month)
-
-	assert.Equal(t, nil, err)
-}
-
-func Test_UpdateTimsheet_Input_Payment_MemberID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
-	timesheetID := "007201912"
-	payment := model.Payment{
-		TotalHours:                    "120:30:30",
-		TotalCoachingCustomerCharging: 90000.00,
+	timesheet := model.Timesheet{
+		TotalHours:                    "11:30:30",
+		TotalCoachingCustomerCharging: 15000.00,
 		TotalCoachingPaymentRate:      10000.00,
-		TotalTrainigWage:              20000.00,
-		TotalOtherWage:                30000.00,
-		PaymentWage:                   60000.00,
+		TotalTrainigWage:              10000.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   20000.00,
 	}
-
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdateTimesheet(payment, timesheetID)
+	err := repository.VerifyTimesheet(timesheet, memberID, year, month)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_VerifyTimsheet_Input_Payment_MemberID_006_Year_2019_Month_11_Should_Be_Create_Timesheet(t *testing.T) {
+func Test_VerifyTimsheet_Input_Timesheet_MemberID_006_Year_2019_Month_11_Should_Be_Create_Timesheet(t *testing.T) {
 	memberID := "006"
 	month := 2019
 	year := 11
-	payment := model.Payment{
+	payment := model.Timesheet{
 		TotalHours:                    "120:00:00",
 		TotalCoachingCustomerCharging: 0.00,
 		TotalCoachingPaymentRate:      0.00,
@@ -330,81 +362,78 @@ func Test_VerifyTimsheet_Input_Payment_MemberID_006_Year_2019_Month_11_Should_Be
 	assert.Equal(t, nil, err)
 }
 
-func Test_VerifyTimsheet_Input_Payment_MemberID_007_Year_2019_Month_11_Should_Be_Update_Timesheet(t *testing.T) {
-	memberID := "007"
-	month := 11
+func Test_CreateTimsheet_Input_Timesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
+	timesheetID := "006201912"
+	memberID := "006"
+	month := 12
 	year := 2019
-	payment := model.Payment{
-		TotalHours:                    "11:30:30",
-		TotalCoachingCustomerCharging: 15000.00,
-		TotalCoachingPaymentRate:      10000.00,
+	timesheet := model.Timesheet{
+		TotalHours:                    "120:00:00",
+		TotalCoachingCustomerCharging: 30000.00,
+		TotalCoachingPaymentRate:      20000.00,
 		TotalTrainigWage:              10000.00,
-		TotalOtherWage:                0.00,
-		PaymentWage:                   20000.00,
+		TotalOtherWage:                10000.00,
+		PaymentWage:                   40000.00,
 	}
+
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.VerifyTimesheet(payment, memberID, year, month)
+	err := repository.CreateTimesheet(timesheet, timesheetID, memberID, year, month)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
-	transactionTimesheet := []model.TransactionTimesheet{
-		{
-			MemberID:               "001",
-			Month:                  12,
-			Year:                   2019,
-			Company:                "shuhari",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
-			Coaching:               20000.00,
-			Training:               0.00,
-			Other:                  6500.00,
-			TotalIncomes:           6500.00,
-			Salary:                 25000.00,
-			IncomeTax1:             0.00,
-			SocialSecurity:         750.00,
-			NetSalary:              24250.00,
-			Wage:                   6500.00,
-			IncomeTax53Percentage:  5,
-			IncomeTax53:            325.00,
-			NetWage:                6175.00,
-			NetTransfer:            30425.00,
-			StatusCheckingTransfer: "รอการตรวจสอบ",
-		},
-		{
-			MemberID:               "001",
-			Month:                  12,
-			Year:                   2019,
-			Company:                "siam_chamnankit",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
-			Coaching:               30000.00,
-			Training:               0.00,
-			Other:                  6500.00,
-			TotalIncomes:           6500.00,
-			Salary:                 25000.00,
-			IncomeTax1:             0.00,
-			SocialSecurity:         750.00,
-			NetSalary:              24250.00,
-			Wage:                   6500.00,
-			IncomeTax53Percentage:  5,
-			IncomeTax53:            325.00,
-			NetWage:                6175.00,
-			NetTransfer:            30425.00,
-			StatusCheckingTransfer: "รอการตรวจสอบ",
-		},
+func Test_UpdateTimsheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
+	timesheetID := "007201912"
+	timesheet := model.Timesheet{
+		TotalHours:                    "120:30:30",
+		TotalCoachingCustomerCharging: 90000.00,
+		TotalCoachingPaymentRate:      10000.00,
+		TotalTrainigWage:              20000.00,
+		TotalOtherWage:                30000.00,
+		PaymentWage:                   60000.00,
 	}
+
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.VerifyTransactionTimsheet(transactionTimesheet)
+	err := repository.UpdateTimesheet(timesheet, timesheetID)
 
 	assert.Equal(t, nil, err)
+}
+
+func Test_GetTimsheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(t *testing.T) {
+	expected := model.Timesheet{
+		ID:                            "003201712",
+		MemberID:                      "003",
+		Month:                         12,
+		Year:                          2017,
+		TotalHours:                    "88:00:00",
+		TotalCoachingCustomerCharging: 0.00,
+		TotalCoachingPaymentRate:      0.00,
+		TotalTrainigWage:              120000.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   120000.00,
+	}
+	memberID := "003"
+	month := 12
+	year := 2017
+
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual, err := repository.GetTimesheet(memberID, year, month)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }

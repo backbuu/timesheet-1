@@ -33,6 +33,12 @@ type TimesheetRequest struct {
 	Month    int    `json:"month"`
 }
 
+type TimesheetResponse struct {
+	Member    []model.Member
+	Timesheet model.Timesheet
+	Incomes   []model.Incomes
+}
+
 type TimesheetAPI struct {
 	Timesheet           timesheet.TimesheetGateways
 	TimesheetRepository repository.TimesheetRepositoryGateways
@@ -59,7 +65,7 @@ func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	timesheetResponse := model.TimesheetResponse{
+	timesheetResponse := TimesheetResponse{
 		Member:    members,
 		Timesheet: timesheet,
 		Incomes:   incomes,

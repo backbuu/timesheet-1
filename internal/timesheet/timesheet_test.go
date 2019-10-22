@@ -217,7 +217,7 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 }
 
 func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingPaymentRate_10000_TrainigWage_20000_Should_Be_Payment(t *testing.T) {
-	expected := model.Payment{
+	expected := model.Timesheet{
 		TotalHours:                    "16:00:00",
 		TotalCoachingCustomerCharging: 15000.00,
 		TotalCoachingPaymentRate:      10000.00,

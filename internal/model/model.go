@@ -4,25 +4,6 @@ import (
 	"time"
 )
 
-type TimesheetResponse struct {
-	Member    []Member
-	Timesheet Timesheet
-	Incomes   []Incomes
-}
-
-type Timesheet struct {
-	ID                            string  `json:"id"`
-	MemberID                      string  `db:"member_id" json:"member_id"`
-	Month                         int     `db:"month" json:"month"`
-	Year                          int     `db:"year" json:"year"`
-	TotalHours                    string  `db:"total_hours" json:"total_hours"`
-	TotalCoachingCustomerCharging float64 `db:"total_coaching_customer_charging" json:"total_coaching_customer_charging"`
-	TotalCoachingPaymentRate      float64 `db:"total_coaching_payment_rate" json:"total_coaching_payment_rate"`
-	TotalTrainigWage              float64 `db:"total_training_wage" json:"total_training_wage"`
-	TotalOtherWage                float64 `db:"total_other_wage" json:"total_other_wage"`
-	PaymentWage                   float64 `db:"total_payment_wage" json:"total_payment_wage"`
-}
-
 type TransactionTimesheet struct {
 	ID                     string  `json:"id"`
 	MemberID               string  `db:"member_id" json:"member_id"`
@@ -44,8 +25,8 @@ type TransactionTimesheet struct {
 	NetWage                float64 `db:"net_wage" json:"net_wage"`
 	NetTransfer            float64 `db:"net_transfer" json:"net_transfer"`
 	StatusCheckingTransfer string  `db:"status_checking_transfer" json:"status_checking_transfer"`
-	DateTransfer           *string `db:"date_transfer" json:"date_transfer"`
-	Comment                *string `db:"comment" json:"comment"`
+	DateTransfer           *string `db:"date_transfer" json:"date_transfer,omitempty"`
+	Comment                *string `db:"comment" json:"comment,omitempty"`
 }
 
 type Incomes struct {
@@ -68,16 +49,17 @@ type Incomes struct {
 	Description              string    `db:"description" json:"description"`
 }
 
-type Payment struct {
-	MemberID                      string  `json:"member_id"`
-	Month                         int     `json:"month"`
-	Year                          int     `json:"year"`
-	TotalHours                    string  `json:"total_hours_hours"`
-	TotalCoachingCustomerCharging float64 `json:"total_coaching_customer_charging"`
-	TotalCoachingPaymentRate      float64 `json:"total_coaching_payment_rate"`
-	TotalTrainigWage              float64 `json:"total_trainig_wage"`
-	TotalOtherWage                float64 `json:"total_other_wage"`
-	PaymentWage                   float64 `json:"payment_wage"`
+type Timesheet struct {
+	ID                            string  `json:"id"`
+	MemberID                      string  `db:"member_id" json:"member_id"`
+	Month                         int     `db:"month" json:"month"`
+	Year                          int     `db:"year" json:"year"`
+	TotalHours                    string  `db:"total_hours" json:"total_hours"`
+	TotalCoachingCustomerCharging float64 `db:"total_coaching_customer_charging" json:"total_coaching_customer_charging"`
+	TotalCoachingPaymentRate      float64 `db:"total_coaching_payment_rate" json:"total_coaching_payment_rate"`
+	TotalTrainigWage              float64 `db:"total_training_wage" json:"total_training_wage"`
+	TotalOtherWage                float64 `db:"total_other_wage" json:"total_other_wage"`
+	PaymentWage                   float64 `db:"payment_wage" json:"payment_wage"`
 }
 
 type Member struct {
@@ -94,7 +76,7 @@ type Member struct {
 	IncomeTax1            float64 `db:"income_tax_1" json:"income_tax_1"`
 	SocialSecurity        float64 `db:"social_security" json:"social_security"`
 	IncomeTax53Percentage int     `db:"income_tax_53_percentage" json:"income_tax_53_percentage"`
-	Status                *string `db:"status" json:"status"`
+	Status                *string `db:"status" json:"status,omitempty"`
 	TravelExpense         float64 `db:"travel_expense" json:"travel_expense"`
 }
 
