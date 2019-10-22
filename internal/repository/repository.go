@@ -8,6 +8,7 @@ import (
 )
 
 type TimesheetRepositoryGateways interface {
+	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	GetSummary(year, month int) ([]model.TransactionTimesheet, error)
 	GetMemberByID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
@@ -18,6 +19,10 @@ type TimesheetRepositoryGateways interface {
 
 type TimesheetRepository struct {
 	DatabaseConnection *sqlx.DB
+}
+
+func (repository TimesheetRepository) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
+	return model.Timesheet{}, nil
 }
 
 func (repository TimesheetRepository) GetSummary(year, month int) ([]model.TransactionTimesheet, error) {
