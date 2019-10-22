@@ -29,15 +29,14 @@ func main() {
 		log.Fatal("Cannot connect database", err.Error())
 	}
 	defer databaseConnection.Close()
-
-	repository := repository.TimesheetRepository{
+	timesheetRepository := repository.TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 	api := handler.TimesheetAPI{
 		Timesheet: timesheet.Timesheet{
-			Repository: repository,
+			Repository: timesheetRepository,
 		},
-		TimesheetRepository: repository,
+		TimesheetRepository: timesheetRepository,
 	}
 
 	router := gin.Default()
