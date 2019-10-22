@@ -12,10 +12,6 @@ const (
 	SiamChamnankitCompany = "siam_chamnankit"
 	ShuhariCompany        = "shuhari"
 
-	NoSalary         = 0.00
-	NoIncomeTax1     = 0.00
-	NoSocialSecurity = 0.00
-
 	OneMinute = 60
 	OneHour   = 60
 )
@@ -37,7 +33,7 @@ func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, income
 		totalTrainingWage := calculateTotalTrainingWage(incomes, member.Company)
 		totalOtherWage := calculateTotalOtherWage(incomes, member.Company, member.TravelExpense)
 		paymentWage := calculateTotalPaymentWage(totalCoachingPaymentRate, totalTrainingWage, totalOtherWage)
-		salary, incomeTax1, socialSecurity, netSalary := calculateNetSalary(paymentWage, member.Salary, member.IncomeTax1, member.SocialSecurity)
+		netSalary := calculateNetSalary(member.Salary, member.IncomeTax1, member.SocialSecurity)
 		wage := calculateWage(paymentWage, member.Salary)
 		incomeTax53 := calculateIncomeTax53(wage, member.IncomeTax53Percentage)
 		netWage := calculateNetWage(member.IncomeTax53Percentage, paymentWage, member.Salary)
@@ -52,9 +48,9 @@ func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, income
 			Training:              totalTrainingWage,
 			Other:                 totalOtherWage,
 			TotalIncomes:          paymentWage,
-			Salary:                salary,
-			IncomeTax1:            incomeTax1,
-			SocialSecurity:        socialSecurity,
+			Salary:                member.Salary,
+			IncomeTax1:            member.IncomeTax1,
+			SocialSecurity:        member.SocialSecurity,
 			NetSalary:             netSalary,
 			Wage:                  wage,
 			IncomeTax53Percentage: member.IncomeTax53Percentage,
@@ -137,12 +133,8 @@ func calculateTotalPaymentWage(coachingPaymentRate, trainingWage, otherWage floa
 	return coachingPaymentRate + trainingWage + otherWage
 }
 
-func calculateNetSalary(paymentWage, salary, incomeTax1, socialSecurity float64) (float64, float64, float64, float64) {
-	netSalary := salary - incomeTax1 - socialSecurity
-	if paymentWage >= salary {
-		return salary, incomeTax1, socialSecurity, netSalary
-	}
-	return NoSalary, NoIncomeTax1, NoSocialSecurity, NoSalary
+func calculateNetSalary(salary, incomeTax1, socialSecurity float64) float64 {
+	return salary - incomeTax1 - socialSecurity
 }
 
 func calculateNetWage(incomeTax53Percentage int, paymentWage, salary float64) float64 {
