@@ -9,13 +9,26 @@
 <script src="js/jquery-3.4.1.min.js"></script>
 <body>
   <form action="showsummarybyid.html" method="get">
-    <input type="hidden" name="id" value="001">
-    <input type="submit" value="PRATHAN">
+    <input type="month" id="date" name="date">
+    <select name="id" id="id">
+      <option value="" selected disabled hidden>รายชื่อ</option>
+      <option value="007">PRUTH</option>
+      <option value="001">PRATHAN</option>
+      <option value="004">THAWATCHAI</option>
+      <option value="003">SOMKIAT</option>
+      <option value="008">CHAMNAN</option>
+      <option value="009">CHONNIKAN</option>
+      <option value="010">CHITPONG</option>
+      <option value="011">NATHAWAT</option>
+      <option value="012">PICHAYA</option>
+      <option value="013">PICHAI</option>
+      <option value="002">NAREENART</option>
+      <option value="005">APIPOL</option>
+      <option value="006">PANUMARS</option>
+      <option value="014">NATTAKIT</option>      
+    </select>
+    <input type="submit" id="button_show_summary_by_id" value="ยืนยัน"/>
   </form>
-  <form action="showsummarybyid.html" method="get">
-      <input type="hidden" name="id" value="002">
-      <input type="submit" value="NAREENART">
-    </form><br>
   
   <h1>DATE</h1>
     Year <input id="year" type="number" value=2018>
@@ -43,7 +56,7 @@
       <td>หัก ประกันสังคม</td>
       <td>ยอดสุทธิเงินเดือน</td>
       <td>เงินค่าจ้าง</td>
-      <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
+      <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
       <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
       <td>ยอดสุทธิค่าจ้าง</td>
       <td>ยอดโอนเงินสุทธิ</td>
@@ -58,7 +71,6 @@
       <td id="total_social_security_siam_chamnankit">฿ 0.00 </td>
       <td id="total_net_salary_siam_chamnankit">฿ 0.00 </td>
       <td id="total_wage_siam_chamnankit">฿ 0.00 </td>
-      <td></td>
       <td id="total_income_tax_53_siam_chamnankit">฿ 0.00 </td>
       <td id="total_net_wage_siam_chamnankit">฿ 0.00 </td>
       <td id="total_net_transfer_siam_chamnankit">฿ 0.00 </td>
@@ -89,7 +101,7 @@
       <td>หัก ประกันสังคม</td>
       <td>ยอดสุทธิเงินเดือน</td>
       <td>เงินค่าจ้าง</td>
-      <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
+      <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
       <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
       <td>ยอดสุทธิค่าจ้าง</td>
       <td>ยอดโอนเงินสุทธิ</td>
@@ -104,7 +116,6 @@
       <td id="total_social_security_shuhari">฿ 0.00 </td>
       <td id="total_net_salary_shuhari">฿ 0.00 </td>
       <td id="total_wage_shuhari">฿ 0.00 </td>
-      <td></td>
       <td id="total_income_tax_53_shuhari">฿ 0.00 </td>
       <td id="total_net_wage_shuhari">฿ 0.00 </td>
       <td id="total_net_transferShuhari">฿ 0.00 </td>
