@@ -13,7 +13,7 @@ type TimesheetRepositoryGateways interface {
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
-	VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error
+	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 }
 
@@ -129,25 +129,13 @@ func (repository TimesheetRepository) UpdateTransactionTimsheet(transactionTimes
 	return nil
 }
 
-func (repository TimesheetRepository) VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error {
-	query := `SELECT COUNT(id) FROM timesheet.timesheets WHERE id LIKE ?`
-	var count int
-	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
-	err := repository.DatabaseConnection.Get(&count, query, timesheetID)
-	if err != nil {
-		return err
-	}
-	if count == 0 {
-		return repository.CreateTimesheet(payment, timesheetID, memberID, year, month)
-	}
-	return repository.UpdateTimesheet(payment, timesheetID)
-}
-
-func (repository TimesheetRepository) CreateTimesheet(payment model.Timesheet, timesheetID, memberID string, year int, month int) error {
+func (repository TimesheetRepository) CreateTimesheet(memberID string, year int, month int) error {
 	query := `INSERT INTO timesheets (id, member_id, month, year, total_hours, total_coaching_customer_charging,
 		total_coaching_payment_rate, total_training_wage, total_other_wage, payment_wage) 
 		VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? )`
 	transaction := repository.DatabaseConnection.MustBegin()
+	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
+	var payment model.Timesheet
 	transaction.MustExec(query, timesheetID, memberID, month, year, payment.TotalHours,
 		payment.TotalCoachingCustomerCharging, payment.TotalCoachingPaymentRate,
 		payment.TotalTrainigWage, payment.TotalOtherWage, payment.PaymentWage)
@@ -158,13 +146,13 @@ func (repository TimesheetRepository) CreateTimesheet(payment model.Timesheet, t
 	return nil
 }
 
-func (repository TimesheetRepository) UpdateTimesheet(payment model.Timesheet, timesheetID string) error {
+func (repository TimesheetRepository) UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error {
 	query := `UPDATE timesheets SET total_hours = ?, total_coaching_customer_charging = ?, 
 		total_coaching_payment_rate = ?, total_training_wage = ?, total_other_wage = ?, payment_wage = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, payment.TotalHours,
-		payment.TotalCoachingCustomerCharging, payment.TotalCoachingPaymentRate, payment.TotalTrainigWage,
-		payment.TotalOtherWage, payment.PaymentWage, timesheetID)
+	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
+	transaction.MustExec(query, timesheet.TotalHours, timesheet.TotalCoachingCustomerCharging, timesheet.TotalCoachingPaymentRate,
+		timesheet.TotalTrainigWage, timesheet.TotalOtherWage, timesheet.PaymentWage, timesheetID)
 	err := transaction.Commit()
 	if err != nil {
 		return err

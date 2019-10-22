@@ -294,7 +294,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		PaymentWage:                   195000.00,
 	})
 
-	mockRepository.On("VerifyTimesheet", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	mockRepository.On("UpdateTimesheet", mock.Anything, "001", 2018, 12).Return(nil)
 
 	mockRepository.On("GetMemberByID", "001").Return([]model.Member{
 		{

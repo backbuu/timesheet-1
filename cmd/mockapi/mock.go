@@ -35,8 +35,8 @@ func (mock *MockRepository) VerifyTransactionTimsheet(transactionTimesheet []mod
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error {
-	argument := mock.Called(payment, memberID, year, month)
+func (mock *MockRepository) UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error {
+	argument := mock.Called(timesheet, memberID, year, month)
 	return argument.Error(0)
 }
 

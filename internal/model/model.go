@@ -37,7 +37,7 @@ type SummaryTimesheet struct {
 	RatePerHour                   float64   `json:"rate_per_hour"`
 	Year                          int       `json:"year"`
 	Month                         int       `json:"month"`
-	Incomes                       []Incomes `json:"incomes"`
+	Incomes                       []Incomes `json:"incomes,omitempty"`
 	TimesheetID                   string    `json:"timesheet_id"`
 	TotalHours                    string    `json:"total_hours"`
 	TotalCoachingCustomerCharging float64   `json:"total_coaching_customer_charging"`
