@@ -8,21 +8,17 @@ import (
 )
 
 type TimesheetRepositoryGateways interface {
-	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	GetSummary(year, month int) ([]model.TransactionTimesheet, error)
 	GetMemberByID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
-	VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error
 	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
+	VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error
+	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 }
 
 type TimesheetRepository struct {
 	DatabaseConnection *sqlx.DB
-}
-
-func (repository TimesheetRepository) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
-	return model.Timesheet{}, nil
 }
 
 func (repository TimesheetRepository) GetSummary(year, month int) ([]model.TransactionTimesheet, error) {
@@ -53,6 +49,16 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 	return nil
 }
 
+func (repository TimesheetRepository) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
+	var incomeList []model.Incomes
+	query := `SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ?`
+	err := repository.DatabaseConnection.Select(&incomeList, query, memberID, year, month)
+	if err != nil {
+		return []model.Incomes{}, err
+	}
+	return incomeList, nil
+}
+
 func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Member, error) {
 	var memberList []model.Member
 	query := `SELECT * FROM timesheet.members WHERE member_id = ?`
@@ -63,14 +69,27 @@ func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Me
 	return memberList, nil
 }
 
-func (repository TimesheetRepository) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
-	var incomeList []model.Incomes
-	query := `SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ?`
-	err := repository.DatabaseConnection.Select(&incomeList, query, memberID, year, month)
-	if err != nil {
-		return []model.Incomes{}, err
+func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
+	for _, transactionTimesheet := range transactionTimesheet {
+		query := `SELECT COUNT(id) FROM timesheet.transactions WHERE id LIKE ?`
+		var count int
+		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
+		err := repository.DatabaseConnection.Get(&count, query, transactionID)
+		if err != nil {
+			return err
+		}
+		if count == 0 {
+			err = repository.CreateTransactionTimsheet(transactionTimesheet, transactionID)
+			if err != nil {
+				return err
+			}
+		}
+		err = repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
+		if err != nil {
+			return err
+		}
 	}
-	return incomeList, nil
+	return nil
 }
 
 func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
@@ -110,7 +129,21 @@ func (repository TimesheetRepository) UpdateTransactionTimsheet(transactionTimes
 	return nil
 }
 
-func (repository TimesheetRepository) CreateTimesheet(payment model.Payment, timesheetID, memberID string, year int, month int) error {
+func (repository TimesheetRepository) VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error {
+	query := `SELECT COUNT(id) FROM timesheet.timesheets WHERE id LIKE ?`
+	var count int
+	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
+	err := repository.DatabaseConnection.Get(&count, query, timesheetID)
+	if err != nil {
+		return err
+	}
+	if count == 0 {
+		return repository.CreateTimesheet(payment, timesheetID, memberID, year, month)
+	}
+	return repository.UpdateTimesheet(payment, timesheetID)
+}
+
+func (repository TimesheetRepository) CreateTimesheet(payment model.Timesheet, timesheetID, memberID string, year int, month int) error {
 	query := `INSERT INTO timesheets (id, member_id, month, year, total_hours, total_coaching_customer_charging,
 		total_coaching_payment_rate, total_training_wage, total_other_wage, payment_wage) 
 		VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? )`
@@ -125,7 +158,7 @@ func (repository TimesheetRepository) CreateTimesheet(payment model.Payment, tim
 	return nil
 }
 
-func (repository TimesheetRepository) UpdateTimesheet(payment model.Payment, timesheetID string) error {
+func (repository TimesheetRepository) UpdateTimesheet(payment model.Timesheet, timesheetID string) error {
 	query := `UPDATE timesheets SET total_hours = ?, total_coaching_customer_charging = ?, 
 		total_coaching_payment_rate = ?, total_training_wage = ?, total_other_wage = ?, payment_wage = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
@@ -139,39 +172,13 @@ func (repository TimesheetRepository) UpdateTimesheet(payment model.Payment, tim
 	return nil
 }
 
-func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
-	for _, transactionTimesheet := range transactionTimesheet {
-		query := `SELECT COUNT(id) FROM timesheet.transactions WHERE id LIKE ?`
-		var count int
-		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
-		err := repository.DatabaseConnection.Get(&count, query, transactionID)
-		if err != nil {
-			return err
-		}
-		if count == 0 {
-			err = repository.CreateTransactionTimsheet(transactionTimesheet, transactionID)
-			if err != nil {
-				return err
-			}
-		}
-		err = repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (repository TimesheetRepository) VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error {
-	query := `SELECT COUNT(id) FROM timesheet.timesheets WHERE id LIKE ?`
-	var count int
+func (repository TimesheetRepository) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
+	var payment model.Timesheet
+	query := `SELECT * FROM timesheets WHERE id = ?`
 	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
-	err := repository.DatabaseConnection.Get(&count, query, timesheetID)
+	err := repository.DatabaseConnection.Get(&payment, query, timesheetID)
 	if err != nil {
-		return err
+		return model.Timesheet{}, err
 	}
-	if count == 0 {
-		return repository.CreateTimesheet(payment, timesheetID, memberID, year, month)
-	}
-	return repository.UpdateTimesheet(payment, timesheetID)
+	return payment, nil
 }
