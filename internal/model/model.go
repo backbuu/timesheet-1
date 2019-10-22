@@ -29,6 +29,24 @@ type TransactionTimesheet struct {
 	Comment                *string `db:"comment" json:"comment,omitempty"`
 }
 
+type SummaryTimesheet struct {
+	MemberNameENG                 string    `json:"member_name_eng"`
+	Email                         string    `json:"email"`
+	OvertimeRate                  float64   `json:"overtime"`
+	RatePerDay                    float64   `json:"rate_per_day"`
+	RatePerHour                   float64   `json:"rate_per_hour"`
+	Year                          int       `json:"year"`
+	Month                         int       `json:"month"`
+	Incomes                       []Incomes `json:"incomes"`
+	TimesheetID                   string    `json:"timesheet_id"`
+	TotalHours                    string    `json:"total_hours"`
+	TotalCoachingCustomerCharging float64   `json:"total_coaching_customer_charging"`
+	TotalCoachingPaymentRate      float64   `json:"total_coaching_payment_rate"`
+	TotalTrainigWage              float64   `json:"total_training_wage"`
+	TotalOtherWage                float64   `json:"total_other_wage"`
+	PaymentWage                   float64   `json:"payment_wage"`
+}
+
 type Incomes struct {
 	ID                       int       `json:"id"`
 	MemberID                 string    `db:"member_id" json:"member_id"`
