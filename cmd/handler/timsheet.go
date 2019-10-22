@@ -27,9 +27,45 @@ type IncomeRequest struct {
 	Incomes  model.Incomes `json:"incomes"`
 }
 
+type TimesheetRequest struct {
+	MemberID string `json:"member_id"`
+	Year     int    `json:"year"`
+	Month    int    `json:"month"`
+}
+
 type TimesheetAPI struct {
 	Timesheet           timesheet.TimesheetGateways
 	TimesheetRepository repository.TimesheetRepositoryGateways
+}
+
+func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
+	var request TimesheetRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+	members, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	timesheet, err := api.TimesheetRepository.GetTimesheet(request.MemberID, request.Year, request.Month)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	incomes, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	timesheetResponse := model.TimesheetResponse{
+		Member:    members,
+		Timesheet: timesheet,
+		Incomes:   incomes,
+	}
+
+	context.JSON(http.StatusOK, timesheetResponse)
 }
 
 func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
