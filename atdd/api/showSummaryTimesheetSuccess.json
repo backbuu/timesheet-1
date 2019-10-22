@@ -98,16 +98,6 @@
 									"    pm.expect(jsonData[0].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
 									"});",
 									"",
-									"pm.test(\"Date transfer should be \", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[0].date_transfer).to.eql(\"\");",
-									"});",
-									"",
-									"pm.test(\"Comment should be \", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[0].comment).to.eql(\"\");",
-									"});",
-									"",
 									"pm.test(\"Member ID should be 001\", function () {",
 									"    pm.expect(jsonData[1].member_id).to.eql(\"001\");",
 									"});",
@@ -182,16 +172,6 @@
 									"",
 									"pm.test(\"Status checking transfer should be รอการตรวจสอบ\", function () {",
 									"    pm.expect(jsonData[1].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
-									"});",
-									"",
-									"pm.test(\"Date transfer should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[1].date_transfer).to.eql(\"\");",
-									"});",
-									"",
-									"pm.test(\"Comment should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[1].comment).to.eql(\"\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -234,8 +214,8 @@
 							"script": {
 								"id": "85f5ed22-b649-4061-a1a2-63f85c1daaff",
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -254,7 +234,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"001\",\n\t\"incomes\":{\n\t\t\"day\":28,\n\t\t\"start_time_am\":\"2018-01-01 9:00:00\",\n\t\t\"end_time_am\":\"2018-01-01 12:00:00\",\n\t\t\"start_time_pm\":\"2018-01-01 13:00:00\",\n\t\t\"end_time_pm\":\"2018-01-01 18:00:00\",\n\t\t\"overtime\":0,\n\t\t\"total_hours\":\"2018-01-01 08:00:00\",\n\t\t\"coaching_customer_charging\":15000,\n\t\t\"coaching_payment_rate\":10000,\n\t\t\"training_wage\":0,\n\t\t\"other_wage\":0,\n\t\t\"company\":\"siam_chamnankit\",\n\t\t\"description\":\"[KBTG] 2 Days Agile Project Management\"}\n}\n"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"001\",\n\t\"incomes\":{\n\t\t\"day\":28,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"overtime\":0,\n\t\t\"total_hours\":\"2018-01-01T08:00:00.000Z\",\n\t\t\"coaching_customer_charging\":15000,\n\t\t\"coaching_payment_rate\":10000,\n\t\t\"training_wage\":0,\n\t\t\"other_wage\":0,\n\t\t\"company\":\"siam_chamnankit\",\n\t\t\"description\":\"[KBTG] 2 Days Agile Project Management\"}\n}\n"
 						},
 						"url": {
 							"raw": "http://localhost:8080/addIncomeItem",
@@ -404,16 +384,6 @@
 									"    pm.expect(jsonData[0].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
 									"});",
 									"",
-									"pm.test(\"Date transfer should be \", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[0].date_transfer).to.eql(\"\");",
-									"});",
-									"",
-									"pm.test(\"Comment should be \", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[0].comment).to.eql(\"\");",
-									"});",
-									"",
 									"pm.test(\"Member ID should be 001\", function () {",
 									"    pm.expect(jsonData[1].member_id).to.eql(\"001\");",
 									"});",
@@ -488,16 +458,6 @@
 									"",
 									"pm.test(\"Status checking transfer should be รอการตรวจสอบ\", function () {",
 									"    pm.expect(jsonData[1].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
-									"});",
-									"",
-									"pm.test(\"Date transfer should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[1].date_transfer).to.eql(\"\");",
-									"});",
-									"",
-									"pm.test(\"Comment should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[1].comment).to.eql(\"\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -626,16 +586,6 @@
 									"",
 									"pm.test(\"Status checking transfer should be รอการตรวจสอบ\", function () {",
 									"    pm.expect(jsonData[2].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
-									"});",
-									"",
-									"pm.test(\"Date transfer should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[2].date_transfer).to.eql(\"\");",
-									"});",
-									"",
-									"pm.test(\"Comment should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[2].comment).to.eql(\"\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -678,8 +628,8 @@
 							"script": {
 								"id": "85f5ed22-b649-4061-a1a2-63f85c1daaff",
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -698,7 +648,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"002\",\n\t\"incomes\":{\n\t\t\"day\":28,\n\t\t\"start_time_am\":\"2018-01-01 9:00:00\",\n\t\t\"end_time_am\":\"2018-01-01 12:00:00\",\n\t\t\"start_time_pm\":\"2018-01-01 13:00:00\",\n\t\t\"end_time_pm\":\"2018-01-01 18:00:00\",\n\t\t\"overtime\":0,\n\t\t\"total_hours\":\"2018-01-01 08:00:00\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":0,\n\t\t\"other_wage\":0,\n\t\t\"company\":\"shuhari\",\n\t\t\"description\":\"work at TN\"}\n}\n"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"002\",\n\t\"incomes\":{\n\t\t\"day\":28,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"overtime\":0,\n\t\t\"total_hours\":\"2018-01-01T08:00:00.000Z\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":0,\n\t\t\"other_wage\":0,\n\t\t\"company\":\"shuhari\",\n\t\t\"description\":\"work at TN\"}\n}\n"
 						},
 						"url": {
 							"raw": "http://localhost:8080/addIncomeItem",
@@ -846,16 +796,6 @@
 									"",
 									"pm.test(\"Status checking transfer should be รอการตรวจสอบ\", function () {",
 									"    pm.expect(jsonData[2].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
-									"});",
-									"",
-									"pm.test(\"Date transfer should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[2].date_transfer).to.eql(\"\");",
-									"});",
-									"",
-									"pm.test(\"Comment should be blank\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData[2].comment).to.eql(\"\");",
 									"});"
 								],
 								"type": "text/javascript"
