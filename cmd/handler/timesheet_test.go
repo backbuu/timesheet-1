@@ -17,13 +17,13 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_Timesheet(t *testing.T) {
+func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_Timesheet(t *testing.T) {
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	expected := `{"member_name_eng":"Somkiat Puisungnoen", "email":"somkiat@scrum123.com", "overtime_rate":0, "rate_per_day":15000.00, "rate_per_hour":1875.00, "month":12,"year":2018, "incomes":[{"day":18, "start_time_am":"2018-12-01 09:00:00", "end_time_am":"2018-12-01 12:00:00", "start_time_pm":"2018-12-01 13:00:00", "end_time_pm":"2018-12-01 18:00:00", "overtime":0, "total_hours":8, "coaching_customer_charging":0.00, "coaching_payment_rate":0.00, "training_wage":40000.00, "other_wage":0.00, "company":"siam_chamnankit", "description":"TDD with JAVA"},{"day":19, "start_time_am":"2018-12-01 09:00:00", "end_time_am":"2018-12-01 12:00:00", "start_time_pm":"2018-12-01 13:00:00", "end_time_pm":"2018-12-01 18:00:00", "overtime":0, "total_hours":8, "coaching_customer_charging":0.00, "coaching_payment_rate":0.00, "training_wage":40000.00, "other_wage":0.00, "company":"siam_chamnankit", "description":"TDD with JAVA"}]}`
+	expected := `{"Member":[{"id":4,"member_id":"003","company":"siam_chamnankit","member_name_th":"สมเกียรติ ปุ๋ยสูงเนิน","member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":15000,"income_tax_1":0,"social_security":750,"income_tax_53_percentage":10,"status":null,"travel_expense":0},{"id":5,"member_id":"003","company":"shuhari","member_name_th":"สมเกียรติ ปุ๋ยสูงเนิน","member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":40000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":null,"travel_expense":0}],"Timesheet":{"id":"003201812","member_id":"003","month":12,"year":2019,"total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"total_payment_wage":80000},"Incomes":[{"id":13,"member_id":"003","month":12,"year":2018,"day":18,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"siam_chamnankit","description":"TDD with JAVA"},{"id":0,"member_id":"","month":0,"year":0,"day":19,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"siam_chamnankit","description":"TDD with JAVA"}]}`
 	timesheetRequest := TimesheetRequest{
 		Year:     2018,
 		Month:    12,
@@ -34,15 +34,47 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 	writer := httptest.NewRecorder()
 
 	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("GetTimesheet", 2018, 12).Return(model.Timesheet{
-		MemberNameENG:                 "Somkiat Puisungnoen",
-		Email:                         "somkiat@scrum123.com",
-		OvertimeRate:                  0.00,
-		RatePerDay:                    15000.00,
-		RatePerHour:                   1875.00,
+	mockRepository.On("GetMemberByID", "003").Return([]model.Member{
+		{
+			ID:                    4,
+			MemberID:              "003",
+			Company:               "siam_chamnankit",
+			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
+			MemberNameENG:         "Somkiat Puisungnoen",
+			Email:                 "somkiat@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                15000.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        750.00,
+			IncomeTax53Percentage: 10,
+			TravelExpense:         0.00,
+		},
+		{
+			ID:                    5,
+			MemberID:              "003",
+			Company:               "shuhari",
+			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
+			MemberNameENG:         "Somkiat Puisungnoen",
+			Email:                 "somkiat@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                40000.00,
+			IncomeTax1:            5000.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 10,
+			TravelExpense:         0.00,
+		},
+	}, nil)
+
+	mockRepository.On("GetTimesheet", "003", 2018, 12).Return(model.Timesheet{
+		ID:                            "003201812",
+		MemberID:                      "003",
 		Month:                         12,
 		Year:                          2019,
-		TotalHoursPerMonth:            16,
+		TotalHours:                    "16:00:00",
 		TotalCoachingCustomerCharging: 0.00,
 		TotalCoachingPaymentRate:      0.00,
 		TotalTrainigWage:              80000.00,
@@ -50,9 +82,12 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 		PaymentWage:                   80000.00,
 	}, nil)
 
-	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("GetIncomes", "003", 2019, 12).Return([]model.Incomes{
+	mockRepository.On("GetIncomes", "003", 2018, 12).Return([]model.Incomes{
 		{
+			ID:                       13,
+			MemberID:                 "003",
+			Month:                    12,
+			Year:                     2018,
 			Day:                      18,
 			StartTimeAM:              startTimeAM,
 			EndTimeAM:                endTimeAM,
@@ -75,7 +110,6 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 			EndTimePM:                endTimePM,
 			Overtime:                 0,
 			TotalHours:               totalHours,
-			TotalHoursHours:          8,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             40000.00,
@@ -89,7 +123,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
-	testRoute.POST("/showSummaryTimesheetByID", api.GetSummaryByIDHandler)
+	testRoute.POST("/showTimesheetByID", api.GetSummaryByIDHandler)
 	testRoute.ServeHTTP(writer, request)
 
 	response := writer.Result()
