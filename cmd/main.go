@@ -45,6 +45,7 @@ func main() {
 	router.POST("/addIncomeItem", api.CreateIncomeHandler)
 	router.POST("/calculatePayment", api.CalculatePaymentHandler)
 	router.POST("/showTimesheetByID", api.GetSummaryByIDHandler)
+	router.POST("/updateStatusCheckingTransfer", api.UpdateStatusCheckingTransferHandler)
 	router.StaticFS("/", http.Dir("ui"))
 	log.Fatal(router.Run())
 }
