@@ -437,3 +437,19 @@ func Test_GetTimsheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
+
+func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_No_Error(t *testing.T) {
+	transactionID := "004201912siam_chamnankit"
+	status := "โอนเงินเรียบร้อยแล้ว"
+	date := "30/12/2019"
+	comment := "หักค่าตั๋วเครื่องบิน"
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	err := repository.UpdateStatusTransfer(status, date, comment, transactionID)
+
+	assert.Equal(t, nil, err)
+}
