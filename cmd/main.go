@@ -30,11 +30,14 @@ func main() {
 	}
 	defer databaseConnection.Close()
 
+	repository := repository.TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
 	api := handler.TimesheetAPI{
-		Timesheet: timesheet.Timesheet{},
-		TimesheetRepository: repository.TimesheetRepository{
-			DatabaseConnection: databaseConnection,
+		Timesheet: timesheet.Timesheet{
+			Repository: repository,
 		},
+		TimesheetRepository: repository,
 	}
 
 	router := gin.Default()

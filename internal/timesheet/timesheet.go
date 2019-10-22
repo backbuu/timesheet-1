@@ -5,6 +5,7 @@ import (
 	"math"
 	"time"
 	"timesheet/internal/model"
+	"timesheet/internal/repository"
 )
 
 const (
@@ -22,9 +23,11 @@ const (
 type TimesheetGateways interface {
 	CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
 	CalculatePayment(incomes []model.Incomes) model.Timesheet
+	GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error)
 }
 
 type Timesheet struct {
+	Repository repository.TimesheetRepository
 }
 
 func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
@@ -81,6 +84,37 @@ func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Times
 		TotalOtherWage:                totalOtherWage,
 		PaymentWage:                   paymentWage,
 	}
+}
+
+func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error) {
+	memberList, err := timesheet.Repository.GetMemberByID(memberID)
+	if err != nil {
+		return model.SummaryTimesheet{}, err
+	}
+	incomeList, err := timesheet.Repository.GetIncomes(memberID, year, month)
+	if err != nil {
+		return model.SummaryTimesheet{}, err
+	}
+	payment, err := timesheet.Repository.GetTimesheet(memberID, year, month)
+	if err != nil {
+		return model.SummaryTimesheet{}, err
+	}
+	return model.SummaryTimesheet{
+		MemberNameENG:                 memberList[0].MemberNameENG,
+		Email:                         memberList[0].Email,
+		OvertimeRate:                  memberList[0].OvertimeRate,
+		RatePerDay:                    memberList[0].RatePerDay,
+		RatePerHour:                   memberList[0].RatePerHour,
+		Year:                          year,
+		Month:                         month,
+		Incomes:                       incomeList,
+		TimesheetID:                   payment.ID,
+		TotalHours:                    payment.TotalHours,
+		TotalCoachingCustomerCharging: payment.TotalCoachingCustomerCharging,
+		TotalCoachingPaymentRate:      payment.TotalCoachingPaymentRate,
+		TotalTrainigWage:              payment.TotalTrainigWage,
+		TotalOtherWage:                payment.TotalOtherWage,
+		PaymentWage:                   payment.PaymentWage}, nil
 }
 
 func calculateTotalHours(incomes []model.Incomes) string {
