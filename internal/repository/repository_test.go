@@ -395,7 +395,7 @@ func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Stat
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdateStatusTransfer(status, date, comment, transactionID)
+	err := repository.UpdateStatusTransfer(transactionID, status, date, comment)
 
 	assert.Equal(t, nil, err)
 }
