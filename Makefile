@@ -23,6 +23,7 @@ acceptance_test:
 	sleep 10
 	newman run atdd/api/showSummaryTimesheetSuccess.json
 	newman run atdd/api/showTimeSheetByIDSuccess.json
+	newman run atdd/api/updateStatusCheckingTransferSuccess.json
 	docker-compose down
 
 down:
