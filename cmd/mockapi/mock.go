@@ -40,7 +40,7 @@ func (mock *MockRepository) VerifyTransactionTimsheet(transactionTimesheet []mod
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) VerifyTimesheet(payment model.Payment, memberID string, year int, month int) error {
+func (mock *MockRepository) VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error {
 	argument := mock.Called(payment, memberID, year, month)
 	return argument.Error(0)
 }
@@ -49,9 +49,9 @@ type MockTimesheet struct {
 	mock.Mock
 }
 
-func (mock *MockTimesheet) CalculatePayment(incomes []model.Incomes) model.Payment {
+func (mock *MockTimesheet) CalculatePayment(incomes []model.Incomes) model.Timesheet {
 	argument := mock.Called(incomes)
-	return argument.Get(0).(model.Payment)
+	return argument.Get(0).(model.Timesheet)
 }
 
 func (mock *MockTimesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {

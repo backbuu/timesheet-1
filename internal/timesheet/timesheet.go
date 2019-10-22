@@ -21,7 +21,7 @@ const (
 
 type TimesheetGateways interface {
 	CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
-	CalculatePayment(incomes []model.Incomes) model.Payment
+	CalculatePayment(incomes []model.Incomes) model.Timesheet
 }
 
 type Timesheet struct {
@@ -66,14 +66,14 @@ func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, income
 	return transactionTimesheetList
 }
 
-func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Payment {
+func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Timesheet {
 	totalHour := calculateTotalHours(incomes)
 	totalCoachingCustomerCharging := calculateTotalCoachingCustomerCharging(incomes)
 	totalCoachingPaymentRate := calculateTotalCoachingPaymentRate(incomes, "")
 	totalTrainingWage := calculateTotalTrainingWage(incomes, "")
 	totalOtherWage := calculateTotalOtherWage(incomes, "", 0.00)
 	paymentWage := calculateTotalPaymentWage(totalCoachingPaymentRate, totalTrainingWage, totalOtherWage)
-	return model.Payment{
+	return model.Timesheet{
 		TotalHours:                    totalHour,
 		TotalCoachingCustomerCharging: totalCoachingCustomerCharging,
 		TotalCoachingPaymentRate:      totalCoachingPaymentRate,
