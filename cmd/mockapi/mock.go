@@ -10,11 +10,6 @@ type MockRepository struct {
 	mock.Mock
 }
 
-func (mock *MockRepository) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
-	argument := mock.Called(memberID, year, month)
-	return argument.Get(0).(model.Timesheet), argument.Error(1)
-}
-
 func (mock *MockRepository) GetSummary(year, month int) ([]model.TransactionTimesheet, error) {
 	argument := mock.Called(year, month)
 	return argument.Get(0).([]model.TransactionTimesheet), argument.Error(1)
@@ -57,4 +52,9 @@ func (mock *MockTimesheet) CalculatePayment(incomes []model.Incomes) model.Times
 func (mock *MockTimesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
 	argument := mock.Called(member, incomes, year, month)
 	return argument.Get(0).([]model.TransactionTimesheet)
+}
+
+func (mock *MockTimesheet) GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error) {
+	argument := mock.Called(memberID, year, month)
+	return argument.Get(0).(model.SummaryTimesheet), argument.Error(1)
 }

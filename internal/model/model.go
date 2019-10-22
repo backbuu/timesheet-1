@@ -32,7 +32,7 @@ type TransactionTimesheet struct {
 type SummaryTimesheet struct {
 	MemberNameENG                 string    `json:"member_name_eng"`
 	Email                         string    `json:"email"`
-	OvertimeRate                  float64   `json:"overtime"`
+	OvertimeRate                  float64   `json:"overtime_rate"`
 	RatePerDay                    float64   `json:"rate_per_day"`
 	RatePerHour                   float64   `json:"rate_per_hour"`
 	Year                          int       `json:"year"`

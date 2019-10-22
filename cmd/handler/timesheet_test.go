@@ -23,9 +23,9 @@ func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	expected := `{"Member":[{"id":4,"member_id":"003","company":"siam_chamnankit","member_name_th":"สมเกียรติ ปุ๋ยสูงเนิน","member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":15000,"income_tax_1":0,"social_security":750,"income_tax_53_percentage":10,"travel_expense":0},{"id":5,"member_id":"003","company":"shuhari","member_name_th":"สมเกียรติ ปุ๋ยสูงเนิน","member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":40000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"travel_expense":0}],"Timesheet":{"id":"003201812","member_id":"003","month":12,"year":2019,"total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000},"Incomes":[{"id":13,"member_id":"003","month":12,"year":2018,"day":18,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"siam_chamnankit","description":"TDD with JAVA"},{"id":0,"member_id":"","month":0,"year":0,"day":19,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"siam_chamnankit","description":"TDD with JAVA"}]}`
+	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
 	timesheetRequest := TimesheetRequest{
-		Year:     2018,
+		Year:     2017,
 		Month:    12,
 		MemberID: "003",
 	}
@@ -33,47 +33,56 @@ func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_
 	request := httptest.NewRequest("POST", "/showTimesheetByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 
-	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("GetMemberByID", "003").Return([]model.Member{
-		{
-			ID:                    4,
-			MemberID:              "003",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
-			MemberNameENG:         "Somkiat Puisungnoen",
-			Email:                 "somkiat@scrum123.com",
-			OvertimeRate:          0.00,
-			RatePerDay:            15000.00,
-			RatePerHour:           1875.00,
-			Salary:                15000.00,
-			IncomeTax1:            0.00,
-			SocialSecurity:        750.00,
-			IncomeTax53Percentage: 10,
-			TravelExpense:         0.00,
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("GetSummaryByID", "003", 2017, 12).Return(model.SummaryTimesheet{
+		MemberNameENG: "Somkiat Puisungnoen",
+		Email:         "somkiat@scrum123.com",
+		OvertimeRate:  0.00,
+		RatePerDay:    15000.00,
+		RatePerHour:   1875.00,
+		Year:          2019,
+		Month:         12,
+		Incomes: []model.Incomes{
+			{
+				ID:                       61,
+				MemberID:                 "003",
+				Month:                    12,
+				Year:                     2019,
+				Day:                      1,
+				StartTimeAM:              startTimeAM,
+				EndTimeAM:                endTimeAM,
+				StartTimePM:              startTimePM,
+				EndTimePM:                endTimePM,
+				Overtime:                 0,
+				TotalHours:               totalHours,
+				CoachingCustomerCharging: 0.00,
+				CoachingPaymentRate:      0.00,
+				TrainingWage:             40000.00,
+				OtherWage:                0.00,
+				Company:                  "shuhari",
+				Description:              "Technical Excellence at Khonkean",
+			},
+			{
+				ID:                       62,
+				MemberID:                 "003",
+				Month:                    12,
+				Year:                     2019,
+				Day:                      2,
+				StartTimeAM:              startTimeAM,
+				EndTimeAM:                endTimeAM,
+				StartTimePM:              startTimePM,
+				EndTimePM:                endTimePM,
+				Overtime:                 0,
+				TotalHours:               totalHours,
+				CoachingCustomerCharging: 0.00,
+				CoachingPaymentRate:      0.00,
+				TrainingWage:             40000.00,
+				OtherWage:                0.00,
+				Company:                  "shuhari",
+				Description:              "Technical Excellence at Khonkean",
+			},
 		},
-		{
-			ID:                    5,
-			MemberID:              "003",
-			Company:               "shuhari",
-			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
-			MemberNameENG:         "Somkiat Puisungnoen",
-			Email:                 "somkiat@scrum123.com",
-			OvertimeRate:          0.00,
-			RatePerDay:            15000.00,
-			RatePerHour:           1875.00,
-			Salary:                40000.00,
-			IncomeTax1:            5000.00,
-			SocialSecurity:        0.00,
-			IncomeTax53Percentage: 10,
-			TravelExpense:         0.00,
-		},
-	}, nil)
-
-	mockRepository.On("GetTimesheet", "003", 2018, 12).Return(model.Timesheet{
-		ID:                            "003201812",
-		MemberID:                      "003",
-		Month:                         12,
-		Year:                          2019,
+		TimesheetID:                   "003201912",
 		TotalHours:                    "16:00:00",
 		TotalCoachingCustomerCharging: 0.00,
 		TotalCoachingPaymentRate:      0.00,
@@ -81,46 +90,8 @@ func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_
 		TotalOtherWage:                0.00,
 		PaymentWage:                   80000.00,
 	}, nil)
-
-	mockRepository.On("GetIncomes", "003", 2018, 12).Return([]model.Incomes{
-		{
-			ID:                       13,
-			MemberID:                 "003",
-			Month:                    12,
-			Year:                     2018,
-			Day:                      18,
-			StartTimeAM:              startTimeAM,
-			EndTimeAM:                endTimeAM,
-			StartTimePM:              startTimePM,
-			EndTimePM:                endTimePM,
-			Overtime:                 0,
-			TotalHours:               totalHours,
-			CoachingCustomerCharging: 0.00,
-			CoachingPaymentRate:      0.00,
-			TrainingWage:             40000.00,
-			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
-			Description:              "TDD with JAVA",
-		},
-		{
-			Day:                      19,
-			StartTimeAM:              startTimeAM,
-			EndTimeAM:                endTimeAM,
-			StartTimePM:              startTimePM,
-			EndTimePM:                endTimePM,
-			Overtime:                 0,
-			TotalHours:               totalHours,
-			CoachingCustomerCharging: 0.00,
-			CoachingPaymentRate:      0.00,
-			TrainingWage:             40000.00,
-			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
-			Description:              "TDD with JAVA",
-		},
-	}, nil)
-
 	api := TimesheetAPI{
-		TimesheetRepository: mockRepository,
+		Timesheet: mockTimesheet,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/showTimesheetByID", api.GetSummaryByIDHandler)

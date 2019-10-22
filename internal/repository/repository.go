@@ -14,7 +14,6 @@ type TimesheetRepositoryGateways interface {
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 	VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error
-	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 }
 
 type TimesheetRepository struct {
