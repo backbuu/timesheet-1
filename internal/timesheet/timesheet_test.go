@@ -220,6 +220,79 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 	assert.Equal(t, expected, actual)
 }
 
+func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_TransactionTimesheet(t *testing.T) {
+	expected := []model.TransactionTimesheet{
+		{
+			MemberID:              "002",
+			MemberNameTH:          "นารีนารถ เนรัญชร",
+			Year:                  2018,
+			Month:                 12,
+			Company:               "shuhari",
+			Coaching:              0.00,
+			Training:              0.00,
+			Other:                 6500.00,
+			TotalIncomes:          6500.00,
+			Salary:                25000.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        750.00,
+			NetSalary:             24250.00,
+			Wage:                  6500.00,
+			IncomeTax53Percentage: 5,
+			IncomeTax53:           325.00,
+			NetWage:               6175.00,
+			NetTransfer:           30425.00,
+		},
+	}
+	status := "salary"
+	member := []model.Member{
+		{
+			MemberID:              "002",
+			Company:               "shuhari",
+			MemberNameTH:          "นารีนารถ เนรัญชร",
+			MemberNameENG:         "Nareenart Narunchon",
+			Email:                 "nareenart@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            0.00,
+			RatePerHour:           0.00,
+			Salary:                25000.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        750.00,
+			IncomeTax53Percentage: 5,
+			TravelExpense:         1500.00,
+			Status:                &status,
+		},
+	}
+	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
+	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
+	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
+	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
+	incomes := []model.Incomes{
+		{
+			Day:                      1,
+			StartTimeAM:              startTimeAM,
+			EndTimeAM:                endTimeAM,
+			StartTimePM:              startTimePM,
+			EndTimePM:                endTimePM,
+			Overtime:                 0,
+			TotalHours:               totalHours,
+			CoachingCustomerCharging: 0.00,
+			CoachingPaymentRate:      0.00,
+			TrainingWage:             0.00,
+			OtherWage:                5000.00,
+			Company:                  "shuhari",
+			Description:              "work at TN",
+		},
+	}
+	year := 2018
+	month := 12
+
+	timesheet := Timesheet{}
+	actual := timesheet.CalculatePaymentSummary(member, incomes, year, month)
+
+	assert.Equal(t, expected, actual)
+}
+
 func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingPaymentRate_10000_TrainigWage_20000_Should_Be_Payment(t *testing.T) {
 	expected := model.Timesheet{
 		TotalHours:                    "16:00:00",
