@@ -388,3 +388,31 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 
 	assert.Equal(t, http.StatusOK, actual.StatusCode)
 }
+
+func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_Status_200(t *testing.T) {
+	requestUpdate := UpdateStatusRequest{
+		TransactionID: "004201912siam_chamnankit",
+		Status:        "โอนเงินเรียบร้อยแล้ว",
+		Date:          "30/12/2019",
+		Comment:       "หักค่าตั๋วเครื่องบิน",
+	}
+
+	jsonRequest, _ := json.Marshal(requestUpdate)
+	request := httptest.NewRequest("POST", "/updateStatusCheckingTransfer", bytes.NewBuffer(jsonRequest))
+	writer := httptest.NewRecorder()
+
+	mockRepository := new(mockapi.MockRepository)
+	mockRepository.On("UpdateStatusTransfer", "004201912siam_chamnankit", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
+
+	api := TimesheetAPI{
+		TimesheetRepository: mockRepository,
+	}
+
+	testRoute := gin.Default()
+	testRoute.POST("/updateStatusCheckingTransfer", api.UpdateStatusCheckingTransferHandler)
+	testRoute.ServeHTTP(writer, request)
+
+	response := writer.Result()
+
+	assert.Equal(t, http.StatusOK, response.StatusCode)
+}

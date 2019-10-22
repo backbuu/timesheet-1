@@ -40,6 +40,11 @@ func (mock *MockRepository) VerifyTimesheet(payment model.Timesheet, memberID st
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) UpdateStatusTransfer(transactionID, status, date, comment string) error {
+	argument := mock.Called(transactionID, status, date, comment)
+	return argument.Error(0)
+}
+
 type MockTimesheet struct {
 	mock.Mock
 }

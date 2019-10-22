@@ -33,6 +33,13 @@ type TimesheetRequest struct {
 	Month    int    `json:"month"`
 }
 
+type UpdateStatusRequest struct {
+	TransactionID string `json:"transaction_id"`
+	Status        string `json:"status"`
+	Date          string `json:"date"`
+	Comment       string `json:"comment"`
+}
+
 type TimesheetAPI struct {
 	Timesheet           timesheet.TimesheetGateways
 	TimesheetRepository repository.TimesheetRepositoryGateways
@@ -105,5 +112,19 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
+	context.Status(http.StatusOK)
+}
+
+func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context) {
+	var request UpdateStatusRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
 	context.Status(http.StatusOK)
 }

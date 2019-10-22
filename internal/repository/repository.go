@@ -14,6 +14,7 @@ type TimesheetRepositoryGateways interface {
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 	VerifyTimesheet(payment model.Timesheet, memberID string, year int, month int) error
+	UpdateStatusTransfer(transactionID, status, date, comment string) error
 }
 
 type TimesheetRepository struct {
@@ -180,4 +181,15 @@ func (repository TimesheetRepository) GetTimesheet(memberID string, year, month 
 		return model.Timesheet{}, err
 	}
 	return payment, nil
+}
+
+func (repository TimesheetRepository) UpdateStatusTransfer(transactionID, status, date, comment string) error {
+	query := `UPDATE transactions SET status_checking_transfer = ?, date_transfer = ?, comment = ? WHERE id = ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, status, date, comment, transactionID)
+	err := transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
 }
