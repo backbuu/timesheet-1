@@ -508,11 +508,9 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_UpdateMemberDetailsHandler_Input_MemberID_001_Should_Be_Status_200(t *testing.T) {
+func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testing.T) {
 	requestUpdateMember := model.Member{
 		ID:                    1,
-		MemberID:              "001",
-		Company:               "siam_chamnankit",
 		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 		MemberNameENG:         "Prathan Dansakulcharoenkit",
 		Email:                 "prathan@scrum123.com",
@@ -534,8 +532,6 @@ func Test_UpdateMemberDetailsHandler_Input_MemberID_001_Should_Be_Status_200(t *
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateMemberDetails", model.Member{
 		ID:                    1,
-		MemberID:              "001",
-		Company:               "siam_chamnankit",
 		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 		MemberNameENG:         "Prathan Dansakulcharoenkit",
 		Email:                 "prathan@scrum123.com",
