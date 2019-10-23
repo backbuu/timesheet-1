@@ -25,8 +25,8 @@ type TransactionTimesheet struct {
 	NetWage                float64 `db:"net_wage" json:"net_wage"`
 	NetTransfer            float64 `db:"net_transfer" json:"net_transfer"`
 	StatusCheckingTransfer string  `db:"status_checking_transfer" json:"status_checking_transfer"`
-	DateTransfer           *string `db:"date_transfer" json:"date_transfer,omitempty"`
-	Comment                *string `db:"comment" json:"comment,omitempty"`
+	DateTransfer           string  `db:"date_transfer" json:"date_transfer,omitempty"`
+	Comment                string  `db:"comment" json:"comment,omitempty"`
 }
 
 type SummaryTimesheet struct {
