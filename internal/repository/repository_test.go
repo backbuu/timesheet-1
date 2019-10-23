@@ -89,7 +89,6 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 }
 
 func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
-	status := "wage"
 	expected := []model.Member{
 		{
 			ID:                    1,
@@ -106,7 +105,7 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
 			TravelExpense:         0.00,
-			Status:                &status,
+			Status:                "wage",
 		},
 		{
 			ID:                    2,
@@ -123,7 +122,7 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 			SocialSecurity:        0.00,
 			IncomeTax53Percentage: 10,
 			TravelExpense:         0.00,
-			Status:                &status,
+			Status:                "wage",
 		},
 	}
 	memberID := "001"
