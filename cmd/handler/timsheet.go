@@ -47,6 +47,10 @@ type DeleteIncomeRequest struct {
 	Day      int    `json:"day"`
 }
 
+type MemberRequest struct {
+	MemberID string `json:"member_id"`
+}
+
 type TimesheetAPI struct {
 	Timesheet           timesheet.TimesheetGateways
 	TimesheetRepository repository.TimesheetRepositoryGateways
@@ -148,4 +152,19 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 	context.Status(http.StatusOK)
+}
+
+func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
+	var request MemberRequest
+
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	memberDetails, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	context.JSON(http.StatusOK, memberDetails)
 }
