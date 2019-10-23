@@ -35,6 +35,8 @@ func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *
 			NetWage:                67500.00,
 			NetTransfer:            142500.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
+			DateTransfer:           "",
+			Comment:                "",
 		},
 	}
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -399,6 +401,22 @@ func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Stat
 	}
 
 	err := repository.UpdateStatusTransfer(transactionID, status, date, comment)
+
+	assert.Equal(t, nil, err)
+}
+
+func Test_DeleteIncome_Input_Year_2018_Month_12_MemberID_005_Day_15_Should_Be_No_Error(t *testing.T) {
+	year := 2018
+	month := 12
+	day := 15
+	memberID := "005"
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	err := repository.DeleteIncome(year, month, day, memberID)
 
 	assert.Equal(t, nil, err)
 }

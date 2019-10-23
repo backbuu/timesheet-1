@@ -416,3 +416,31 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 
 	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
+
+func Test_DeleteIncomeHandler_Input_Year_2018_Month_12_MemberID_005_Day_15_Should_Be_Status_200(t *testing.T) {
+	requestDelete := DeleteIncomeRequest{
+		Year:     2018,
+		Month:    12,
+		MemberID: "005",
+		Day:      15,
+	}
+
+	jsonRequest, _ := json.Marshal(requestDelete)
+	request := httptest.NewRequest("POST", "/deleteIncomeItem", bytes.NewBuffer(jsonRequest))
+	writer := httptest.NewRecorder()
+
+	mockRepository := new(mockapi.MockRepository)
+	mockRepository.On("DeleteIncome", 2018, 12, 15, "005").Return(nil)
+
+	api := TimesheetAPI{
+		TimesheetRepository: mockRepository,
+	}
+
+	testRoute := gin.Default()
+	testRoute.POST("/deleteIncomeItem", api.DeleteIncomeHandler)
+	testRoute.ServeHTTP(writer, request)
+
+	response := writer.Result()
+
+	assert.Equal(t, http.StatusOK, response.StatusCode)
+}

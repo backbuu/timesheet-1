@@ -26,8 +26,8 @@
 									"    pm.expect(jsonData.member_name_eng).to.eql(\"Apipol sukgler\");",
 									"});",
 									"",
-									"pm.test(\"Email should be apipol@scrum123.com\", function () {",
-									"    pm.expect(jsonData.email).to.eql(\"apipol@scrum123.com\");",
+									"pm.test(\"Email should be golf.apipol@scrum123.com\", function () {",
+									"    pm.expect(jsonData.email).to.eql(\"golf.apipol@scrum123.com\");",
 									"});",
 									"",
 									"pm.test(\"Overtime rate should be 0\", function () {",
@@ -42,17 +42,22 @@
 									"    pm.expect(jsonData.rate_per_hour).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Month should be 12\", function () {",
-									"    pm.expect(jsonData.month).to.eql(\"12\");",
-									"});",
-									"",
 									"pm.test(\"Year should be 2018\", function () {",
-									"    pm.expect(jsonData.year).to.eql(\"2018\");",
+									"    pm.expect(jsonData.year).to.eql(2018);",
 									"});",
 									"",
-									"pm.test(\"Total hours per month should be 120\", function () {",
-									"    pm.expect(jsonData.total_hours_per_month).to.eql(120);",
+									"pm.test(\"Month should be 12\", function () {",
+									"    pm.expect(jsonData.month).to.eql(12);",
 									"});",
+									"",
+									"pm.test(\"TimesheetID should be 005201812\", function () {",
+									"    pm.expect(jsonData.timesheet_id).to.eql(\"005201812\");",
+									"});",
+									"",
+									"pm.test(\"Total hours per month should be 120:00:00\", function () {",
+									"    pm.expect(jsonData.total_hours).to.eql(\"120:00:00\");",
+									"});",
+									"",
 									"",
 									"pm.test(\"Total coaching customer charging should be 0\", function () {",
 									"    pm.expect(jsonData.total_coaching_customer_charging).to.eql(0);",
@@ -70,8 +75,8 @@
 									"    pm.expect(jsonData.total_other_wage).to.eql(5000);",
 									"});",
 									"",
-									"pm.test(\"Total payment wage should be 5000\", function () {",
-									"    pm.expect(jsonData.total_payment_wage).to.eql(5000);",
+									"pm.test(\"Payment wage should be 5000\", function () {",
+									"    pm.expect(jsonData.payment_wage).to.eql(5000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -151,6 +156,50 @@
 					"response": []
 				},
 				{
+					"name": "Calculate payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85f5ed22-b649-4061-a1a2-63f85c1daaff",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"member_id\":\"005\",\n\t\"year\":2018,\n\t\"month\":12\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/calculatePayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"calculatePayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Show timesheet by ID",
 					"event": [
 						{
@@ -168,8 +217,8 @@
 									"    pm.expect(jsonData.member_name_eng).to.eql(\"Apipol sukgler\");",
 									"});",
 									"",
-									"pm.test(\"Email should be apipol@scrum123.com\", function () {",
-									"    pm.expect(jsonData.email).to.eql(\"apipol@scrum123.com\");",
+									"pm.test(\"Email should be golf.apipol@scrum123.com\", function () {",
+									"    pm.expect(jsonData.email).to.eql(\"golf.apipol@scrum123.com\");",
 									"});",
 									"",
 									"pm.test(\"Overtime rate should be 0\", function () {",
@@ -184,17 +233,22 @@
 									"    pm.expect(jsonData.rate_per_hour).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Month should be 12\", function () {",
-									"    pm.expect(jsonData.month).to.eql(\"12\");",
-									"});",
-									"",
 									"pm.test(\"Year should be 2018\", function () {",
-									"    pm.expect(jsonData.year).to.eql(\"2018\");",
+									"    pm.expect(jsonData.year).to.eql(2018);",
 									"});",
 									"",
-									"pm.test(\"Total hours per month should be 112\", function () {",
-									"    pm.expect(jsonData.total_hours_per_month).to.eql(112);",
+									"pm.test(\"Month should be 12\", function () {",
+									"    pm.expect(jsonData.month).to.eql(12);",
 									"});",
+									"",
+									"pm.test(\"TimesheetID should be 005201812\", function () {",
+									"    pm.expect(jsonData.timesheet_id).to.eql(\"005201812\");",
+									"});",
+									"",
+									"pm.test(\"Total hours per month should be 112:00:00\", function () {",
+									"    pm.expect(jsonData.total_hours).to.eql(\"112:00:00\");",
+									"});",
+									"",
 									"",
 									"pm.test(\"Total coaching customer charging should be 0\", function () {",
 									"    pm.expect(jsonData.total_coaching_customer_charging).to.eql(0);",
@@ -212,8 +266,8 @@
 									"    pm.expect(jsonData.total_other_wage).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Total payment wage should be 0\", function () {",
-									"    pm.expect(jsonData.total_payment_wage).to.eql(0);",
+									"pm.test(\"Payment wage should be 0\", function () {",
+									"    pm.expect(jsonData.payment_wage).to.eql(0);",
 									"});",
 									"",
 									"",
