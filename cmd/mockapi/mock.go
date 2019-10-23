@@ -45,8 +45,8 @@ func (mock *MockRepository) UpdateStatusTransfer(transactionID, status, date, co
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) DeleteIncome(year, month, day int, memberID string) error {
-	argument := mock.Called(year, month, day, memberID)
+func (mock *MockRepository) DeleteIncome(id int) error {
+	argument := mock.Called(id)
 	return argument.Error(0)
 }
 
