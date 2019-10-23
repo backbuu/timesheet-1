@@ -50,6 +50,11 @@ func (mock *MockRepository) DeleteIncome(year, month, day int, memberID string) 
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) UpdateMemberDetails(memberDetails model.Member) error {
+	argument := mock.Called(memberDetails)
+	return argument.Error(0)
+}
+
 type MockTimesheet struct {
 	mock.Mock
 }
