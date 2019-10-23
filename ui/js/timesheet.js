@@ -1,7 +1,9 @@
 function showSummary(){
-    var year = parseInt($("#year").val());
-    var month = parseInt($("#month").val());
-
+    var date = $("#date_summary").val();
+    var fullDate = new Date(date);
+    var year = fullDate.getFullYear();
+    var month = fullDate.getMonth()+1;
+    
     var request = new XMLHttpRequest();
     var url = "/showSummaryTimesheet";
     request.open("POST", url, true);
@@ -154,7 +156,8 @@ function calculateTimesheet(){
     var month = fullDate.getMonth()+1;
     
     addIncomeToTimesheet(memberID,year,month)
-    calculatePayment(memberID,year,month)    
+    calculatePayment(memberID,year,month)
+    window.location.replace(window.location.href)    
 }
 
 function addIncomeToTimesheet(memberID,year,month){
@@ -243,25 +246,27 @@ function showSummaryByID() {
             var paymentWage = json.payment_wage;
             var incomeList = "";
             
-            
-            for (var i = 0; i < json.incomes.length; i++) {
-                incomeList += "<tr>";
-                incomeList += "<td>"+json.incomes[i].day+"</td>";
-                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_am)+"</td>";
-                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_am)+"</td>";
-                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_pm)+"</td>";
-                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_pm)+"</td>";
-                incomeList += "<td>"+json.incomes[i].overtime+"</td>";
-                incomeList += "<td>"+convertTimestampToTime(json.incomes[i].total_hours)+"</td>";
-                incomeList += "<td>"+json.incomes[i].coaching_customer_charging+"</td>";
-                incomeList += "<td>"+json.incomes[i].coaching_payment_rate+"</td>";
-                incomeList += "<td>"+json.incomes[i].training_wage+"</td>";
-                incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
-                // incomeList += "<td>"+json.incomes[i].company+"</td>";
-                incomeList += "<td>"+json.incomes[i].description+"</td>";
-                incomeList += "</tr>";  
+            if (json.incomes !== null) {
+                for (var i = 0; i < json.incomes.length; i++) {
+                    incomeList += "<tr>";
+                    incomeList += "<td>"+json.incomes[i].day+"</td>";
+                    incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_am)+"</td>";
+                    incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_am)+"</td>";
+                    incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_pm)+"</td>";
+                    incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_pm)+"</td>";
+                    incomeList += "<td>"+json.incomes[i].overtime+"</td>";
+                    incomeList += "<td>"+convertTimestampToTime(json.incomes[i].total_hours)+"</td>";
+                    incomeList += "<td>"+json.incomes[i].coaching_customer_charging+"</td>";
+                    incomeList += "<td>"+json.incomes[i].coaching_payment_rate+"</td>";
+                    incomeList += "<td>"+json.incomes[i].training_wage+"</td>";
+                    incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
+                    // incomeList += "<td>"+json.incomes[i].company+"</td>";
+                    incomeList += "<td>"+json.incomes[i].description+"</td>";
+                    incomeList += "</tr>";  
+                }
+                $("#table_timesheet").html(incomeList);
             }
-
+            
             $("#member_name_eng").html(memberNameENG);
             $("#email").html(email);
             $("#overtime_rate").html(overtimeRate);
@@ -269,8 +274,7 @@ function showSummaryByID() {
             $("#ratePerHour").html(ratePerHour);
             $("#month").html(month);
             $("#monthString").html(monthString);
-            $("#year").html(year);
-            $("#table_timesheet").html(incomeList);
+            $("#year").html(year); 
             $("#thours").html(totalHours);
             $("#total_coaching_customer_charging").html(totalCoachingCustomerCharging);
             $("#total_coaching_payment_rate").html(totalCoachingPaymentRate);
