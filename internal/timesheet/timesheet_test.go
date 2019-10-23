@@ -243,7 +243,6 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_Transactio
 			NetTransfer:           30425.00,
 		},
 	}
-	status := "salary"
 	member := []model.Member{
 		{
 			MemberID:              "002",
@@ -259,7 +258,7 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_Transactio
 			SocialSecurity:        750.00,
 			IncomeTax53Percentage: 5,
 			TravelExpense:         1500.00,
-			Status:                &status,
+			Status:                "salary",
 		},
 	}
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")

@@ -94,7 +94,7 @@ type Member struct {
 	IncomeTax1            float64 `db:"income_tax_1" json:"income_tax_1"`
 	SocialSecurity        float64 `db:"social_security" json:"social_security"`
 	IncomeTax53Percentage int     `db:"income_tax_53_percentage" json:"income_tax_53_percentage"`
-	Status                *string `db:"status" json:"status,omitempty"`
+	Status                string  `db:"status" json:"status"`
 	TravelExpense         float64 `db:"travel_expense" json:"travel_expense"`
 }
 
