@@ -507,3 +507,58 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, string(actual))
 }
+
+func Test_UpdateMemberDetailsHandler_Input_MemberID_001_Should_Be_Status_200(t *testing.T) {
+	requestUpdateMember := model.Member{
+		ID:                    1,
+		MemberID:              "001",
+		Company:               "siam_chamnankit",
+		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+		MemberNameENG:         "Prathan Dansakulcharoenkit",
+		Email:                 "prathan@scrum123.com",
+		OvertimeRate:          0.00,
+		RatePerDay:            15000.00,
+		RatePerHour:           1875.00,
+		Salary:                80000.00,
+		IncomeTax1:            5000.00,
+		SocialSecurity:        0.00,
+		IncomeTax53Percentage: 10,
+		Status:                "wage",
+		TravelExpense:         0.00,
+	}
+
+	jsonRequest, _ := json.Marshal(requestUpdateMember)
+	request := httptest.NewRequest("POST", "/updateMemberDetails", bytes.NewBuffer(jsonRequest))
+	writer := httptest.NewRecorder()
+
+	mockRepository := new(mockapi.MockRepository)
+	mockRepository.On("UpdateMemberDetails", model.Member{
+		ID:                    1,
+		MemberID:              "001",
+		Company:               "siam_chamnankit",
+		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+		MemberNameENG:         "Prathan Dansakulcharoenkit",
+		Email:                 "prathan@scrum123.com",
+		OvertimeRate:          0.00,
+		RatePerDay:            15000.00,
+		RatePerHour:           1875.00,
+		Salary:                80000.00,
+		IncomeTax1:            5000.00,
+		SocialSecurity:        0.00,
+		IncomeTax53Percentage: 10,
+		Status:                "wage",
+		TravelExpense:         0.00,
+	}).Return(nil)
+
+	api := TimesheetAPI{
+		TimesheetRepository: mockRepository,
+	}
+
+	testRoute := gin.Default()
+	testRoute.POST("/updateMemberDetails", api.UpdateMemberDetails)
+	testRoute.ServeHTTP(writer, request)
+
+	response := writer.Result()
+
+	assert.Equal(t, http.StatusOK, response.StatusCode)
+}
