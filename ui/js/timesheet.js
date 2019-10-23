@@ -1,5 +1,8 @@
 function showSummary(){
-    var date = $("#date_summary").val();
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    date = params.get("date_summary");
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
@@ -72,10 +75,18 @@ function showSummary(){
                     totalNetWageSiamChamnankit +=json[i-1].net_wage;
                     siamChamnankit += "<td>"+json[i-1].net_transfer+"</td>";
                     totalNetTransferSiamChamnankit += json[i-1].net_transfer;
-                    siamChamnankit += "<td>"+json[i-1].status_checking_transfer+"</td>";
-                    siamChamnankit += "<td>"+json[i-1].date_transfer+"</td>";
-                    siamChamnankit += "<td>"+json[i-1].comment+"</td>";
+                    siamChamnankit += "<td><select id=\"status_checking_transfer_"+i+"\"><option value=\""+json[i-1].status_checking_transfer+"\">"+json[i-1].status_checking_transfer+"</option>";
+                    siamChamnankit += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
+                    siamChamnankit += "<option value=\"โอนเงินเรียบร้อย\">โอนเงินเรียบร้อย</option>";
+                    siamChamnankit += "<option value=\"ถูกต้อง\">ถูกต้อง</option>";
+                    siamChamnankit += "<option value=\"ไม่ถูกต้อง\">ไม่ถูกต้อง</option>";
+                    siamChamnankit += "</select></td>";
+                    siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
+                    siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
+                    siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
+                    siamChamnankit += "<td><input type=\"submit\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     siamChamnankit += "</tr>";
+            
                 }else{
                     countShuhari++;
                     shuhari += "<tr>";
@@ -106,9 +117,16 @@ function showSummary(){
                     totalNetWageShuhari += json[i-1].net_wage;
                     shuhari += "<td>"+json[i-1].net_transfer+"</td>";
                     totalNetTransferShuhari += json[i-1].net_transfer;
-                    shuhari += "<td>"+json[i-1].status_checking_transfer+"</td>";
-                    shuhari += "<td>"+json[i-1].date_transfer+"</td>";
-                    shuhari += "<td>"+json[i-1].comment+"</td>";
+                    shuhari += "<td><select id=\"status_checking_transfer_"+i+"\"><option value=\""+json[i-1].status_checking_transfer+"\">"+json[i-1].status_checking_transfer+"</option>";
+                    shuhari += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
+                    shuhari += "<option value=\"โอนเงินเรียบร้อย\">โอนเงินเรียบร้อย</option>";
+                    shuhari += "<option value=\"ถูกต้อง\">ถูกต้อง</option>";
+                    shuhari += "<option value=\"ไม่ถูกต้อง\">ไม่ถูกต้อง</option>";
+                    shuhari += "</select></td>";
+                    shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
+                    shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
+                    shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
+                    shuhari += "<td>"+"<input type=\"submit\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     shuhari += "</tr>";
                 }
             }
@@ -142,7 +160,27 @@ function showSummary(){
         }
     }; 
     var data = JSON.stringify({"year":year, "month": month});
-    request.send(data);
+    request.send(data);  
+
+}
+
+function updateStatusTransfer(index){
+    var transactionID = $("#transaction_id_"+index).val();
+    var statusTransfer = $("#status_checking_transfer_"+index).val();
+    var dateTransfer = $("#date_transfer_"+index).val();
+    var comment = $("#comment_"+index).val();
+
+    var request = new XMLHttpRequest();
+    var url = "/updateStatusCheckingTransfer";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+        }
+    }
+    var data = JSON.stringify({"transaction_id":transactionID,"status":statusTransfer,"date":dateTransfer,"comment":comment});
+    request.send(data); 
+    window.location.replace(window.location.href)    
 }
 
 function calculateTimesheet(){
@@ -154,13 +192,6 @@ function calculateTimesheet(){
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
-    
-    addIncomeToTimesheet(memberID,year,month)
-    calculatePayment(memberID,year,month)
-    window.location.replace(window.location.href)    
-}
-
-function addIncomeToTimesheet(memberID,year,month){
     var day = parseInt($("#day").val());
 
     var fullStartTimeAm = $("#start_time_am").val();
@@ -198,9 +229,19 @@ function addIncomeToTimesheet(memberID,year,month){
     request.setRequestHeader("Content-Type", "application/json");
     var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"overtime":overtime,"total_hours":totalHours,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
     request.send(data);  
+    window.location.replace(window.location.href); 
 }
 
-function calculatePayment(memberID,year,month) {
+function calculatePayment() {
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    memberID = params.get("id");
+    date = params.get("date");
+    var fullDate = new Date(date);
+    var year = fullDate.getFullYear();
+    var month = fullDate.getMonth()+1;
+
     var request = new XMLHttpRequest();
     var url = "/calculatePayment";
     request.open("POST", url, true);
@@ -210,7 +251,8 @@ function calculatePayment(memberID,year,month) {
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
-    request.send(data);   
+    request.send(data); 
+    window.location.replace(window.location.href); 
 }
 
 function showSummaryByID() {
@@ -245,6 +287,7 @@ function showSummaryByID() {
             var totalOtherWage = json.total_other_wage;
             var paymentWage = json.payment_wage;
             var incomeList = "";
+            console.log(totalCoachingPaymentRate);
             
             if (json.incomes !== null) {
                 for (var i = 0; i < json.incomes.length; i++) {
@@ -262,6 +305,11 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
                     // incomeList += "<td>"+json.incomes[i].company+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
+                    incomeList += "<td><input type=\"hidden\" id=\"day_id_"+i+"\" value=\""+json.incomes[i].day+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"year_id_"+i+"\" value=\""+json.year+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"month_id_"+i+"\" value=\""+json.month+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json.incomes[i].member_id+"\">"
+                    incomeList += "<input type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     incomeList += "</tr>";  
                 }
                 $("#table_timesheet").html(incomeList);
@@ -280,7 +328,8 @@ function showSummaryByID() {
             $("#total_coaching_payment_rate").html(totalCoachingPaymentRate);
             $("#total_trainig_wage").html(totalTrainigWage); 
             $("#total_other_wage").html(totalOtherWage); 
-            $("#payment_wage").html(paymentWage);             
+            $("#payment_wage").html(paymentWage);    
+                     
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
@@ -292,4 +341,24 @@ function convertTimestampToTime(timestamp){
     datetext = date.toUTCString();
     datetext = datetext.split(' ')[4];
     return datetext
+}
+
+function deleteIncome(index){
+    var day = parseInt($("#day_id_"+index).val());
+    var year = parseInt($("#year_id_"+index).val());
+    var month = parseInt($("#month_id_"+index).val());
+    var memberID = $("#member_id_"+index).val();
+
+    var request = new XMLHttpRequest();
+    var url = "/deleteIncomeItem";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+        }
+    }
+    var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"day":day});
+    
+    request.send(data);
+    window.location.replace(window.location.href) 
 }
