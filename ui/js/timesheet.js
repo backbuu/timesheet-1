@@ -86,7 +86,6 @@ function showSummary(){
                     siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
                     siamChamnankit += "<td>"+"<input type=\"submit\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     siamChamnankit += "</tr>";
-            console.log(json[i-1].company);
             
                 }else{
                     countShuhari++;
@@ -129,8 +128,6 @@ function showSummary(){
                     shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
                     shuhari += "<td>"+"<input type=\"submit\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     shuhari += "</tr>";
-                    console.log(json[i-1].company);
-            
                 }
             }
             $("#table_siam_chamnankit").html(siamChamnankit);
@@ -195,13 +192,6 @@ function calculateTimesheet(){
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
-    
-    addIncomeToTimesheet(memberID,year,month)
-    calculatePayment(memberID,year,month)
-    window.location.replace(window.location.href)    
-}
-
-function addIncomeToTimesheet(memberID,year,month){
     var day = parseInt($("#day").val());
 
     var fullStartTimeAm = $("#start_time_am").val();
@@ -239,9 +229,19 @@ function addIncomeToTimesheet(memberID,year,month){
     request.setRequestHeader("Content-Type", "application/json");
     var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"overtime":overtime,"total_hours":totalHours,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
     request.send(data);  
+    window.location.replace(window.location.href); 
 }
 
-function calculatePayment(memberID,year,month) {
+function calculatePayment() {
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    memberID = params.get("id");
+    date = params.get("date");
+    var fullDate = new Date(date);
+    var year = fullDate.getFullYear();
+    var month = fullDate.getMonth()+1;
+
     var request = new XMLHttpRequest();
     var url = "/calculatePayment";
     request.open("POST", url, true);
@@ -252,6 +252,7 @@ function calculatePayment(memberID,year,month) {
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
     request.send(data); 
+    window.location.replace(window.location.href); 
 }
 
 function showSummaryByID() {
