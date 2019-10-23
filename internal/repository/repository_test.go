@@ -35,6 +35,8 @@ func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *
 			NetWage:                67500.00,
 			NetTransfer:            142500.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
+			DateTransfer:           "",
+			Comment:                "",
 		},
 	}
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
