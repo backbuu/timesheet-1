@@ -404,18 +404,15 @@ func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Stat
 	assert.Equal(t, nil, err)
 }
 
-func Test_DeleteIncome_Input_Year_2018_Month_12_MemberID_005_Day_15_Should_Be_No_Error(t *testing.T) {
-	year := 2018
-	month := 12
-	day := 15
-	memberID := "005"
+func Test_DeleteIncome_Input_ID_47_Should_Be_No_Error(t *testing.T) {
+	id := 47
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.DeleteIncome(year, month, day, memberID)
+	err := repository.DeleteIncome(id)
 
 	assert.Equal(t, nil, err)
 }
