@@ -84,7 +84,7 @@ function showSummary(){
                     siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    siamChamnankit += "<td>"+"<input type=\"submit\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    siamChamnankit += "<td><input type=\"submit\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     siamChamnankit += "</tr>";
             
                 }else{
@@ -305,6 +305,11 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
                     // incomeList += "<td>"+json.incomes[i].company+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
+                    incomeList += "<td><input type=\"hidden\" id=\"day_id_"+i+"\" value=\""+json.incomes[i].day+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"year_id_"+i+"\" value=\""+json.year+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"month_id_"+i+"\" value=\""+json.month+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json.incomes[i].member_id+"\">"
+                    incomeList += "<input type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     incomeList += "</tr>";  
                 }
                 $("#table_timesheet").html(incomeList);
@@ -336,4 +341,24 @@ function convertTimestampToTime(timestamp){
     datetext = date.toUTCString();
     datetext = datetext.split(' ')[4];
     return datetext
+}
+
+function deleteIncome(index){
+    var day = parseInt($("#day_id_"+index).val());
+    var year = parseInt($("#year_id_"+index).val());
+    var month = parseInt($("#month_id_"+index).val());
+    var memberID = $("#member_id_"+index).val();
+
+    var request = new XMLHttpRequest();
+    var url = "/deleteIncomeItem";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+        }
+    }
+    var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"day":day});
+    
+    request.send(data);
+    window.location.replace(window.location.href) 
 }
