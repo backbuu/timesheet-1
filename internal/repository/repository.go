@@ -7,6 +7,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+const (
+	InitialStatusCheckingTransfer = "รอการตรวจสอบ"
+	InitialDateTransfer           = ""
+	InitialComment                = ""
+)
+
 type TimesheetRepositoryGateways interface {
 	GetSummary(year, month int) ([]model.TransactionTimesheet, error)
 	GetMemberByID(memberID string) ([]model.Member, error)
@@ -95,8 +101,8 @@ func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimes
 func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
 	query := `INSERT INTO transactions (id, member_id, month, year, company, member_name_th, coaching, 
 		training, other, total_incomes, salary, income_tax_1, social_security, net_salary, wage, 
-		income_tax_53_percentage, income_tax_53, net_wage, net_transfer, status_checking_transfer) 
-		VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? , ? , ?)`
+		income_tax_53_percentage, income_tax_53, net_wage, net_transfer, status_checking_transfer, date_transfer, comment) 
+		VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? , ? , ?, ? , ?)`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, transactionID, transactionTimesheet.MemberID, transactionTimesheet.Month,
 		transactionTimesheet.Year, transactionTimesheet.Company, transactionTimesheet.MemberNameTH,
@@ -104,7 +110,7 @@ func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimes
 		transactionTimesheet.TotalIncomes, transactionTimesheet.Salary, transactionTimesheet.IncomeTax1,
 		transactionTimesheet.SocialSecurity, transactionTimesheet.NetSalary, transactionTimesheet.Wage,
 		transactionTimesheet.IncomeTax53Percentage, transactionTimesheet.IncomeTax53, transactionTimesheet.NetWage,
-		transactionTimesheet.NetTransfer, transactionTimesheet.StatusCheckingTransfer)
+		transactionTimesheet.NetTransfer, InitialStatusCheckingTransfer, InitialDateTransfer, InitialComment)
 	err := transaction.Commit()
 	if err != nil {
 		return err
