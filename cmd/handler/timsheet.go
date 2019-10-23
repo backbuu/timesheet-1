@@ -40,6 +40,13 @@ type UpdateStatusRequest struct {
 	Comment       string `json:"comment"`
 }
 
+type DeleteIncomeRequest struct {
+	Year     int    `json:"year"`
+	Month    int    `json:"month"`
+	MemberID string `json:"member_id"`
+	Day      int    `json:"day"`
+}
+
 type TimesheetAPI struct {
 	Timesheet           timesheet.TimesheetGateways
 	TimesheetRepository repository.TimesheetRepositoryGateways
@@ -123,6 +130,20 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 	}
 
 	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	context.Status(http.StatusOK)
+}
+
+func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
+	var request DeleteIncomeRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	err = api.TimesheetRepository.DeleteIncome(request.Year, request.Month, request.Day, request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
