@@ -444,3 +444,66 @@ func Test_DeleteIncomeHandler_Input_Year_2018_Month_12_MemberID_005_Day_15_Shoul
 
 	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
+
+func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetails(t *testing.T) {
+	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0},{"id":2,"member_id":"001","company":"shuhari","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0}]`
+	memberRequest := MemberRequest{
+		MemberID: "001",
+	}
+
+	jsonRequest, _ := json.Marshal(memberRequest)
+	request := httptest.NewRequest("POST", "/showMemberDetailsByID", bytes.NewBuffer(jsonRequest))
+	writer := httptest.NewRecorder()
+
+	mockRepository := new(mockapi.MockRepository)
+	mockRepository.On("GetMemberByID", "001").Return([]model.Member{
+		{
+			ID:                    1,
+			MemberID:              "001",
+			Company:               "siam_chamnankit",
+			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			Email:                 "prathan@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                80000.00,
+			IncomeTax1:            5000.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 10,
+			Status:                "wage",
+			TravelExpense:         0.00,
+		},
+		{
+			ID:                    2,
+			MemberID:              "001",
+			Company:               "shuhari",
+			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			Email:                 "prathan@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                0.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 10,
+			Status:                "wage",
+			TravelExpense:         0.00,
+		},
+	}, nil)
+
+	api := TimesheetAPI{
+		TimesheetRepository: mockRepository,
+	}
+
+	testRoute := gin.Default()
+	testRoute.POST("/showMemberDetailsByID", api.ShowMemberDetailsByIDHandler)
+	testRoute.ServeHTTP(writer, request)
+
+	response := writer.Result()
+	actual, err := ioutil.ReadAll(response.Body)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, string(actual))
+}
