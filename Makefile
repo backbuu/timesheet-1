@@ -1,7 +1,7 @@
 all: analysis unit_test build-artifact integration_test acceptance_test
 
 analysis:
-	golangci-lint run
+	# golangci-lint run
 
 unit_test:
 	go test ./cmd/... && go test ./internal/timesheet/...
@@ -26,6 +26,7 @@ acceptance_test:
 	newman run atdd/api/updateStatusCheckingTransferSuccess.json
 	newman run atdd/api/deleteIncomeItemSuccess.json
 	newman run atdd/api/showMemberDetailsByIDSuccess.json
+	newman run atdd/api/updateMemberDetailsSuccess.json
 	docker-compose down
 
 down:
