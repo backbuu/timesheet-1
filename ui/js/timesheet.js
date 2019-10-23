@@ -302,12 +302,8 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].coaching_payment_rate+"</td>";
                     incomeList += "<td>"+json.incomes[i].training_wage+"</td>";
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
-                    // incomeList += "<td>"+json.incomes[i].company+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
-                    incomeList += "<td><input type=\"hidden\" id=\"day_id_"+i+"\" value=\""+json.incomes[i].day+"\">"
-                    incomeList += "<input type=\"hidden\" id=\"year_id_"+i+"\" value=\""+json.year+"\">"
-                    incomeList += "<input type=\"hidden\" id=\"month_id_"+i+"\" value=\""+json.month+"\">"
-                    incomeList += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json.incomes[i].member_id+"\">"
+                    incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     incomeList += "</tr>";  
                 }
@@ -342,10 +338,7 @@ function convertTimestampToTime(timestamp){
 }
 
 function deleteIncome(index){
-    var day = parseInt($("#day_id_"+index).val());
-    var year = parseInt($("#year_id_"+index).val());
-    var month = parseInt($("#month_id_"+index).val());
-    var memberID = $("#member_id_"+index).val();
+    var incomeID = parseInt($("#income_id_"+index).val());    
 
     var request = new XMLHttpRequest();
     var url = "/deleteIncomeItem";
@@ -355,7 +348,7 @@ function deleteIncome(index){
         if (request.readyState === 4 && request.status === 200) {
         }
     }
-    var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"day":day});
+    var data = JSON.stringify({"id":incomeID});
     
     request.send(data);
     window.location.replace(window.location.href) 
