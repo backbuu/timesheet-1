@@ -287,7 +287,6 @@ function showSummaryByID() {
             var totalOtherWage = json.total_other_wage;
             var paymentWage = json.payment_wage;
             var incomeList = "";
-            console.log(totalCoachingPaymentRate);
             
             if (json.incomes !== null) {
                 for (var i = 0; i < json.incomes.length; i++) {
@@ -367,7 +366,6 @@ function getMemberByID(){
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
     var memberID =  params.get("id");
-    console.log(memberID);
     
     var request = new XMLHttpRequest();
     var url = "/showMemberDetailsByID";
@@ -436,8 +434,6 @@ function editMemberDetails(index){
     var data = JSON.stringify({"id":id,"member_name_th":memberNameTH,"member_name_eng":memberNameENG,
         "email":email,"overtime_rate":overtimeRate,"rate_per_day":ratePerDay,"rate_per_hour":ratePerHour,
         "salary":salary,"income_tax_1":incomeTax1,"social_security":socialSecurity,"income_tax_53_percentage":incomeTax53Percentage,
-        "status":status,"travel_expense":travelExpense});
-    console.log(data);
-    
+        "status":status,"travel_expense":travelExpense});    
     request.send(data);
 }
