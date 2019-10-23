@@ -22,6 +22,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(year, month, day int, memberID string) error
+	UpdateMemberDetails(memberDetails model.Member) error
 }
 
 type TimesheetRepository struct {
@@ -193,6 +194,17 @@ func (repository TimesheetRepository) DeleteIncome(year, month, day int, memberI
 	query := `DELETE FROM incomes WHERE year = ? AND month = ? AND day = ? AND member_id LIKE ?`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, year, month, day, memberID)
+	err := transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repository TimesheetRepository) UpdateMemberDetails(memberDetails model.Member) error {
+	query := `UPDATE members SET member_name_th = ?, member_name_eng = ?, email = ?, overtime_rate = ?, rate_per_day = ?, rate_per_hour = ?, salary = ?, income_tax_1 = ?, social_security = ?, income_tax_53_percentage = ?, travel_expense = ?, status = ? WHERE id = ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, memberDetails.MemberNameTH, memberDetails.MemberNameENG, memberDetails.Email, memberDetails.OvertimeRate, memberDetails.RatePerDay, memberDetails.RatePerHour, memberDetails.Salary, memberDetails.IncomeTax1, memberDetails.SocialSecurity, memberDetails.IncomeTax53Percentage, memberDetails.TravelExpense, memberDetails.Status, memberDetails.ID)
 	err := transaction.Commit()
 	if err != nil {
 		return err

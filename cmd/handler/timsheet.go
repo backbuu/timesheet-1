@@ -168,3 +168,17 @@ func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, memberDetails)
 }
+
+func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
+	var request model.Member
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	err = api.TimesheetRepository.UpdateMemberDetails(request)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	context.Status(http.StatusOK)
+}
