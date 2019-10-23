@@ -393,9 +393,10 @@ function getMemberByID(){
                 member += "<tr><th>ประเภทของรายได้</th><td><select id=\"status_id_"+i+"\">";
                 member += "<option value=\""+json[i].status+"\">"+json[i].status+"</option>";
                 member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
-                member += "<option value=\"wage\">เงินเดือน (salary)</option>";
+                member += "<option value=\"salary\">เงินเดือน (salary)</option>";
                 member += "</select></td></tr>";
                 member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
+                member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
                 member += "<tr><td colspan=\"2\"><input type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
                 member += "</table>"
                 if (i+1 < json.length) {
@@ -406,5 +407,37 @@ function getMemberByID(){
         }
     }
     var data = JSON.stringify({"member_id":memberID});
+    request.send(data);
+}
+
+function editMemberDetails(index){
+    var id = parseInt($("#member_details_id_"+index).val());
+    var memberNameTH = $("#member_name_th_id_"+index).val();
+    var memberNameENG = $("#member_name_eng_id_"+index).val();
+    var email = $("#email_id_"+index).val();
+    var overtimeRate = parseFloat($("#overtime_rate_id_"+index).val());
+    var ratePerDay = parseFloat($("#rate_per_day_id_"+index).val());
+    var ratePerHour = parseFloat($("#rate_per_hour_id_"+index).val());
+    var salary = parseFloat($("#salary_id_"+index).val());
+    var incomeTax1 = parseFloat($("#income_tax_1_id_"+index).val());
+    var socialSecurity = parseFloat($("#social_security_id_"+index).val());
+    var incomeTax53Percentage = parseInt($("#income_tax_53_percentage_id_"+index).val());
+    var status = $("#status_id_"+index).val();
+    var travelExpense = parseFloat($("#travel_expense_id_"+index).val());
+
+    var request = new XMLHttpRequest();
+    var url = "/updateMemberDetails";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+        }
+    }
+    var data = JSON.stringify({"id":id,"member_name_th":memberNameTH,"member_name_eng":memberNameENG,
+        "email":email,"overtime_rate":overtimeRate,"rate_per_day":ratePerDay,"rate_per_hour":ratePerHour,
+        "salary":salary,"income_tax_1":incomeTax1,"social_security":socialSecurity,"income_tax_53_percentage":incomeTax53Percentage,
+        "status":status,"travel_expense":travelExpense});
+    console.log(data);
+    
     request.send(data);
 }
