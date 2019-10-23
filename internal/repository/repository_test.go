@@ -419,3 +419,30 @@ func Test_DeleteIncome_Input_Year_2018_Month_12_MemberID_005_Day_15_Should_Be_No
 
 	assert.Equal(t, nil, err)
 }
+
+func Test_UpdateMemberDetails_Input_Member_Should_Be_No_Error(t *testing.T) {
+	memberDetails := model.Member{
+		ID:                    10,
+		MemberNameTH:          "ภาณุมาศ แสนโท",
+		MemberNameENG:         "Panumars Seanto",
+		Email:                 "panumars@scrum123.com",
+		OvertimeRate:          0.00,
+		RatePerDay:            15000.00,
+		RatePerHour:           1875.00,
+		Salary:                25000.00,
+		IncomeTax1:            0.00,
+		SocialSecurity:        750.00,
+		IncomeTax53Percentage: 5,
+		Status:                "wage",
+		TravelExpense:         0.00,
+	}
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	err := repository.UpdateMemberDetails(memberDetails)
+
+	assert.Equal(t, nil, err)
+}
