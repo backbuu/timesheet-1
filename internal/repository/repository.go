@@ -190,10 +190,10 @@ func (repository TimesheetRepository) UpdateStatusTransfer(transactionID, status
 	return nil
 }
 
-func (repository TimesheetRepository) DeleteIncome(year, month, day int, memberID string) error {
-	query := `DELETE FROM incomes WHERE year = ? AND month = ? AND day = ? AND member_id LIKE ?`
+func (repository TimesheetRepository) DeleteIncome(id int) error {
+	query := `DELETE FROM incomes WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, year, month, day, memberID)
+	transaction.MustExec(query, id)
 	err := transaction.Commit()
 	if err != nil {
 		return err
