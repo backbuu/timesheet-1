@@ -555,7 +555,7 @@ func Test_UpdateMemberDetailsHandler_Input_MemberID_001_Should_Be_Status_200(t *
 	}
 
 	testRoute := gin.Default()
-	testRoute.POST("/updateMemberDetails", api.UpdateMemberDetails)
+	testRoute.POST("/updateMemberDetails", api.UpdateMemberDetailsHandler)
 	testRoute.ServeHTTP(writer, request)
 
 	response := writer.Result()
