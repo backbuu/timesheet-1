@@ -314,7 +314,6 @@ function showSummaryByID() {
                 }
                 $("#table_timesheet").html(incomeList);
             }
-            
             $("#member_name_eng").html(memberNameENG);
             $("#email").html(email);
             $("#overtime_rate").html(overtimeRate);
@@ -328,12 +327,12 @@ function showSummaryByID() {
             $("#total_coaching_payment_rate").html(totalCoachingPaymentRate);
             $("#total_trainig_wage").html(totalTrainigWage); 
             $("#total_other_wage").html(totalOtherWage); 
-            $("#payment_wage").html(paymentWage);    
-                     
+            $("#payment_wage").html(paymentWage);         
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
-    request.send(data);   
+    request.send(data); 
+
 }
 
 function convertTimestampToTime(timestamp){
@@ -361,4 +360,51 @@ function deleteIncome(index){
     
     request.send(data);
     window.location.replace(window.location.href) 
+}
+
+function getMemberByID(){
+    var urlString = document.referrer;
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    var memberID =  params.get("id");
+    console.log(memberID);
+    
+    var request = new XMLHttpRequest();
+    var url = "/showMemberDetailsByID";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            var member = "";
+            for (var i = 0; i < json.length; i++) {
+                member += "<table>"
+                member += "<tr><th>บริษัท</th><td>"+json[i].company+"</td></tr>";
+                member += "<tr><th>ชื่อ(ภาษาไทย)</th><td><input type=\"text\" id=\"member_name_th_id_"+i+"\" value=\""+json[i].member_name_th+"\"></td></tr>";
+                member += "<tr><th>ชื่อ(ภาษาอังกฤษ)</th><td><input type=\"text\" id=\"member_name_eng_id_"+i+"\" value=\""+json[i].member_name_eng+"\"></td></tr>";
+                member += "<tr><th>E-mail</th><td><input type=\"email\" id=\"email_id_"+i+"\" value=\""+json[i].email+"\"></td></tr>";
+                member += "<tr><th>Overtime Rate</th><td><input type=\"number\" id=\"overtime_rate_id_"+i+"\" value=\""+json[i].overtime_rate+"\"></td></tr>";
+                member += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day+"\"></td></tr>";
+                member += "<tr><th>Rate Per Hour</th><td><input type=\"number\" id=\"rate_per_hour_id_"+i+"\" value=\""+json[i].rate_per_hour+"\"></td></tr>";
+                member += "<tr><th>เงินเดือน</th><td><input type=\"number\" id=\"salary_id_"+i+"\" value=\""+json[i].salary+"\"></td></tr>";
+                member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.1</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1+"\"></td></tr>";
+                member += "<tr><th>ประกันสังคม</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security+"\"></td></tr>";
+                member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
+                member += "<tr><th>ประเภทของรายได้</th><td><select id=\"status_id_"+i+"\">";
+                member += "<option value=\""+json[i].status+"\">"+json[i].status+"</option>";
+                member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
+                member += "<option value=\"wage\">เงินเดือน (salary)</option>";
+                member += "</select></td></tr>";
+                member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
+                member += "<tr><td colspan=\"2\"><input type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
+                member += "</table>"
+                if (i+1 < json.length) {
+                    member += "<br>"
+                }
+            }
+            $("#table_member_details").html(member);
+        }
+    }
+    var data = JSON.stringify({"member_id":memberID});
+    request.send(data);
 }
