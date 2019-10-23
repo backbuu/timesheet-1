@@ -21,6 +21,7 @@ type TimesheetRepositoryGateways interface {
 	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
+	DeleteIncome(year, month, day int, memberID string) error
 }
 
 type TimesheetRepository struct {
@@ -181,6 +182,17 @@ func (repository TimesheetRepository) UpdateStatusTransfer(transactionID, status
 	query := `UPDATE transactions SET status_checking_transfer = ?, date_transfer = ?, comment = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, status, date, comment, transactionID)
+	err := transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repository TimesheetRepository) DeleteIncome(year, month, day int, memberID string) error {
+	query := `DELETE FROM incomes WHERE year = ? AND month = ? AND day = ? AND member_id LIKE ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, year, month, day, memberID)
 	err := transaction.Commit()
 	if err != nil {
 		return err
