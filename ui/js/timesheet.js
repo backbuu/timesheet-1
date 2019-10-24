@@ -290,7 +290,7 @@ function showSummaryByID() {
             
             if (json.incomes !== null) {
                 for (var i = 0; i < json.incomes.length; i++) {
-                    incomeList += "<tr>";
+                    incomeList += "<tr id=\"income_company_"+json.incomes[i].company+"\">";
                     incomeList += "<td>"+json.incomes[i].day+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_am)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_am)+"</td>";
@@ -305,7 +305,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
-                    incomeList += "</tr>";  
+                    incomeList += "</tr>";
                 }
                 $("#table_timesheet").html(incomeList);
             }
@@ -322,7 +322,8 @@ function showSummaryByID() {
             $("#total_coaching_payment_rate").html(totalCoachingPaymentRate);
             $("#total_trainig_wage").html(totalTrainigWage); 
             $("#total_other_wage").html(totalOtherWage); 
-            $("#payment_wage").html(paymentWage);         
+            $("#payment_wage").html(paymentWage); 
+                    
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
