@@ -287,7 +287,6 @@ function showSummaryByID() {
             var totalOtherWage = json.total_other_wage;
             var paymentWage = json.payment_wage;
             var incomeList = "";
-            console.log(totalCoachingPaymentRate);
             
             if (json.incomes !== null) {
                 for (var i = 0; i < json.incomes.length; i++) {
@@ -303,18 +302,13 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].coaching_payment_rate+"</td>";
                     incomeList += "<td>"+json.incomes[i].training_wage+"</td>";
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
-                    // incomeList += "<td>"+json.incomes[i].company+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
-                    incomeList += "<td><input type=\"hidden\" id=\"day_id_"+i+"\" value=\""+json.incomes[i].day+"\">"
-                    incomeList += "<input type=\"hidden\" id=\"year_id_"+i+"\" value=\""+json.year+"\">"
-                    incomeList += "<input type=\"hidden\" id=\"month_id_"+i+"\" value=\""+json.month+"\">"
-                    incomeList += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json.incomes[i].member_id+"\">"
+                    incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     incomeList += "</tr>";  
                 }
                 $("#table_timesheet").html(incomeList);
             }
-            
             $("#member_name_eng").html(memberNameENG);
             $("#email").html(email);
             $("#overtime_rate").html(overtimeRate);
@@ -328,12 +322,12 @@ function showSummaryByID() {
             $("#total_coaching_payment_rate").html(totalCoachingPaymentRate);
             $("#total_trainig_wage").html(totalTrainigWage); 
             $("#total_other_wage").html(totalOtherWage); 
-            $("#payment_wage").html(paymentWage);    
-                     
+            $("#payment_wage").html(paymentWage);         
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
-    request.send(data);   
+    request.send(data); 
+
 }
 
 function convertTimestampToTime(timestamp){
@@ -344,10 +338,7 @@ function convertTimestampToTime(timestamp){
 }
 
 function deleteIncome(index){
-    var day = parseInt($("#day_id_"+index).val());
-    var year = parseInt($("#year_id_"+index).val());
-    var month = parseInt($("#month_id_"+index).val());
-    var memberID = $("#member_id_"+index).val();
+    var incomeID = parseInt($("#income_id_"+index).val());    
 
     var request = new XMLHttpRequest();
     var url = "/deleteIncomeItem";
@@ -357,8 +348,85 @@ function deleteIncome(index){
         if (request.readyState === 4 && request.status === 200) {
         }
     }
-    var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"day":day});
+    var data = JSON.stringify({"id":incomeID});
     
     request.send(data);
     window.location.replace(window.location.href) 
+}
+
+function getMemberByID(){
+    var urlString = document.referrer;
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    var memberID =  params.get("id");
+    
+    var request = new XMLHttpRequest();
+    var url = "/showMemberDetailsByID";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            var member = "";
+            for (var i = 0; i < json.length; i++) {
+                member += "<table>"
+                member += "<tr><th>บริษัท</th><td>"+json[i].company+"</td></tr>";
+                member += "<tr><th>ชื่อ(ภาษาไทย)</th><td><input type=\"text\" id=\"member_name_th_id_"+i+"\" value=\""+json[i].member_name_th+"\"></td></tr>";
+                member += "<tr><th>ชื่อ(ภาษาอังกฤษ)</th><td><input type=\"text\" id=\"member_name_eng_id_"+i+"\" value=\""+json[i].member_name_eng+"\"></td></tr>";
+                member += "<tr><th>E-mail</th><td><input type=\"email\" id=\"email_id_"+i+"\" value=\""+json[i].email+"\"></td></tr>";
+                member += "<tr><th>Overtime Rate</th><td><input type=\"number\" id=\"overtime_rate_id_"+i+"\" value=\""+json[i].overtime_rate+"\"></td></tr>";
+                member += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day+"\"></td></tr>";
+                member += "<tr><th>Rate Per Hour</th><td><input type=\"number\" id=\"rate_per_hour_id_"+i+"\" value=\""+json[i].rate_per_hour+"\"></td></tr>";
+                member += "<tr><th>เงินเดือน</th><td><input type=\"number\" id=\"salary_id_"+i+"\" value=\""+json[i].salary+"\"></td></tr>";
+                member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.1</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1+"\"></td></tr>";
+                member += "<tr><th>ประกันสังคม</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security+"\"></td></tr>";
+                member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
+                member += "<tr><th>ประเภทของรายได้</th><td><select id=\"status_id_"+i+"\">";
+                member += "<option value=\""+json[i].status+"\">"+json[i].status+"</option>";
+                member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
+                member += "<option value=\"salary\">เงินเดือน (salary)</option>";
+                member += "</select></td></tr>";
+                member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
+                member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
+                member += "<tr><td colspan=\"2\"><input type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
+                member += "</table>"
+                if (i+1 < json.length) {
+                    member += "<br>"
+                }
+            }
+            $("#table_member_details").html(member);
+        }
+    }
+    var data = JSON.stringify({"member_id":memberID});
+    request.send(data);
+}
+
+function editMemberDetails(index){
+    var id = parseInt($("#member_details_id_"+index).val());
+    var memberNameTH = $("#member_name_th_id_"+index).val();
+    var memberNameENG = $("#member_name_eng_id_"+index).val();
+    var email = $("#email_id_"+index).val();
+    var overtimeRate = parseFloat($("#overtime_rate_id_"+index).val());
+    var ratePerDay = parseFloat($("#rate_per_day_id_"+index).val());
+    var ratePerHour = parseFloat($("#rate_per_hour_id_"+index).val());
+    var salary = parseFloat($("#salary_id_"+index).val());
+    var incomeTax1 = parseFloat($("#income_tax_1_id_"+index).val());
+    var socialSecurity = parseFloat($("#social_security_id_"+index).val());
+    var incomeTax53Percentage = parseInt($("#income_tax_53_percentage_id_"+index).val());
+    var status = $("#status_id_"+index).val();
+    var travelExpense = parseFloat($("#travel_expense_id_"+index).val());
+
+    var request = new XMLHttpRequest();
+    var url = "/updateMemberDetails";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+        }
+    }
+    var data = JSON.stringify({"id":id,"member_name_th":memberNameTH,"member_name_eng":memberNameENG,
+        "email":email,"overtime_rate":overtimeRate,"rate_per_day":ratePerDay,"rate_per_hour":ratePerHour,
+        "salary":salary,"income_tax_1":incomeTax1,"social_security":socialSecurity,"income_tax_53_percentage":incomeTax53Percentage,
+        "status":status,"travel_expense":travelExpense});    
+    request.send(data);
 }
