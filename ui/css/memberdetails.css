@@ -1,4 +1,16 @@
 body {
     font-family: 'Sarabun', sans-serif;
-    color: darkslateblue;
+    background-color: #ffffff;
+}
+
+#button_back {
+    background-color: #f36e31;
+    color: white;
+    text-align: right;
+    font-size: 16px;
+    margin: 5px;
+}
+
+#button_back:hover {
+    background-color: #a13422;
 }
