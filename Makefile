@@ -31,3 +31,7 @@ acceptance_test:
 
 down:
 	docker-compose down
+
+seed:
+	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
+
