@@ -4,19 +4,20 @@
   <meta charset="utf-8">
   <title id="title_name"></title>
   <link rel="stylesheet" href="/css/showsummarybyid.css">
+  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
 </head>
 <script src="js/timesheet.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
 <script>showSummaryByID();</script>
 <body>
     <form action="/">
-        <input type="submit" value="Payment"/>
+        <input id="payment_button" type="submit" value="Payment"/>
     </form>
     <form action="memberdetails.html">
-        <input type="submit" value="แก้ไขข้อมูลพนักงาน"/>
+        <input id="editMember_button" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
     </form>
     <br><br>
-    <table>
+    <table class="table_details">
         <tr>
             <th>Name:</th>
             <td id="member_name_eng"></td>
@@ -48,7 +49,8 @@
         </tr>
     </table><br><br>
 
-    <table border="1">
+    <div class="table" style="overflow-x:auto;">
+        <table border="1">
         <tr>
             <th>Date</th>
             <th>Start Time</th>
@@ -139,11 +141,14 @@
                 <option value="shuhari">Shuhari</option>
             </select></td>
             <td><input type="text" id="description" placeholder="Description" ></td>
-            <td><input type="submit" value="ยืนยัน" onclick="calculateTimesheet()"/></td>
+            <td><input class="button" id="accept_button" type="submit" value="ยืนยัน" onclick="calculateTimesheet()"/></td>
         </tr>
     </table><br><br>
+    </div>
 
-    <table border="1" style="width:100%">
+
+    <div class="table" style="overflow-x:auto;">
+        <table border="1" style="width:100%">
         <tr>
             <th>Date</th>
             <th>Start Time</th>
@@ -170,8 +175,9 @@
             <th id="total_coaching_payment_rate"></th>
             <th id="total_trainig_wage"></th>
             <th id="total_other_wage"></th>
-            <th><input type="button" value="คำนวณ" onclick="calculatePayment()"/></th>
+            <th><input class="button" id="calculate_button" type="button" value="คำนวณ" onclick="calculatePayment()"/></th>
         </tr>
     </table>
+    </div>
 </body>
 </html>

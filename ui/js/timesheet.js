@@ -304,7 +304,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
-                    incomeList += "<input type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
+                    incomeList += "<input id=\"delete_button\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     incomeList += "</tr>";
                 }
                 $("#table_timesheet").html(incomeList);
