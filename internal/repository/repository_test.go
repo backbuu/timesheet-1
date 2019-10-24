@@ -5,6 +5,7 @@ import (
 	"time"
 	"timesheet/internal/model"
 	. "timesheet/internal/repository"
+	"timesheet/internal/timesheet"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -442,4 +443,118 @@ func Test_UpdateMemberDetails_Input_Member_Should_Be_No_Error(t *testing.T) {
 	err := repository.UpdateMemberDetails(memberDetails)
 
 	assert.Equal(t, nil, err)
+}
+
+func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_SummaryTimesheet(t *testing.T) {
+	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
+	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
+	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
+	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
+	expected := model.SummaryTimesheet{
+		MemberNameENG: "Somkiat Puisungnoen",
+		Email:         "somkiat@scrum123.com",
+		OvertimeRate:  0.00,
+		RatePerDay:    15000.00,
+		RatePerHour:   1875.00,
+		Year:          2019,
+		Month:         12,
+		Incomes: []model.Incomes{
+			{
+				ID:                       61,
+				MemberID:                 "003",
+				Month:                    12,
+				Year:                     2019,
+				Day:                      1,
+				StartTimeAM:              startTimeAM,
+				EndTimeAM:                endTimeAM,
+				StartTimePM:              startTimePM,
+				EndTimePM:                endTimePM,
+				Overtime:                 0,
+				TotalHours:               totalHours,
+				CoachingCustomerCharging: 0.00,
+				CoachingPaymentRate:      0.00,
+				TrainingWage:             40000.00,
+				OtherWage:                0.00,
+				Company:                  "shuhari",
+				Description:              "Technical Excellence at Khonkean",
+			},
+			{
+				ID:                       62,
+				MemberID:                 "003",
+				Month:                    12,
+				Year:                     2019,
+				Day:                      2,
+				StartTimeAM:              startTimeAM,
+				EndTimeAM:                endTimeAM,
+				StartTimePM:              startTimePM,
+				EndTimePM:                endTimePM,
+				Overtime:                 0,
+				TotalHours:               totalHours,
+				CoachingCustomerCharging: 0.00,
+				CoachingPaymentRate:      0.00,
+				TrainingWage:             40000.00,
+				OtherWage:                0.00,
+				Company:                  "shuhari",
+				Description:              "Technical Excellence at Khonkean",
+			},
+		},
+		TimesheetID:                   "003201912",
+		TotalHours:                    "16:00:00",
+		TotalCoachingCustomerCharging: 0.00,
+		TotalCoachingPaymentRate:      0.00,
+		TotalTrainigWage:              80000.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   80000.00,
+	}
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
+	defer databaseConnection.Close()
+	timesheet := timesheet.Timesheet{
+		Repository: TimesheetRepository{
+			DatabaseConnection: databaseConnection,
+		},
+	}
+	memberID := "003"
+	year := 2019
+	month := 12
+
+	actual, err := timesheet.GetSummaryByID(memberID, year, month)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
+
+func Test_GetSummaryByID_Input_MemberID_002_Year_2017_Month_12_Should_Be_SummaryTimesheet_No_Incomes_And_Created_Timesheet(t *testing.T) {
+	expected := model.SummaryTimesheet{
+		MemberNameENG:                 "Nareenart Narunchon",
+		Email:                         "nareenart@scrum123.com",
+		OvertimeRate:                  0.00,
+		RatePerDay:                    0.00,
+		RatePerHour:                   0.00,
+		Year:                          2019,
+		Month:                         12,
+		Incomes:                       nil,
+		TimesheetID:                   "",
+		TotalHours:                    "",
+		TotalCoachingCustomerCharging: 0.00,
+		TotalCoachingPaymentRate:      0.00,
+		TotalTrainigWage:              0.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   0.00,
+	}
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	timesheet := timesheet.Timesheet{
+		Repository: TimesheetRepository{
+			DatabaseConnection: databaseConnection,
+		},
+	}
+	memberID := "002"
+	year := 2019
+	month := 12
+
+	actual, err := timesheet.GetSummaryByID(memberID, year, month)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
 }
