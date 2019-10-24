@@ -41,10 +41,7 @@ type UpdateStatusRequest struct {
 }
 
 type DeleteIncomeRequest struct {
-	Year     int    `json:"year"`
-	Month    int    `json:"month"`
-	MemberID string `json:"member_id"`
-	Day      int    `json:"day"`
+	ID int `json:"id"`
 }
 
 type MemberRequest struct {
@@ -147,7 +144,7 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	err = api.TimesheetRepository.DeleteIncome(request.Year, request.Month, request.Day, request.MemberID)
+	err = api.TimesheetRepository.DeleteIncome(request.ID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}

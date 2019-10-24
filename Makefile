@@ -26,6 +26,7 @@ acceptance_test:
 	newman run atdd/api/updateStatusCheckingTransferSuccess.json
 	newman run atdd/api/deleteIncomeItemSuccess.json
 	newman run atdd/api/showMemberDetailsByIDSuccess.json
+	newman run atdd/api/updateMemberDetailsSuccess.json
 	docker-compose down
 
 down:
