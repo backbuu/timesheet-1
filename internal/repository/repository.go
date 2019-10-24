@@ -59,7 +59,7 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 
 func (repository TimesheetRepository) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
 	var incomeList []model.Incomes
-	query := `SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ?`
+	query := `SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ? ORDER BY day ASC`
 	err := repository.DatabaseConnection.Select(&incomeList, query, memberID, year, month)
 	if err != nil {
 		return []model.Incomes{}, err
