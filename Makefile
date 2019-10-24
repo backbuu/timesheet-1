@@ -1,7 +1,7 @@
 all: analysis unit_test build-artifact integration_test acceptance_test
 
 analysis:
-	# golangci-lint run
+	golangci-lint run
 
 unit_test:
 	go test ./cmd/... && go test ./internal/timesheet/...
