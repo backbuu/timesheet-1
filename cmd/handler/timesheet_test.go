@@ -137,6 +137,8 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 			NetWage:                67500.00,
 			NetTransfer:            142500.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
+			DateTransfer:           "",
+			Comment:                "",
 		}, {
 			ID:                     "001201812shuhari",
 			MemberID:               "001",
@@ -158,6 +160,8 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 			NetWage:                36000.00,
 			NetTransfer:            36000.00,
 			StatusCheckingTransfer: "รอการตรวจสอบ",
+			DateTransfer:           "",
+			Comment:                "",
 		},
 	}, nil)
 
