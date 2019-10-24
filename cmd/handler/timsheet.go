@@ -99,26 +99,26 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	incomes, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
+	incomeList, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	payments := api.Timesheet.CalculatePayment(incomes)
+	payments := api.Timesheet.CalculatePayment(incomeList)
 
 	err = api.TimesheetRepository.UpdateTimesheet(payments, request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	members, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	memberList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	transactionTimesheet := api.Timesheet.CalculatePaymentSummary(members, incomes, request.Year, request.Month)
+	transactionTimesheetList := api.Timesheet.CalculatePaymentSummary(memberList, incomeList, request.Year, request.Month)
 
-	err = api.TimesheetRepository.VerifyTransactionTimsheet(transactionTimesheet)
+	err = api.TimesheetRepository.VerifyTransactionTimsheet(transactionTimesheetList)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
