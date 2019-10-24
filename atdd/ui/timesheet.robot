@@ -6,12 +6,18 @@ ${URL_PAYMENTS}    http://localhost:8080/
 ${URL_PAYMENTS_YEAR_MONTH}    http://localhost:8080/?date_summary=2018-12
 
 *** Test Case ***
-ดูผลสรุปในหน้า PAYMENTS
+ดูผลสรุปในหน้า PAYMENTS และเปลี่ยนสถานะการโอนเงินสำเร็จ
     เปิด Browser
     ใส่เดือนและปีที่ต้องการดูสรุปผล
     กดปุ่มยืนยัน
     เข้าสู่หน้าสรุปผลค่าจ้างเดือนและปีนั้น
     ต้องเจอพนักงานในตารางแรก
+    เปลี่ยนสถานะการตรวจสอบ
+    ใส่วันที่โอนเงิน
+    ใส่หมายเหตุ
+    กดปุ่มเปลี่ยนสถานะ
+    ตรวจสอบสถานะการโอนถูกต้อง
+    ตรวจสอบวันที่โอนเงิน
     ปิด Browser
 
 ***Keywords***
@@ -45,5 +51,22 @@ ${URL_PAYMENTS_YEAR_MONTH}    http://localhost:8080/?date_summary=2018-12
     Element Text Should Be    id=net_transfer_id_1    133500
     Select From List By Value    id=status_checking_transfer_1    รอการตรวจสอบ
 
+เปลี่ยนสถานะการตรวจสอบ
+    Select From List By Label    id=status_checking_transfer_1    ถูกต้อง
+ใส่วันที่โอนเงิน
+    Input Text    id=date_transfer_1    28/12/2018
+ใส่หมายเหตุ
+    Input Text    id=comment_1     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
+กดปุ่มเปลี่ยนสถานะ
+    Click Button    id=button_change_status_checking_transfer_id_1
+ตรวจสอบสถานะการโอนถูกต้อง
+    Wait Until Page Contains Element    row_summary_id_1
+    Select From List By Value    id=status_checking_transfer_1    ถูกต้อง
+
+ตรวจสอบวันที่โอนเงิน
+    Wait Until Page Contains Element    date_transfer_1
+    Textfield Should Contain    id=date_transfer_1    28/12/2018
+    Textfield Should Contain    id=comment_1     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
+    
 ปิด Browser
     Close Browser
