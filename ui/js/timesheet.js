@@ -183,7 +183,7 @@ function updateStatusTransfer(index){
     window.location.replace(window.location.href)    
 }
 
-function calculateTimesheet(){
+function addIncomeItem(){
     var urlString = window.location.href
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
