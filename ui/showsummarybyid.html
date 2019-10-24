@@ -31,16 +31,16 @@
         </tr>
         <tr>
             <th>Rate Per Day:</th>
-            <td id="ratePerDay"></td>
+            <td id="rate_per_day"></td>
         </tr>
         <tr>
             <th>Rate Per Hour:</th>
-            <td id="ratePerHour"></td>
+            <td id="rate_per_hour"></td>
         </tr>
         <tr>
             <th>Month:</th>
             <td id="month"></td>
-            <td id="monthString"></td>
+            <td id="full_month"></td>
         </tr>
         <tr>
             <th>Year:</th>
@@ -139,7 +139,7 @@
                 <option value="shuhari">Shuhari</option>
             </select></td>
             <td><input type="text" id="description" placeholder="Description" ></td>
-            <td><input type="submit" value="ยืนยัน" onclick="calculateTimesheet()"/></td>
+            <td><input type="submit" id="button_add_income_item" value="ยืนยัน" onclick="calculateTimesheet()"/></td>
         </tr>
     </table><br><br>
 
@@ -170,7 +170,7 @@
             <th id="total_coaching_payment_rate"></th>
             <th id="total_trainig_wage"></th>
             <th id="total_other_wage"></th>
-            <th><input type="button" value="คำนวณ" onclick="calculatePayment()"/></th>
+            <th><input type="button" id="button_calculate_payment" value="คำนวณ" onclick="calculatePayment()"/></th>
         </tr>
     </table>
 </body>

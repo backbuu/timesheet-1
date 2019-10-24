@@ -312,10 +312,10 @@ function showSummaryByID() {
             $("#member_name_eng").html(memberNameENG);
             $("#email").html(email);
             $("#overtime_rate").html(overtimeRate);
-            $("#ratePerDay").html(ratePerDay);
-            $("#ratePerHour").html(ratePerHour);
+            $("#rate_per_day").html(ratePerDay);
+            $("#rate_per_hour").html(ratePerHour);
             $("#month").html(month);
-            $("#monthString").html(monthString);
+            $("#full_month").html(monthString);
             $("#year").html(year); 
             $("#thours").html(totalHours);
             $("#total_coaching_customer_charging").html(totalCoachingCustomerCharging);
