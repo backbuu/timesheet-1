@@ -6,7 +6,7 @@ function showSummary(){
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
-    
+
     var request = new XMLHttpRequest();
     var url = "/showSummaryTimesheet";
     request.open("POST", url, true);
@@ -266,6 +266,11 @@ function showSummaryByID() {
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
+
+    if (date == null || memberID == null) {
+        alert("โปรดกรอกข้อมูลให้ครบถ้วน");
+        location.href = document.referrer
+    }
 
     var request = new XMLHttpRequest();
     var url = "/showTimesheetByID";
