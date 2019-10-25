@@ -1,4 +1,44 @@
 body {
     font-family: 'Sarabun', sans-serif;
-    color: blue
+    background-color: #ffffff;
+}
+
+#title_timesheet {
+    color: #0f697c;
+    font-size: 60px;
+}
+
+.table_company th{
+    color: #ffffff;
+    text-align: center;
+    background-color: #0f697c;
+}
+
+.table_company td{
+    color: #ffffff;
+    text-align: center;
+    background-color: #5aaebd;
+}
+
+#button_show_summary_by_id, #button_show_summary {
+    background-color: #f36e31;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}
+
+#button_show_summary_by_id:hover, #button_show_summary:hover{
+    background-color:#a13422;
+}
+
+.button {
+    background-color: #00ce48;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    width: 100%;
+}
+
+.button:hover {
+  background-color:#21723e;
 }

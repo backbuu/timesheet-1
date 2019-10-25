@@ -84,7 +84,7 @@ function showSummary(){
                     siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    siamChamnankit += "<td><input type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     siamChamnankit += "</tr>";
             
                 }else{
@@ -126,7 +126,7 @@ function showSummary(){
                     shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    shuhari += "<td>"+"<input type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     shuhari += "</tr>";
                 }
             }
@@ -309,7 +309,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
-                    incomeList += "<input id=\"delete_button\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
+                    incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     incomeList += "</tr>";
                 }
                 $("#table_timesheet").html(incomeList);
