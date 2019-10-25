@@ -23,7 +23,7 @@ type TimesheetRepositoryGateways interface {
 	CreateTimesheet(memberID string, year int, month int) error
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
-	DeleteIncome(id int) error
+	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
 }
 
@@ -61,7 +61,7 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 
 func (repository TimesheetRepository) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
 	var incomeList []model.Incomes
-	query := `SELECT * FROM timesheet.incomes WHERE member_id = ? AND year = ? AND month = ? ORDER BY day ASC`
+	query := `SELECT * FROM incomes WHERE member_id = ? AND year = ? AND month = ? ORDER BY day ASC`
 	err := repository.DatabaseConnection.Select(&incomeList, query, memberID, year, month)
 	if err != nil {
 		return []model.Incomes{}, err
@@ -71,7 +71,7 @@ func (repository TimesheetRepository) GetIncomes(memberID string, year, month in
 
 func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Member, error) {
 	var memberList []model.Member
-	query := `SELECT * FROM timesheet.members WHERE member_id = ?`
+	query := `SELECT * FROM members WHERE member_id = ?`
 	err := repository.DatabaseConnection.Select(&memberList, query, memberID)
 	if err != nil {
 		return []model.Member{}, err
@@ -81,7 +81,7 @@ func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Me
 
 func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
 	for _, transactionTimesheet := range transactionTimesheet {
-		query := `SELECT COUNT(id) FROM timesheet.transactions WHERE id LIKE ?`
+		query := `SELECT COUNT(id) FROM transactions WHERE id LIKE ?`
 		var count int
 		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
 		err := repository.DatabaseConnection.Get(&count, query, transactionID)
@@ -161,8 +161,9 @@ func (repository TimesheetRepository) UpdateTimesheet(timesheet model.Timesheet,
 		total_coaching_payment_rate = ?, total_training_wage = ?, total_other_wage = ?, payment_wage = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
 	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
-	transaction.MustExec(query, timesheet.TotalHours, timesheet.TotalCoachingCustomerCharging, timesheet.TotalCoachingPaymentRate,
-		timesheet.TotalTrainigWage, timesheet.TotalOtherWage, timesheet.PaymentWage, timesheetID)
+	transaction.MustExec(query, timesheet.TotalHours, timesheet.TotalCoachingCustomerCharging,
+		timesheet.TotalCoachingPaymentRate, timesheet.TotalTrainigWage, timesheet.TotalOtherWage,
+		timesheet.PaymentWage, timesheetID)
 	err := transaction.Commit()
 	if err != nil {
 		return err
@@ -192,10 +193,10 @@ func (repository TimesheetRepository) UpdateStatusTransfer(transactionID, status
 	return nil
 }
 
-func (repository TimesheetRepository) DeleteIncome(id int) error {
+func (repository TimesheetRepository) DeleteIncome(incomeID int) error {
 	query := `DELETE FROM incomes WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, id)
+	transaction.MustExec(query, incomeID)
 	err := transaction.Commit()
 	if err != nil {
 		return err
@@ -206,7 +207,10 @@ func (repository TimesheetRepository) DeleteIncome(id int) error {
 func (repository TimesheetRepository) UpdateMemberDetails(memberDetails model.Member) error {
 	query := `UPDATE members SET member_name_th = ?, member_name_eng = ?, email = ?, overtime_rate = ?, rate_per_day = ?, rate_per_hour = ?, salary = ?, income_tax_1 = ?, social_security = ?, income_tax_53_percentage = ?, travel_expense = ?, status = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, memberDetails.MemberNameTH, memberDetails.MemberNameENG, memberDetails.Email, memberDetails.OvertimeRate, memberDetails.RatePerDay, memberDetails.RatePerHour, memberDetails.Salary, memberDetails.IncomeTax1, memberDetails.SocialSecurity, memberDetails.IncomeTax53Percentage, memberDetails.TravelExpense, memberDetails.Status, memberDetails.ID)
+	transaction.MustExec(query, memberDetails.MemberNameTH, memberDetails.MemberNameENG, memberDetails.Email,
+		memberDetails.OvertimeRate, memberDetails.RatePerDay, memberDetails.RatePerHour, memberDetails.Salary,
+		memberDetails.IncomeTax1, memberDetails.SocialSecurity, memberDetails.IncomeTax53Percentage,
+		memberDetails.TravelExpense, memberDetails.Status, memberDetails.ID)
 	err := transaction.Commit()
 	if err != nil {
 		return err

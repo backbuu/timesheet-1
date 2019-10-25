@@ -17,12 +17,7 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_Timesheet(t *testing.T) {
-	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
-	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
-	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
-	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
-	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
+func Test_GetSummaryByIDHandler_Input_Year_2017_Month_12_MemberID_003_Should_Be_SummaryTimesheet(t *testing.T) {
 	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
 	timesheetRequest := TimesheetRequest{
 		Year:     2017,
@@ -32,7 +27,11 @@ func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_
 	jsonRequest, _ := json.Marshal(timesheetRequest)
 	request := httptest.NewRequest("POST", "/showTimesheetByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
+	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
+	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
+	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
+	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	mockTimesheet := new(mockapi.MockTimesheet)
 	mockTimesheet.On("GetSummaryByID", "003", 2017, 12).Return(model.SummaryTimesheet{
 		MemberNameENG: "Somkiat Puisungnoen",
@@ -90,13 +89,13 @@ func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_
 		TotalOtherWage:                0.00,
 		PaymentWage:                   80000.00,
 	}, nil)
+
 	api := TimesheetAPI{
 		Timesheet: mockTimesheet,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/showTimesheetByID", api.GetSummaryByIDHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
 
@@ -104,7 +103,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2018_Month_12_MemberID_003_Should_Be_
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *testing.T) {
+func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
 	expected := `[{"id":"001201812siam_chamnankit","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"001201812shuhari","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shuhari","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
 	date := Date{
 		Year:  2018,
@@ -113,7 +112,6 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 	jsonRequest, _ := json.Marshal(date)
 	request := httptest.NewRequest("POST", "/showSummaryTimesheet", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetSummary", 2018, 12).Return([]model.TransactionTimesheet{
 		{
@@ -171,7 +169,6 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 	testRoute := gin.Default()
 	testRoute.POST("/showSummaryTimesheet", api.GetSummaryHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
 
@@ -179,7 +176,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_Timesheet(t *test
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Should_Be_Status_200(t *testing.T) {
+func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Should_Be_200(t *testing.T) {
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -208,7 +205,6 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	jsonRequest, _ := json.Marshal(requestIncome)
 	request := httptest.NewRequest("POST", "/addIncomeItem", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("CreateIncome", 2018, 12, "001", model.Incomes{
 		Day:                      28,
@@ -229,11 +225,9 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	api := TimesheetAPI{
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/addIncomeItem", api.CreateIncomeHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 
 	assert.Equal(t, http.StatusCreated, response.StatusCode)
@@ -248,7 +242,6 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	jsonRequest, _ := json.Marshal(calculatePaymentRequest)
 	request := httptest.NewRequest("POST", "/calculatePayment", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -287,7 +280,6 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}, nil)
-
 	mockTimesheet := new(mockapi.MockTimesheet)
 	mockTimesheet.On("CalculatePayment", mock.Anything).Return(model.Timesheet{
 		TotalHours:                    "16:00:00",
@@ -297,9 +289,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		TotalOtherWage:                40000.00,
 		PaymentWage:                   195000.00,
 	})
-
 	mockRepository.On("UpdateTimesheet", mock.Anything, "001", 2018, 12).Return(nil)
-
 	mockRepository.On("GetMemberByID", "001").Return([]model.Member{
 		{
 			ID:                    1,
@@ -334,7 +324,6 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			TravelExpense:         0.00,
 		},
 	}, nil)
-
 	mockTimesheet.On("CalculatePaymentSummary", mock.Anything, mock.Anything, 2018, 12).Return([]model.TransactionTimesheet{
 		{
 			MemberID:              "001",
@@ -376,18 +365,15 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			NetTransfer:           36000.00,
 		},
 	})
-
 	mockRepository.On("VerifyTransactionTimsheet", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{
 		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/calculatePayment", api.CalculatePaymentHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	actual := writer.Result()
 
 	assert.Equal(t, http.StatusOK, actual.StatusCode)
@@ -400,36 +386,30 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 		Date:          "30/12/2019",
 		Comment:       "หักค่าตั๋วเครื่องบิน",
 	}
-
 	jsonRequest, _ := json.Marshal(requestUpdate)
 	request := httptest.NewRequest("POST", "/updateStatusCheckingTransfer", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateStatusTransfer", "004201912siam_chamnankit", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
 
 	api := TimesheetAPI{
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/updateStatusCheckingTransfer", api.UpdateStatusCheckingTransferHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 
 	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
 
-func Test_DeleteIncomeHandler_Input_ID_47_Should_Be_Status_200(t *testing.T) {
+func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	requestDelete := DeleteIncomeRequest{
-		ID: 47,
+		IncomeID: 47,
 	}
-
 	jsonRequest, _ := json.Marshal(requestDelete)
 	request := httptest.NewRequest("POST", "/deleteIncomeItem", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("DeleteIncome", 47).Return(nil)
 
@@ -529,7 +509,6 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	jsonRequest, _ := json.Marshal(requestUpdateMember)
 	request := httptest.NewRequest("POST", "/updateMemberDetails", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateMemberDetails", model.Member{
 		ID:                    1,
@@ -550,11 +529,9 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	api := TimesheetAPI{
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/updateMemberDetails", api.UpdateMemberDetailsHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 
 	assert.Equal(t, http.StatusOK, response.StatusCode)

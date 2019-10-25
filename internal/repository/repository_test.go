@@ -62,7 +62,7 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 	year := 2017
 	month := 12
 	memberID := "001"
-	incomes := model.Incomes{
+	income := model.Incomes{
 		Day:                      28,
 		StartTimeAM:              startTimeAM,
 		EndTimeAM:                endTimeAM,
@@ -83,12 +83,12 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.CreateIncome(year, month, memberID, incomes)
+	err := repository.CreateIncome(year, month, memberID, income)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
+func Test_GetMemberByID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
 	expected := []model.Member{
 		{
 			ID:                    1,
@@ -138,7 +138,7 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_Member(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_Incomes_Day_11_And_12(t *testing.T) {
+func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(t *testing.T) {
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -254,7 +254,7 @@ func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Cre
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_Error(t *testing.T) {
+func Test_CreateTransactionTimsheet_Input_TransactionID_006201912shuhari_TransactionTimesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
 	transactionID := "006201912shuhari"
 	transactionTimesheet := model.TransactionTimesheet{
 		MemberID:               "006",
@@ -288,7 +288,7 @@ func Test_CreateTransactionTimsheet_Input_Transaction_MemberID_006_Should_Be_No_
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_No_Error(t *testing.T) {
+func Test_UpdateTransactionTimsheet_Input_TransactionID_001201911shuhari_TransactionTimesheet_MemberID_001_Should_Be_No_Error(t *testing.T) {
 	transactionID := "001201911shuhari"
 	transactionTimesheet := model.TransactionTimesheet{
 		MemberID:              "001",
@@ -320,11 +320,10 @@ func Test_UpdateTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_No_
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTimsheet_Input_Timesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
+func Test_CreateTimsheet_Input_MemberID_006_Month_12_Year_2019_Should_Be_No_Error(t *testing.T) {
 	memberID := "006"
 	month := 12
 	year := 2019
-
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
@@ -375,7 +374,6 @@ func Test_GetTimsheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(
 	memberID := "003"
 	month := 12
 	year := 2017
-
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
@@ -404,15 +402,15 @@ func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Stat
 	assert.Equal(t, nil, err)
 }
 
-func Test_DeleteIncome_Input_ID_47_Should_Be_No_Error(t *testing.T) {
-	id := 47
+func Test_DeleteIncome_Input_IncomeID_47_Should_Be_No_Error(t *testing.T) {
+	incomeID := 47
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.DeleteIncome(id)
+	err := repository.DeleteIncome(incomeID)
 
 	assert.Equal(t, nil, err)
 }

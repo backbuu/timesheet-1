@@ -9,8 +9,7 @@ import (
 )
 
 const (
-	SiamChamnankitCompany = "siam_chamnankit"
-	ShuhariCompany        = "shuhari"
+	InitialIndex = 0
 
 	OneMinute = 60
 	OneHour   = 60
@@ -29,9 +28,9 @@ type Timesheet struct {
 func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
 	var transactionTimesheetList []model.TransactionTimesheet
 	for _, member := range member {
-		totalCoachingPaymentRate := calculateTotalCoachingPaymentRate(incomes, member.Company)
-		totalTrainingWage := calculateTotalTrainingWage(incomes, member.Company)
-		totalOtherWage := calculateTotalOtherWage(incomes, member.Company, member.TravelExpense)
+		totalCoachingPaymentRate := calculateTotalCoachingPaymentRateByCompany(incomes, member.Company)
+		totalTrainingWage := calculateTotalTrainingWageByCompany(incomes, member.Company)
+		totalOtherWage := calculateTotalOtherWageByCompany(incomes, member.Company, member.TravelExpense)
 		paymentWage := calculateTotalPaymentWage(totalCoachingPaymentRate, totalTrainingWage, totalOtherWage)
 		netSalary := calculateNetSalary(member.Salary, member.IncomeTax1, member.SocialSecurity)
 		wage := calculateWage(paymentWage, member.Salary)
@@ -65,12 +64,12 @@ func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, income
 	return transactionTimesheetList
 }
 
-func (timesheet Timesheet) CalculatePayment(incomes []model.Incomes) model.Timesheet {
-	totalHour := calculateTotalHours(incomes)
-	totalCoachingCustomerCharging := calculateTotalCoachingCustomerCharging(incomes)
-	totalCoachingPaymentRate := calculateTotalCoachingPaymentRate(incomes, "")
-	totalTrainingWage := calculateTotalTrainingWage(incomes, "")
-	totalOtherWage := calculateTotalOtherWage(incomes, "", 0.00)
+func (timesheet Timesheet) CalculatePayment(incomeList []model.Incomes) model.Timesheet {
+	totalHour := calculateTotalHours(incomeList)
+	totalCoachingCustomerCharging := calculateTotalCoachingCustomerCharging(incomeList)
+	totalCoachingPaymentRate := calculateTotalCoachingPaymentRate(incomeList)
+	totalTrainingWage := calculateTotalTrainingWage(incomeList)
+	totalOtherWage := calculateTotalOtherWage(incomeList)
 	paymentWage := calculateTotalPaymentWage(totalCoachingPaymentRate, totalTrainingWage, totalOtherWage)
 	return model.Timesheet{
 		TotalHours:                    totalHour,
@@ -100,11 +99,11 @@ func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (mod
 		}
 	}
 	return model.SummaryTimesheet{
-		MemberNameENG:                 memberList[0].MemberNameENG,
-		Email:                         memberList[0].Email,
-		OvertimeRate:                  memberList[0].OvertimeRate,
-		RatePerDay:                    memberList[0].RatePerDay,
-		RatePerHour:                   memberList[0].RatePerHour,
+		MemberNameENG:                 memberList[InitialIndex].MemberNameENG,
+		Email:                         memberList[InitialIndex].Email,
+		OvertimeRate:                  memberList[InitialIndex].OvertimeRate,
+		RatePerDay:                    memberList[InitialIndex].RatePerDay,
+		RatePerHour:                   memberList[InitialIndex].RatePerHour,
 		Year:                          year,
 		Month:                         month,
 		Incomes:                       incomeList,
@@ -117,10 +116,10 @@ func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (mod
 		PaymentWage:                   payment.PaymentWage}, nil
 }
 
-func calculateTotalHours(incomes []model.Incomes) string {
+func calculateTotalHours(incomeList []model.Incomes) string {
 	var toltalHours time.Duration
 	var overtime int
-	for _, income := range incomes {
+	for _, income := range incomeList {
 		toltalHours += income.EndTimeAM.Sub(income.StartTimeAM)
 		toltalHours += income.EndTimePM.Sub(income.StartTimePM)
 		overtime += income.Overtime
@@ -162,82 +161,64 @@ func calculateNetTransfer(netSalary, netWage float64) float64 {
 	return netSalary + netWage
 }
 
-func calculateTotalCoachingCustomerCharging(incomes []model.Incomes) float64 {
+func calculateTotalCoachingCustomerCharging(incomeList []model.Incomes) float64 {
 	var totalCoachingCustomerCharging float64
-	for _, income := range incomes {
+	for _, income := range incomeList {
 		totalCoachingCustomerCharging += income.CoachingCustomerCharging
 	}
 	return totalCoachingCustomerCharging
 }
 
-func calculateTotalOtherWage(incomes []model.Incomes, company string, travelExpense float64) float64 {
+func calculateTotalOtherWage(incomeList []model.Incomes) float64 {
 	var totalOtherWage float64
-	if company == SiamChamnankitCompany {
-		for _, income := range incomes {
-			if income.Company == SiamChamnankitCompany {
-				totalOtherWage += income.OtherWage
-			}
-		}
-		return totalOtherWage + travelExpense
-	}
-	if company == ShuhariCompany {
-		for _, income := range incomes {
-			if income.Company == ShuhariCompany {
-				totalOtherWage += income.OtherWage
-			}
-		}
-		return totalOtherWage + travelExpense
-	}
-	for _, income := range incomes {
+	for _, income := range incomeList {
 		totalOtherWage += income.OtherWage
+	}
+	return totalOtherWage
+}
+
+func calculateTotalOtherWageByCompany(incomeList []model.Incomes, company string, travelExpense float64) float64 {
+	var totalOtherWage float64
+	for _, income := range incomeList {
+		if income.Company == company {
+			totalOtherWage += income.OtherWage
+		}
 	}
 	return totalOtherWage + travelExpense
 }
 
-func calculateTotalCoachingPaymentRate(incomes []model.Incomes, company string) float64 {
+func calculateTotalCoachingPaymentRate(incomeList []model.Incomes) float64 {
 	var totalCoachingPaymentRate float64
-	if company == SiamChamnankitCompany {
-		for _, income := range incomes {
-			if income.Company == SiamChamnankitCompany {
-				totalCoachingPaymentRate += income.CoachingPaymentRate
-			}
-		}
-		return totalCoachingPaymentRate
-	}
-	if company == ShuhariCompany {
-		for _, income := range incomes {
-			if income.Company == ShuhariCompany {
-				totalCoachingPaymentRate += income.CoachingPaymentRate
-			}
-		}
-		return totalCoachingPaymentRate
-	}
-	for _, income := range incomes {
+	for _, income := range incomeList {
 		totalCoachingPaymentRate += income.CoachingPaymentRate
 	}
 	return totalCoachingPaymentRate
 }
 
-func calculateTotalTrainingWage(incomes []model.Incomes, company string) float64 {
+func calculateTotalCoachingPaymentRateByCompany(incomeList []model.Incomes, company string) float64 {
+	var totalCoachingPaymentRate float64
+	for _, income := range incomeList {
+		if income.Company == company {
+			totalCoachingPaymentRate += income.CoachingPaymentRate
+		}
+	}
+	return totalCoachingPaymentRate
+}
+
+func calculateTotalTrainingWage(incomeList []model.Incomes) float64 {
 	var totalCoachingTrainingWage float64
-	if company == SiamChamnankitCompany {
-		for _, income := range incomes {
-			if income.Company == SiamChamnankitCompany {
-				totalCoachingTrainingWage += income.TrainingWage
-			}
-		}
-		return totalCoachingTrainingWage
-	}
-	if company == ShuhariCompany {
-		for _, income := range incomes {
-			if income.Company == ShuhariCompany {
-				totalCoachingTrainingWage += income.TrainingWage
-			}
-		}
-		return totalCoachingTrainingWage
-	}
-	for _, income := range incomes {
+	for _, income := range incomeList {
 		totalCoachingTrainingWage += income.TrainingWage
+	}
+	return totalCoachingTrainingWage
+}
+
+func calculateTotalTrainingWageByCompany(incomeList []model.Incomes, company string) float64 {
+	var totalCoachingTrainingWage float64
+	for _, income := range incomeList {
+		if income.Company == company {
+			totalCoachingTrainingWage += income.TrainingWage
+		}
 	}
 	return totalCoachingTrainingWage
 }
