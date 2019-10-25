@@ -206,19 +206,19 @@ func calculateTotalCoachingPaymentRateByCompany(incomeList []model.Incomes, comp
 }
 
 func calculateTotalTrainingWage(incomeList []model.Incomes) float64 {
-	var totalCoachingTrainingWage float64
+	var totalTrainingWage float64
 	for _, income := range incomeList {
-		totalCoachingTrainingWage += income.TrainingWage
+		totalTrainingWage += income.TrainingWage
 	}
-	return totalCoachingTrainingWage
+	return totalTrainingWage
 }
 
 func calculateTotalTrainingWageByCompany(incomeList []model.Incomes, company string) float64 {
-	var totalCoachingTrainingWage float64
+	var totalTrainingWage float64
 	for _, income := range incomeList {
 		if income.Company == company {
-			totalCoachingTrainingWage += income.TrainingWage
+			totalTrainingWage += income.TrainingWage
 		}
 	}
-	return totalCoachingTrainingWage
+	return totalTrainingWage
 }
