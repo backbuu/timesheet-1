@@ -8,13 +8,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_CalculateTotalHour_Input_Incomes_Should_Be_Time_18_0_0(t *testing.T) {
+func Test_CalculateTotalHour_Input_IncomeList_Should_Be_Time_18_00_00(t *testing.T) {
 	expected := "18:00:00"
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:30:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			StartTimeAM: startTimeAM,
 			EndTimeAM:   endTimeAM,
@@ -31,45 +31,42 @@ func Test_CalculateTotalHour_Input_Incomes_Should_Be_Time_18_0_0(t *testing.T) {
 		},
 	}
 
-	actual := calculateTotalHours(incomes)
+	actual := calculateTotalHours(incomeList)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateNetSalary_Input_Salary_80000_IncomeTax1_5000_SocialSecurity_0_Should_Be_NetSalary_75000(t *testing.T) {
-	expectedNetSalary := 75000.00
-
+func Test_CalculateNetSalary_Input_Salary_80000_IncomeTax1_5000_SocialSecurity_0_Should_Be_75000(t *testing.T) {
+	expected := 75000.00
 	salary := 80000.00
 	incomeTax1 := 5000.00
 	socialSecurity := 0.00
 
-	actualNetSalary := calculateNetSalary(salary, incomeTax1, socialSecurity)
+	actual := calculateNetSalary(salary, incomeTax1, socialSecurity)
 
-	assert.Equal(t, expectedNetSalary, actualNetSalary)
+	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateNetSalary_Input_Salary_40000_IncomeTax1_5000_SocialSecurity_750_Should_Be_NetSalary_0(t *testing.T) {
-	expectedNetSalary := 34250.00
-
+func Test_CalculateNetSalary_Input_Salary_40000_IncomeTax1_5000_SocialSecurity_750_Should_Be_34250(t *testing.T) {
+	expected := 34250.00
 	salary := 40000.00
 	incomeTax1 := 5000.00
 	socialSecurity := 750.00
 
-	actualNetSalary := calculateNetSalary(salary, incomeTax1, socialSecurity)
+	actual := calculateNetSalary(salary, incomeTax1, socialSecurity)
 
-	assert.Equal(t, expectedNetSalary, actualNetSalary)
+	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateNetSalary_Input_Salary_25000_IncomeTax1_0_SocialSecurity_750_Should_Be_NetSalary_24250(t *testing.T) {
-	expectedNetSalary := 24250.00
-
+func Test_CalculateNetSalary_Input_Salary_25000_IncomeTax1_0_SocialSecurity_750_Should_Be_24250(t *testing.T) {
+	expected := 24250.00
 	salary := 25000.00
 	incomeTax1 := 0.00
 	socialSecurity := 750.00
 
-	actualNetSalary := calculateNetSalary(salary, incomeTax1, socialSecurity)
+	actual := calculateNetSalary(salary, incomeTax1, socialSecurity)
 
-	assert.Equal(t, expectedNetSalary, actualNetSalary)
+	assert.Equal(t, expected, actual)
 }
 
 func Test_CalculateNetWage_Input_IncomeTax53Percentage_10_PaymentWage_155000_Salary_80000_Should_Be_67500(t *testing.T) {
@@ -93,17 +90,7 @@ func Test_CalculateIncomeTax53_Input_IncomeTax53Percentage_10_Wage_40000_Should_
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateWage_Input_PaymentWage_155000_Salary_80000_Should_Be_750000(t *testing.T) {
-	expected := 75000.00
-	paymentWage := 155000.00
-	salary := 80000.00
-
-	actual := calculateWage(paymentWage, salary)
-
-	assert.Equal(t, expected, actual)
-}
-
-func Test_CalculateWage_Input_PaymentWage_155000_Salary_80000_Should_Be_155000(t *testing.T) {
+func Test_CalculateWage_Input_PaymentWage_155000_Salary_80000_Should_Be_75000(t *testing.T) {
 	expected := 75000.00
 	paymentWage := 155000.00
 	salary := 80000.00
@@ -134,14 +121,14 @@ func Test_CalculateTotalPaymentWage_Input_CoachingPaymentRate_85000_TrainingWage
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalCoachingCustomerCharging_Input_Incomes_Should_Be_60000(t *testing.T) {
+func Test_CalculateTotalCoachingCustomerCharging_Input_IncomeList_Should_Be_60000(t *testing.T) {
 	expected := 60000.00
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -189,12 +176,12 @@ func Test_CalculateTotalCoachingCustomerCharging_Input_Incomes_Should_Be_60000(t
 		},
 	}
 
-	actual := calculateTotalCoachingCustomerCharging(incomes)
+	actual := calculateTotalCoachingCustomerCharging(incomeList)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalOtherWage_Input_Incomes_Company_Shuhari_TravelExpense_0_Should_Be_45000(t *testing.T) {
+func Test_CalculateTotalOtherWageByCompany_Input_IncomeList_Company_Shuhari_TravelExpense_0_Should_Be_45000(t *testing.T) {
 	expected := 45000.00
 	company := "shuhari"
 	travelExpense := 0.00
@@ -203,7 +190,7 @@ func Test_CalculateTotalOtherWage_Input_Incomes_Company_Shuhari_TravelExpense_0_
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -251,21 +238,19 @@ func Test_CalculateTotalOtherWage_Input_Incomes_Company_Shuhari_TravelExpense_0_
 		},
 	}
 
-	actual := calculateTotalOtherWage(incomes, company, travelExpense)
+	actual := calculateTotalOtherWageByCompany(incomeList, company, travelExpense)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalOtherWage_Input_Incomes_TravelExpense_0_Should_Be_55000(t *testing.T) {
+func Test_CalculateTotalOtherWage_Input_IncomeList_Should_Be_55000(t *testing.T) {
 	expected := 55000.00
-	company := ""
-	travelExpense := 0.00
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -313,12 +298,12 @@ func Test_CalculateTotalOtherWage_Input_Incomes_TravelExpense_0_Should_Be_55000(
 		},
 	}
 
-	actual := calculateTotalOtherWage(incomes, company, travelExpense)
+	actual := calculateTotalOtherWage(incomeList)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalCoachingPaymentRate_Input_Incomes_Company_SiamChamnankit_Should_Be_10000(t *testing.T) {
+func Test_CalculateTotalCoachingPaymentRateByCompany_Input_IncomeList_Company_SiamChamnankit_Should_Be_10000(t *testing.T) {
 	expected := 10000.00
 	company := "siam_chamnankit"
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
@@ -326,7 +311,7 @@ func Test_CalculateTotalCoachingPaymentRate_Input_Incomes_Company_SiamChamnankit
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -374,20 +359,19 @@ func Test_CalculateTotalCoachingPaymentRate_Input_Incomes_Company_SiamChamnankit
 		},
 	}
 
-	actual := calculateTotalCoachingPaymentRate(incomes, company)
+	actual := calculateTotalCoachingPaymentRateByCompany(incomeList, company)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalCoachingPaymentRate_Input_Incomes_Should_Be_20000(t *testing.T) {
+func Test_CalculateTotalCoachingPaymentRate_Input_IncomeList_Should_Be_20000(t *testing.T) {
 	expected := 20000.00
-	company := ""
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -435,12 +419,12 @@ func Test_CalculateTotalCoachingPaymentRate_Input_Incomes_Should_Be_20000(t *tes
 		},
 	}
 
-	actual := calculateTotalCoachingPaymentRate(incomes, company)
+	actual := calculateTotalCoachingPaymentRate(incomeList)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalTrainingWage_Input_Incomes_Company_Shuhari_Should_Be_20000(t *testing.T) {
+func Test_CalculateTotalTrainingWageByCompany_Input_IncomeList_Company_Shuhari_Should_Be_20000(t *testing.T) {
 	expected := 20000.00
 	company := "shuhari"
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
@@ -448,7 +432,7 @@ func Test_CalculateTotalTrainingWage_Input_Incomes_Company_Shuhari_Should_Be_200
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -496,20 +480,19 @@ func Test_CalculateTotalTrainingWage_Input_Incomes_Company_Shuhari_Should_Be_200
 		},
 	}
 
-	actual := calculateTotalTrainingWage(incomes, company)
+	actual := calculateTotalTrainingWageByCompany(incomeList, company)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalTrainingWage_Input_Incomes_Should_Be_30000(t *testing.T) {
+func Test_CalculateTotalTrainingWage_Input_IncomeList_Should_Be_30000(t *testing.T) {
 	expected := 30000.00
-	company := ""
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	incomes := []model.Incomes{
+	incomeList := []model.Incomes{
 		{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -557,7 +540,7 @@ func Test_CalculateTotalTrainingWage_Input_Incomes_Should_Be_30000(t *testing.T)
 		},
 	}
 
-	actual := calculateTotalTrainingWage(incomes, company)
+	actual := calculateTotalTrainingWage(incomeList)
 
 	assert.Equal(t, expected, actual)
 }
