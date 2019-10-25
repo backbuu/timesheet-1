@@ -40,6 +40,15 @@ func (mock *MockRepository) UpdateTimesheet(timesheet model.Timesheet, memberID 
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) CreateTimesheet(memberID string, year int, month int) error {
+	argument := mock.Called(memberID, year, month)
+	return argument.Error(0)
+}
+func (mock *MockRepository) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
+	argument := mock.Called(memberID, year, month)
+	return argument.Get(0).(model.Timesheet), argument.Error(1)
+}
+
 func (mock *MockRepository) UpdateStatusTransfer(transactionID, status, date, comment string) error {
 	argument := mock.Called(transactionID, status, date, comment)
 	return argument.Error(0)

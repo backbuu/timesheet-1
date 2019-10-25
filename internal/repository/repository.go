@@ -20,6 +20,8 @@ type TimesheetRepositoryGateways interface {
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
+	CreateTimesheet(memberID string, year int, month int) error
+	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(id int) error
 	UpdateMemberDetails(memberDetails model.Member) error
