@@ -41,7 +41,7 @@ type UpdateStatusRequest struct {
 }
 
 type DeleteIncomeRequest struct {
-	ID int `json:"id"`
+	IncomeID int `json:"id"`
 }
 
 type MemberRequest struct {
@@ -102,8 +102,8 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
-	payments := api.Timesheet.CalculatePayment(incomeList)
-	err = api.TimesheetRepository.UpdateTimesheet(payments, request.MemberID, request.Year, request.Month)
+	timesheet := api.Timesheet.CalculatePayment(incomeList)
+	err = api.TimesheetRepository.UpdateTimesheet(timesheet, request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
@@ -138,7 +138,7 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	err = api.TimesheetRepository.DeleteIncome(request.ID)
+	err = api.TimesheetRepository.DeleteIncome(request.IncomeID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
@@ -147,16 +147,15 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 
 func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
 	var request MemberRequest
-
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	memberDetails, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	memberDetailList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
-	context.JSON(http.StatusOK, memberDetails)
+	context.JSON(http.StatusOK, memberDetailList)
 }
 
 func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
