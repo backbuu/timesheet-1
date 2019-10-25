@@ -1,11 +1,12 @@
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #ffffff;
-}
-
-#title_timesheet {
+#title_payments {
     color: #0f697c;
     font-size: 60px;
+}
+
+.title_company {
+    color: #f36e31;
+    font-size: 30px;
+    margin: 0;
 }
 
 .table_company th{
@@ -41,4 +42,9 @@ body {
 
 .button:hover {
   background-color:#21723e;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #e7faf3;
 }

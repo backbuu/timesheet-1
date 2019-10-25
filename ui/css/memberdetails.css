@@ -1,16 +1,38 @@
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #ffffff;
+#title_profile {
+    color: #0f697c;
+    font-size: 60px;
 }
 
 #button_back {
     background-color: #f36e31;
     color: #ffffff;
-    text-align: right;
     font-size: 16px;
     margin: 5px;
 }
 
 #button_back:hover {
     background-color: #a13422;
+}
+
+.button {
+    text-align: left;
+    background-color: #00ce48;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color:#21723e;
+}
+
+#table_member_details th{
+    color: #0f697c;
+    font-size: 18px;
+    text-align: left;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #e7faf3;
 }

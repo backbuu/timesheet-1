@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title id="title_name"></title>
+  <title>PROFILE</title>
   <link rel="stylesheet" href="/css/showsummarybyid.css">
   <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
 </head>
@@ -13,7 +13,7 @@
     <form action="/">
         <input id="button_payment" type="submit" value="กลับสู่หน้าหลัก"/>
     </form>
-    <br><br>
+    <h1 id="title_timesheet">WORK TIMESHEET</h1>
     <table class="table_details">
         <tr>
             <th>Name:</th>
@@ -45,10 +45,12 @@
             <td id="year"></td>
         </tr>
         <form action="memberdetails.html">
-        <input id="button_edit_member" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
-    </form>
-    </table><br><br>
-
+            <input id="button_edit_member" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
+        </form>
+    </table>
+    <br>
+    <br>
+    
     <div style="overflow-x:auto;">
         <table class="table">
         <tr>
@@ -143,9 +145,10 @@
             <td><input type="text" id="description" placeholder="Description" ></td>
             <td><input class="button" type="submit" id="button_add_income_item" value="ยืนยัน" onclick="addIncomeItem()"/></td>
         </tr>
-    </table><br><br>
+    </table>
+    <br>
+    <br>
     </div>
-
 
     <div style="overflow-x:auto;">
         <table class="table">
