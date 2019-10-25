@@ -394,7 +394,7 @@ function getMemberByID(){
                 member += "</select></td></tr>";
                 member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
                 member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
-                member += "<tr><td colspan=\"2\"><input  class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
+                member += "<tr><td style=\"position:relative;left:600px;top:-30px;\" colspan=\"2\"><input  class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
                 member += "</table>"
                 if (i+1 < json.length) {
                     member += "<br><br><br>"
