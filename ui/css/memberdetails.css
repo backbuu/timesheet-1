@@ -1,16 +1,61 @@
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #ffffff;
+* {
+  box-sizing: border-box;
+}
+
+#title_profile {
+    color: #0f697c;
+    font-size: 60px;
 }
 
 #button_back {
     background-color: #f36e31;
     color: #ffffff;
-    text-align: right;
     font-size: 16px;
     margin: 5px;
 }
 
 #button_back:hover {
     background-color: #a13422;
+}
+
+.button {
+    text-align: left;
+    background-color: #00ce48;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color:#21723e;
+}
+
+#table_member_details th{
+    color: #0f697c;
+    font-size: 18px;
+    text-align: left;
+    table-layout: fixed;
+}
+
+#table_member_details td{
+    color: #0f697c;
+    font-size: 18px;
+    text-align: left;
+}
+
+input[type=text],input[type=number],input[type=email] {
+    width: 100%;
+    padding: 10px 10px;
+    margin: 2px;
+    border-top-style: none;
+    border-right-style: none; 
+    border-bottom: 2px solid #0f697c ;
+    border-left-style: none;
+    box-sizing: border-box;
+    background-color:transparent;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #e7faf3;
 }

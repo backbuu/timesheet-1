@@ -1,17 +1,23 @@
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-#title_timesheet {
+#title_payments {
     color: #0f697c;
     font-size: 60px;
+}
+
+.title_company {
+    color: #f36e31;
+    font-size: 30px;
+    margin: 0;
 }
 
 .table_company th{
     color: #ffffff;
     text-align: center;
     background-color: #0f697c;
+    table-layout: fixed;
 }
 
 .table_company td{
@@ -41,4 +47,9 @@ body {
 
 .button:hover {
   background-color:#21723e;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #e7faf3;
 }

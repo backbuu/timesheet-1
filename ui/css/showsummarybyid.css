@@ -1,6 +1,14 @@
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #ffffff;
+* {
+  box-sizing: border-box;
+}
+
+#title_timesheet {
+    color: #0f697c;
+    font-size: 60px;
+}
+
+.table_details tr{
+    font-size: 20px;
 }
 
 .table {
@@ -13,6 +21,7 @@ body {
 .table th{
     background-color: #0f697c;
     border: 2px solid #ffffff;
+    table-layout: fixed;
 }
 
 .table td{
@@ -74,4 +83,9 @@ body {
 
 #button_delete:hover {
   background-color: #f25821;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #e7faf3;
 }

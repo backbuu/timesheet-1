@@ -375,10 +375,10 @@ function getMemberByID(){
             var json = JSON.parse(request.responseText);
             var member = "";
             for (var i = 0; i < json.length; i++) {
-                member += "<table>"
+                member += "<table id =\"table_member_details\">"
                 member += "<tr><th>บริษัท</th><td id=\"company_id_"+i+"\">"+json[i].company+"</td></tr>";
-                member += "<tr><th>ชื่อ(ภาษาไทย)</th><td><input type=\"text\" id=\"member_name_th_id_"+i+"\" value=\""+json[i].member_name_th+"\"></td></tr>";
-                member += "<tr><th>ชื่อ(ภาษาอังกฤษ)</th><td><input type=\"text\" id=\"member_name_eng_id_"+i+"\" value=\""+json[i].member_name_eng+"\"></td></tr>";
+                member += "<tr><th>ชื่อ-นามสกุล (ภาษาไทย)</th><td><input type=\"text\" id=\"member_name_th_id_"+i+"\" value=\""+json[i].member_name_th+"\"></td></tr>";
+                member += "<tr><th>ชื่อ-นามสกุล (ภาษาอังกฤษ)</th><td><input type=\"text\" id=\"member_name_eng_id_"+i+"\" value=\""+json[i].member_name_eng+"\"></td></tr>";
                 member += "<tr><th>E-mail</th><td><input type=\"email\" id=\"email_id_"+i+"\" value=\""+json[i].email+"\"></td></tr>";
                 member += "<tr><th>Overtime Rate</th><td><input type=\"number\" id=\"overtime_rate_id_"+i+"\" value=\""+json[i].overtime_rate+"\"></td></tr>";
                 member += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day+"\"></td></tr>";
@@ -394,10 +394,10 @@ function getMemberByID(){
                 member += "</select></td></tr>";
                 member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
                 member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
-                member += "<tr><td colspan=\"2\"><input type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
+                member += "<tr><td colspan=\"2\"><input  class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
                 member += "</table>"
                 if (i+1 < json.length) {
-                    member += "<br>"
+                    member += "<br><br><br>"
                 }
             }
             $("#table_member_details").html(member);

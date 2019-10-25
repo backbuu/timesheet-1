@@ -2,9 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title id="title_name"></title>
+  <title>PROFILE</title>
   <link rel="stylesheet" href="/css/showsummarybyid.css">
   <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <script src="js/timesheet.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
@@ -13,7 +14,7 @@
     <form action="/">
         <input id="button_payment" type="submit" value="กลับสู่หน้าหลัก"/>
     </form>
-    <br><br>
+    <h1 id="title_timesheet">WORK TIMESHEET</h1>
     <table class="table_details">
         <tr>
             <th>Name:</th>
@@ -45,11 +46,11 @@
             <td id="year"></td>
         </tr>
         <form action="memberdetails.html">
-        <input id="button_edit_member" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
-    </form>
-    </table><br><br>
-
-    <div style="overflow-x:auto;">
+            <input id="button_edit_member" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
+        </form>
+    </table>
+    <br>
+    <br>
         <table class="table">
         <tr>
             <th>Date</th>
@@ -143,11 +144,9 @@
             <td><input type="text" id="description" placeholder="Description" ></td>
             <td><input class="button" type="submit" id="button_add_income_item" value="ยืนยัน" onclick="addIncomeItem()"/></td>
         </tr>
-    </table><br><br>
-    </div>
-
-
-    <div style="overflow-x:auto;">
+    </table>
+    <br>
+    <br>
         <table class="table">
         <tr>
             <th>Date</th>
@@ -178,6 +177,5 @@
             <th colspan="2"><input class="button" type="button" id="button_calculate_payment" value="คำนวณ" onclick="calculatePayment()"/></th>
         </tr>
     </table>
-    </div>
 </body>
 </html>
