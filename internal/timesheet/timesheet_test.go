@@ -1,8 +1,10 @@
 package timesheet_test
 
 import (
+	"errors"
 	"testing"
 	"time"
+	"timesheet/internal/mockinternal"
 	"timesheet/internal/model"
 	. "timesheet/internal/timesheet"
 
@@ -338,5 +340,230 @@ func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingP
 
 	actual := timesheet.CalculatePayment(incomes)
 
+	assert.Equal(t, expected, actual)
+}
+
+func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_SummaryTimesheet(t *testing.T) {
+	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
+	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
+	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
+	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
+	expected := model.SummaryTimesheet{
+		MemberNameENG: "Somkiat Puisungnoen",
+		Email:         "somkiat@scrum123.com",
+		OvertimeRate:  0.00,
+		RatePerDay:    15000.00,
+		RatePerHour:   1875.00,
+		Year:          2019,
+		Month:         12,
+		Incomes: []model.Incomes{
+			{
+				ID:                       61,
+				MemberID:                 "003",
+				Month:                    12,
+				Year:                     2019,
+				Day:                      1,
+				StartTimeAM:              startTimeAM,
+				EndTimeAM:                endTimeAM,
+				StartTimePM:              startTimePM,
+				EndTimePM:                endTimePM,
+				Overtime:                 0,
+				TotalHours:               totalHours,
+				CoachingCustomerCharging: 0.00,
+				CoachingPaymentRate:      0.00,
+				TrainingWage:             40000.00,
+				OtherWage:                0.00,
+				Company:                  "shuhari",
+				Description:              "Technical Excellence at Khonkean",
+			},
+			{
+				ID:                       62,
+				MemberID:                 "003",
+				Month:                    12,
+				Year:                     2019,
+				Day:                      2,
+				StartTimeAM:              startTimeAM,
+				EndTimeAM:                endTimeAM,
+				StartTimePM:              startTimePM,
+				EndTimePM:                endTimePM,
+				Overtime:                 0,
+				TotalHours:               totalHours,
+				CoachingCustomerCharging: 0.00,
+				CoachingPaymentRate:      0.00,
+				TrainingWage:             40000.00,
+				OtherWage:                0.00,
+				Company:                  "shuhari",
+				Description:              "Technical Excellence at Khonkean",
+			},
+		},
+		TimesheetID:                   "003201912",
+		TotalHours:                    "16:00:00",
+		TotalCoachingCustomerCharging: 0.00,
+		TotalCoachingPaymentRate:      0.00,
+		TotalTrainigWage:              80000.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   80000.00,
+	}
+	mockRepository := new(mockinternal.MockRepository)
+	mockRepository.On("GetMemberByID", "003").Return([]model.Member{
+		{
+			ID:                    4,
+			MemberID:              "003",
+			Company:               "siam_chamnankit",
+			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
+			MemberNameENG:         "Somkiat Puisungnoen",
+			Email:                 "somkiat@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                15000.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        750.00,
+			IncomeTax53Percentage: 10,
+			Status:                "wage",
+			TravelExpense:         0.00,
+		},
+		{
+			ID:                    5,
+			MemberID:              "003",
+			Company:               "shuhari",
+			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
+			MemberNameENG:         "Somkiat Puisungnoen",
+			Email:                 "somkiat@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            15000.00,
+			RatePerHour:           1875.00,
+			Salary:                40000.00,
+			IncomeTax1:            5000.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 10,
+			Status:                "wage",
+			TravelExpense:         0.00,
+		},
+	}, nil)
+
+	mockRepository.On("GetIncomes", "003", 2019, 12).Return([]model.Incomes{
+		{
+			ID:                       61,
+			MemberID:                 "003",
+			Month:                    12,
+			Year:                     2019,
+			Day:                      1,
+			StartTimeAM:              startTimeAM,
+			EndTimeAM:                endTimeAM,
+			StartTimePM:              startTimePM,
+			EndTimePM:                endTimePM,
+			Overtime:                 0,
+			TotalHours:               totalHours,
+			CoachingCustomerCharging: 0.00,
+			CoachingPaymentRate:      0.00,
+			TrainingWage:             40000.00,
+			OtherWage:                0.00,
+			Company:                  "shuhari",
+			Description:              "Technical Excellence at Khonkean",
+		},
+		{
+			ID:                       62,
+			MemberID:                 "003",
+			Month:                    12,
+			Year:                     2019,
+			Day:                      2,
+			StartTimeAM:              startTimeAM,
+			EndTimeAM:                endTimeAM,
+			StartTimePM:              startTimePM,
+			EndTimePM:                endTimePM,
+			Overtime:                 0,
+			TotalHours:               totalHours,
+			CoachingCustomerCharging: 0.00,
+			CoachingPaymentRate:      0.00,
+			TrainingWage:             40000.00,
+			OtherWage:                0.00,
+			Company:                  "shuhari",
+			Description:              "Technical Excellence at Khonkean",
+		},
+	}, nil)
+
+	mockRepository.On("GetTimesheet", "003", 2019, 12).Return(model.Timesheet{
+		ID:                            "003201912",
+		MemberID:                      "003",
+		Month:                         12,
+		Year:                          2019,
+		TotalHours:                    "16:00:00",
+		TotalCoachingCustomerCharging: 0.00,
+		TotalCoachingPaymentRate:      0.00,
+		TotalTrainigWage:              80000.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   80000.00,
+	}, nil)
+
+	mockRepository.On("CreateTimesheet", "003", 2019, 12).Return(nil)
+
+	timesheet := Timesheet{
+		Repository: mockRepository,
+	}
+	memberID := "003"
+	year := 2019
+	month := 12
+
+	actual, err := timesheet.GetSummaryByID(memberID, year, month)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
+
+func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_SummaryTimesheet_No_Incomes_And_Created_Timesheet(t *testing.T) {
+	expected := model.SummaryTimesheet{
+		MemberNameENG:                 "Nareenart Narunchon",
+		Email:                         "nareenart@scrum123.com",
+		OvertimeRate:                  0.00,
+		RatePerDay:                    0.00,
+		RatePerHour:                   0.00,
+		Year:                          2019,
+		Month:                         12,
+		Incomes:                       nil,
+		TimesheetID:                   "",
+		TotalHours:                    "",
+		TotalCoachingCustomerCharging: 0.00,
+		TotalCoachingPaymentRate:      0.00,
+		TotalTrainigWage:              0.00,
+		TotalOtherWage:                0.00,
+		PaymentWage:                   0.00,
+	}
+
+	mockRepository := new(mockinternal.MockRepository)
+	mockRepository.On("GetMemberByID", "002").Return([]model.Member{
+		{
+			ID:                    3,
+			MemberID:              "002",
+			Company:               "shuhari",
+			MemberNameTH:          "นารีนารถ เนรัญชร",
+			MemberNameENG:         "Nareenart Narunchon",
+			Email:                 "nareenart@scrum123.com",
+			OvertimeRate:          0.00,
+			RatePerDay:            0.00,
+			RatePerHour:           0.00,
+			Salary:                25000.00,
+			IncomeTax1:            0.00,
+			SocialSecurity:        0.00,
+			IncomeTax53Percentage: 5,
+			Status:                "salary",
+			TravelExpense:         0.00,
+		},
+	}, nil)
+
+	mockRepository.On("GetIncomes", "002", 2019, 12).Return([]model.Incomes(nil), nil)
+	mockRepository.On("GetTimesheet", "002", 2019, 12).Return(model.Timesheet{}, errors.New("sql: no rows in result set"))
+	mockRepository.On("CreateTimesheet", "002", 2019, 12).Return(nil)
+	timesheet := Timesheet{
+		Repository: mockRepository,
+	}
+	memberID := "002"
+	year := 2019
+	month := 12
+
+	actual, err := timesheet.GetSummaryByID(memberID, year, month)
+
+	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }

@@ -23,7 +23,7 @@ type TimesheetGateways interface {
 }
 
 type Timesheet struct {
-	Repository repository.TimesheetRepository
+	Repository repository.TimesheetRepositoryGateways
 }
 
 func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
@@ -144,8 +144,7 @@ func calculateNetSalary(salary, incomeTax1, socialSecurity float64) float64 {
 func calculateNetWage(incomeTax53Percentage int, paymentWage, salary float64) float64 {
 	wage := calculateWage(paymentWage, salary)
 	incomeTax53 := calculateIncomeTax53(wage, incomeTax53Percentage)
-	netWage := wage - incomeTax53
-	return netWage
+	return wage - incomeTax53
 }
 
 func calculateWage(paymentWage, salary float64) float64 {
