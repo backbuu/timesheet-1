@@ -11,9 +11,8 @@ import (
 const (
 	InitialIndex = 0
 
-	NoHaveTravelExpense = 0.00
-	OneMinute           = 60
-	OneHour             = 60
+	OneMinute = 60
+	OneHour   = 60
 )
 
 type TimesheetGateways interface {
