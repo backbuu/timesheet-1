@@ -5,7 +5,7 @@ Library    SeleniumLibrary
 ${URL_PAYMENTS}    http://localhost:8080/
 
 *** Test Case ***
-ดูผลสรุปในหน้า PAYMENTS และเปลี่ยนสถานะการโอนเงินสำเร็จ
+ดูผลสรุปในหน้า PAYMENTS และเปลี่ยนสถานะการโอนเงินเป็น ถูกต้อง สำเร็จของ PRATHAN
     เปิด Browser
     ใส่เดือนและปีที่ต้องการดูสรุปผล
     กดปุ่มยืนยันดูสรุปผล    
@@ -18,7 +18,7 @@ ${URL_PAYMENTS}    http://localhost:8080/
     ตรวจสอบสถานะการโอน    1    ถูกต้อง    28/12/2018     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
     ปิด Browser
 
-ดูสรุปค่าจ้างรายบุคคล
+ดูสรุปค่าจ้างรายบุคคลของ PRATHAN และสามารถเพิ่มค่าจ้างรายวันในวันที่ 28 สำเร็จ
     เปิด Browser
     ใส่เดือนและปีที่ต้องการดูสรุปผลรายบุคคล    12\t2018
     ใส่ชื่อที่ต้องการดูสรุปผลรายบุคคล     PRATHAN
@@ -40,6 +40,17 @@ ${URL_PAYMENTS}    http://localhost:8080/
     ใส่บริษัทที่เป็นผู้รับผิดชอบ    Shuhari
     ใส่คำอธิบายสถานที่หรือหมายเหตุ    Siam Chamnankit and SHR operation
     กดปุ่มยืนยันเพิ่มค่าจ้างรายวัน
+    ปิด Browser
+
+แก้ไขข้อมูลเงินเดือนเป็น 30000 ของ NAREENART สำเร็จ
+    เปิด Browser
+    ใส่เดือนและปีที่ต้องการดูสรุปผลรายบุคคล    12\t2019
+    ใส่ชื่อที่ต้องการดูสรุปผลรายบุคคล     NAREENART
+    กดปุ่มยืนยันดูสรุปค่าจ้างรายบุคคล
+    กดปุ่มแก้ไขข้อมูลพนักงาน
+    เข้าสู่หน้าแก้ไขข้อมูลของพนักงานต้องเจอข้อมูลพนักกงาน    0    shuhari    นารีนารถ เนรัญชร    Nareenart Narunchon    nareenart@scrum123.com    0    0    0    25000    0    750    5    salary    1500
+    ใส่เงินเดือน    0    30000
+    กดยืนยันการแก้ไขข้อมูล    0
     ปิด Browser
 
 ***Keywords***
@@ -188,6 +199,33 @@ ${URL_PAYMENTS}    http://localhost:8080/
 
 กดปุ่มคำนวณสรุปผลค่าจ้าง
     Click Element    id=button_calculate_payment
+
+กดปุ่มแก้ไขข้อมูลพนักงาน
+    Click Element    id=button_edit_member
+
+เข้าสู่หน้าแก้ไขข้อมูลของพนักงานต้องเจอข้อมูลพนักกงาน
+    [Arguments]    ${id}    ${company}    ${name_th}    ${name_eng}    ${email}    ${overtime_rate}    ${rate_per_day}    ${rate_per_hour}    ${salary}    ${income_tax_1}    ${social_security}    ${income_tax_53_percentage}    ${status}    ${travel_expense}
+    Element Text Should Be    id=company_id_${id}    ${company}
+    Textfield Should Contain    id=member_name_th_id_${id}    ${name_th}
+    Textfield Should Contain    id=member_name_eng_id_${id}    ${name_eng}
+    Textfield Should Contain    id=email_id_${id}    ${email}
+    Textfield Should Contain    id=overtime_rate_id_${id}    ${overtime_rate}
+    Textfield Should Contain    id=rate_per_day_id_${id}    ${rate_per_day}
+    Textfield Should Contain    id=rate_per_hour_id_${id}    ${rate_per_hour}
+    Textfield Should Contain    id=salary_id_${id}    ${salary}
+    Textfield Should Contain    id=income_tax_1_id_${id}    ${income_tax_1}
+    Textfield Should Contain    id=social_security_id_${id}    ${social_security}
+    Textfield Should Contain    id=income_tax_53_percentage_id_${id}    ${income_tax_53_percentage}
+    Select From List By Value   id=status_id_${id}    ${status}
+    Textfield Should Contain    id=travel_expense_id_${id}    ${travel_expense}
+
+ใส่เงินเดือน
+    [Arguments]    ${id}    ${salary}
+    Input Text    id=salary_id_${id}    ${salary}
+
+กดยืนยันการแก้ไขข้อมูล
+    [Arguments]    ${id}
+    Click Element    button_edit_member_id_${id}
  
 ปิด Browser
     Close Browser

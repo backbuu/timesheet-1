@@ -376,7 +376,7 @@ function getMemberByID(){
             var member = "";
             for (var i = 0; i < json.length; i++) {
                 member += "<table id =\"table_member_details\">"
-                member += "<tr><th>บริษัท</th><td>"+json[i].company+"</td></tr>";
+                member += "<tr><th>บริษัท</th><td id=\"company_id_"+i+"\">"+json[i].company+"</td></tr>";
                 member += "<tr><th>ชื่อ(ภาษาไทย)</th><td><input type=\"text\" id=\"member_name_th_id_"+i+"\" value=\""+json[i].member_name_th+"\"></td></tr>";
                 member += "<tr><th>ชื่อ(ภาษาอังกฤษ)</th><td><input type=\"text\" id=\"member_name_eng_id_"+i+"\" value=\""+json[i].member_name_eng+"\"></td></tr>";
                 member += "<tr><th>E-mail</th><td><input type=\"email\" id=\"email_id_"+i+"\" value=\""+json[i].email+"\"></td></tr>";

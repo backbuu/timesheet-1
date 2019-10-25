@@ -1,4 +1,4 @@
-all: analysis unit_test build-artifact integration_test acceptance_test
+all: analysis unit_test build-artifact integration_test acceptance_test robot_test
 
 analysis:
 	golangci-lint run
@@ -27,6 +27,14 @@ acceptance_test:
 	newman run atdd/api/deleteIncomeItemSuccess.json
 	newman run atdd/api/showMemberDetailsByIDSuccess.json
 	newman run atdd/api/updateMemberDetailsSuccess.json
+	docker-compose down
+
+robot_test:
+	docker-compose up -d
+	sleep 30
+	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
+	sleep 10
+	robot atdd/ui/timesheet.robot
 	docker-compose down
 
 down:
