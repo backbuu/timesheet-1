@@ -1,11 +1,14 @@
 function showSummary(){
-    var urlString = window.location.href
-    var url = new URL(urlString);
-    var params = new URLSearchParams(url.search);
-    date = params.get("date_summary");
+
+    var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
+
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    $(document).ready(function(){
+        $("#title_timesheet").text(month+"-"+monthNames[month-1]+year+"-TIMESHEET");  
+    });
 
     var request = new XMLHttpRequest();
     var url = "/showSummaryTimesheet";
@@ -445,6 +448,11 @@ function setCurrentDate(){
     $(document).ready(function(){
         $("#date_summary").val(today);  
         $("#date").val(today);  
-    });     
+    });
+
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    $(document).ready(function(){
+        $("#title_timesheet").text(currentMonth+"-"+monthNames[currentMonth-1]+currentYear+"-TIMESHEET");  
+    });   
 }
 
