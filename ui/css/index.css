@@ -4,22 +4,30 @@
 
 .header{
     background-color:#e27d60;
-    height:90px;
+    height:6vw;
+}
+
+.seaching_summary{
+    text-align: center;
 }
 
 body {
     font-family: 'Sarabun', sans-serif;
-    background-color: #dcf7ed;
+    background-color: #f7eee1;
 }
   
 #title_timesheet {
-    color: #0f697c;
-    font-size: 30px;
+    text-align: center;
+    font-size: 4vw;
+}
+
+#form_show_summary_by_id {
+    text-align: center;
 }
 
 .title_company {
     color: #f36e31;
-    font-size: 30px;
+    font-size: 3vw;
     margin: 0;
 }
 
@@ -39,7 +47,7 @@ body {
     background-color: #f36e31;
     color: white;
     text-align: center;
-    font-size: 12px;
+    font-size: 1vw;
 }
 
 #button_show_summary_by_id:hover, #button_show_summary:hover{
@@ -50,7 +58,7 @@ body {
     background-color: #00ce48;
     color: white;
     text-align: center;
-    font-size: 12px;
+    font-size: 1vw;
     width: 100%;
 }
 
