@@ -436,3 +436,15 @@ function editMemberDetails(index){
         "status":status,"travel_expense":travelExpense});    
     request.send(data);
 }
+
+function setCurrentDate(){
+    var currentTime = new Date();
+    var currentYear = String(currentTime.getFullYear());
+    var currentMonth = String(currentTime.getMonth()+1);
+    var today = currentYear + "-" + currentMonth;
+    $(document).ready(function(){
+        $("#date_summary").val(today);  
+        $("#date").val(today);  
+    });     
+}
+
