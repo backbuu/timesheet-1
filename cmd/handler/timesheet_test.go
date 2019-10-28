@@ -17,10 +17,10 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func Test_GetSummaryByIDHandler_Input_Year_2017_Month_12_MemberID_003_Should_Be_SummaryTimesheet(t *testing.T) {
+func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_SummaryTimesheet(t *testing.T) {
 	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
 	timesheetRequest := TimesheetRequest{
-		Year:     2017,
+		Year:     2019,
 		Month:    12,
 		MemberID: "003",
 	}
@@ -33,7 +33,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2017_Month_12_MemberID_003_Should_Be_
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("GetSummaryByID", "003", 2017, 12).Return(model.SummaryTimesheet{
+	mockTimesheet.On("GetSummaryByID", "003", 2019, 12).Return(model.SummaryTimesheet{
 		MemberNameENG: "Somkiat Puisungnoen",
 		Email:         "somkiat@scrum123.com",
 		OvertimeRate:  0.00,
