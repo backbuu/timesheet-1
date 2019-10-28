@@ -11,10 +11,17 @@
 <script src="js/jquery-3.4.1.min.js"></script>
 <script>showSummaryByID();</script>
 <body>
-    <form action="/">
-        <input id="button_payment" type="submit" value="กลับสู่หน้าหลัก"/>
+    <div class="header">
+        <h1 id="title_timesheet_by_id"></h1>
+    </div>
+    <br>
+    <form action="index.html">
+            <input id="button_payment" type="submit" value="กลับสู่หน้าหลัก"/>
     </form>
-    <h1 id="title_timesheet">WORK TIMESHEET</h1>
+    <form action="memberdetails.html">
+        <input id="button_edit_member" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
+    </form>
+    <br><br>
     <table class="table_details">
         <tr>
             <th>Name:</th>
@@ -46,9 +53,7 @@
             <td id="year"></td>
         </tr>
     </table>
-        <form action="memberdetails.html">
-            <input style="position:relative;left:600px;top:-206px;" id="button_edit_member" type="submit" value="แก้ไขข้อมูลพนักงาน"/>
-        </form>
+       
     <br>
     <br>
         <table class="table">
