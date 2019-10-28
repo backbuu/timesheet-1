@@ -199,7 +199,7 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 }
 
 func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
-	transactionTimesheet := []model.TransactionTimesheet{
+	transactionTimesheetList := []model.TransactionTimesheet{
 		{
 			MemberID:               "001",
 			Month:                  12,
@@ -249,7 +249,7 @@ func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Cre
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.VerifyTransactionTimsheet(transactionTimesheet)
+	err := repository.VerifyTransactionTimsheet(transactionTimesheetList)
 
 	assert.Equal(t, nil, err)
 }
