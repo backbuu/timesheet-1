@@ -2,9 +2,19 @@
   box-sizing: border-box;
 }
 
-#title_payments {
+.header{
+    background-color:#e27d60;
+    height:90px;
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: #dcf7ed;
+}
+  
+#title_timesheet {
     color: #0f697c;
-    font-size: 60px;
+    font-size: 30px;
 }
 
 .title_company {
@@ -46,9 +56,4 @@
 
 .button:hover {
   background-color:#21723e;
-}
-
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #e7faf3;
 }
