@@ -15,6 +15,8 @@ ${URL_PAYMENTS}    http://localhost:8080/
     ใส่วันที่โอนเงิน    1    28/12/2018
     ใส่หมายเหตุ    1     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
     กดปุ่มเปลี่ยนสถานะ    1
+    ใส่เดือนและปีที่ต้องการดูสรุปผล
+    กดปุ่มยืนยันดูสรุปผล 
     ตรวจสอบสถานะการโอน    1    ถูกต้อง    28/12/2018     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
     ปิด Browser
 
@@ -64,7 +66,7 @@ ${URL_PAYMENTS}    http://localhost:8080/
     Click Element    id=button_show_summary
 
 เข้าสู่หน้าสรุปผลค่าจ้างเดือนและปีนั้น
-    Element Text Should Be    id=title_payments    PAYMENTS
+    Element Text Should Be    id=title_timesheet    12-DECEMBER2018-TIMESHEET
 
 ต้องเจอพนักงานในตารางแรก
     [Arguments]    ${id}    ${name}    ${coaching}    ${training}    ${other}    ${total_incomes}    ${salary}    ${income_tax_1}    ${social_security}    ${net_salary}    ${wage}    ${income_tax_53_percentage}    ${income_tax_53}    ${net_wage}    ${net_transfer}    ${status_checking_transfer}
