@@ -72,8 +72,11 @@ func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	transactionTimesheet, _ := api.TimesheetRepository.GetSummary(request.Year, request.Month)
-	context.JSON(http.StatusOK, transactionTimesheet)
+	transactionTimesheetList, err := api.TimesheetRepository.GetSummary(request.Year, request.Month)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	context.JSON(http.StatusOK, transactionTimesheetList)
 }
 
 func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
