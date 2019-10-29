@@ -1,34 +1,54 @@
+header {
+    position: fixed;
+    width:100%;
+    z-index: 1;
+    height: 88%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+/* HERE ENDS THE MAGIC */
+header .container {
+    padding-top: 150px;
+    padding-bottom: 50px;
+}
+
+header img {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+header .intro-text .name {
+    display: block;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+header .intro-text .skills {
+    font-size: 1.25em;
+    font-weight: 300;
+}
+
+
 * {
   box-sizing: border-box;
 }
 
-.header{
-    background-color:#e27d60;
-    height:6vw;
-}
-
 .seaching_summary{
     text-align: center;
-}
-
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #f7eee1;
-}
-  
-#title_timesheet {
-    text-align: center;
-    font-size: 4vw;
-}
-
-#form_show_summary_by_id {
-    text-align: center;
+    padding-top: 100px;
+    padding-left: 30px;
 }
 
 .title_company {
     color: #f36e31;
-    font-size: 3vw;
+    font-size: 20px;
     margin: 0;
+    padding-top: 50px;
+    padding-left: 30px;
 }
 
 .table_company th{
@@ -38,7 +58,7 @@ body {
 }
 
 .table_company td{
-    color: #ffffff;
+    color: #0a3d47;
     text-align: center;
     background-color: #5aaebd;
 }
@@ -47,7 +67,7 @@ body {
     background-color: #f36e31;
     color: white;
     text-align: center;
-    font-size: 1vw;
+    font-size: 12px;
 }
 
 #button_show_summary_by_id:hover, #button_show_summary:hover{
