@@ -55,12 +55,14 @@ header .intro-text .skills {
     color: #ffffff;
     text-align: center;
     background-color: #0f697c;
+    border: 1px solid white;
 }
 
 .table_company td{
     color: #0a3d47;
     text-align: center;
     background-color: #5aaebd;
+    border: 1px solid white;
 }
 
 #button_show_summary_by_id, #button_show_summary {
