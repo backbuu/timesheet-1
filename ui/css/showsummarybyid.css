@@ -4,16 +4,16 @@
 
 .header{
     background-color:#e27d60;
-    height:9vw;
+    height:6vw;
 }
 
 #title_timesheet_by_id {
-    font-size: 6vw;
+    font-size: 4vw;
     text-align: center;
 }
 
 .table_details tr{
-    font-size: 2vw;
+    font-size: 20px;
     text-align: left;
 }
 
@@ -90,5 +90,5 @@
 
 body {
     font-family: 'Sarabun', sans-serif;
-    background-color: #f7eee1;
+    background-color: white;
 }

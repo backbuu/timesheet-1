@@ -44,33 +44,33 @@
 
 #table_member_details th{
     color: #07343d;
-    font-size: 1.8vw;
+    font-size: 18px;
     text-align: left;
-    padding-left: 8vw;
-    padding-right: 4vw;
+    padding-left: 80px;
+    padding-right: 40px;
 }
 
 #table_member_details td{
     color: #07343d;
-    font-size: 1.8vw;
+    font-size: 18px;
     text-align: left;
-    width: 20vw;
+    width: 200px;
 }
 
 input[type=text],input[type=number],input[type=email] {
     width: 100%;
-    padding: 1vw 1vw;
-    margin: 0.2vw;
+    padding: 10px 1px;
+    margin: 2px;
     border-top-style: none;
     border-right-style: none; 
-    border-bottom: 0.2vw solid #0f697c ;
+    border-bottom: 2px solid #0f697c ;
     border-left-style: none;
     box-sizing: border-box;
     background-color:transparent;
-    font-size: 1.5vw;
+    font-size: 15px;
 }
 
 body {
     font-family: 'Sarabun', sans-serif;
-    background-color: #f7eee1;
+    background-color: white;
 }
