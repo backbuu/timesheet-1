@@ -59,9 +59,6 @@ func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	if request.MemberID == "" || request.Year == 0 || request.Month == 0 {
-		context.Status(http.StatusBadRequest)
-	}
 	summaryTimesheet, err := api.Timesheet.GetSummaryByID(request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -75,8 +72,11 @@ func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	transactionTimesheet, _ := api.TimesheetRepository.GetSummary(request.Year, request.Month)
-	context.JSON(http.StatusOK, transactionTimesheet)
+	transactionTimesheetList, err := api.TimesheetRepository.GetSummary(request.Year, request.Month)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	context.JSON(http.StatusOK, transactionTimesheetList)
 }
 
 func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
@@ -151,11 +151,11 @@ func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	memberDetailList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	memberList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
-	context.JSON(http.StatusOK, memberDetailList)
+	context.JSON(http.StatusOK, memberList)
 }
 
 func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {

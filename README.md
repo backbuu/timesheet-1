@@ -53,12 +53,6 @@ OneMinute, ShuhariCompany
 year, member_id
 ```
 
-# Error Message Pattern
-- ใช้รูปแบบ verb + noun + "error" เช่น
-```
-Get incomes error
-```
-
 ## ข้อตกลง Commit Message ร่วมกัน
 `[Created]: สร้างไฟล์ใหม่`
 

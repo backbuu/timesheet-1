@@ -2,16 +2,28 @@
   box-sizing: border-box;
 }
 
+.header{
+    background-color:#e27d60;
+    height:6vw;
+}
+
 #title_profile {
-    color: #0f697c;
-    font-size: 60px;
+    text-align: center;
+    font-size: 4vw;
 }
 
 #button_back {
     background-color: #f36e31;
     color: #ffffff;
-    font-size: 16px;
-    margin: 5px;
+    font-size: 1.6vw;
+    margin: 0.5vw;
+}
+
+#button_edit_member{
+    background-color: #f36e31;
+    color: #ffffff;
+    font-size: 1.6vw;
+    margin: 0.5vw;
 }
 
 #button_back:hover {
@@ -19,11 +31,11 @@
 }
 
 .button {
-    text-align: left;
     background-color: #00ce48;
     color: white;
     text-align: center;
-    font-size: 16px;
+    font-size: 1.6vw;
+    position: relative;
 }
 
 .button:hover {
@@ -47,7 +59,7 @@
 
 input[type=text],input[type=number],input[type=email] {
     width: 100%;
-    padding: 10px 10px;
+    padding: 10px 1px;
     margin: 2px;
     border-top-style: none;
     border-right-style: none; 
@@ -55,9 +67,10 @@ input[type=text],input[type=number],input[type=email] {
     border-left-style: none;
     box-sizing: border-box;
     background-color:transparent;
+    font-size: 15px;
 }
 
 body {
     font-family: 'Sarabun', sans-serif;
-    background-color: #e7faf3;
+    background-color: white;
 }

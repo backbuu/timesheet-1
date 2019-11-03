@@ -2,9 +2,14 @@
   box-sizing: border-box;
 }
 
-#title_timesheet {
-    color: #0f697c;
-    font-size: 60px;
+.header{
+    background-color:#e27d60;
+    height:6vw;
+}
+
+#title_timesheet_by_id {
+    font-size: 4vw;
+    text-align: center;
 }
 
 .table_details tr{
@@ -21,11 +26,11 @@
 
 .table th{
     background-color: #0f697c;
-    border: 2px solid #ffffff;
+    border: 0.2vw solid #ffffff;
 }
 
 .table td{
-    border: 2px solid #ffffff;
+    border: 0.2vw solid #ffffff;
 }
 
 #income_company_shuhari {
@@ -44,26 +49,26 @@
 }
 
 #button_edit_member {
-    background-color: #00968f;
+    background-color: #f36e31;
     color: white;
     font-size: 16px;
 }
 
 #button_edit_member:hover {
-    background-color: #042738;
+    background-color: #a13422;
 }
 
 .table_details {
     color: #07343d;
-    padding-left: 80px;
-    padding-right: 40px;
+    padding-left: 8vw;
+    padding-right: 4vw;
 }
 
 .button {
     background-color: #00ce48;
     color: white;
     text-align: center;
-    font-size: 12px;
+    font-size: 10px;
     width: 100%;
 }
 
@@ -75,7 +80,7 @@
     background-color: #0f697c;
     color: #ffffff;
     text-align: center;
-    font-size: 12px;
+    font-size: 1.2vw;
     width: 100%;
 }
 
@@ -85,5 +90,5 @@
 
 body {
     font-family: 'Sarabun', sans-serif;
-    background-color: #e7faf3;
+    background-color: white;
 }

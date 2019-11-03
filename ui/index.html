@@ -9,124 +9,129 @@
 </head>
 <script src="js/timesheet.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
-<script>showSummary();</script>
+<script>setCurrentDate();</script>
 <body>
-  <form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
-    <input type="month" id="date" name="date">
-    <select name="id" id="id">
-      <option value="" selected disabled hidden>รายชื่อ</option>
-      <option value="007">PRUTH</option>
-      <option value="001">PRATHAN</option>
-      <option value="004">THAWATCHAI</option>
-      <option value="003">SOMKIAT</option>
-      <option value="008">CHAMNAN</option>
-      <option value="009">CHONNIKAN</option>
-      <option value="010">CHITPONG</option>
-      <option value="011">NATHAWAT</option>
-      <option value="012">PICHAYA</option>
-      <option value="013">PICHAI</option>
-      <option value="002">NAREENART</option>
-      <option value="005">APIPOL</option>
-      <option value="006">PANUMARS</option>
-      <option value="014">NATTAKIT</option>      
-    </select>
-    <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
-  </form>
-  <br>
-  <h1 id="title_payments">PAYMENTS</h1>
-    <form action="/" method="get">
-      <input id="date_summary" name="date_summary" type="month" value="2018-12">
-      <input id="button_show_summary" type="submit" value="ยืนยัน"/>
-    </form>
-  <br>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">1.1.min.js"></script> -->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand" id="title_timesheet"></a>
+            <form class="nav navbar-nav navbar-right" id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
+                <input type="month" id="date" name="date">
+                <select name="id" id="id">
+                  <option value="" selected disabled hidden>รายชื่อ</option>
+                  <option value="007">PRUTH</option>
+                  <option value="001">PRATHAN</option>
+                  <option value="004">THAWATCHAI</option>
+                  <option value="003">SOMKIAT</option>
+                  <option value="008">CHAMNAN</option>
+                  <option value="009">CHONNIKAN</option>
+                  <option value="010">CHITPONG</option>
+                  <option value="011">NATHAWAT</option>
+                  <option value="012">PICHAYA</option>
+                  <option value="013">PICHAI</option>
+                  <option value="002">NAREENART</option>
+                  <option value="005">APIPOL</option>
+                  <option value="006">PANUMARS</option>
+                  <option value="014">NATTAKIT</option>      
+                </select>
+                <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
+            </form>
+        </div>
+        
+    </div>
+</nav>
+</div>
+  <div class="seaching_summary">
+    TIMESHEET :<input id="date_summary" name="date_summary" type="month">
+    <input id="button_show_summary" type="submit" value="ยืนยัน" onclick="showSummary()"/>
+  </div>
   <h2 class="title_company">SIAM CHAMNANKIT</h2>
-  <table class="table_company" border="0.5" width="2000">
-    <tr>
-      <th rowspan="3">ลำดับที่</th>
-      <th rowspan="3">พนักงาน</th>
-      <th colspan="4">รายได้</th>
-      <th colspan="4"></th>
-      <th colspan="5">รายรับก้อนเงินค่าจ้าง หัก ณ ที่จ่าย ภ.ง.ด. 53</th>
-      <th rowspan="3">สถานะการตรวจสอบ</th>
-      <th rowspan="3">วันที่โอนเงิน</th>
-      <th rowspan="3" colspan="2">หมายเหตุ</th>
-      </tr> 
+  <table class="table_company" width="2100">
       <tr>
-      <td>Coaching</td>
-      <td>Training</td>
-      <td>Other</td>
-      <td>รวม</td>
-      <td>เงินเดือน</td>
-      <td>หัก ณ ที่จ่าย ภ.ง.ด.1</td>
-      <td>หัก ประกันสังคม</td>
-      <td>ยอดสุทธิเงินเดือน</td>
-      <td>เงินค่าจ้าง</td>
-      <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
-      <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
-      <td>ยอดสุทธิค่าจ้าง</td>
-      <td>ยอดโอนเงินสุทธิ</td>
-      </tr>
-      <tr>
-      <td id="total_coaching_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_traning_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_other_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_incomes_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_salary_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_income_tax_1_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_social_security_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_net_salary_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_wage_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_income_tax_53_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_net_wage_siam_chamnankit">฿ 0.00 </td>
-      <td id="total_net_transfer_siam_chamnankit">฿ 0.00 </td>
-      </tr>
-      <tbody id="table_siam_chamnankit"></tbody>
-  </table>
-  <br>
-  <br>
-  <br>
+        <th rowspan="3">ลำดับที่</th>
+        <th rowspan="3">พนักงาน</th>
+        <th colspan="4">รายได้</th>
+        <th colspan="4"></th>
+        <th colspan="5">รายรับก้อนเงินค่าจ้าง หัก ณ ที่จ่าย ภ.ง.ด. 53</th>
+        <th rowspan="3">สถานะการตรวจสอบ</th>
+        <th rowspan="3">วันที่โอนเงิน</th>
+        <th rowspan="3" colspan="2">หมายเหตุ</th>
+        </tr> 
+        <tr>
+        <td>Coaching</td>
+        <td>Training</td>
+        <td>Other</td>
+        <td>รวม</td>
+        <td>เงินเดือน</td>
+        <td>หัก ณ ที่จ่าย ภ.ง.ด.1</td>
+        <td>หัก ประกันสังคม</td>
+        <td>ยอดสุทธิเงินเดือน</td>
+        <td>เงินค่าจ้าง</td>
+        <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
+        <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
+        <td>ยอดสุทธิค่าจ้าง</td>
+        <td>ยอดโอนเงินสุทธิ</td>
+        </tr>
+        <tr>
+        <td id="total_coaching_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_traning_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_other_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_incomes_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_salary_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_income_tax_1_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_social_security_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_net_salary_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_wage_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_income_tax_53_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_net_wage_siam_chamnankit">฿ 0.00 </td>
+        <td id="total_net_transfer_siam_chamnankit">฿ 0.00 </td>
+        </tr>
+        <tbody id="table_siam_chamnankit"></tbody>
+    </table>
   <h2 class="title_company">SHUHARI</h2>
-  <table class="table_company" border="0.5" width="2000">
-    <tr>
-      <th rowspan="3">ลำดับที่</th>
-      <th rowspan="3">พนักงาน</th>
-      <th colspan="4">รายได้</th>
-      <th colspan="4"></th>
-      <th colspan="5">รายรับก้อนเงินค่าจ้าง หัก ณ ที่จ่าย ภ.ง.ด. 53</th>
-      <th rowspan="3">สถานะการตรวจสอบ</th>
-      <th rowspan="3">วันที่โอนเงิน</th>
-      <th rowspan="3" colspan="2">หมายเหตุ</th>
-       </tr> 
+  <table class="table_company" border="0.5" width="2100">
       <tr>
-      <td>Coaching</td>
-      <td>Training</td>
-      <td>Other</td>
-      <td>รวม</td>
-      <td>เงินเดือน</td>
-      <td>หัก ณ ที่จ่าย ภ.ง.ด.1</td>
-      <td>หัก ประกันสังคม</td>
-      <td>ยอดสุทธิเงินเดือน</td>
-      <td>เงินค่าจ้าง</td>
-      <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
-      <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
-      <td>ยอดสุทธิค่าจ้าง</td>
-      <td>ยอดโอนเงินสุทธิ</td>
-      </tr>
-      <tr>
-      <td id="total_coaching_shuhari">฿ 0.00 </td>
-      <td id="total_traning_shuhari">฿ 0.00 </td>
-      <td id="total_other_shuhari">฿ 0.00 </td>
-      <td id="total_incomes_shuhari">฿ 0.00 </td>
-      <td id="total_salary_shuhari">฿ 0.00 </td>
-      <td id="total_income_tax_1_shuhari">฿ 0.00 </td>
-      <td id="total_social_security_shuhari">฿ 0.00 </td>
-      <td id="total_net_salary_shuhari">฿ 0.00 </td>
-      <td id="total_wage_shuhari">฿ 0.00 </td>
-      <td id="total_income_tax_53_shuhari">฿ 0.00 </td>
-      <td id="total_net_wage_shuhari">฿ 0.00 </td>
-      <td id="total_net_transferShuhari">฿ 0.00 </td>
-      </tr>
-      <tbody id="table_shuhari"></tbody>
+        <th rowspan="3">ลำดับที่</th>
+        <th rowspan="3">พนักงาน</th>
+        <th colspan="4">รายได้</th>
+        <th colspan="4"></th>
+        <th colspan="5">รายรับก้อนเงินค่าจ้าง หัก ณ ที่จ่าย ภ.ง.ด. 53</th>
+        <th rowspan="3">สถานะการตรวจสอบ</th>
+        <th rowspan="3">วันที่โอนเงิน</th>
+        <th rowspan="3" colspan="2">หมายเหตุ</th>
+         </tr> 
+        <tr>
+        <td>Coaching</td>
+        <td>Training</td>
+        <td>Other</td>
+        <td>รวม</td>
+        <td>เงินเดือน</td>
+        <td>หัก ณ ที่จ่าย ภ.ง.ด.1</td>
+        <td>หัก ประกันสังคม</td>
+        <td>ยอดสุทธิเงินเดือน</td>
+        <td>เงินค่าจ้าง</td>
+        <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
+        <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
+        <td>ยอดสุทธิค่าจ้าง</td>
+        <td>ยอดโอนเงินสุทธิ</td>
+        </tr>
+        <tr>
+        <td id="total_coaching_shuhari">฿ 0.00 </td>
+        <td id="total_traning_shuhari">฿ 0.00 </td>
+        <td id="total_other_shuhari">฿ 0.00 </td>
+        <td id="total_incomes_shuhari">฿ 0.00 </td>
+        <td id="total_salary_shuhari">฿ 0.00 </td>
+        <td id="total_income_tax_1_shuhari">฿ 0.00 </td>
+        <td id="total_social_security_shuhari">฿ 0.00 </td>
+        <td id="total_net_salary_shuhari">฿ 0.00 </td>
+        <td id="total_wage_shuhari">฿ 0.00 </td>
+        <td id="total_income_tax_53_shuhari">฿ 0.00 </td>
+        <td id="total_net_wage_shuhari">฿ 0.00 </td>
+        <td id="total_net_transferShuhari">฿ 0.00 </td>
+        </tr>
+        <tbody id="table_shuhari"></tbody>
   </table>
 </body>
 </html>

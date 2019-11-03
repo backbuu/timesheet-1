@@ -1,28 +1,68 @@
+header {
+    position: fixed;
+    width:100%;
+    z-index: 1;
+    height: 88%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+/* HERE ENDS THE MAGIC */
+header .container {
+    padding-top: 150px;
+    padding-bottom: 50px;
+}
+
+header img {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+header .intro-text .name {
+    display: block;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+header .intro-text .skills {
+    font-size: 1.25em;
+    font-weight: 300;
+}
+
+
 * {
   box-sizing: border-box;
 }
 
-#title_payments {
-    color: #0f697c;
-    font-size: 60px;
+.seaching_summary{
+    text-align: center;
+    padding-top: 100px;
+    padding-left: 30px;
 }
 
 .title_company {
     color: #f36e31;
-    font-size: 30px;
+    font-size: 20px;
     margin: 0;
+    padding-top: 50px;
+    padding-left: 30px;
 }
 
 .table_company th{
     color: #ffffff;
     text-align: center;
     background-color: #0f697c;
+    border: 1px solid white;
 }
 
 .table_company td{
-    color: #ffffff;
+    color: #0a3d47;
     text-align: center;
     background-color: #5aaebd;
+    border: 1px solid white;
 }
 
 #button_show_summary_by_id, #button_show_summary {
@@ -40,15 +80,10 @@
     background-color: #00ce48;
     color: white;
     text-align: center;
-    font-size: 12px;
+    font-size: 1vw;
     width: 100%;
 }
 
 .button:hover {
   background-color:#21723e;
-}
-
-body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: #e7faf3;
 }

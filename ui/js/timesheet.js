@@ -1,12 +1,14 @@
 function showSummary(){
-    var urlString = window.location.href
-    var url = new URL(urlString);
-    var params = new URLSearchParams(url.search);
-    date = params.get("date_summary");
+    var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
-
+    
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+      $(document).click(function(){
+        $("#title_timesheet").text(month+"-"+monthNames[month-1]+year+"-TIMESHEET");  
+    });
+    
     var request = new XMLHttpRequest();
     var url = "/showSummaryTimesheet";
     request.open("POST", url, true);
@@ -44,6 +46,7 @@ function showSummary(){
             var totalNetWageShuhari = 0;
             var totalNetTransferShuhari = 0;
    
+            if (json !== null){
             for (var i = 1; i <= json.length; i++) {  
                 if(json[i-1].company === "siam_chamnankit"){
                     countSiamChamnankit++;
@@ -84,7 +87,7 @@ function showSummary(){
                     siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     siamChamnankit += "</tr>";
             
                 }else{
@@ -126,37 +129,38 @@ function showSummary(){
                     shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"เปลี่ยนสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     shuhari += "</tr>";
                 }
             }
             $("#table_siam_chamnankit").html(siamChamnankit);
-            $("#total_coaching_siam_chamnankit").html(totalCoachingSiamChamnankit);
-            $("#total_traning_siam_chamnankit").html(totalTraningSiamChamnankit);
-            $("#total_other_siam_chamnankit").html(totalOtherSiamChamnankit);
-            $("#total_incomes_siam_chamnankit").html(totalIncomesSiamChamnankit);
-            $("#total_salary_siam_chamnankit").html(totalSalarySiamChamnankit);
-            $("#total_income_tax_1_siam_chamnankit").html(totalIncomeTax1SiamChamnankit);
-            $("#total_social_security_siam_chamnankit").html(totalSocialSecuritySiamChamnankit);
-            $("#total_net_salary_siam_chamnankit").html(totalNetSalarySiamChamnankit);
-            $("#total_wage_siam_chamnankit").html(totalWageSiamChamnankit);
-            $("#total_income_tax_53_siam_chamnankit").html(totalIncomeTax53SiamChamnankit);
-            $("#total_net_wage_siam_chamnankit").html(totalNetWageSiamChamnankit);
-            $("#total_net_transfer_siam_chamnankit").html(totalNetTransferSiamChamnankit);
+            $("#total_coaching_siam_chamnankit").html("฿ "+totalCoachingSiamChamnankit);
+            $("#total_traning_siam_chamnankit").html("฿ "+totalTraningSiamChamnankit);
+            $("#total_other_siam_chamnankit").html("฿ "+totalOtherSiamChamnankit);
+            $("#total_incomes_siam_chamnankit").html("฿ "+totalIncomesSiamChamnankit);
+            $("#total_salary_siam_chamnankit").html("฿ "+totalSalarySiamChamnankit);
+            $("#total_income_tax_1_siam_chamnankit").html("฿ "+totalIncomeTax1SiamChamnankit);
+            $("#total_social_security_siam_chamnankit").html("฿ "+totalSocialSecuritySiamChamnankit);
+            $("#total_net_salary_siam_chamnankit").html("฿ "+totalNetSalarySiamChamnankit);
+            $("#total_wage_siam_chamnankit").html("฿ "+totalWageSiamChamnankit);
+            $("#total_income_tax_53_siam_chamnankit").html("฿ "+totalIncomeTax53SiamChamnankit);
+            $("#total_net_wage_siam_chamnankit").html("฿ "+totalNetWageSiamChamnankit);
+            $("#total_net_transfer_siam_chamnankit").html("฿ "+totalNetTransferSiamChamnankit);
             
             $("#table_shuhari").html(shuhari);
-            $("#total_coaching_shuhari").html(totalCoachingShuhari);
-            $("#total_traning_shuhari").html(totalTraningShuhari);
-            $("#total_other_shuhari").html(totalOtherShuhari);
-            $("#total_incomes_shuhari").html(totalIncomesShuhari);
-            $("#total_salary_shuhari").html(totalSalaryShuhari);
-            $("#total_income_tax_1_shuhari").html(totalIncomeTax1Shuhari);
-            $("#total_social_security_shuhari").html(totalSocialSecurityShuhari);
-            $("#total_net_salary_shuhari").html(totalNetSalaryShuhari);
-            $("#total_wage_shuhari").html(totalWageShuhari);
-            $("#total_income_tax_53_shuhari").html(totalIncomeTax53Shuhari);
-            $("#total_net_wage_shuhari").html(totalNetWageShuhari);
-            $("#total_net_transferShuhari").html(totalNetTransferShuhari);  
+            $("#total_coaching_shuhari").html("฿ "+totalCoachingShuhari);
+            $("#total_traning_shuhari").html("฿ "+totalTraningShuhari);
+            $("#total_other_shuhari").html("฿ "+totalOtherShuhari);
+            $("#total_incomes_shuhari").html("฿ "+totalIncomesShuhari);
+            $("#total_salary_shuhari").html("฿ "+totalSalaryShuhari);
+            $("#total_income_tax_1_shuhari").html("฿ "+totalIncomeTax1Shuhari);
+            $("#total_social_security_shuhari").html("฿ "+totalSocialSecurityShuhari);
+            $("#total_net_salary_shuhari").html("฿ "+totalNetSalaryShuhari);
+            $("#total_wage_shuhari").html("฿ "+totalWageShuhari);
+            $("#total_income_tax_53_shuhari").html("฿ "+totalIncomeTax53Shuhari);
+            $("#total_net_wage_shuhari").html("฿ "+totalNetWageShuhari);
+            $("#total_net_transferShuhari").html("฿ "+totalNetTransferShuhari);
+        }  
         }
     }; 
     var data = JSON.stringify({"year":year, "month": month});
@@ -256,6 +260,7 @@ function calculatePayment() {
 }
 
 function showSummaryByID() {
+    setCurrentDate();
     const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 
     var urlString = window.location.href
@@ -271,6 +276,11 @@ function showSummaryByID() {
         alert("โปรดกรอกข้อมูลให้ครบถ้วน");
         location.href = document.referrer
     }
+
+    const monthNamesCapital = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    $(document).ready(function(){
+      $("#title_timesheet_by_id").text(month+"-"+monthNamesCapital[month-1]+year+"-TIMESHEET");  
+    });
 
     var request = new XMLHttpRequest();
     var url = "/showTimesheetByID";
@@ -394,7 +404,7 @@ function getMemberByID(){
                 member += "</select></td></tr>";
                 member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
                 member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
-                member += "<tr><td style=\"position:relative;left:600px;top:-30px;\" colspan=\"2\"><input  class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
+                member += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
                 member += "</table>"
                 if (i+1 < json.length) {
                     member += "<br><br><br>"
@@ -436,3 +446,22 @@ function editMemberDetails(index){
         "status":status,"travel_expense":travelExpense});    
     request.send(data);
 }
+
+function setCurrentDate(){
+    var currentTime = new Date();
+    var currentYear = String(currentTime.getFullYear());
+    var currentMonth = String(currentTime.getMonth()+1);
+    var today = currentYear + "-" + currentMonth;
+    $(document).ready(function(){
+        $("#date_summary").val(today);  
+        $("#date").val(today);  
+        showSummary();
+    });
+
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    $(document).ready(function(){
+        $("#title_timesheet").text(currentMonth+"-"+monthNames[currentMonth-1]+currentYear+"-TIMESHEET");  
+    });  
+    
+}
+

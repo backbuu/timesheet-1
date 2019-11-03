@@ -97,9 +97,3 @@ type Member struct {
 	Status                string  `db:"status" json:"status"`
 	TravelExpense         float64 `db:"travel_expense" json:"travel_expense"`
 }
-
-type Time struct {
-	Hours   int
-	Minutes int
-	Seconds int
-}

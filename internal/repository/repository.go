@@ -18,7 +18,7 @@ type TimesheetRepositoryGateways interface {
 	GetMemberByID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
-	VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error
+	VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
 	CreateTimesheet(memberID string, year int, month int) error
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
@@ -79,8 +79,8 @@ func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Me
 	return memberList, nil
 }
 
-func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheet []model.TransactionTimesheet) error {
-	for _, transactionTimesheet := range transactionTimesheet {
+func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error {
+	for _, transactionTimesheet := range transactionTimesheetList {
 		query := `SELECT COUNT(id) FROM transactions WHERE id LIKE ?`
 		var count int
 		transactionID := transactionTimesheet.MemberID + strconv.Itoa(transactionTimesheet.Year) + strconv.Itoa(transactionTimesheet.Month) + transactionTimesheet.Company
@@ -172,14 +172,14 @@ func (repository TimesheetRepository) UpdateTimesheet(timesheet model.Timesheet,
 }
 
 func (repository TimesheetRepository) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
-	var payment model.Timesheet
+	var timesheet model.Timesheet
 	query := `SELECT * FROM timesheets WHERE id = ?`
 	timesheetID := memberID + strconv.Itoa(year) + strconv.Itoa(month)
-	err := repository.DatabaseConnection.Get(&payment, query, timesheetID)
+	err := repository.DatabaseConnection.Get(&timesheet, query, timesheetID)
 	if err != nil {
 		return model.Timesheet{}, err
 	}
-	return payment, nil
+	return timesheet, nil
 }
 
 func (repository TimesheetRepository) UpdateStatusTransfer(transactionID, status, date, comment string) error {
