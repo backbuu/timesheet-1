@@ -64,7 +64,7 @@ ${URL_PAYMENTS}    http://localhost:8080/
     Click Element    id=button_show_summary
 
 เข้าสู่หน้าสรุปผลค่าจ้างเดือนและปีนั้น
-    Element Text Should Be    id=title_timesheet    TIMESHEET
+    Element Text Should Be    id=title_payments    PAYMENTS
 
 ต้องเจอพนักงานในตารางแรก
     [Arguments]    ${id}    ${name}    ${coaching}    ${training}    ${other}    ${total_incomes}    ${salary}    ${income_tax_1}    ${social_security}    ${net_salary}    ${wage}    ${income_tax_53_percentage}    ${income_tax_53}    ${net_wage}    ${net_transfer}    ${status_checking_transfer}
