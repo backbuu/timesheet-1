@@ -63,3 +63,8 @@ func (mock *MockRepository) UpdateMemberDetails(memberDetails model.Member) erro
 	argument := mock.Called(memberDetails)
 	return argument.Error(0)
 }
+
+func (mock *MockRepository) CreateAuthentication(userInfo model.UserInfo, token model.Token) error {
+	argument := mock.Called(userInfo, token)
+	return argument.Error(0)
+}

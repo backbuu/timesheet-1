@@ -25,6 +25,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
+	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
 }
 
 type TimesheetRepository struct {
