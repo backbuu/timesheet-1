@@ -40,6 +40,8 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.GET("/login", handler.OauthGoogleLogin)
+	router.GET("/callback", handler.OauthGoogleCallback)
 
 	router.POST("/showSummaryTimesheet", api.GetSummaryHandler)
 	router.POST("/addIncomeItem", api.CreateIncomeHandler)
@@ -49,6 +51,6 @@ func main() {
 	router.POST("/deleteIncomeItem", api.DeleteIncomeHandler)
 	router.POST("/showMemberDetailsByID", api.ShowMemberDetailsByIDHandler)
 	router.POST("/updateMemberDetails", api.UpdateMemberDetailsHandler)
-	router.StaticFS("/", http.Dir("ui"))
+	router.StaticFS("/home", http.Dir("ui"))
 	log.Fatal(router.Run())
 }
