@@ -97,3 +97,21 @@ type Member struct {
 	Status                string  `db:"status" json:"status"`
 	TravelExpense         float64 `db:"travel_expense" json:"travel_expense"`
 }
+
+type Authentication struct {
+	MemberID     string    `db:"member_id" json:"member_id"`
+	Email        string    `db:"email" json:"email"`
+	Picture      string    `db:"picture" json:"picture"`
+	AccessToken  string    `db:"access_token" json:"access_token"`
+	TokenType    string    `db:"token_type" json:"token_type"`
+	RefreshToken string    `db:"refresh_token" json:"refresh_token"`
+	Expiry       time.Time `db:"expiry" json:"expiry"`
+}
+
+type UserInfo struct {
+	ID            string `json:"id"`
+	Email         string `json:"email"`
+	VerifiedEmail bool   `json:"verified_email"`
+	Picture       string `json:"picture"`
+	HD            string `json:"hd"`
+}
