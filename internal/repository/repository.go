@@ -228,13 +228,19 @@ func (repository TimesheetRepository) GetMemberIDByEmail(email string) (string, 
 	return memberID, nil
 }
 
-// func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserInfo, token *oauth2.Token) error {
-// 	memberID, err := repository.getMemberIDByEmail(userInfo.Email)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	_ = model.Authentication{
-// 		MemberID: memberID,
-// 	}
-// 	return nil
-// }
+func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserInfo, token model.Token) error {
+	memberID, err := repository.GetMemberIDByEmail(userInfo.Email)
+	if err != nil {
+		return err
+	}
+	query := `INSERT INTO authentication (member_id, email, picture, access_token, token_type, refresh_token, expiry) 
+		VALUES (?, ?, ?, ?, ?, ?, ?)`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, memberID, userInfo.Email, userInfo.Picture, token.AccessToken, token.TokenType,
+		token.RefreshToken, token.Expiry)
+	err = transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
+}

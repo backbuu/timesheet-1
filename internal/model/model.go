@@ -107,7 +107,12 @@ type Authentication struct {
 	RefreshToken string    `db:"refresh_token" json:"refresh_token"`
 	Expiry       time.Time `db:"expiry" json:"expiry"`
 }
-
+type Token struct {
+	AccessToken  string    `json:"access_token"`
+	TokenType    string    `json:"token_type"`
+	RefreshToken string    `json:"refresh_token"`
+	Expiry       time.Time `json:"expiry"`
+}
 type UserInfo struct {
 	ID            string `json:"id"`
 	Email         string `json:"email"`
