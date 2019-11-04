@@ -25,6 +25,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
+	GetHolidayList(month int) ([]model.Holiday, error)
 }
 
 type TimesheetRepository struct {
@@ -243,4 +244,14 @@ func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserIn
 		return err
 	}
 	return nil
+}
+
+func (repository TimesheetRepository) GetHolidayList(month int) ([]model.Holiday, error) {
+	var holidayList []model.Holiday
+	query := `SELECT * FROM holidays WHERE month = ?`
+	err := repository.DatabaseConnection.Select(&holidayList, query, month)
+	if err != nil {
+		return []model.Holiday{}, err
+	}
+	return holidayList, nil
 }
