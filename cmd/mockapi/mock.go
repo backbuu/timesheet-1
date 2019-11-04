@@ -74,6 +74,11 @@ func (mock *MockRepository) CreateAuthentication(userInfo model.UserInfo, token 
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) GetProfileByAccessToken(accessToken string) (model.Profile, error) {
+	argument := mock.Called(accessToken)
+	return argument.Get(0).(model.Profile), argument.Error(1)
+}
+
 type MockTimesheet struct {
 	mock.Mock
 }
