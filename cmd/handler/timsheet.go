@@ -48,6 +48,10 @@ type MemberRequest struct {
 	MemberID string `json:"member_id"`
 }
 
+type HolidayRequest struct {
+	Month int `json:"month"`
+}
+
 type TimesheetAPI struct {
 	Timesheet           timesheet.TimesheetGateways
 	TimesheetRepository repository.TimesheetRepositoryGateways
@@ -169,4 +173,17 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 	context.Status(http.StatusOK)
+}
+
+func (api TimesheetAPI) GetHolidayListHandler(context *gin.Context) {
+	holidayList := []model.Holiday{
+		{
+			ID:    1,
+			Day:   1,
+			Month: 1,
+			Name:  "วันขึ้นปีใหม่",
+		},
+	}
+
+	context.JSON(http.StatusOK, holidayList)
 }
