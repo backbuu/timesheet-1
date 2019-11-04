@@ -15,7 +15,7 @@ const (
 
 type TimesheetRepositoryGateways interface {
 	GetSummary(year, month int) ([]model.TransactionTimesheet, error)
-	GetMemberByID(memberID string) ([]model.Member, error)
+	GetMemberListByMemberID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error
