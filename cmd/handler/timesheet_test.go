@@ -416,11 +416,9 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	api := TimesheetAPI{
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/deleteIncomeItem", api.DeleteIncomeHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 
 	assert.Equal(t, http.StatusOK, response.StatusCode)
@@ -431,11 +429,9 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	memberRequest := MemberRequest{
 		MemberID: "001",
 	}
-
 	jsonRequest, _ := json.Marshal(memberRequest)
 	request := httptest.NewRequest("POST", "/showMemberDetailsByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
@@ -477,11 +473,9 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	api := TimesheetAPI{
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/showMemberDetailsByID", api.ShowMemberDetailsByIDHandler)
 	testRoute.ServeHTTP(writer, request)
-
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
 
@@ -505,7 +499,6 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 		Status:                "wage",
 		TravelExpense:         0.00,
 	}
-
 	jsonRequest, _ := json.Marshal(requestUpdateMember)
 	request := httptest.NewRequest("POST", "/updateMemberDetails", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
@@ -542,11 +535,9 @@ func Test_GetHolidayListHandler_Input_Month_1_Should_Be_HolidayList(t *testing.T
 	holidayRequest := HolidayRequest{
 		Month: 1,
 	}
-
 	jsonRequest, _ := json.Marshal(holidayRequest)
 	request := httptest.NewRequest("POST", "/showHoliday", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
-
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetHolidayList", 1).Return([]model.Holiday{
 		{
@@ -560,11 +551,34 @@ func Test_GetHolidayListHandler_Input_Month_1_Should_Be_HolidayList(t *testing.T
 	api := TimesheetAPI{
 		TimesheetRepository: mockRepository,
 	}
-
 	testRoute := gin.Default()
 	testRoute.POST("/showHoliday", api.GetHolidayListHandler)
 	testRoute.ServeHTTP(writer, request)
+	response := writer.Result()
+	actual, err := ioutil.ReadAll(response.Body)
 
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, string(actual))
+}
+
+func Test_GetProfileHandler_Input_AccessToken_Should_Be_Profile(t *testing.T) {
+	expected := `{"member_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
+	request := httptest.NewRequest("POST", "/showProfile", nil)
+	writer := httptest.NewRecorder()
+
+	mockRepository := new(mockapi.MockRepository)
+	mockRepository.On("GetProfileByAccessToken", mock.Anything).Return(model.Profile{
+		MemberID: "007",
+		Email:    "logintest535@gmail.com",
+		Picture:  "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
+	}, nil)
+
+	api := TimesheetAPI{
+		TimesheetRepository: mockRepository,
+	}
+	testRoute := gin.Default()
+	testRoute.POST("/showProfile", api.GetProfileHandler)
+	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
 
