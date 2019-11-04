@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	InitialStatusCheckingTransfer = "รอการตรวจสอบ"
-	InitialDateTransfer           = ""
-	InitialComment                = ""
+	initialStatusCheckingTransfer = "รอการตรวจสอบ"
+	initialDateTransfer           = ""
+	initialComment                = ""
 )
 
 type TimesheetRepositoryGateways interface {
@@ -114,7 +114,7 @@ func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimes
 		transactionTimesheet.TotalIncomes, transactionTimesheet.Salary, transactionTimesheet.IncomeTax1,
 		transactionTimesheet.SocialSecurity, transactionTimesheet.NetSalary, transactionTimesheet.Wage,
 		transactionTimesheet.IncomeTax53Percentage, transactionTimesheet.IncomeTax53, transactionTimesheet.NetWage,
-		transactionTimesheet.NetTransfer, InitialStatusCheckingTransfer, InitialDateTransfer, InitialComment)
+		transactionTimesheet.NetTransfer, initialStatusCheckingTransfer, initialDateTransfer, initialComment)
 	err := transaction.Commit()
 	if err != nil {
 		return err

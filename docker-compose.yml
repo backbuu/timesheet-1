@@ -4,6 +4,9 @@ services:
     container_name: my-timesheet
     image: timesheet:1
     restart: always
+    environment:
+      GOOGLE_OAUTH_CLIENT_ID: 692575898397-dnt9sqi2jstddfepsng04p9ac4oj7p4n.apps.googleusercontent.com
+      GOOGLE_OAUTH_CLIENT_SECRET: Bt67Uhhu9SVqvxR3uFRc6IjL
     build:
       context: .
     depends_on:

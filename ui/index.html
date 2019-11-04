@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>PAYMENTS</title>
-  <link rel="stylesheet" href="/css/index.css">
+  <meta name="google-signin-client_id" content="timesheet.apps.googleusercontent.com">
+  <link rel="stylesheet" href="/home/css/index.css">
   <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -17,36 +18,38 @@
     <div class="container">
         <div class="navbar-header page-scroll">
             <a class="navbar-brand" id="title_timesheet"></a>
-            <form class="nav navbar-nav navbar-right" id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
-                <input type="month" id="date" name="date">
-                <select name="id" id="id">
-                  <option value="" selected disabled hidden>รายชื่อ</option>
-                  <option value="007">PRUTH</option>
-                  <option value="001">PRATHAN</option>
-                  <option value="004">THAWATCHAI</option>
-                  <option value="003">SOMKIAT</option>
-                  <option value="008">CHAMNAN</option>
-                  <option value="009">CHONNIKAN</option>
-                  <option value="010">CHITPONG</option>
-                  <option value="011">NATHAWAT</option>
-                  <option value="012">PICHAYA</option>
-                  <option value="013">PICHAI</option>
-                  <option value="002">NAREENART</option>
-                  <option value="005">APIPOL</option>
-                  <option value="006">PANUMARS</option>
-                  <option value="014">NATTAKIT</option>      
-                </select>
-                <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
-            </form>
+            <div class="nav navbar-nav navbar-right"><a href="/login">Login Google</a></div>
         </div>
         
     </div>
 </nav>
 </div>
+
   <div class="seaching_summary">
     TIMESHEET :<input id="date_summary" name="date_summary" type="month">
     <input id="button_show_summary" type="submit" value="ยืนยัน" onclick="showSummary()"/>
   </div>
+  <form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
+    <input type="month" id="date" name="date">
+    <select name="id" id="id">
+      <option value="" selected disabled hidden>รายชื่อ</option>
+      <option value="007">PRUTH</option>
+      <option value="001">PRATHAN</option>
+      <option value="004">THAWATCHAI</option>
+      <option value="003">SOMKIAT</option>
+      <option value="008">CHAMNAN</option>
+      <option value="009">CHONNIKAN</option>
+      <option value="010">CHITPONG</option>
+      <option value="011">NATHAWAT</option>
+      <option value="012">PICHAYA</option>
+      <option value="013">PICHAI</option>
+      <option value="002">NAREENART</option>
+      <option value="005">APIPOL</option>
+      <option value="006">PANUMARS</option>
+      <option value="014">NATTAKIT</option>      
+    </select>
+    <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
+</form>
   <h2 class="title_company">SIAM CHAMNANKIT</h2>
   <table class="table_company" width="2100">
       <tr>
