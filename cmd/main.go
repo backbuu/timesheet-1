@@ -41,7 +41,7 @@ func main() {
 
 	router := gin.Default()
 	router.GET("/login", handler.OauthGoogleLogin)
-	router.GET("/callback", handler.OauthGoogleCallback)
+	router.GET("/callback", api.OauthGoogleCallback)
 
 	router.POST("/showSummaryTimesheet", api.GetSummaryHandler)
 	router.POST("/addIncomeItem", api.CreateIncomeHandler)

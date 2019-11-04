@@ -67,6 +67,11 @@ func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
+	accessToken := getAccessToken()
+	if accessToken != "" {
+		bearer := "Bearer " + accessToken
+		context.Writer.Header().Set("Authorization", bearer)
+	}
 	var request Date
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
@@ -120,6 +125,11 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context) {
+	// reqToken := context.GetHeader("Authorization")
+	// splitToken := strings.Split(reqToken, "Bearer")
+	// reqToken = splitToken[1]
+	// log.Printf("%+v", reqToken)
+
 	var request UpdateStatusRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
