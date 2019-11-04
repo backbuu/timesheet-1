@@ -4,12 +4,14 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"time"
+	"timesheet/internal/model"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
@@ -17,14 +19,6 @@ import (
 )
 
 const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
-
-type UserInfo struct {
-	ID            string `json:"id"`
-	Email         string `json:"email"`
-	VerifiedEmail bool   `json:"verified_email"`
-	Picture       string `json:"picture"`
-	HD            string `json:"hd"`
-}
 
 var googleOauthConfig = &oauth2.Config{
 	RedirectURL:  "http://localhost:8080/callback",
@@ -47,20 +41,24 @@ func OauthGoogleCallback(context *gin.Context) {
 		context.Redirect(http.StatusTemporaryRedirect, "/home")
 		return
 	}
-	token, _ := getToken(context.Request.FormValue("code"))
+	token, err := getToken(context.Request.FormValue("code"))
+	if err != nil {
+		log.Println(err.Error())
+		context.Redirect(http.StatusTemporaryRedirect, "/home")
+		return
+	}
 	bearer := "Bearer " + token.AccessToken
 	context.Writer.Header().Set("Authorization", bearer)
 
-	// data, err := getUserDataFromGoogle(context.Request.FormValue("code"))
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// 	context.Redirect(http.StatusTemporaryRedirect, "/home")
-	// 	return
-	// }
-	// var userInfo UserInfo
-	// json.Unmarshal(data, &userInfo)
+	userInfo, err := getUserDataFromGoogle(token.AccessToken)
+	if err != nil {
+		log.Println(err.Error())
+		context.Redirect(http.StatusTemporaryRedirect, "/home")
+		return
+	}
+
 	context.Redirect(http.StatusTemporaryRedirect, "/home")
-	// context.JSON(http.StatusOK, userInfo)
+	context.JSON(http.StatusOK, userInfo)
 }
 
 func SendAccassToken(context *gin.Context) {
@@ -78,22 +76,27 @@ func generateStateOauthCookie(writer http.ResponseWriter) string {
 }
 
 func getToken(code string) (*oauth2.Token, error) {
-	return googleOauthConfig.Exchange(context.Background(), code)
-}
-
-func getUserDataFromGoogle(code string) ([]byte, error) {
 	token, err := googleOauthConfig.Exchange(context.Background(), code)
 	if err != nil {
 		return nil, fmt.Errorf("code exchange wrong: %s", err.Error())
 	}
-	response, err := http.Get(oauthGoogleUrlAPI + token.AccessToken)
+	return token, nil
+}
+
+func getUserDataFromGoogle(accessToken string) (model.UserInfo, error) {
+	var userInfo model.UserInfo
+	response, err := http.Get(oauthGoogleUrlAPI + accessToken)
 	if err != nil {
-		return nil, fmt.Errorf("failed getting user info: %s", err.Error())
+		return userInfo, fmt.Errorf("failed getting user info: %s", err.Error())
 	}
 	defer response.Body.Close()
 	contents, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed read response: %s", err.Error())
+		return userInfo, fmt.Errorf("failed read response: %s", err.Error())
 	}
-	return contents, nil
+	err = json.Unmarshal(contents, &userInfo)
+	if err != nil {
+		return userInfo, fmt.Errorf("failed unmashal response: %s", err.Error())
+	}
+	return userInfo, nil
 }
