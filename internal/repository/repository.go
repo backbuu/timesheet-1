@@ -27,6 +27,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateMemberDetails(memberDetails model.Member) error
 	GetHolidayList(month int) ([]model.Holiday, error)
 	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
+	GetProfileByAccessToken(accessToken string) (model.Profile, error)
 }
 
 type TimesheetRepository struct {
