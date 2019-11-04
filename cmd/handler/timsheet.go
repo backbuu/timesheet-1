@@ -62,6 +62,7 @@ func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	summaryTimesheet, err := api.Timesheet.GetSummaryByID(request.MemberID, request.Year, request.Month)
 	if err != nil {
@@ -71,10 +72,16 @@ func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
+	accessToken := getAccessToken()
+	if accessToken != "" {
+		bearer := "Bearer " + accessToken
+		context.Writer.Header().Set("Authorization", bearer)
+	}
 	var request Date
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	transactionTimesheetList, err := api.TimesheetRepository.GetSummary(request.Year, request.Month)
 	if err != nil {
@@ -88,6 +95,7 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	err = api.TimesheetRepository.CreateIncome(request.Year, request.Month, request.MemberID, request.Incomes)
 	if err != nil {
@@ -101,6 +109,7 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 	err := context.BindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	incomeList, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
 	if err != nil {
@@ -128,6 +137,7 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
 	if err != nil {
@@ -141,6 +151,7 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	err = api.TimesheetRepository.DeleteIncome(request.IncomeID)
 	if err != nil {
@@ -154,6 +165,7 @@ func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	memberList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
 	if err != nil {
@@ -167,6 +179,7 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	err = api.TimesheetRepository.UpdateMemberDetails(request)
 	if err != nil {

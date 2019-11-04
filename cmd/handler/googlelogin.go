@@ -20,6 +20,7 @@ import (
 
 const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
 
+var accessToken string
 var googleOauthConfig = &oauth2.Config{
 	RedirectURL:  "http://localhost:8080/callback",
 	ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
@@ -34,7 +35,7 @@ func OauthGoogleLogin(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
-func OauthGoogleCallback(context *gin.Context) {
+func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 	oauthState, _ := context.Request.Cookie("oauthstate")
 	if context.Request.FormValue("state") != oauthState.Value {
 		log.Println("invalid oauth google state")
@@ -47,22 +48,27 @@ func OauthGoogleCallback(context *gin.Context) {
 		context.Redirect(http.StatusTemporaryRedirect, "/home")
 		return
 	}
-	bearer := "Bearer " + token.AccessToken
-	context.Writer.Header().Set("Authorization", bearer)
-
 	userInfo, err := getUserDataFromGoogle(token.AccessToken)
 	if err != nil {
 		log.Println(err.Error())
 		context.Redirect(http.StatusTemporaryRedirect, "/home")
 		return
 	}
-
+	err = api.TimesheetRepository.CreateAuthentication(userInfo, model.Token{
+		AccessToken:  token.AccessToken,
+		TokenType:    token.TokenType,
+		RefreshToken: token.RefreshToken,
+		Expiry:       token.Expiry,
+	})
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	accessToken = token.AccessToken
 	context.Redirect(http.StatusTemporaryRedirect, "/home")
-	context.JSON(http.StatusOK, userInfo)
 }
 
-func SendAccassToken(context *gin.Context) {
-	context.Redirect(http.StatusTemporaryRedirect, "/home")
+func getAccessToken() string {
+	return accessToken
 }
 
 func generateStateOauthCookie(writer http.ResponseWriter) string {

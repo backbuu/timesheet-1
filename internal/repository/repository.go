@@ -26,6 +26,7 @@ type TimesheetRepositoryGateways interface {
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
 	GetHolidayList(month int) ([]model.Holiday, error)
+	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
 }
 
 type TimesheetRepository struct {
