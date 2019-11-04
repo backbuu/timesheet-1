@@ -88,7 +88,7 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetMemberByID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
+func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
 	expected := []model.Member{
 		{
 			ID:                    1,
@@ -132,7 +132,7 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetMemberByID(memberID)
+	actual, err := repository.GetMemberListByMemberID(memberID)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)

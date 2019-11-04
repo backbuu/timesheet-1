@@ -71,7 +71,7 @@ func (repository TimesheetRepository) GetIncomes(memberID string, year, month in
 	return incomeList, nil
 }
 
-func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Member, error) {
+func (repository TimesheetRepository) GetMemberListByMemberID(memberID string) ([]model.Member, error) {
 	var memberList []model.Member
 	query := `SELECT * FROM members WHERE member_id = ?`
 	err := repository.DatabaseConnection.Select(&memberList, query, memberID)
