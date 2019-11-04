@@ -9,10 +9,8 @@ import (
 )
 
 const (
-	InitialIndex = 0
-
-	OneMinute = 60
-	OneHour   = 60
+	initialIndex = 0
+	oneHour      = 60
 )
 
 type TimesheetGateways interface {
@@ -99,11 +97,11 @@ func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (mod
 		}
 	}
 	return model.SummaryTimesheet{
-		MemberNameENG:                 memberList[InitialIndex].MemberNameENG,
-		Email:                         memberList[InitialIndex].Email,
-		OvertimeRate:                  memberList[InitialIndex].OvertimeRate,
-		RatePerDay:                    memberList[InitialIndex].RatePerDay,
-		RatePerHour:                   memberList[InitialIndex].RatePerHour,
+		MemberNameENG:                 memberList[initialIndex].MemberNameENG,
+		Email:                         memberList[initialIndex].Email,
+		OvertimeRate:                  memberList[initialIndex].OvertimeRate,
+		RatePerDay:                    memberList[initialIndex].RatePerDay,
+		RatePerHour:                   memberList[initialIndex].RatePerHour,
 		Year:                          year,
 		Month:                         month,
 		Incomes:                       incomeList,
@@ -125,7 +123,7 @@ func calculateTotalHours(incomeList []model.Incomes) string {
 		overtime += income.Overtime
 	}
 	hours := toltalHours.Hours() + float64(overtime)
-	minutes := math.Mod(toltalHours.Minutes(), OneHour)
+	minutes := math.Mod(toltalHours.Minutes(), oneHour)
 	if minutes != 0 {
 		return fmt.Sprintf("%.0f:%2.0f:00", hours, minutes)
 	}
