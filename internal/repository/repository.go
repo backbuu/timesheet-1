@@ -217,3 +217,24 @@ func (repository TimesheetRepository) UpdateMemberDetails(memberDetails model.Me
 	}
 	return nil
 }
+
+func (repository TimesheetRepository) GetMemberIDByEmail(email string) (string, error) {
+	var memberID string
+	query := `SELECT member_id FROM members WHERE email LIKE ?`
+	err := repository.DatabaseConnection.Get(&memberID, query, email)
+	if err != nil {
+		return memberID, err
+	}
+	return memberID, nil
+}
+
+// func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserInfo, token *oauth2.Token) error {
+// 	memberID, err := repository.getMemberIDByEmail(userInfo.Email)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	_ = model.Authentication{
+// 		MemberID: memberID,
+// 	}
+// 	return nil
+// }
