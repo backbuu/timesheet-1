@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strings"
 	"timesheet/internal/model"
 	"timesheet/internal/repository"
 	"timesheet/internal/timesheet"
@@ -199,4 +200,15 @@ func (api TimesheetAPI) GetHolidayListHandler(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 	context.JSON(http.StatusOK, holidayList)
+}
+
+func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer")
+	requestToken = splitToken[1]
+	profile, err := api.TimesheetRepository.GetProfileByAccessToken(requestToken)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	context.JSON(http.StatusOK, profile)
 }
