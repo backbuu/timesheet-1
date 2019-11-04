@@ -245,3 +245,13 @@ func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserIn
 	}
 	return nil
 }
+
+func (repository TimesheetRepository) GetEmailAndPictureByAccessToken(accessToken string) (model.Profile, error) {
+	var profile model.Profile
+	query := `SELECT email, picture FROM authentication WHERE access_token LIKE ?`
+	err := repository.DatabaseConnection.Get(&profile, query, accessToken)
+	if err != nil {
+		return profile, err
+	}
+	return profile, nil
+}
