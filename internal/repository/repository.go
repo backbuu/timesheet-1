@@ -25,6 +25,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
+	GetHolidayList(month int) ([]model.Holiday, error)
 	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
 }
 
@@ -234,7 +235,7 @@ func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserIn
 	if err != nil {
 		return err
 	}
-	query := `INSERT INTO authentication (member_id, email, picture, access_token, token_type, refresh_token, expiry) 
+	query := `INSERT INTO authentications (member_id, email, picture, access_token, token_type, refresh_token, expiry) 
 		VALUES (?, ?, ?, ?, ?, ?, ?)`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberID, userInfo.Email, userInfo.Picture, token.AccessToken, token.TokenType,
@@ -246,9 +247,19 @@ func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserIn
 	return nil
 }
 
+func (repository TimesheetRepository) GetHolidayList(month int) ([]model.Holiday, error) {
+	var holidayList []model.Holiday
+	query := `SELECT * FROM holidays WHERE month = ?`
+	err := repository.DatabaseConnection.Select(&holidayList, query, month)
+	if err != nil {
+		return []model.Holiday{}, err
+	}
+	return holidayList, nil
+}
+
 func (repository TimesheetRepository) GetProfileByAccessToken(accessToken string) (model.Profile, error) {
 	var profile model.Profile
-	query := `SELECT member_id, email, picture FROM authentication WHERE access_token LIKE ?`
+	query := `SELECT member_id, email, picture FROM authentications WHERE access_token LIKE ?`
 	err := repository.DatabaseConnection.Get(&profile, query, accessToken)
 	if err != nil {
 		return profile, err

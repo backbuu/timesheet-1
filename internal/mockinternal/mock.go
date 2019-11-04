@@ -68,3 +68,8 @@ func (mock *MockRepository) CreateAuthentication(userInfo model.UserInfo, token 
 	argument := mock.Called(userInfo, token)
 	return argument.Error(0)
 }
+
+func (mock *MockRepository) GetHolidayList(month int) ([]model.Holiday, error) {
+	argument := mock.Called(month)
+	return argument.Get(0).([]model.Holiday), argument.Error(1)
+}

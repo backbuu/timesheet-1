@@ -121,6 +121,13 @@ type UserInfo struct {
 	HD            string `json:"hd"`
 }
 
+type Holiday struct {
+	ID    int    `json:"id"`
+	Day   int    `db:"day" json:"day"`
+	Month int    `db:"month" json:"month"`
+	Name  string `db:"name" json:"name"`
+}
+
 type Profile struct {
 	MemberID string `db:"member_id" json:"member_id"`
 	Email    string `db:"email" json:"email"`
