@@ -127,3 +127,8 @@ type Holiday struct {
 	Month int    `db:"month" json:"month"`
 	Name  string `db:"name" json:"name"`
 }
+
+type Profile struct {
+	Email   string `db:"email" json:"email"`
+	Picture string `db:"picture" json:"picture"`
+}

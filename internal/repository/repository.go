@@ -256,3 +256,13 @@ func (repository TimesheetRepository) GetHolidayList(month int) ([]model.Holiday
 	}
 	return holidayList, nil
 }
+
+func (repository TimesheetRepository) GetEmailAndPictureByAccessToken(accessToken string) (model.Profile, error) {
+	var profile model.Profile
+	query := `SELECT email, picture FROM authentications WHERE access_token LIKE ?`
+	err := repository.DatabaseConnection.Get(&profile, query, accessToken)
+	if err != nil {
+		return profile, err
+	}
+	return profile, nil
+}
