@@ -120,3 +120,10 @@ type UserInfo struct {
 	Picture       string `json:"picture"`
 	HD            string `json:"hd"`
 }
+
+type Holiday struct {
+	ID    int    `json:"id"`
+	Day   int    `db:"day" json:"day"`
+	Month int    `db:"month" json:"month"`
+	Name  string `db:"name" json:"name"`
+}
