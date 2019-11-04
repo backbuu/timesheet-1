@@ -564,6 +564,7 @@ func Test_GetHolidayListHandler_Input_Month_1_Should_Be_HolidayList(t *testing.T
 func Test_GetProfileHandler_Input_AccessToken_Should_Be_Profile(t *testing.T) {
 	expected := `{"member_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
 	request := httptest.NewRequest("POST", "/showProfile", nil)
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
 
 	mockRepository := new(mockapi.MockRepository)
