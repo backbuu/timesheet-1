@@ -41,7 +41,7 @@ CREATE TABLE `authentications` (
 
 LOCK TABLES `authentications` WRITE;
 /*!40000 ALTER TABLE `authentications` DISABLE KEYS */;
-INSERT INTO `authentications` VALUES (1,'007','logintest535@gmail.com','content.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg','ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw','Bearer','1//0g5_PVHVkEHZQCgYIARAAGBASNwF-L9Irhkfqgbi_3NLg0tQifpojpdkFax23p4GAtTKO-CkFTj8AZjCJc4IrQ2bU73Cdl-6ZkqM','2018-12-01 09:00:00');
+INSERT INTO `authentications` VALUES (1,'007','logintest535@gmail.com','https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg','ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw','Bearer','1//0g5_PVHVkEHZQCgYIARAAGBASNwF-L9Irhkfqgbi_3NLg0tQifpojpdkFax23p4GAtTKO-CkFTj8AZjCJc4IrQ2bU73Cdl-6ZkqM','2018-12-01 09:00:00');
 /*!40000 ALTER TABLE `authentications` ENABLE KEYS */;
 UNLOCK TABLES;
 
