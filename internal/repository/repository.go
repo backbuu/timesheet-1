@@ -235,7 +235,7 @@ func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserIn
 	if err != nil {
 		return err
 	}
-	query := `INSERT INTO authentication (member_id, email, picture, access_token, token_type, refresh_token, expiry) 
+	query := `INSERT INTO authentications (member_id, email, picture, access_token, token_type, refresh_token, expiry) 
 		VALUES (?, ?, ?, ?, ?, ?, ?)`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberID, userInfo.Email, userInfo.Picture, token.AccessToken, token.TokenType,
