@@ -406,7 +406,7 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		PaymentWage:                   80000.00,
 	}
 	mockRepository := new(mockinternal.MockRepository)
-	mockRepository.On("GetMemberByID", "003").Return([]model.Member{
+	mockRepository.On("GetMemberListByMemberID", "003").Return([]model.Member{
 		{
 			ID:                    4,
 			MemberID:              "003",
@@ -532,7 +532,7 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 	}
 
 	mockRepository := new(mockinternal.MockRepository)
-	mockRepository.On("GetMemberByID", "002").Return([]model.Member{
+	mockRepository.On("GetMemberListByMemberID", "002").Return([]model.Member{
 		{
 			ID:                    3,
 			MemberID:              "002",

@@ -120,7 +120,7 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
-	memberList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	memberList, err := api.TimesheetRepository.GetMemberListByMemberID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
@@ -167,7 +167,7 @@ func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	memberList, err := api.TimesheetRepository.GetMemberByID(request.MemberID)
+	memberList, err := api.TimesheetRepository.GetMemberListByMemberID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}

@@ -15,7 +15,7 @@ const (
 
 type TimesheetRepositoryGateways interface {
 	GetSummary(year, month int) ([]model.TransactionTimesheet, error)
-	GetMemberByID(memberID string) ([]model.Member, error)
+	GetMemberListByMemberID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error
@@ -71,7 +71,7 @@ func (repository TimesheetRepository) GetIncomes(memberID string, year, month in
 	return incomeList, nil
 }
 
-func (repository TimesheetRepository) GetMemberByID(memberID string) ([]model.Member, error) {
+func (repository TimesheetRepository) GetMemberListByMemberID(memberID string) ([]model.Member, error) {
 	var memberList []model.Member
 	query := `SELECT * FROM members WHERE member_id = ?`
 	err := repository.DatabaseConnection.Select(&memberList, query, memberID)
@@ -257,9 +257,9 @@ func (repository TimesheetRepository) GetHolidayList(month int) ([]model.Holiday
 	return holidayList, nil
 }
 
-func (repository TimesheetRepository) GetEmailAndPictureByAccessToken(accessToken string) (model.Profile, error) {
+func (repository TimesheetRepository) GetProfileByAccessToken(accessToken string) (model.Profile, error) {
 	var profile model.Profile
-	query := `SELECT email, picture FROM authentications WHERE access_token LIKE ?`
+	query := `SELECT member_id, email, picture FROM authentications WHERE access_token LIKE ?`
 	err := repository.DatabaseConnection.Get(&profile, query, accessToken)
 	if err != nil {
 		return profile, err

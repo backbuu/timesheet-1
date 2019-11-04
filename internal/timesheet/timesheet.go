@@ -81,7 +81,7 @@ func (timesheet Timesheet) CalculatePayment(incomeList []model.Incomes) model.Ti
 
 func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error) {
 	var incomeList []model.Incomes
-	memberList, err := timesheet.Repository.GetMemberByID(memberID)
+	memberList, err := timesheet.Repository.GetMemberListByMemberID(memberID)
 	if err != nil {
 		return model.SummaryTimesheet{}, err
 	}

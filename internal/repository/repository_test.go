@@ -88,7 +88,7 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetMemberByID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
+func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
 	expected := []model.Member{
 		{
 			ID:                    1,
@@ -132,7 +132,7 @@ func Test_GetMemberByID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetMemberByID(memberID)
+	actual, err := repository.GetMemberListByMemberID(memberID)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
@@ -531,19 +531,20 @@ func Test_GetHolidayList_Input_Month_1_Should_Be_HolidayList(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetEmailAndPictureByAccessToken_Input_AccessToken_Should_Be_Email_logintest535_gmail_com_And_Picture(t *testing.T) {
+func Test_GetProfileByAccessToken_Input_AccessToken_Should_Be_Email_logintest535_gmail_com_And_Picture(t *testing.T) {
 	expected := model.Profile{
-		Email:   "logintest535@gmail.com",
-		Picture: "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
+		MemberID: "077",
+		Email:    "logintest535@gmail.com",
+		Picture:  "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
 	}
 	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
-	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetEmailAndPictureByAccessToken(accessToken)
+	actual, err := repository.GetProfileByAccessToken(accessToken)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)

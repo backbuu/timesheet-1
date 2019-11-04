@@ -25,7 +25,7 @@ func (mock *MockRepository) GetIncomes(memberID string, year, month int) ([]mode
 	return argument.Get(0).([]model.Incomes), argument.Error(1)
 }
 
-func (mock *MockRepository) GetMemberByID(memberID string) ([]model.Member, error) {
+func (mock *MockRepository) GetMemberListByMemberID(memberID string) ([]model.Member, error) {
 	argument := mock.Called(memberID)
 	return argument.Get(0).([]model.Member), argument.Error(1)
 }

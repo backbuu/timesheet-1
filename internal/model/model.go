@@ -129,6 +129,7 @@ type Holiday struct {
 }
 
 type Profile struct {
-	Email   string `db:"email" json:"email"`
-	Picture string `db:"picture" json:"picture"`
+	MemberID string `db:"member_id" json:"member_id"`
+	Email    string `db:"email" json:"email"`
+	Picture  string `db:"picture" json:"picture"`
 }
