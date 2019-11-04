@@ -508,3 +508,25 @@ func Test_CreateAuthentication_Input_UserInfo_logintest535_gmail_com_Should_Be_N
 
 	assert.Equal(t, nil, err)
 }
+
+func Test_GetHolidayList_Input_Month_1_Should_Be_HolidayList(t *testing.T) {
+	expected := []model.Holiday{
+		{
+			ID:    1,
+			Day:   1,
+			Month: 1,
+			Name:  "วันขึ้นปีใหม่",
+		},
+	}
+	month := 1
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual, err := repository.GetHolidayList(month)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
