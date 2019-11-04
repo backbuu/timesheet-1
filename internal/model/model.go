@@ -120,3 +120,8 @@ type UserInfo struct {
 	Picture       string `json:"picture"`
 	HD            string `json:"hd"`
 }
+
+type Profile struct {
+	Email   string `db:"email" json:"email"`
+	Picture string `db:"picture" json:"picture"`
+}
