@@ -176,14 +176,14 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetHolidayListHandler(context *gin.Context) {
-	holidayList := []model.Holiday{
-		{
-			ID:    1,
-			Day:   1,
-			Month: 1,
-			Name:  "วันขึ้นปีใหม่",
-		},
+	var request HolidayRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-
+	holidayList, err := api.TimesheetRepository.GetHolidayList(request.Month)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
 	context.JSON(http.StatusOK, holidayList)
 }
