@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 	"timesheet/internal/model"
 
@@ -29,10 +30,22 @@ var googleOauthConfig = &oauth2.Config{
 	Endpoint:     google.Endpoint,
 }
 
-func OauthGoogleLogin(c *gin.Context) {
-	oauthState := generateStateOauthCookie(c.Writer)
+func OauthGoogleLogin(context *gin.Context) {
+	oauthState := generateStateOauthCookie(context.Writer)
 	url := googleOauthConfig.AuthCodeURL(oauthState, oauth2.AccessTypeOffline)
-	c.Redirect(http.StatusTemporaryRedirect, url)
+	context.Redirect(http.StatusTemporaryRedirect, url)
+}
+
+func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	err := api.TimesheetRepository.DeleteAuthentication(requestToken)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.Status(http.StatusOK)
 }
 
 func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {

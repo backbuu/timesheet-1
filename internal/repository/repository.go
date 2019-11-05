@@ -28,6 +28,7 @@ type TimesheetRepositoryGateways interface {
 	GetHolidayList(month int) ([]model.Holiday, error)
 	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
 	GetProfileByAccessToken(accessToken string) (model.Profile, error)
+	DeleteAuthentication(accessToken string) error
 }
 
 type TimesheetRepository struct {
@@ -266,4 +267,15 @@ func (repository TimesheetRepository) GetProfileByAccessToken(accessToken string
 		return profile, err
 	}
 	return profile, nil
+}
+
+func (repository TimesheetRepository) DeleteAuthentication(accessToken string) error {
+	query := `DELETE FROM authentications WHERE access_token LIKE ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, accessToken)
+	err := transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
 }
