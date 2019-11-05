@@ -78,3 +78,8 @@ func (mock *MockRepository) GetProfileByAccessToken(accessToken string) (model.P
 	argument := mock.Called(accessToken)
 	return argument.Get(0).(model.Profile), argument.Error(1)
 }
+
+func (mock *MockRepository) DeleteAuthentication(accessToken string) error {
+	argument := mock.Called(accessToken)
+	return argument.Error(0)
+}
