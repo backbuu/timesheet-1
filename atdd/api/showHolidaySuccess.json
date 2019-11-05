@@ -18,6 +18,10 @@
 								"exec": [
 									"var jsonData = pm.response.json();",
 									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
 									"pm.test(\"Month should be 1\", function () {",
 									"    pm.expect(jsonData[0].month).to.eql(1);",
 									"});",
@@ -34,11 +38,8 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
