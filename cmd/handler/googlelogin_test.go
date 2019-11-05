@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func Test_OauthGoogleLogout_Input_AccessToken_Should_Be_304(t *testing.T) {
+func Test_OauthGoogleLogout_Input_AccessToken_Should_Be_200(t *testing.T) {
 	request := httptest.NewRequest("POST", "/logout", nil)
 	writer := httptest.NewRecorder()
 	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
@@ -28,5 +28,5 @@ func Test_OauthGoogleLogout_Input_AccessToken_Should_Be_304(t *testing.T) {
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 
-	assert.Equal(t, http.StatusTemporaryRedirect, response.StatusCode)
+	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
