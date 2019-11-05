@@ -267,3 +267,14 @@ func (repository TimesheetRepository) GetProfileByAccessToken(accessToken string
 	}
 	return profile, nil
 }
+
+func (repository TimesheetRepository) DeleteAuthentication(accessToken string) error {
+	query := `DELETE FROM authentications WHERE access_token LIKE ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, accessToken)
+	err := transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
+}
