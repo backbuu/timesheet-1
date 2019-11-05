@@ -10,6 +10,7 @@
 <script src="js/timesheet.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
 <script>showSummaryByID();</script>
+<script>showHolidayList();</script>
 <body>
     <div class="header">
         <h1 id="title_timesheet_by_id"></h1>
@@ -53,7 +54,34 @@
             <td id="year"></td>
         </tr>
     </table>
-       
+    <br>
+    <br>
+    <table class="table">
+        <tbody id="table_holiday"></tbody>
+    </table>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+        <tbody id="table_calendar"></tbody>
+        <tr>
+            <th id="sun"></th>
+            <th id="mon"></th>
+            <th id="tue"></th>
+            <th id="wed"></th>
+            <th id="thu"></th>
+            <th id="fri"></th>
+            <th id="sat"></th>
+        </tr>
+    </table>
     <br>
     <br>
         <table class="table">
