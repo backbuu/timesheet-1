@@ -45,7 +45,7 @@ func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	context.Redirect(http.StatusTemporaryRedirect, "/home")
+	context.Status(http.StatusOK)
 }
 
 func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
