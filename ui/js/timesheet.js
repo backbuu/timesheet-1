@@ -15,6 +15,10 @@ function showSummary(){
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
+            var headers = request.getResponseHeader("Authorization");
+            if(headers != null){
+                document.cookie = "access_token="+headers;
+            }
             var json = JSON.parse(request.responseText);
             var siamChamnankit = "";
             var countSiamChamnankit = 0 ;
@@ -164,8 +168,7 @@ function showSummary(){
         }
     }; 
     var data = JSON.stringify({"year":year, "month": month});
-    request.send(data);  
-
+    request.send(data);
 }
 
 function updateStatusTransfer(index){
@@ -456,12 +459,59 @@ function setCurrentDate(){
         $("#date_summary").val(today);  
         $("#date").val(today);  
         showSummary();
+        setInitial();
     });
 
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     $(document).ready(function(){
         $("#title_timesheet").text(currentMonth+"-"+monthNames[currentMonth-1]+currentYear+"-TIMESHEET");  
     });  
-    
+}
+  
+function showProfile(){
+    console.log(getCookie("access_token"));
+    var request = new XMLHttpRequest();
+    var url = "/showProfile";
+    request.open("GET", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", getCookie("access_token"));
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            var picture = "<img src=\""+json.picture+"\" class=\"circular--square\">"
+            $("#picture_profile").html(picture);
+            $("#email_profile").html(json.email);        
+        }
+    }   
+    request.send();
+}
+  
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
 }
 
+function setInitial(){
+    var loginButton = "<a href=\"/login\">Login Google</a>"
+    var logoutButton = "<a href=\"/logout\">logout</a>"
+    console.log(getCookie("access_token"));
+    console.log();
+    $(document).ready(function(){
+        if (getCookie("access_token") != ""){
+            showProfile();
+            $("#button_login_logout").html(logoutButton);  
+        }else{
+            $("#button_login_logout").html(loginButton);
+        }
+    }); 
+}
