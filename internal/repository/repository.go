@@ -221,6 +221,16 @@ func (repository TimesheetRepository) UpdateMemberDetails(memberDetails model.Me
 	return nil
 }
 
+func (repository TimesheetRepository) GetHolidayList(month int) ([]model.Holiday, error) {
+	var holidayList []model.Holiday
+	query := `SELECT * FROM holidays WHERE month = ?`
+	err := repository.DatabaseConnection.Select(&holidayList, query, month)
+	if err != nil {
+		return []model.Holiday{}, err
+	}
+	return holidayList, nil
+}
+
 func (repository TimesheetRepository) GetMemberIDByEmail(email string) (string, error) {
 	var memberID string
 	query := `SELECT member_id FROM members WHERE email LIKE ?`
@@ -246,16 +256,6 @@ func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserIn
 		return err
 	}
 	return nil
-}
-
-func (repository TimesheetRepository) GetHolidayList(month int) ([]model.Holiday, error) {
-	var holidayList []model.Holiday
-	query := `SELECT * FROM holidays WHERE month = ?`
-	err := repository.DatabaseConnection.Select(&holidayList, query, month)
-	if err != nil {
-		return []model.Holiday{}, err
-	}
-	return holidayList, nil
 }
 
 func (repository TimesheetRepository) GetProfileByAccessToken(accessToken string) (model.Profile, error) {
