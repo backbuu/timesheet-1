@@ -549,3 +549,16 @@ func Test_GetProfileByAccessToken_Input_AccessToken_Should_Be_Email_logintest535
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
+
+func Test_DeleteAuthentication_Input_AccessToken_Should_Be_No_Error(t *testing.T) {
+	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	err := repository.DeleteAuthentication(accessToken)
+
+	assert.Equal(t, nil, err)
+}
