@@ -9,7 +9,7 @@
 </head>
 <script src="js/timesheet.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
-<script>showSummaryByID();</script>
+<script>showSummaryByID();setTableBodyAddIncomeItem();</script>
 
 <body>
 <a id="title_timesheet_by_id"></a>
@@ -38,101 +38,7 @@
     <br>
     <br>
     <table class="table">
-        <tbody id="table_holiday"></tbody>
-    </table>
-    <table class="table">
-        <tr>
-            <th>Date</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Overtime</th>
-            <th>Total Hours</th>
-            <th>Coaching Customer Charging (THB)</th>
-            <th>Coaching Payment Rate (THB)</th>
-            <th>Training Wage (THB)</th>
-            <th>Other Wage (THB)</th>
-            <th>Company</th>
-            <th colspan="2">Description</th>
-            <th></th>
-        </tr>
-        <tr>
-            <td><select id="day">
-                <option value=1>1</option>
-                <option value=2>2</option>
-                <option value=3>3</option>
-                <option value=4>4</option>
-                <option value=5>5</option>
-                <option value=6>6</option>
-                <option value=7>7</option>
-                <option value=8>8</option>
-                <option value=9>9</option>
-                <option value=10>10</option>
-                <option value=11>11</option>
-                <option value=12>12</option>
-                <option value=13>13</option>
-                <option value=14>14</option>
-                <option value=15>15</option>
-                <option value=16>16</option>
-                <option value=17>17</option>
-                <option value=18>18</option>
-                <option value=19>19</option>
-                <option value=20>20</option>
-                <option value=21>21</option>
-                <option value=22>22</option>
-                <option value=23>23</option>
-                <option value=24>24</option>
-                <option value=25>25</option>
-                <option value=26>26</option>
-                <option value=27>27</option>
-                <option value=28>28</option>
-                <option value=29>29</option>
-                <option value=30>30</option>
-                <option value=31>31</option>
-            </select></td>
-            <td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td>
-            <td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td>
-            <td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td>
-            <td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td>
-            <td><input type="number" id="overtime" value=0 placeholder="Overtime"></td>
-            <td><input type="time" step="1" id="total_hours" value=08:00:00 placeholder="Total Hours"></td>
-            <td><select id="coaching_customer_charging" value=0.00>
-                <option value=0.00>฿ 0.00</option>
-                <option value=5000.00>฿ 5,000.00</option>
-                <option value=7500.00>฿ 7,500.00</option>
-                <option value=10000.00>฿ 10,000.00</option>
-                <option value=15000.00>฿ 15,000.00</option>
-            </select></td>
-            <td><select id="coaching_payment_rate" value=0.00>
-                <option value=0.00>฿ 0.00</option>
-                <option value=5000.00>฿ 5,000.00</option>
-                <option value=7500.00>฿ 7,500.00</option>
-            <option value=10000.00>฿ 10,000.00</option>
-            <option value=15000.00>฿ 15,000.00</option>
-            </select></td>
-            <td><select id="training_wage" value=0.00>
-                <option value=0.00>฿ 0.00</option>
-                <option value=1000.00>฿ 1,000.00</option>
-                <option value=2000.00>฿ 2,000.00</option>
-                <option value=3000.00>฿ 3,000.00</option>
-                <option value=5000.00>฿ 5,000.00</option>
-                <option value=10000.00>฿ 10,000.00</option>
-            </select></td>
-            <td><select id="other_wage" value=0.00>
-                <option value=0.00>฿ 0.00</option>
-                <option value=2000.00>฿ 2,000.00</option>
-                <option value=5000.00>฿ 5,000.00</option>
-                <option value=7500.00>฿ 7,500.00</option>
-                <option value=10000.00>฿ 10,000.00</option>
-            </select></td>
-            <td><select id="company">
-                <option value="siam_chamnankit">Siam Chamnankit</option>
-                <option value="shuhari">Shuhari</option>
-            </select></td>
-            <td><input type="text" id="description" placeholder="Description" ></td>
-            <td><input class="button" type="submit" id="button_add_income_item" value="ยืนยัน" onclick="addIncomeItem()"/></td>
-        </tr>
+        <tbody id="table_addIncomeItem"></tbody>
     </table>
     <br>
     <br>
@@ -163,7 +69,7 @@
             <th id="total_coaching_payment_rate"></th>
             <th id="total_trainig_wage"></th>
             <th id="total_other_wage"></th>
-            <th colspan="2"><input class="button" type="button" id="button_calculate_payment" value="คำนวณ" onclick="calculatePayment()"/></th>
+            <th id="th_button_calculate" colspan="2"></th>
         </tr>
     </table>
 </body>
