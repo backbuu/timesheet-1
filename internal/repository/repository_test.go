@@ -533,7 +533,7 @@ func Test_CreateAuthentication_Input_UserInfo_logintest535_gmail_com_Should_Be_N
 
 func Test_GetProfileByAccessToken_Input_AccessToken_Should_Be_Email_logintest535_gmail_com_And_Picture(t *testing.T) {
 	expected := model.Profile{
-		MemberID: "077",
+		MemberID: "071",
 		Email:    "logintest535@gmail.com",
 		Picture:  "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
 	}

@@ -536,7 +536,7 @@ func Test_GetHolidayListHandler_Input_Month_1_Should_Be_HolidayList(t *testing.T
 		Month: 1,
 	}
 	jsonRequest, _ := json.Marshal(holidayRequest)
-	request := httptest.NewRequest("GET", "/showHoliday", bytes.NewBuffer(jsonRequest))
+	request := httptest.NewRequest("POST", "/showHoliday", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetHolidayList", 1).Return([]model.Holiday{
@@ -552,7 +552,7 @@ func Test_GetHolidayListHandler_Input_Month_1_Should_Be_HolidayList(t *testing.T
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
-	testRoute.GET("/showHoliday", api.GetHolidayListHandler)
+	testRoute.POST("/showHoliday", api.GetHolidayListHandler)
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)

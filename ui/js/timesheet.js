@@ -498,7 +498,7 @@ function getCookie(cname) {
 function setInitial(){    
     var loginButton = "<a href=\"/login\">Login Google</a>"
     var logoutButton = "<input type=\"button\" value=\"logout\"/>"
-    
+
     $(document).ready(function(){
         if (getCookie("access_token") != "" || getCookie("oauthstate") != ""){
             $("#button_logout").html(logoutButton);
@@ -539,4 +539,36 @@ function deleteOauthState(){
     }   
     request.send();
     return true
+}
+
+function showHolidayList() {
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    memberID = params.get("id");
+    date = params.get("date");
+    var fullDate = new Date(date);
+    var month = fullDate.getMonth()+1;
+
+    var request = new XMLHttpRequest();
+    var url = "/showHoliday";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            var holidayList = "";
+            if (json !== null){
+                for (var i = 0; i < json.length; i++) {
+                    holidayList += "<table id =\"table_holiday\">"
+                    holidayList += "<td>"+json[i].day+"</td>";
+                    holidayList += "<td>"+json[i].name+"</td>";
+                    holidayList += "</table>"
+                }
+            }
+            $("#table_holiday").html(holidayList);
+        }
+    }   
+    var data = JSON.stringify({"month":month});
+    request.send(data);
 }
