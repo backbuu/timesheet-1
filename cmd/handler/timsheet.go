@@ -74,11 +74,6 @@ func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
-	accessToken := getAccessToken()
-	if accessToken != "" {
-		bearer := "Bearer " + accessToken
-		context.Writer.Header().Set("Authorization", bearer)
-	}
 	var request Date
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
