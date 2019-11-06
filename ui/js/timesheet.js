@@ -1,4 +1,4 @@
-function showSummary(){
+function showSummary(id){
     var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
@@ -87,9 +87,10 @@ function showSummary(){
                     siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
-                    siamChamnankit += "</tr>";
-            
+                    if (json[i-1].member_id == id) {
+                        siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    }
+                    siamChamnankit += "</tr>";
                 }else{
                     countShuhari++;
                     shuhari += "<tr id=\"row_summary_id_"+i+"\">";
@@ -129,7 +130,9 @@ function showSummary(){
                     shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    if (json[i-1].member_id == id) {
+                        shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    }
                     shuhari += "</tr>";
                 }
             }
@@ -165,6 +168,7 @@ function showSummary(){
     }; 
     var data = JSON.stringify({"year":year, "month": month});
     request.send(data);
+
 }
 
 function updateStatusTransfer(index){
@@ -454,14 +458,13 @@ function setCurrentDate(){
     $(document).ready(function(){
         $("#date_summary").val(today);  
         $("#date").val(today); 
-        setInitial(); 
-        showSummary();
+        setInitialHome(); 
     });
 
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     $(document).ready(function(){
         $("#title_timesheet").text(currentMonth+"-"+monthNames[currentMonth-1]+currentYear+"-TIMESHEET");  
-    });  
+    }); 
 }
     
 function showProfile(){
@@ -473,8 +476,12 @@ function showProfile(){
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
             var picture = "<img src=\""+json.picture+"\" class=\"circular--square\">"
+            $("#hidden_member_id").html(json.member_id);
+            if (window.location.pathname === "/home/"){
+                showSummary(json.member_id);  
+            }
             $("#picture_profile").html(picture);
-            $("#email_profile").html(json.email);        
+            $("#email_profile").html(json.email);  
         }
     }   
     request.send();
@@ -495,22 +502,22 @@ function getCookie(cname) {
     return "";
 }
 
-function setInitial(){    
+function setInitialHome(){    
     var loginButton = "<a href=\"/login\">Login Google</a>"
     var logoutButton = "<input type=\"button\" value=\"logout\"/>"
 
     $(document).ready(function(){
         if (getCookie("access_token") != "" || getCookie("oauthstate") != ""){
             $("#button_logout").html(logoutButton);
-            showProfile();
+            showProfile();          
             $("#button_logout").click(function(){
                 logout();
-                // window.location = "https://mail.google.com/mail/u/0/?logout&hl=en";
                 if (deleteOauthState()){
                     window.location.replace("/home") 
                 };
             });
         }else{
+            showSummary("");
             $("#button_login").html(loginButton);
         }
     });
@@ -539,36 +546,4 @@ function deleteOauthState(){
     }   
     request.send();
     return true
-}
-
-function showHolidayList() {
-    var urlString = window.location.href
-    var url = new URL(urlString);
-    var params = new URLSearchParams(url.search);
-    memberID = params.get("id");
-    date = params.get("date");
-    var fullDate = new Date(date);
-    var month = fullDate.getMonth()+1;
-
-    var request = new XMLHttpRequest();
-    var url = "/showHoliday";
-    request.open("POST", url, true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-            var json = JSON.parse(request.responseText);
-            var holidayList = "";
-            if (json !== null){
-                for (var i = 0; i < json.length; i++) {
-                    holidayList += "<table id =\"table_holiday\">"
-                    holidayList += "<td>"+json[i].day+"</td>";
-                    holidayList += "<td>"+json[i].name+"</td>";
-                    holidayList += "</table>"
-                }
-            }
-            $("#table_holiday").html(holidayList);
-        }
-    }   
-    var data = JSON.stringify({"month":month});
-    request.send(data);
 }

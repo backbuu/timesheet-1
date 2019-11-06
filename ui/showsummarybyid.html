@@ -10,12 +10,14 @@
 <script src="js/timesheet.js"></script>
 <script src="js/jquery-3.4.1.min.js"></script>
 <script>showSummaryByID();</script>
-<script>showHolidayList();</script>
+
 <body>
-    <div class="header">
-        <h1 id="title_timesheet_by_id"></h1>
-    </div>
-    <br>
+<a id="title_timesheet_by_id"></a>
+<div id="picture_profile"></div>
+<div id="email_profile"></div>
+<div id="button_logout"></div>
+<div id="button_login"></div>
+
     <form action="index.html">
             <input id="button_payment" type="submit" value="กลับสู่หน้าหลัก"/>
     </form>
@@ -32,59 +34,13 @@
             <th>Email:</th>
             <td id="email"></td>
         </tr>
-        <tr>
-            <th>Overtime Rate:</th>
-            <td id="overtime_rate"></td>
-        </tr>
-        <tr>
-            <th>Rate Per Day:</th>
-            <td id="rate_per_day"></td>
-        </tr>
-        <tr>
-            <th>Rate Per Hour:</th>
-            <td id="rate_per_hour"></td>
-        </tr>
-        <tr>
-            <th>Month:</th>
-            <td id="month"></td>
-            <td id="full_month"></td>
-        </tr>
-        <tr>
-            <th>Year:</th>
-            <td id="year"></td>
-        </tr>
     </table>
     <br>
     <br>
     <table class="table">
         <tbody id="table_holiday"></tbody>
     </table>
-    <br>
-    <br>
     <table class="table">
-        <tr>
-            <th>Sun</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-        </tr>
-        <tbody id="table_calendar"></tbody>
-        <tr>
-            <th id="sun"></th>
-            <th id="mon"></th>
-            <th id="tue"></th>
-            <th id="wed"></th>
-            <th id="thu"></th>
-            <th id="fri"></th>
-            <th id="sat"></th>
-        </tr>
-    </table>
-    <br>
-    <br>
-        <table class="table">
         <tr>
             <th>Date</th>
             <th>Start Time</th>
