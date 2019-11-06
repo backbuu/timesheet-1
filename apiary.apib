@@ -1,0 +1,94 @@
+FORMAT: 1A
+
+# Timesheet
+
+API สำหรับใช้ใน project timesheet
+
+## ShowSummaryTimesheet [/showSummaryTimesheet]
+แสดงสรุปผลค่าจ้างทั้งหมดในเดือนปีที่กำหนด
+
+### showSummaryTimesheet [POST]
+
++ Request 200 (application/json)
+
+        {
+            "year": 2018,
+            "month": 12
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "id": "001201812siam_chamnankit",
+            "member_id": "001",
+            "member_name_th": "นารีนารถ เนรัญชร",
+            "month": 12,
+            "year": 2018,
+            "company": "siam_chamnankit",
+            "coaching": 85000.00,
+            "training": 30000.00,
+            "other": 40000.00,
+            "total_incomes": 155000.00,
+            "salary": 80000.00,
+            "income_tax_1": 5000.00,
+            "social_security": 0.00,
+            "net_salary": 75000.00,
+            "wage": 75000.00,
+            "income_tax_53_percentage": 10,
+            "income_tax_53": 7500.00,
+            "net_wage": 67500.00,
+            "net_transfer": 142500.00,
+            "status_checking_transfer": "รอการตรวจสอบ",
+            "date_transfer": "",
+            "comment": ""
+        }
+        
+## ShowTimesheetByID [/showTimesheetByID]
+คำนวณค่าจ้างทั้งหมดที่ได้รับ
+
+### showTimesheetByID [POST]
+
++ Request 200 (application/json)
+
+        {
+            "member_id": "001",
+            "year": 2018,
+            "month": 12
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "member_name_eng": "Somkiat Puisungnoen",
+            "email": "somkiat@scrum123.com",
+            "overtime_rate": 0.00,
+            "rate_per_day": 15000.00,
+            "rate_per_hour": 1875.00,
+            "year": 2018,
+            "month": 12,
+            "incomes": [{
+                "id":61,
+                "member_id":"003",
+                "month":12,"year":2018,
+                "day":1,
+                "start_time_am":"2018-12-01T09:00:00Z",
+                "end_time_am":"2018-12-01T12:00:00Z",
+                "start_time_pm":"2018-12-01T13:00:00Z",
+                "end_time_pm":"2018-12-01T18:00:00Z",
+                "overtime":0,
+                "total_hours":"2018-12-01T08:00:00Z",
+                "coaching_customer_charging":0,
+                "coaching_payment_rate":0,
+                "training_wage":40000,
+                "other_wage":0,
+                "company":"shuhari",
+                "description":"Technical Excellence at Khonkean"
+            }],
+            "timesheet_id": "003201912",
+            "total_hours": "16:00:00",
+            "total_coaching_customer_charging": 0.00,
+            "total_coaching_payment_rate": 0.00,
+            "total_training_wage": 8000.00,
+            "total_other_wage": 0.00,
+            "payment_wage": 8000.00
+        }

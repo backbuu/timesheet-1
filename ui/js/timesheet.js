@@ -275,9 +275,17 @@ function showSummaryByID() {
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
+    var firstDay = new Date(fullDate.getFullYear(), fullDate.getMonth(), 1);
+    var lastDay = new Date(fullDate.getFullYear(), fullDate.getMonth() + 1, 0);
 
     var memberIDByCookie = getCookie("member_id")
     console.log(memberID,memberIDByCookie);
+
+    var src = "https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FBangkok&amp;src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGgudGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%230B8043&amp;color=%230B8043&amp;showTz=0&amp;showPrint=0&amp;showCalendars=0&amp;showTabs=0&amp;showNav=0&amp;dates=";
+            var startDate = year.toString()+month.toString()+("0" + firstDay.getDate()).slice(-2)
+            var endDate = year.toString()+month.toString()+("0" + lastDay.getDate()).slice(-2)
+    
+            var googleCalendarURL = "<iframe src=\""+src+startDate+"/"+endDate+"\" style=\"border-width:0\" width=\"600\" height=\"400\" frameborder=\"0\" scrolling=\"no\"></iframe>";
     
     if (date == null || memberID == null) {
         alert("โปรดกรอกข้อมูลให้ครบถ้วน");
@@ -340,6 +348,8 @@ function showSummaryByID() {
             if(memberID == memberIDByCookie){
                 $("#th_button_calculate").html("<input class=\"button\" type=\"button\" id=\"button_calculate_payment\" value=\"คำนวณ\" onclick=\"calculatePayment()\"/>"); 
             }
+            $("#google_calendar").html(googleCalendarURL);
+            
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
