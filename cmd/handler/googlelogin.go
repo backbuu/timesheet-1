@@ -21,7 +21,6 @@ import (
 
 const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
 
-var accessToken string
 var googleOauthConfig = &oauth2.Config{
 	RedirectURL:  "http://localhost:8080/callback",
 	ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
@@ -45,6 +44,8 @@ func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	cookie := &http.Cookie{Name: "access_token", Value: "", Path: "/", Expires: time.Unix(0, 0)}
+	http.SetCookie(context.Writer, cookie)
 	context.Status(http.StatusOK)
 }
 
@@ -76,12 +77,9 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
-	accessToken = token.AccessToken
+	cookie := http.Cookie{Name: "access_token", Value: "Bearer " + token.AccessToken, Expires: time.Now().Add(365 * 24 * time.Hour)}
+	http.SetCookie(context.Writer, &cookie)
 	context.Redirect(http.StatusTemporaryRedirect, "/home")
-}
-
-func getAccessToken() string {
-	return accessToken
 }
 
 func generateStateOauthCookie(writer http.ResponseWriter) string {
