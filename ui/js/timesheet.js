@@ -14,7 +14,10 @@ function showSummary(){
     var url = "/showSummaryTimesheet";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = function () {
+
+    var data = JSON.stringify({"year":year, "month": month});
+    request.send(data);
+    request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
             var json = JSON.parse(request.responseText);
             var siamChamnankit = "";
@@ -167,8 +170,6 @@ function showSummary(){
         }  
         }
     }; 
-    var data = JSON.stringify({"year":year, "month": month});
-    request.send(data);
 
 }
 
@@ -575,12 +576,14 @@ function setCurrentDate(){
         $("#title_timesheet").text(currentMonth+"-"+monthNames[currentMonth-1]+currentYear+"-TIMESHEET");  
     }); 
 }
-    
+
 function showProfile(){
+    
     var request = new XMLHttpRequest();
     var url = "/showProfile";
     request.open("GET", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.send();
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
@@ -590,7 +593,7 @@ function showProfile(){
             $("#email_profile").html(json.email);  
         }
     }   
-    request.send();  
+    
 }
 
 function getCookie(cname) {
@@ -613,9 +616,10 @@ function setCookie(cname, cvalue, exdays) {
     date.setTime(date.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ date.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
+}
 
-function setInitialHome(){    
+
+async function setInitialHome(){    
     var loginButton = "<a href=\"/login\">Login Google</a>"
     var logoutButton = "<input type=\"button\" value=\"logout\"/>"
 
@@ -626,8 +630,10 @@ function setInitialHome(){
             $("#button_logout").click(function(){
                 logout();
                 if (deleteOauthState()){
+                    document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
                     window.location.replace("/home") 
                 };
+                console.log(document.cookie);
             });
         }else{  
             $("#button_login").html(loginButton);
@@ -659,3 +665,5 @@ function deleteOauthState(){
     request.send();
     return true
 }
+
+console.log(document.cookie);
