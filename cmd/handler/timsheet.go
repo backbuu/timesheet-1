@@ -211,10 +211,10 @@ func (api TimesheetAPI) GetHolidayListHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	profile, err := api.TimesheetRepository.GetProfileByAccessToken(requestToken)
+	cookie, err := context.Request.Cookie("access_token")
+	splitToken := strings.Split(cookie.String(), "access_token=")
+	accessToken := splitToken[1]
+	profile, err := api.TimesheetRepository.GetProfileByAccessToken(accessToken)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
