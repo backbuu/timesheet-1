@@ -1,9 +1,10 @@
-function showSummary(id){
+function showSummary(){
+    var memberIDByCookie = getCookie("member_id")
     var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
-    
+
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
       $(document).click(function(){
         $("#title_timesheet").text(month+"-"+monthNames[month-1]+year+"-TIMESHEET");  
@@ -87,7 +88,7 @@ function showSummary(id){
                     siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    if (json[i-1].member_id == id) {
+                    if (json[i-1].member_id == memberIDByCookie || memberIDByCookie == "001") {
                         siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     }
                     siamChamnankit += "</tr>";
@@ -130,7 +131,7 @@ function showSummary(id){
                     shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                     shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                     shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
-                    if (json[i-1].member_id == id) {
+                    if (json[i-1].member_id == memberIDByCookie || memberIDByCookie == "001") {
                         shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     }
                     shuhari += "</tr>";
@@ -264,8 +265,7 @@ function calculatePayment() {
 
 function showSummaryByID() {
     setCurrentDate();
-    const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-
+    
     var urlString = window.location.href
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
@@ -277,6 +277,15 @@ function showSummaryByID() {
     var firstDay = new Date(fullDate.getFullYear(), fullDate.getMonth(), 1);
     var lastDay = new Date(fullDate.getFullYear(), fullDate.getMonth() + 1, 0);
 
+    var memberIDByCookie = getCookie("member_id")
+    console.log(memberID,memberIDByCookie);
+
+    var src = "https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FBangkok&amp;src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGgudGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%230B8043&amp;color=%230B8043&amp;showTz=0&amp;showPrint=0&amp;showCalendars=0&amp;showTabs=0&amp;showNav=0&amp;dates=";
+            var startDate = year.toString()+month.toString()+("0" + firstDay.getDate()).slice(-2)
+            var endDate = year.toString()+month.toString()+("0" + lastDay.getDate()).slice(-2)
+    
+            var googleCalendarURL = "<iframe src=\""+src+startDate+"/"+endDate+"\" style=\"border-width:0\" width=\"600\" height=\"400\" frameborder=\"0\" scrolling=\"no\"></iframe>";
+    
     if (date == null || memberID == null) {
         alert("โปรดกรอกข้อมูลให้ครบถ้วน");
         location.href = document.referrer
@@ -296,10 +305,6 @@ function showSummaryByID() {
             var json = JSON.parse(request.responseText);
             var memberNameENG = json.member_name_eng;
 		    var email = json.email;
-		    var overtimeRate = json.overtime_rate;
-		    var ratePerDay = json.rate_per_day;
-            var ratePerHour = json.rate_per_hour;
-            var monthString = monthNames[month-1];
 		    var totalHours = json.total_hours;
 		    var totalCoachingCustomerCharging = json.total_coaching_customer_charging;
             var totalCoachingPaymentRate = json.total_coaching_payment_rate;
@@ -324,37 +329,140 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
-                    incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
+                    if (json.incomes[i].member_id == memberIDByCookie) {
+                        incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
+                    }
                     incomeList += "</tr>";
                 }
                 $("#table_timesheet").html(incomeList);
             }
             $("#member_name_eng").html(memberNameENG);
             $("#email").html(email);
-            $("#overtime_rate").html(overtimeRate);
-            $("#rate_per_day").html(ratePerDay);
-            $("#rate_per_hour").html(ratePerHour);
-            $("#month").html(month);
-            $("#full_month").html(monthString);
-            $("#year").html(year); 
             $("#thours").html(totalHours);
             $("#total_coaching_customer_charging").html(totalCoachingCustomerCharging);
             $("#total_coaching_payment_rate").html(totalCoachingPaymentRate);
             $("#total_trainig_wage").html(totalTrainigWage); 
             $("#total_other_wage").html(totalOtherWage); 
-            $("#payment_wage").html(paymentWage); 
-        
-            var src = "https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FBangkok&amp;src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGgudGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%230B8043&amp;color=%230B8043&amp;showTz=0&amp;showPrint=0&amp;showCalendars=0&amp;showTabs=0&amp;showNav=0&amp;dates=";
-            var startDate = year.toString()+month.toString()+("0" + firstDay.getDate()).slice(-2)
-            var endDate = year.toString()+month.toString()+("0" + lastDay.getDate()).slice(-2)
-    
-            var googleCalendarURL = "<iframe src=\""+src+startDate+"/"+endDate+"\" style=\"border-width:0\" width=\"600\" height=\"400\" frameborder=\"0\" scrolling=\"no\"></iframe>";
+            $("#payment_wage").html(paymentWage);             
+            if(memberID == memberIDByCookie){
+                $("#th_button_calculate").html("<input class=\"button\" type=\"button\" id=\"button_calculate_payment\" value=\"คำนวณ\" onclick=\"calculatePayment()\"/>"); 
+            }
             $("#google_calendar").html(googleCalendarURL);
+            
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
     request.send(data); 
 
+}
+
+function setTableBodyAddIncomeItem(){
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    memberID = params.get("id");
+    var memberIDByCookie = getCookie("member_id")
+    var tableBody = `<tr>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Overtime</th>
+        <th>Total Hours</th>
+        <th>Coaching Customer Charging (THB)</th>
+        <th>Coaching Payment Rate (THB)</th>
+        <th>Training Wage (THB)</th>
+        <th>Other Wage (THB)</th>
+        <th>Company</th>
+        <th colspan="2">Description</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td><select id="day">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+            <option value=9>9</option>
+            <option value=10>10</option>
+            <option value=11>11</option>
+            <option value=12>12</option>
+            <option value=13>13</option>
+            <option value=14>14</option>
+            <option value=15>15</option>
+            <option value=16>16</option>
+            <option value=17>17</option>
+            <option value=18>18</option>
+            <option value=19>19</option>
+            <option value=20>20</option>
+            <option value=21>21</option>
+            <option value=22>22</option>
+            <option value=23>23</option>
+            <option value=24>24</option>
+            <option value=25>25</option>
+            <option value=26>26</option>
+            <option value=27>27</option>
+            <option value=28>28</option>
+            <option value=29>29</option>
+            <option value=30>30</option>
+            <option value=31>31</option>
+        </select></td>
+        <td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td>
+        <td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td>
+        <td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td>
+        <td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td>
+        <td><input type="number" id="overtime" value=0 placeholder="Overtime"></td>
+        <td><input type="time" step="1" id="total_hours" value=08:00:00 placeholder="Total Hours"></td>
+        <td><select id="coaching_customer_charging" value=0.00>
+            <option value=0.00>฿ 0.00</option>
+            <option value=5000.00>฿ 5,000.00</option>
+            <option value=7500.00>฿ 7,500.00</option>
+            <option value=10000.00>฿ 10,000.00</option>
+            <option value=15000.00>฿ 15,000.00</option>
+        </select></td>
+        <td><select id="coaching_payment_rate" value=0.00>
+            <option value=0.00>฿ 0.00</option>
+            <option value=5000.00>฿ 5,000.00</option>
+            <option value=7500.00>฿ 7,500.00</option>
+        <option value=10000.00>฿ 10,000.00</option>
+        <option value=15000.00>฿ 15,000.00</option>
+        </select></td>
+        <td><select id="training_wage" value=0.00>
+            <option value=0.00>฿ 0.00</option>
+            <option value=1000.00>฿ 1,000.00</option>
+            <option value=2000.00>฿ 2,000.00</option>
+            <option value=3000.00>฿ 3,000.00</option>
+            <option value=5000.00>฿ 5,000.00</option>
+            <option value=10000.00>฿ 10,000.00</option>
+        </select></td>
+        <td><select id="other_wage" value=0.00>
+            <option value=0.00>฿ 0.00</option>
+            <option value=2000.00>฿ 2,000.00</option>
+            <option value=5000.00>฿ 5,000.00</option>
+            <option value=7500.00>฿ 7,500.00</option>
+            <option value=10000.00>฿ 10,000.00</option>
+        </select></td>
+        <td><select id="company">
+            <option value="siam_chamnankit">Siam Chamnankit</option>
+            <option value="shuhari">Shuhari</option>
+        </select></td>
+        <td><input type="text" id="description" placeholder="Description" ></td>
+        <td><input class="button" type="submit" id="button_add_income_item" value="ยืนยัน" onclick="addIncomeItem()"/></td>
+    </tr>`;
+    console.log(tableBody);
+    $(document).ready(function(){
+        if(memberIDByCookie == memberID){
+            $("#table_addIncomeItem").html(tableBody);  
+        }
+    });
+    
+    console.log($("#table_addIncomeItem").text());
+    
 }
 
 function convertTimestampToTime(timestamp){
@@ -466,7 +574,10 @@ function setCurrentDate(){
     $(document).ready(function(){
         $("#date_summary").val(today);  
         $("#date").val(today); 
-        setInitialHome(); 
+        setInitialHome();
+        if (window.location.pathname === "/home/"){
+            showSummary();
+        }
     });
 
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
@@ -483,16 +594,13 @@ function showProfile(){
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
-            var picture = "<img src=\""+json.picture+"\" class=\"circular--square\">"
-            $("#hidden_member_id").html(json.member_id);
-            if (window.location.pathname === "/home/"){
-                showSummary(json.member_id);  
-            }
+            var picture = "<img class=\"circular--square\" src=\""+json.picture+"\">"
+            setCookie("member_id",json.member_id,30)
             $("#picture_profile").html(picture);
             $("#email_profile").html(json.email);  
         }
     }   
-    request.send();
+    request.send();  
 }
 
 function getCookie(cname) {
@@ -510,6 +618,13 @@ function getCookie(cname) {
     return "";
 }
 
+function setCookie(cname, cvalue, exdays) {
+    var date = new Date();
+    date.setTime(date.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ date.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
 function setInitialHome(){    
     var loginButton = "<a href=\"/login\">Login Google</a>"
     var logoutButton = "<input type=\"button\" value=\"logout\"/>"
@@ -517,17 +632,16 @@ function setInitialHome(){
     $(document).ready(function(){
         if (getCookie("access_token") != "" || getCookie("oauthstate") != ""){
             $("#button_logout").html(logoutButton);
-            showProfile();          
+            showProfile();  
             $("#button_logout").click(function(){
                 logout();
                 if (deleteOauthState()){
                     window.location.replace("/home") 
                 };
             });
-        }else{
-            showSummary("");
+        }else{  
             $("#button_login").html(loginButton);
-        }
+        } 
     });
 }
 
