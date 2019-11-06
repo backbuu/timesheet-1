@@ -15,10 +15,6 @@ function showSummary(){
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
-            var headers = request.getResponseHeader("Authorization");
-            if(headers != null){
-                document.cookie = "access_token="+headers;
-            }
             var json = JSON.parse(request.responseText);
             var siamChamnankit = "";
             var countSiamChamnankit = 0 ;
@@ -457,9 +453,9 @@ function setCurrentDate(){
     var today = currentYear + "-" + currentMonth;
     $(document).ready(function(){
         $("#date_summary").val(today);  
-        $("#date").val(today);  
+        $("#date").val(today); 
+        setInitial(); 
         showSummary();
-        setInitial();
     });
 
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
@@ -467,14 +463,12 @@ function setCurrentDate(){
         $("#title_timesheet").text(currentMonth+"-"+monthNames[currentMonth-1]+currentYear+"-TIMESHEET");  
     });  
 }
-  
+    
 function showProfile(){
-    console.log(getCookie("access_token"));
     var request = new XMLHttpRequest();
     var url = "/showProfile";
     request.open("GET", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", getCookie("access_token"));
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
@@ -485,7 +479,7 @@ function showProfile(){
     }   
     request.send();
 }
-  
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -501,17 +495,48 @@ function getCookie(cname) {
     return "";
 }
 
-function setInitial(){
+function setInitial(){    
     var loginButton = "<a href=\"/login\">Login Google</a>"
-    var logoutButton = "<a href=\"/logout\">logout</a>"
-    console.log(getCookie("access_token"));
-    console.log();
+    var logoutButton = "<input type=\"button\" value=\"logout\"/>"
+    
     $(document).ready(function(){
-        if (getCookie("access_token") != ""){
+        if (getCookie("access_token") != "" || getCookie("oauthstate") != ""){
+            $("#button_logout").html(logoutButton);
             showProfile();
-            $("#button_login_logout").html(logoutButton);  
+            $("#button_logout").click(function(){
+                logout();
+                // window.location = "https://mail.google.com/mail/u/0/?logout&hl=en";
+                if (deleteOauthState()){
+                    window.location.replace("/home") 
+                };
+            });
         }else{
-            $("#button_login_logout").html(loginButton);
+            $("#button_login").html(loginButton);
         }
-    }); 
+    });
+}
+
+function logout(){
+    var request = new XMLHttpRequest();
+    var url = "/logout";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {       
+        }
+    }   
+    request.send();
+    window.location.replace("/home") 
+}
+
+function deleteOauthState(){
+    var request = new XMLHttpRequest();
+    var url = "/deleteOauthState";
+    request.open("GET", url, true);
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {    
+        }
+    }   
+    request.send();
+    return true
 }
