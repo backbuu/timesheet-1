@@ -139,7 +139,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":47\n}"
+							"raw": "{\n\t\"member_id\":\"005\",\n\t\"id\":47\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/deleteIncomeItem",
