@@ -22,7 +22,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
 	CreateTimesheet(memberID string, year int, month int) error
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
-	UpdateStatusTransfer(transactionID, status, date, comment string) error
+	UpdateStatusTransfer(memberID, transactionID, status, date, comment string) error
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
 	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
@@ -186,10 +186,10 @@ func (repository TimesheetRepository) GetTimesheet(memberID string, year, month 
 	return timesheet, nil
 }
 
-func (repository TimesheetRepository) UpdateStatusTransfer(transactionID, status, date, comment string) error {
-	query := `UPDATE transactions SET status_checking_transfer = ?, date_transfer = ?, comment = ? WHERE id = ?`
+func (repository TimesheetRepository) UpdateStatusTransfer(memberID, transactionID, status, date, comment string) error {
+	query := `UPDATE transactions SET member_id = ?, status_checking_transfer = ?, date_transfer = ?, comment = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, status, date, comment, transactionID)
+	transaction.MustExec(query, memberID, status, date, comment, transactionID)
 	err := transaction.Commit()
 	if err != nil {
 		return err
