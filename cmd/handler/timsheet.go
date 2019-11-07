@@ -35,6 +35,7 @@ type TimesheetRequest struct {
 }
 
 type UpdateStatusRequest struct {
+	MemberID      string `json:"member_id"`
 	TransactionID string `json:"transaction_id"`
 	Status        string `json:"status"`
 	Date          string `json:"date"`
@@ -140,6 +141,14 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
 		return
 	}
 	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)

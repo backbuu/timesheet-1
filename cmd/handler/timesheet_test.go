@@ -381,6 +381,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 
 func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_Status_200(t *testing.T) {
 	requestUpdate := UpdateStatusRequest{
+		MemberID:      "004",
 		TransactionID: "004201912siam_chamnankit",
 		Status:        "โอนเงินเรียบร้อยแล้ว",
 		Date:          "30/12/2019",
@@ -389,10 +390,16 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 	jsonRequest, _ := json.Marshal(requestUpdate)
 	request := httptest.NewRequest("POST", "/updateStatusCheckingTransfer", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateStatusTransfer", "004201912siam_chamnankit", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
 
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "004").Return("Success")
+
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
