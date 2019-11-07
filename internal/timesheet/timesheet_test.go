@@ -2,6 +2,7 @@ package timesheet_test
 
 import (
 	"errors"
+	"os"
 	"testing"
 	"time"
 	"timesheet/internal/mockinternal"
@@ -9,6 +10,7 @@ import (
 	. "timesheet/internal/timesheet"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_TransactionTimesheet(t *testing.T) {
@@ -565,5 +567,65 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 	actual, err := timesheet.GetSummaryByID(memberID, year, month)
 
 	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
+
+func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Expired(t *testing.T) {
+	expected := "Expired"
+	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
+	memberID := "071"
+	os.Setenv("FIX_TIME", "2018-12-01 12:00:00")
+	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	mockRepository := new(mockinternal.MockRepository)
+	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
+		MemberID: "071",
+		Expiry:   expiry,
+	}, nil)
+	timesheet := Timesheet{
+		Repository: mockRepository,
+	}
+
+	actual := timesheet.VerifyAuthentication(accessToken, memberID)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Without_Authorization(t *testing.T) {
+	expected := "Without Authorization"
+	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
+	memberID := "008"
+	os.Setenv("FIX_TIME", "2018-12-01 12:00:00")
+	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	mockRepository := new(mockinternal.MockRepository)
+	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
+		MemberID: "071",
+		Expiry:   expiry,
+	}, nil)
+	timesheet := Timesheet{
+		Repository: mockRepository,
+	}
+
+	actual := timesheet.VerifyAuthentication(accessToken, memberID)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(t *testing.T) {
+	expected := "Success"
+	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
+	memberID := "071"
+	os.Setenv("FIX_TIME", "2018-12-01 08:30:00")
+	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	mockRepository := new(mockinternal.MockRepository)
+	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
+		MemberID: "071",
+		Expiry:   expiry,
+	}, nil)
+	timesheet := Timesheet{
+		Repository: mockRepository,
+	}
+
+	actual := timesheet.VerifyAuthentication(accessToken, memberID)
+
 	assert.Equal(t, expected, actual)
 }
