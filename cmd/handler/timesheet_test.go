@@ -204,7 +204,12 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	}
 	jsonRequest, _ := json.Marshal(requestIncome)
 	request := httptest.NewRequest("POST", "/addIncomeItem", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "001").Return("Success")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("CreateIncome", 2018, 12, "001", model.Incomes{
 		Day:                      28,
@@ -223,6 +228,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	}).Return(nil)
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
