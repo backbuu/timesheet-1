@@ -89,6 +89,7 @@ function showSummary(){
                         siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                         siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                         siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
+                        siamChamnankit += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json[i-1].member_id+"\">";
                         siamChamnankit += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     }else{
                         siamChamnankit += "<td id=\"status_checking_transfer_"+i+"\">"+json[i-1].status_checking_transfer+"</td>";
@@ -136,6 +137,7 @@ function showSummary(){
                         shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
                         shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
                         shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
+                        shuhari += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json[i-1].member_id+"\">";
                         shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
                     }else{
                         shuhari += "<td id=\"status_checking_transfer_"+i+"\">"+json[i-1].status_checking_transfer+"</td>";
@@ -183,8 +185,8 @@ function updateStatusTransfer(index){
     var transactionID = $("#transaction_id_"+index).val();
     var statusTransfer = $("#status_checking_transfer_"+index).val();
     var dateTransfer = $("#date_transfer_"+index).val();
+    var memberID = $("#member_id_"+index).val();
     var comment = $("#comment_"+index).val();
-
     var request = new XMLHttpRequest();
     var url = "/updateStatusCheckingTransfer";
     request.open("POST", url, true);
@@ -194,7 +196,7 @@ function updateStatusTransfer(index){
         if (request.readyState === 4 && request.status === 200) {
         }
     }
-    var data = JSON.stringify({"transaction_id":transactionID,"status":statusTransfer,"date":dateTransfer,"comment":comment});
+    var data = JSON.stringify({"member_id":memberID,"transaction_id":transactionID,"status":statusTransfer,"date":dateTransfer,"comment":comment});
     request.send(data); 
     window.location.replace(window.location.href)    
 }
@@ -208,6 +210,8 @@ function addIncomeItem(){
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
+
+    var day = parseInt($("#day").val());
 
     var fullStartTimeAm = $("#start_time_am").val();
     var startTimeAm = new Date("January 02, 2006 "+fullStartTimeAm+" UTC");
@@ -244,7 +248,7 @@ function addIncomeItem(){
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"overtime":overtime,"total_hours":totalHours,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
-    request.send(data);  
+    request.send(data); 
     window.location.replace(window.location.href); 
 }
 
