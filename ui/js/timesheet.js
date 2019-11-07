@@ -79,18 +79,22 @@ function showSummary(){
                     totalNetWageSiamChamnankit +=json[i-1].net_wage;
                     siamChamnankit += "<td id=\"net_transfer_id_"+i+"\">"+json[i-1].net_transfer+"</td>";
                     totalNetTransferSiamChamnankit += json[i-1].net_transfer;
-                    siamChamnankit += "<td><select id=\"status_checking_transfer_"+i+"\"><option value=\""+json[i-1].status_checking_transfer+"\">"+json[i-1].status_checking_transfer+"</option>";
-                    siamChamnankit += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
-                    siamChamnankit += "<option value=\"โอนเงินเรียบร้อย\">โอนเงินเรียบร้อย</option>";
-                    siamChamnankit += "<option value=\"ถูกต้อง\">ถูกต้อง</option>";
-                    siamChamnankit += "<option value=\"ไม่ถูกต้อง\">ไม่ถูกต้อง</option>";
-                    siamChamnankit += "</select></td>";
-                    siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
-                    siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
-                    siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
                     if (json[i-1].member_id == memberIDByCookie || memberIDByCookie == "001") {
-                        siamChamnankit += "<td><input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
-                    }
+                        siamChamnankit += "<td><select id=\"status_checking_transfer_"+i+"\"><option value=\""+json[i-1].status_checking_transfer+"\">"+json[i-1].status_checking_transfer+"</option>";
+                        siamChamnankit += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
+                        siamChamnankit += "<option value=\"โอนเงินเรียบร้อย\">โอนเงินเรียบร้อย</option>";
+                        siamChamnankit += "<option value=\"ถูกต้อง\">ถูกต้อง</option>";
+                        siamChamnankit += "<option value=\"ไม่ถูกต้อง\">ไม่ถูกต้อง</option>";
+                        siamChamnankit += "</select></td>";
+                        siamChamnankit += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
+                        siamChamnankit += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
+                        siamChamnankit += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
+                        siamChamnankit += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    }else{
+                        siamChamnankit += "<td id=\"status_checking_transfer_"+i+"\">"+json[i-1].status_checking_transfer+"</td>";
+                        siamChamnankit += "<td id=\"date_transfer_"+i+"\">"+json[i-1].date_transfer+"</td>";
+                        siamChamnankit += "<td id=\"comment_"+i+"\">"+json[i-1].comment+"</td>";
+                    }
                     siamChamnankit += "</tr>";
                 }else{
                     countShuhari++;
@@ -122,17 +126,21 @@ function showSummary(){
                     totalNetWageShuhari += json[i-1].net_wage;
                     shuhari += "<td id=\"net_transfer_id_"+i+"\">"+json[i-1].net_transfer+"</td>";
                     totalNetTransferShuhari += json[i-1].net_transfer;
-                    shuhari += "<td><select id=\"status_checking_transfer_"+i+"\"><option value=\""+json[i-1].status_checking_transfer+"\">"+json[i-1].status_checking_transfer+"</option>";
-                    shuhari += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
-                    shuhari += "<option value=\"โอนเงินเรียบร้อย\">โอนเงินเรียบร้อย</option>";
-                    shuhari += "<option value=\"ถูกต้อง\">ถูกต้อง</option>";
-                    shuhari += "<option value=\"ไม่ถูกต้อง\">ไม่ถูกต้อง</option>";
-                    shuhari += "</select></td>";
-                    shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
-                    shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
-                    shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
                     if (json[i-1].member_id == memberIDByCookie || memberIDByCookie == "001") {
+                        shuhari += "<td><select id=\"status_checking_transfer_"+i+"\"><option value=\""+json[i-1].status_checking_transfer+"\">"+json[i-1].status_checking_transfer+"</option>";
+                        shuhari += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
+                        shuhari += "<option value=\"โอนเงินเรียบร้อย\">โอนเงินเรียบร้อย</option>";
+                        shuhari += "<option value=\"ถูกต้อง\">ถูกต้อง</option>";
+                        shuhari += "<option value=\"ไม่ถูกต้อง\">ไม่ถูกต้อง</option>";
+                        shuhari += "</select></td>";
+                        shuhari += "<td><input type=\"text\" id=\"date_transfer_"+i+"\" value=\""+json[i-1].date_transfer+"\"></td>";
+                        shuhari += "<td><input type=\"text\" id=\"comment_"+i+"\" value=\""+json[i-1].comment+"\"></td>";
+                        shuhari += "<input type=\"hidden\" id=\"transaction_id_"+i+"\" value=\""+json[i-1].id+"\">";
                         shuhari += "<td>"+"<input class=\"button\" type=\"submit\" id=\"button_change_status_checking_transfer_id_"+i+"\" value=\"ยืนยันสถานะ\" onclick=\"updateStatusTransfer("+i+")\"/>"+"</td>";
+                    }else{
+                        shuhari += "<td id=\"status_checking_transfer_"+i+"\">"+json[i-1].status_checking_transfer+"</td>";
+                        shuhari += "<td id=\"date_transfer_"+i+"\">"+json[i-1].date_transfer+"</td>";
+                        shuhari += "<td id=\"comment_"+i+"\">"+json[i-1].comment+"</td>";
                     }
                     shuhari += "</tr>";
                 }
