@@ -202,7 +202,12 @@ function updateStatusTransfer(index){
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
     request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
+        if (request.status === 401){
+            logout();
+            if (deleteOauthState()){
+                document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
+                window.location.replace("/home") 
+            };
         }
     }
     var data = JSON.stringify({"member_id":memberID,"transaction_id":transactionID,"status":statusTransfer,"date":dateTransfer,"comment":comment});
@@ -256,6 +261,15 @@ function addIncomeItem(){
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
+    request.onreadystatechange = function () {
+        if (request.status === 401){
+            logout();
+            if (deleteOauthState()){
+                document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
+                window.location.replace("/home") 
+            };
+        }
+    }
     var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"overtime":overtime,"total_hours":totalHours,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
     request.send(data); 
     window.location.replace(window.location.href); 
@@ -277,7 +291,12 @@ function calculatePayment() {
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
+        if (request.status === 401){
+            logout();
+            if (deleteOauthState()){
+                document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
+                window.location.replace("/home") 
+            };
         }
     }
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
@@ -508,7 +527,12 @@ function deleteIncome(index){
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
+        if (request.status === 401){
+            logout();
+            if (deleteOauthState()){
+                document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
+                window.location.replace("/home") 
+            };
         }
     }
     var data = JSON.stringify({"id":incomeID,"member_id":memberID});
@@ -620,7 +644,12 @@ function editMemberDetails(index){
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
+        if (request.status === 401){
+            logout();
+            if (deleteOauthState()){
+                document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
+                window.location.replace("/home") 
+            };
         }
     }
     var data = JSON.stringify({"id":id,"member_id":memberID,"member_name_th":memberNameTH,"member_name_eng":memberNameENG,
