@@ -28,6 +28,7 @@ type TimesheetRepositoryGateways interface {
 	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
 	GetProfileByAccessToken(accessToken string) (model.Profile, error)
 	DeleteAuthentication(accessToken string) error
+	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
 }
 
 type TimesheetRepository struct {
