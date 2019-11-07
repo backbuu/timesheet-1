@@ -30,11 +30,28 @@ var googleOauthConfig = &oauth2.Config{
 	Endpoint:     google.Endpoint,
 }
 
+type RefreshTokenRequest struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+	RefreshToken string `json:"refresh_token"`
+	GrantType    string `json:"grant_type"`
+}
+
 func OauthGoogleLogin(context *gin.Context) {
 	oauthState := generateStateOauthCookie(context.Writer)
 	url := googleOauthConfig.AuthCodeURL(oauthState, oauth2.AccessTypeOffline)
 	context.Redirect(http.StatusTemporaryRedirect, url)
 }
+
+// func (api TimesheetAPI) GetNewAccessToken(context *gin.Context) {
+// 	request := RefreshTokenRequest{
+// 		ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
+// 		ClientSecret: os.Getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
+// 		RefreshToken: "1//0g5_PVHVkEHZQCgYIARAAGBASNwF-L9Irhkfqgbi_3NLg0tQifpojpdkFax23p4GAtTKO-CkFTj8AZjCJc4IrQ2bU73Cdl-6ZkqM",
+// 		GrantType:    "refresh_token",
+// 	}
+// 	context.JSON(http.StatusOK, request)
+// }
 
 func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
 	requestToken := context.GetHeader("Authorization")
