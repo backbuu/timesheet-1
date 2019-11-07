@@ -189,6 +189,7 @@ function updateStatusTransfer(index){
     var url = "/updateStatusCheckingTransfer";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
         }
@@ -241,6 +242,7 @@ function addIncomeItem(){
     var url = "/addIncomeItem";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"overtime":overtime,"total_hours":totalHours,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
     request.send(data);  
     window.location.replace(window.location.href); 
@@ -260,6 +262,7 @@ function calculatePayment() {
     var url = "/calculatePayment";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
         }
@@ -521,9 +524,13 @@ function getMemberByID(){
                     member += "<tr><th>ประกันสังคม</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security+"\"></td></tr>";
                     member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
                     member += "<tr><th>ประเภทของรายได้</th><td><select id=\"status_id_"+i+"\">";
-                    member += "<option value=\""+json[i].status+"\">"+json[i].status+"</option>";
-                    member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
-                    member += "<option value=\"salary\">เงินเดือน (salary)</option>";
+                    if (json[i].status == "wage"){
+                        member += "<option value=\""+json[i].status+"\">ค่าจ้างรายวัน (wage)</option>";
+                        member += "<option value=\"salary\">เงินเดือน (salary)</option>";
+                    }else{
+                        member += "<option value=\""+json[i].status+"\">เงินเดือน (salary)</option>";
+                        member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
+                    }
                     member += "</select></td></tr>";
                     member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
                     member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
@@ -574,6 +581,7 @@ function editMemberDetails(index){
     var url = "/updateMemberDetails";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
         }
@@ -691,3 +699,39 @@ function deleteOauthState(){
     request.send();
     return true
 }
+
+// function refreshTokenRequest(){
+//     var request = new XMLHttpRequest();
+//     var url = "/getNewAccessToken";
+//     request.open("POST", url, true);
+//     request.setRequestHeader("Content-Type", "application/json");
+//     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
+//     request.onreadystatechange = function () {
+//         if (request.readyState === 4 && request.status === 200) {
+//             var json = JSON.parse(request.responseText);
+//             var clientID = json.client_id
+//             var clientSecret = json.client_secret
+//             var refreshToken = json.refresh_token
+//             var grantType = json.grant_type
+//             getNewAccessToken(clientID,clientSecret,refreshToken,grantType)
+//         }
+//     }
+//     request.send(); 
+// }
+
+// function getNewAccessToken(clientID,clientSecret,refreshToken,grantType){
+//     var request = new XMLHttpRequest();
+//     var url = "https://www.googleapis.com/oauth2/v4/token";
+//     request.open("POST", url, true);
+//     request.setRequestHeader("Content-Type", "application/json");
+//     request.onreadystatechange = function () {
+//         if (request.readyState === 4 && request.status === 200) {
+//             var json = JSON.parse(request.responseText);
+//             var accessToken = json.access_token;
+//             var expiresIn = json.expires_in;
+//             var tokenType = json.token_type
+//         }
+//     }
+//     var data = JSON.stringify({"client_id":clientID,"client_secret":clientSecret,"refresh_token":refreshToken,"grant_type":grantType});
+//     request.send(data); 
+// }
