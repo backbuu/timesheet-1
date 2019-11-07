@@ -14,9 +14,6 @@ function showSummary(){
     var url = "/showSummaryTimesheet";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-
-    var data = JSON.stringify({"year":year, "month": month});
-    request.send(data);
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
             var json = JSON.parse(request.responseText);
@@ -170,7 +167,8 @@ function showSummary(){
         }  
         }
     }; 
-
+    var data = JSON.stringify({"year":year, "month": month});
+    request.send(data);
 }
 
 function updateStatusTransfer(index){
@@ -201,7 +199,6 @@ function addIncomeItem(){
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
     var month = fullDate.getMonth()+1;
-    var day = parseInt($("#day").val());
 
     var fullStartTimeAm = $("#start_time_am").val();
     var startTimeAm = new Date("January 02, 2006 "+fullStartTimeAm+" UTC");
@@ -279,7 +276,6 @@ function showSummaryByID() {
     var lastDay = new Date(fullDate.getFullYear(), fullDate.getMonth() + 1, 0);
 
     var memberIDByCookie = getCookie("member_id")
-    console.log(memberID,memberIDByCookie);
 
     var src = "https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FBangkok&amp;src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGgudGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%230B8043&amp;color=%230B8043&amp;showTz=0&amp;showPrint=0&amp;showCalendars=0&amp;showTabs=0&amp;showNav=0&amp;dates=";
             var startDate = year.toString()+month.toString()+("0" + firstDay.getDate()).slice(-2)
@@ -381,38 +377,38 @@ function setTableBodyAddIncomeItem(){
     </tr>
     <tr>
         <td><select id="day">
-            <option value=1>1</option>
-            <option value=2>2</option>
-            <option value=3>3</option>
-            <option value=4>4</option>
-            <option value=5>5</option>
-            <option value=6>6</option>
-            <option value=7>7</option>
-            <option value=8>8</option>
-            <option value=9>9</option>
-            <option value=10>10</option>
-            <option value=11>11</option>
-            <option value=12>12</option>
-            <option value=13>13</option>
-            <option value=14>14</option>
-            <option value=15>15</option>
-            <option value=16>16</option>
-            <option value=17>17</option>
-            <option value=18>18</option>
-            <option value=19>19</option>
-            <option value=20>20</option>
-            <option value=21>21</option>
-            <option value=22>22</option>
-            <option value=23>23</option>
-            <option value=24>24</option>
-            <option value=25>25</option>
-            <option value=26>26</option>
-            <option value=27>27</option>
-            <option value=28>28</option>
-            <option value=29>29</option>
-            <option value=30>30</option>
-            <option value=31>31</option>
-        </select></td>
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=9>9</option>
+        <option value=10>10</option>
+        <option value=11>11</option>
+        <option value=12>12</option>
+        <option value=13>13</option>
+        <option value=14>14</option>
+        <option value=15>15</option>
+        <option value=16>16</option>
+        <option value=17>17</option>
+        <option value=18>18</option>
+        <option value=19>19</option>
+        <option value=20>20</option>
+        <option value=21>21</option>
+        <option value=22>22</option>
+        <option value=23>23</option>
+        <option value=24>24</option>
+        <option value=25>25</option>
+        <option value=26>26</option>
+        <option value=27>27</option>
+        <option value=28>28</option>
+        <option value=29>29</option>
+        <option value=30>30</option>
+        <option value=31>31</option>
+    </select></td>
         <td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td>
         <td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td>
         <td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td>
@@ -455,15 +451,11 @@ function setTableBodyAddIncomeItem(){
         <td><input type="text" id="description" placeholder="Description" ></td>
         <td><input class="button" type="submit" id="button_add_income_item" value="ยืนยัน" onclick="addIncomeItem()"/></td>
     </tr>`;
-    console.log(tableBody);
     $(document).ready(function(){
         if(memberIDByCookie == memberID){
             $("#table_addIncomeItem").html(tableBody);  
         }
-    });
-    
-    console.log($("#table_addIncomeItem").text());
-    
+    });    
 }
 
 function convertTimestampToTime(timestamp){
@@ -495,7 +487,9 @@ function getMemberByID(){
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
     var memberID =  params.get("id");
-    
+
+    var memberIDByCookie = getCookie("member_id")  
+
     var request = new XMLHttpRequest();
     var url = "/showMemberDetailsByID";
     request.open("POST", url, true);
@@ -507,24 +501,40 @@ function getMemberByID(){
             for (var i = 0; i < json.length; i++) {
                 member += "<table id =\"table_member_details\">"
                 member += "<tr><th>บริษัท</th><td id=\"company_id_"+i+"\">"+json[i].company+"</td></tr>";
-                member += "<tr><th>ชื่อ-นามสกุล (ภาษาไทย)</th><td><input type=\"text\" id=\"member_name_th_id_"+i+"\" value=\""+json[i].member_name_th+"\"></td></tr>";
-                member += "<tr><th>ชื่อ-นามสกุล (ภาษาอังกฤษ)</th><td><input type=\"text\" id=\"member_name_eng_id_"+i+"\" value=\""+json[i].member_name_eng+"\"></td></tr>";
-                member += "<tr><th>E-mail</th><td><input type=\"email\" id=\"email_id_"+i+"\" value=\""+json[i].email+"\"></td></tr>";
-                member += "<tr><th>Overtime Rate</th><td><input type=\"number\" id=\"overtime_rate_id_"+i+"\" value=\""+json[i].overtime_rate+"\"></td></tr>";
-                member += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day+"\"></td></tr>";
-                member += "<tr><th>Rate Per Hour</th><td><input type=\"number\" id=\"rate_per_hour_id_"+i+"\" value=\""+json[i].rate_per_hour+"\"></td></tr>";
-                member += "<tr><th>เงินเดือน</th><td><input type=\"number\" id=\"salary_id_"+i+"\" value=\""+json[i].salary+"\"></td></tr>";
-                member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.1</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1+"\"></td></tr>";
-                member += "<tr><th>ประกันสังคม</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security+"\"></td></tr>";
-                member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
-                member += "<tr><th>ประเภทของรายได้</th><td><select id=\"status_id_"+i+"\">";
-                member += "<option value=\""+json[i].status+"\">"+json[i].status+"</option>";
-                member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
-                member += "<option value=\"salary\">เงินเดือน (salary)</option>";
-                member += "</select></td></tr>";
-                member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
-                member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
-                member += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";
+                member += "<tr><th>ชื่อ-นามสกุล (ภาษาไทย)</th><td >"+json[i].member_name_th+"</td></tr>";
+                member += "<tr><th>ชื่อ-นามสกุล (ภาษาอังกฤษ)</th><td>"+json[i].member_name_eng+"</td></tr>";
+                member += "<tr><th>E-mail</th><td>"+json[i].email+"</td></tr>";
+                if (memberIDByCookie == memberID || memberIDByCookie == "001") {
+                    member += "<tr><th>Overtime Rate</th><td><input type=\"number\" id=\"overtime_rate_id_"+i+"\" value=\""+json[i].overtime_rate+"\"></td></tr>";
+                    member += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day+"\"></td></tr>";
+                    member += "<tr><th>Rate Per Hour</th><td><input type=\"number\" id=\"rate_per_hour_id_"+i+"\" value=\""+json[i].rate_per_hour+"\"></td></tr>";
+                    member += "<tr><th>เงินเดือน</th><td><input type=\"number\" id=\"salary_id_"+i+"\" value=\""+json[i].salary+"\"></td></tr>";
+                    member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.1</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1+"\"></td></tr>";
+                    member += "<tr><th>ประกันสังคม</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security+"\"></td></tr>";
+                    member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
+                    member += "<tr><th>ประเภทของรายได้</th><td><select id=\"status_id_"+i+"\">";
+                    member += "<option value=\""+json[i].status+"\">"+json[i].status+"</option>";
+                    member += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
+                    member += "<option value=\"salary\">เงินเดือน (salary)</option>";
+                    member += "</select></td></tr>";
+                    member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
+                    member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
+                    member += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";                    
+                }else{
+                    member += "<tr><th>Overtime Rate</th><td id=\"overtime_rate_id_"+i+"\">"+json[i].overtime_rate+"</td></tr>";
+                    member += "<tr><th>Rate Per Day</th><td id=\"rate_per_day_id_"+i+"\">"+json[i].rate_per_day+"</td></tr>";
+                    member += "<tr><th>Rate Per Hour</th><td id=\"rate_per_hour_id_"+i+"\">"+json[i].rate_per_hour+"</td></tr>";
+                    member += "<tr><th>เงินเดือน</th><td id=\"salary_id_"+i+"\">"+json[i].salary+"</td></tr>";
+                    member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.1</th><td id=\"income_tax_1_id_"+i+"\">"+json[i].income_tax_1+"</td></tr>";
+                    member += "<tr><th>ประกันสังคม</th><td id=\"social_security_id_"+i+"\">"+json[i].social_security+"</td></tr>";
+                    member += "<tr><th>หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</th><td id=\"income_tax_53_percentage_id_"+i+"\">"+json[i].income_tax_53_percentage+"</td></tr>";
+                    if (json[i].status == "wage"){
+                        member += "<tr><th>ประเภทของรายได้</th><td id=\"status_id_"+i+"\">ค่าจ้างรายวัน (wage)</td></tr>";
+                    }else{
+                        member += "<tr><th>ประเภทของรายได้</th><td id=\"status_id_"+i+"\">เงินเดือน (salary)</td></tr>";
+                    }
+                    member += "<tr><th>ค่าเดินทาง</th><td id=\"travel_expense_id_"+i+"\">"+json[i].travel_expense+"</td></tr>";
+                }
                 member += "</table>"
                 if (i+1 < json.length) {
                     member += "<br><br><br>"
@@ -588,12 +598,10 @@ function setCurrentDate(){
 }
 
 function showProfile(){
-    
     var request = new XMLHttpRequest();
     var url = "/showProfile";
     request.open("GET", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.send();
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
@@ -603,7 +611,7 @@ function showProfile(){
             $("#email_profile").html(json.email);  
         }
     }   
-    
+    request.send();
 }
 
 function getCookie(cname) {
@@ -628,13 +636,12 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-
-async function setInitialHome(){    
+function setInitialHome(){    
     var loginButton = "<a href=\"/login\">Login Google</a>"
     var logoutButton = "<input type=\"button\" value=\"logout\"/>"
 
     $(document).ready(function(){
-        if (getCookie("access_token") != "" || getCookie("oauthstate") != ""){
+        if (getCookie("oauthstate") != ""){
             $("#button_logout").html(logoutButton);
             showProfile();  
             $("#button_logout").click(function(){
@@ -643,7 +650,6 @@ async function setInitialHome(){
                     document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
                     window.location.replace("/home") 
                 };
-                console.log(document.cookie);
             });
         }else{  
             $("#button_login").html(loginButton);
@@ -675,5 +681,3 @@ function deleteOauthState(){
     request.send();
     return true
 }
-
-console.log(document.cookie);
