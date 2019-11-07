@@ -528,7 +528,7 @@ func Test_GetProfileByAccessToken_Input_AccessToken_Should_Be_Email_logintest535
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetAuthenticationByAccessToken_Input_AccessToken_Should_Be_MemberID_071_And_Expiry(t *testing.T) {
+func Test_GetVerifyAuthenticationByAccessToken_Input_AccessToken_Should_Be_MemberID_071_And_Expiry_2018_12_01_09_00_00(t *testing.T) {
 	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	expected := model.VerifyAuthentication{
 		MemberID: "071",
@@ -541,7 +541,7 @@ func Test_GetAuthenticationByAccessToken_Input_AccessToken_Should_Be_MemberID_07
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetAuthenticationByAccessToken(accessToken)
+	actual, err := repository.GetVerifyAuthenticationByAccessToken(accessToken)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
