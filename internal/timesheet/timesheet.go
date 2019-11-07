@@ -3,6 +3,7 @@ package timesheet
 import (
 	"fmt"
 	"math"
+	"os"
 	"time"
 	"timesheet/internal/model"
 	"timesheet/internal/repository"
@@ -112,6 +113,28 @@ func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (mod
 		TotalTrainigWage:              payment.TotalTrainigWage,
 		TotalOtherWage:                payment.TotalOtherWage,
 		PaymentWage:                   payment.PaymentWage}, nil
+}
+
+func (timesheet Timesheet) VerifyAuthentication(accessToken string, memberID string) string {
+	authentication, err := timesheet.Repository.GetVerifyAuthenticationByAccessToken(accessToken)
+	if err != nil {
+		return err.Error()
+	}
+	if authentication.MemberID != memberID {
+		return "Without Authorization"
+	}
+	if authentication.Expiry.Before(now()) {
+		return "Expired"
+	}
+	return "Success"
+}
+
+func now() time.Time {
+	if os.Getenv("FIX_TIME") != "" {
+		fixedTime, _ := time.Parse("2006-01-02 15:04:05", os.Getenv("FIX_TIME"))
+		return fixedTime
+	}
+	return time.Now()
 }
 
 func calculateTotalHours(incomeList []model.Incomes) string {
