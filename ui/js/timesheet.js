@@ -175,6 +175,18 @@ function showSummary(){
         }  
         }
     }; 
+
+    var topButton = document.getElementById("button_to_top");
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+            topButton.style.display = "block";
+        } else {
+            topButton.style.display = "none";
+        }
+    }
+    
     var data = JSON.stringify({"year":year, "month": month});
     request.send(data);
 }
@@ -359,6 +371,18 @@ function showSummaryByID() {
             
         }
     }
+
+    var topButton = document.getElementById("button_to_top");
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+            topButton.style.display = "block";
+        } else {
+            topButton.style.display = "none";
+        }
+    }
+    
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
     request.send(data); 
 
@@ -558,6 +582,18 @@ function getMemberByID(){
             $("#table_member_details").html(member);
         }
     }
+
+    var topButton = document.getElementById("button_to_top");
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+            topButton.style.display = "block";
+        } else {
+            topButton.style.display = "none";
+        }
+    }
+    
     var data = JSON.stringify({"member_id":memberID});
     request.send(data);
 }
@@ -735,3 +771,28 @@ function deleteOauthState(){
 //     var data = JSON.stringify({"client_id":clientID,"client_secret":clientSecret,"refresh_token":refreshToken,"grant_type":grantType});
 //     request.send(data); 
 // }
+
+// function callback() {
+//     var request = new XMLHttpRequest();
+//     var url = "/login";
+//     request.open("GET", url, true);
+//     request.onreadystatechange = function () {
+//         if (response.status !== 200) {
+//             alert("โปรดกรอกข้อมูลให้ครบถ้วน");
+//             location.href = document.referrer
+//         }
+//     }
+// }
+
+// function scrollFunction() {
+//     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+//         topButton.style.display = "block";
+//     } else {
+//         topButton.style.display = "none";
+//     }
+//   }
+
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
