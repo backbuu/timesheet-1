@@ -565,7 +565,7 @@ func Test_GetProfileHandler_Input_AccessToken_Should_Be_Profile(t *testing.T) {
 	expected := `{"member_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
 	request := httptest.NewRequest("GET", "/showProfile", nil)
 	writer := httptest.NewRecorder()
-	http.SetCookie(writer, &http.Cookie{Name: "access_token", Value: "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw", Expires: time.Now().Add(365 * 24 * time.Hour)})
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetProfileByAccessToken", mock.Anything).Return(model.Profile{
 		MemberID: "007",
