@@ -507,6 +507,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 
 func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testing.T) {
 	requestUpdateMember := model.Member{
+		MemberID:              "001",
 		ID:                    1,
 		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 		MemberNameENG:         "Prathan Dansakulcharoenkit",
@@ -523,10 +524,16 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	}
 	jsonRequest, _ := json.Marshal(requestUpdateMember)
 	request := httptest.NewRequest("POST", "/updateMemberDetails", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "001").Return("Success")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateMemberDetails", model.Member{
 		ID:                    1,
+		MemberID:              "001",
 		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 		MemberNameENG:         "Prathan Dansakulcharoenkit",
 		Email:                 "prathan@scrum123.com",
@@ -542,6 +549,7 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	}).Return(nil)
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
