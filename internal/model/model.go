@@ -133,3 +133,8 @@ type Profile struct {
 	Email    string `db:"email" json:"email"`
 	Picture  string `db:"picture" json:"picture"`
 }
+
+type VerifyAuthentication struct {
+	MemberID string    `db:"member_id" json:"member_id"`
+	Expiry   time.Time `db:"expiry" json:"expiry"`
+}
