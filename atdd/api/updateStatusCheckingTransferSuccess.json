@@ -158,7 +158,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"transaction_id\":\"004201812siam_chamnankit\",\n\t\"status\":\"โอนเงินเรียบร้อย\",\n\t\"date\":\"30/12/2018\",\n\t\"comment\":\"หักค่าส่งพัสดุ\"\n}"
+							"raw": "{\n\t\"member_id\":\"004\",\n\t\"transaction_id\":\"004201812siam_chamnankit\",\n\t\"status\":\"โอนเงินเรียบร้อย\",\n\t\"date\":\"30/12/2018\",\n\t\"comment\":\"หักค่าส่งพัสดุ\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/updateStatusCheckingTransfer",
