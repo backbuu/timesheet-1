@@ -610,6 +610,7 @@ function showProfile(){
     var url = "/showProfile";
     request.open("GET", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
@@ -670,6 +671,7 @@ function logout(){
     var url = "/logout";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {       
         }
