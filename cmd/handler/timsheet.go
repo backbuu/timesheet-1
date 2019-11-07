@@ -35,6 +35,7 @@ type TimesheetRequest struct {
 }
 
 type UpdateStatusRequest struct {
+	MemberID      string `json:"member_id"`
 	TransactionID string `json:"transaction_id"`
 	Status        string `json:"status"`
 	Date          string `json:"date"`
@@ -142,7 +143,7 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
+	err = api.TimesheetRepository.UpdateStatusTransfer(request.MemberID, request.TransactionID, request.Status, request.Date, request.Comment)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
