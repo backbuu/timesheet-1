@@ -350,6 +350,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].other_wage+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
+                    incomeList += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json.incomes[i].member_id+"\">"
                     if (json.incomes[i].member_id == memberIDByCookie) {
                         incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
                     }
@@ -500,7 +501,7 @@ function convertTimestampToTime(timestamp){
 
 function deleteIncome(index){
     var incomeID = parseInt($("#income_id_"+index).val());    
-
+    var memberID = $("#member_id_"+index).val()  
     var request = new XMLHttpRequest();
     var url = "/deleteIncomeItem";
     request.open("POST", url, true);
@@ -510,7 +511,7 @@ function deleteIncome(index){
         if (request.readyState === 4 && request.status === 200) {
         }
     }
-    var data = JSON.stringify({"id":incomeID});
+    var data = JSON.stringify({"id":incomeID,"member_id":memberID});
     
     request.send(data);
     window.location.replace(window.location.href) 
@@ -535,9 +536,9 @@ function getMemberByID(){
             for (var i = 0; i < json.length; i++) {
                 member += "<table id =\"table_member_details\">"
                 member += "<tr><th>บริษัท</th><td id=\"company_id_"+i+"\">"+json[i].company+"</td></tr>";
-                member += "<tr><th>ชื่อ-นามสกุล (ภาษาไทย)</th><td >"+json[i].member_name_th+"</td></tr>";
-                member += "<tr><th>ชื่อ-นามสกุล (ภาษาอังกฤษ)</th><td>"+json[i].member_name_eng+"</td></tr>";
-                member += "<tr><th>E-mail</th><td>"+json[i].email+"</td></tr>";
+                member += "<tr><th>ชื่อ-นามสกุล (ภาษาไทย)</th><td id=\"member_name_th_id_"+i+"\">"+json[i].member_name_th+"</td></tr>";
+                member += "<tr><th>ชื่อ-นามสกุล (ภาษาอังกฤษ)</th><td id=\"member_name_eng_id_"+i+"\">"+json[i].member_name_eng+"</td></tr>";
+                member += "<tr><th>E-mail</th><td id=\"email_id_"+i+"\">"+json[i].email+"</td></tr>";
                 if (memberIDByCookie == memberID || memberIDByCookie == "001") {
                     member += "<tr><th>Overtime Rate</th><td><input type=\"number\" id=\"overtime_rate_id_"+i+"\" value=\""+json[i].overtime_rate+"\"></td></tr>";
                     member += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day+"\"></td></tr>";
@@ -557,6 +558,7 @@ function getMemberByID(){
                     member += "</select></td></tr>";
                     member += "<tr><th>ค่าเดินทาง</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense+"\"></td></tr>";
                     member += "<input type=\"hidden\" id=\"member_details_id_"+i+"\" value=\""+json[i].id+"\">";
+                    member += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+memberID+"\">";
                     member += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_member_id_"+i+"\" value=\"ยืนยันการแก้ไขข้อมูล\" onclick=\"editMemberDetails("+i+")\"></td></tr>";                    
                 }else{
                     member += "<tr><th>Overtime Rate</th><td id=\"overtime_rate_id_"+i+"\">"+json[i].overtime_rate+"</td></tr>";
@@ -579,6 +581,8 @@ function getMemberByID(){
                 }
             }
             $("#table_member_details").html(member);
+           
+            
         }
     }
 
@@ -594,11 +598,12 @@ function getMemberByID(){
     request.send(data);
 }
 
-function editMemberDetails(index){
+function editMemberDetails(index){    
     var id = parseInt($("#member_details_id_"+index).val());
-    var memberNameTH = $("#member_name_th_id_"+index).val();
-    var memberNameENG = $("#member_name_eng_id_"+index).val();
-    var email = $("#email_id_"+index).val();
+    var memberID = $("#member_id_"+index).val();
+    var memberNameTH = $("#member_name_th_id_"+index).text();
+    var memberNameENG = $("#member_name_eng_id_"+index).text();
+    var email = $("#email_id_"+index).text();
     var overtimeRate = parseFloat($("#overtime_rate_id_"+index).val());
     var ratePerDay = parseFloat($("#rate_per_day_id_"+index).val());
     var ratePerHour = parseFloat($("#rate_per_hour_id_"+index).val());
@@ -618,10 +623,11 @@ function editMemberDetails(index){
         if (request.readyState === 4 && request.status === 200) {
         }
     }
-    var data = JSON.stringify({"id":id,"member_name_th":memberNameTH,"member_name_eng":memberNameENG,
+    var data = JSON.stringify({"id":id,"member_id":memberID,"member_name_th":memberNameTH,"member_name_eng":memberNameENG,
         "email":email,"overtime_rate":overtimeRate,"rate_per_day":ratePerDay,"rate_per_hour":ratePerHour,
         "salary":salary,"income_tax_1":incomeTax1,"social_security":socialSecurity,"income_tax_53_percentage":incomeTax53Percentage,
-        "status":status,"travel_expense":travelExpense});    
+        "status":status,"travel_expense":travelExpense}); 
+    
     request.send(data);
 }
 
@@ -767,26 +773,6 @@ function deleteOauthState(){
 //     var data = JSON.stringify({"client_id":clientID,"client_secret":clientSecret,"refresh_token":refreshToken,"grant_type":grantType});
 //     request.send(data); 
 // }
-
-// function callback() {
-//     var request = new XMLHttpRequest();
-//     var url = "/login";
-//     request.open("GET", url, true);
-//     request.onreadystatechange = function () {
-//         if (response.status !== 200) {
-//             alert("โปรดกรอกข้อมูลให้ครบถ้วน");
-//             location.href = document.referrer
-//         }
-//     }
-// }
-
-// function scrollFunction() {
-//     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-//         topButton.style.display = "block";
-//     } else {
-//         topButton.style.display = "none";
-//     }
-//   }
 
 function topFunction() {
     document.body.scrollTop = 0;
