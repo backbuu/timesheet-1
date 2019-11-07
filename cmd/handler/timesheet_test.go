@@ -247,7 +247,12 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	}
 	jsonRequest, _ := json.Marshal(calculatePaymentRequest)
 	request := httptest.NewRequest("POST", "/calculatePayment", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "001").Return("Success")
+
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -286,7 +291,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}, nil)
-	mockTimesheet := new(mockapi.MockTimesheet)
+
 	mockTimesheet.On("CalculatePayment", mock.Anything).Return(model.Timesheet{
 		TotalHours:                    "16:00:00",
 		TotalCoachingCustomerCharging: 130000.00,
@@ -295,7 +300,9 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		TotalOtherWage:                40000.00,
 		PaymentWage:                   195000.00,
 	})
+
 	mockRepository.On("UpdateTimesheet", mock.Anything, "001", 2018, 12).Return(nil)
+
 	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
 			ID:                    1,
@@ -330,6 +337,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			TravelExpense:         0.00,
 		},
 	}, nil)
+
 	mockTimesheet.On("CalculatePaymentSummary", mock.Anything, mock.Anything, 2018, 12).Return([]model.TransactionTimesheet{
 		{
 			MemberID:              "001",
@@ -371,6 +379,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			NetTransfer:           36000.00,
 		},
 	})
+
 	mockRepository.On("VerifyTransactionTimsheet", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{

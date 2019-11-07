@@ -119,6 +119,14 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	incomeList, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
