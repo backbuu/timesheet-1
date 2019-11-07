@@ -268,3 +268,13 @@ func (repository TimesheetRepository) DeleteAuthentication(accessToken string) e
 	}
 	return nil
 }
+
+func (repository TimesheetRepository) GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error) {
+	var authentication model.VerifyAuthentication
+	query := `SELECT member_id, expiry FROM authentications WHERE access_token LIKE ?`
+	err := repository.DatabaseConnection.Get(&authentication, query, accessToken)
+	if err != nil {
+		return authentication, err
+	}
+	return authentication, nil
+}
