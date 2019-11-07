@@ -483,6 +483,7 @@ function deleteIncome(index){
     var url = "/deleteIncomeItem";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
         }
