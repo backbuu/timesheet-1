@@ -102,3 +102,8 @@ func (mock *MockTimesheet) GetSummaryByID(memberID string, year, month int) (mod
 	argument := mock.Called(memberID, year, month)
 	return argument.Get(0).(model.SummaryTimesheet), argument.Error(1)
 }
+
+func (mock *MockTimesheet) VerifyAuthentication(accessToken string, memberID string) string {
+	argument := mock.Called(accessToken, memberID)
+	return argument.String(0)
+}
