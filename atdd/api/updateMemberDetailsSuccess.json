@@ -138,7 +138,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":9,\n\t\"member_name_th\":\"ภาณุมาศ แสนโท\",\n\t\"member_name_eng\":\"Panumars Seanto\",\n\t\"email\":\"panumars@scrum123.com\",\n\t\"overtime_rate\":2000,\n\t\"rate_per_day\":15000,\n\t\"rate_per_hour\":1875,\n\t\"salary\":25000,\n\t\"income_tax_1\":0,\n\t\"social_security\":750,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":1500,\n\t\"status\":\"salary\"\n}"
+							"raw": "{\n\t\"id\":9,\n\t\"member_id\":\"006\",\n\t\"member_name_th\":\"ภาณุมาศ แสนโท\",\n\t\"member_name_eng\":\"Panumars Seanto\",\n\t\"email\":\"panumars@scrum123.com\",\n\t\"overtime_rate\":2000,\n\t\"rate_per_day\":15000,\n\t\"rate_per_hour\":1875,\n\t\"salary\":25000,\n\t\"income_tax_1\":0,\n\t\"social_security\":750,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":1500,\n\t\"status\":\"salary\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/updateMemberDetails",
