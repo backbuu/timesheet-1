@@ -204,7 +204,12 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	}
 	jsonRequest, _ := json.Marshal(requestIncome)
 	request := httptest.NewRequest("POST", "/addIncomeItem", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "001").Return("Success")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("CreateIncome", 2018, 12, "001", model.Incomes{
 		Day:                      28,
@@ -223,6 +228,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	}).Return(nil)
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
@@ -241,7 +247,12 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	}
 	jsonRequest, _ := json.Marshal(calculatePaymentRequest)
 	request := httptest.NewRequest("POST", "/calculatePayment", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "001").Return("Success")
+
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -280,7 +291,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}, nil)
-	mockTimesheet := new(mockapi.MockTimesheet)
+
 	mockTimesheet.On("CalculatePayment", mock.Anything).Return(model.Timesheet{
 		TotalHours:                    "16:00:00",
 		TotalCoachingCustomerCharging: 130000.00,
@@ -289,7 +300,9 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		TotalOtherWage:                40000.00,
 		PaymentWage:                   195000.00,
 	})
+
 	mockRepository.On("UpdateTimesheet", mock.Anything, "001", 2018, 12).Return(nil)
+
 	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
 			ID:                    1,
@@ -324,6 +337,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			TravelExpense:         0.00,
 		},
 	}, nil)
+
 	mockTimesheet.On("CalculatePaymentSummary", mock.Anything, mock.Anything, 2018, 12).Return([]model.TransactionTimesheet{
 		{
 			MemberID:              "001",
@@ -365,6 +379,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			NetTransfer:           36000.00,
 		},
 	})
+
 	mockRepository.On("VerifyTransactionTimsheet", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{
@@ -379,7 +394,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	assert.Equal(t, http.StatusOK, actual.StatusCode)
 }
 
-func Test_UpdateStatusCheckingTransferHandler_Input_MemberID_004_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_Status_200(t *testing.T) {
+func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_Status_200(t *testing.T) {
 	requestUpdate := UpdateStatusRequest{
 		MemberID:      "004",
 		TransactionID: "004201912siam_chamnankit",
@@ -390,10 +405,16 @@ func Test_UpdateStatusCheckingTransferHandler_Input_MemberID_004_TransactionID_0
 	jsonRequest, _ := json.Marshal(requestUpdate)
 	request := httptest.NewRequest("POST", "/updateStatusCheckingTransfer", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
+
 	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("UpdateStatusTransfer", "004", "004201912siam_chamnankit", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
+	mockRepository.On("UpdateStatusTransfer", "004201912siam_chamnankit", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "004").Return("Success")
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
@@ -406,15 +427,22 @@ func Test_UpdateStatusCheckingTransferHandler_Input_MemberID_004_TransactionID_0
 
 func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	requestDelete := DeleteIncomeRequest{
+		MemberID: "005",
 		IncomeID: 47,
 	}
 	jsonRequest, _ := json.Marshal(requestDelete)
 	request := httptest.NewRequest("POST", "/deleteIncomeItem", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "005").Return("Success")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("DeleteIncome", 47).Return(nil)
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
@@ -433,6 +461,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	jsonRequest, _ := json.Marshal(memberRequest)
 	request := httptest.NewRequest("POST", "/showMemberDetailsByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
@@ -486,6 +515,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 
 func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testing.T) {
 	requestUpdateMember := model.Member{
+		MemberID:              "001",
 		ID:                    1,
 		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 		MemberNameENG:         "Prathan Dansakulcharoenkit",
@@ -502,10 +532,16 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	}
 	jsonRequest, _ := json.Marshal(requestUpdateMember)
 	request := httptest.NewRequest("POST", "/updateMemberDetails", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "001").Return("Success")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateMemberDetails", model.Member{
 		ID:                    1,
+		MemberID:              "001",
 		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 		MemberNameENG:         "Prathan Dansakulcharoenkit",
 		Email:                 "prathan@scrum123.com",
@@ -521,6 +557,7 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	}).Return(nil)
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
@@ -536,6 +573,7 @@ func Test_GetProfileHandler_Input_AccessToken_Should_Be_Profile(t *testing.T) {
 	request := httptest.NewRequest("GET", "/showProfile", nil)
 	writer := httptest.NewRecorder()
 	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetProfileByAccessToken", mock.Anything).Return(model.Profile{
 		MemberID: "007",

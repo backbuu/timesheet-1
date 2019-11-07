@@ -570,8 +570,8 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Expired(t *testing.T) {
-	expected := "Expired"
+func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
+	expected := "Unauthorized"
 	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
 	memberID := "071"
 	os.Setenv("FIX_TIME", "2018-12-01 12:00:00")
@@ -590,8 +590,8 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Expired(
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Without_Authorization(t *testing.T) {
-	expected := "Without Authorization"
+func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthorized(t *testing.T) {
+	expected := "Unauthorized"
 	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
 	memberID := "008"
 	os.Setenv("FIX_TIME", "2018-12-01 12:00:00")

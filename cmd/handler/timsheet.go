@@ -43,7 +43,8 @@ type UpdateStatusRequest struct {
 }
 
 type DeleteIncomeRequest struct {
-	IncomeID int `json:"id"`
+	MemberID string `json:"member_id"`
+	IncomeID int    `json:"id"`
 }
 
 type MemberRequest struct {
@@ -96,6 +97,14 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	err = api.TimesheetRepository.CreateIncome(request.Year, request.Month, request.MemberID, request.Incomes)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -109,6 +118,14 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 	err := context.BindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
 		return
 	}
 	incomeList, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
@@ -143,7 +160,15 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err = api.TimesheetRepository.UpdateStatusTransfer(request.MemberID, request.TransactionID, request.Status, request.Date, request.Comment)
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
+	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -156,6 +181,14 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
 		return
 	}
 	err = api.TimesheetRepository.DeleteIncome(request.IncomeID)
@@ -186,6 +219,14 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
 		return
 	}
 	err = api.TimesheetRepository.UpdateMemberDetails(request)

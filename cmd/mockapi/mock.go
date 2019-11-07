@@ -49,8 +49,8 @@ func (mock *MockRepository) GetTimesheet(memberID string, year, month int) (mode
 	return argument.Get(0).(model.Timesheet), argument.Error(1)
 }
 
-func (mock *MockRepository) UpdateStatusTransfer(memberID, transactionID, status, date, comment string) error {
-	argument := mock.Called(memberID, transactionID, status, date, comment)
+func (mock *MockRepository) UpdateStatusTransfer(transactionID, status, date, comment string) error {
+	argument := mock.Called(transactionID, status, date, comment)
 	return argument.Error(0)
 }
 
@@ -101,4 +101,9 @@ func (mock *MockTimesheet) CalculatePaymentSummary(member []model.Member, income
 func (mock *MockTimesheet) GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error) {
 	argument := mock.Called(memberID, year, month)
 	return argument.Get(0).(model.SummaryTimesheet), argument.Error(1)
+}
+
+func (mock *MockTimesheet) VerifyAuthentication(accessToken string, memberID string) string {
+	argument := mock.Called(accessToken, memberID)
+	return argument.String(0)
 }
