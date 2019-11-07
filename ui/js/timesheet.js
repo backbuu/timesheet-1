@@ -178,17 +178,14 @@ function showSummary(){
         }
     }; 
 
-    var topButton = document.getElementById("button_to_top");
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
+    window.onscroll = function (){
         if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-            topButton.style.display = "block";
+            document.getElementById("button_to_top").style.display="block";
         } else {
-            topButton.style.display = "none";
+            document.getElementById("button_to_top").style.display="none";
         }
-    }
-    
+    };
+
     var data = JSON.stringify({"year":year, "month": month});
     request.send(data);
 }
@@ -376,16 +373,13 @@ function showSummaryByID() {
         }
     }
 
-    var topButton = document.getElementById("button_to_top");
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
+    window.onscroll = function (){
         if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-            topButton.style.display = "block";
+            document.getElementById("button_to_top").style.display="block";
         } else {
-            topButton.style.display = "none";
+            document.getElementById("button_to_top").style.display="none";
         }
-    }
+    };
     
     var data = JSON.stringify({"member_id":memberID,"year":year,"month":month});
     request.send(data); 
@@ -588,16 +582,13 @@ function getMemberByID(){
         }
     }
 
-    var topButton = document.getElementById("button_to_top");
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
+    window.onscroll = function (){
         if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-            topButton.style.display = "block";
+            document.getElementById("button_to_top").style.display="block";
         } else {
-            topButton.style.display = "none";
+            document.getElementById("button_to_top").style.display="none";
         }
-    }
+    };
     
     var data = JSON.stringify({"member_id":memberID});
     request.send(data);
