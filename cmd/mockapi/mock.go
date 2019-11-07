@@ -79,6 +79,11 @@ func (mock *MockRepository) DeleteAuthentication(accessToken string) error {
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error) {
+	argument := mock.Called(accessToken)
+	return argument.Get(0).(model.VerifyAuthentication), argument.Error(1)
+}
+
 type MockTimesheet struct {
 	mock.Mock
 }
