@@ -386,7 +386,8 @@ func Test_GetTimsheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(
 	assert.Equal(t, expected, actual)
 }
 
-func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_No_Error(t *testing.T) {
+func Test_UpdateStatusTransfer_Input_MemberID_004_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_No_Error(t *testing.T) {
+	memberID := "004"
 	transactionID := "004201912siam_chamnankit"
 	status := "โอนเงินเรียบร้อยแล้ว"
 	date := "30/12/2019"
@@ -397,7 +398,7 @@ func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Stat
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdateStatusTransfer(transactionID, status, date, comment)
+	err := repository.UpdateStatusTransfer(memberID, transactionID, status, date, comment)
 
 	assert.Equal(t, nil, err)
 }
