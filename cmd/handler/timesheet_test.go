@@ -427,15 +427,22 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 
 func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	requestDelete := DeleteIncomeRequest{
+		MemberID: "005",
 		IncomeID: 47,
 	}
 	jsonRequest, _ := json.Marshal(requestDelete)
 	request := httptest.NewRequest("POST", "/deleteIncomeItem", bytes.NewBuffer(jsonRequest))
+	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
 	writer := httptest.NewRecorder()
+
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, "005").Return("Success")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("DeleteIncome", 47).Return(nil)
 
 	api := TimesheetAPI{
+		Timesheet:           mockTimesheet,
 		TimesheetRepository: mockRepository,
 	}
 	testRoute := gin.Default()
@@ -454,6 +461,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	jsonRequest, _ := json.Marshal(memberRequest)
 	request := httptest.NewRequest("POST", "/showMemberDetailsByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
@@ -565,6 +573,7 @@ func Test_GetProfileHandler_Input_AccessToken_Should_Be_Profile(t *testing.T) {
 	request := httptest.NewRequest("GET", "/showProfile", nil)
 	writer := httptest.NewRecorder()
 	request.Header.Add("Authorization", "Bearer ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw")
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetProfileByAccessToken", mock.Anything).Return(model.Profile{
 		MemberID: "007",

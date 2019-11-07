@@ -43,7 +43,8 @@ type UpdateStatusRequest struct {
 }
 
 type DeleteIncomeRequest struct {
-	IncomeID int `json:"id"`
+	MemberID string `json:"member_id"`
+	IncomeID int    `json:"id"`
 }
 
 type MemberRequest struct {
@@ -180,6 +181,14 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	requestToken := context.GetHeader("Authorization")
+	splitToken := strings.Split(requestToken, "Bearer ")
+	requestToken = splitToken[1]
+	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	if status != "Success" {
+		context.Status(http.StatusUnauthorized)
 		return
 	}
 	err = api.TimesheetRepository.DeleteIncome(request.IncomeID)
