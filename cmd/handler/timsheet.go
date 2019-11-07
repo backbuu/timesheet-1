@@ -195,21 +195,6 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 	context.Status(http.StatusOK)
 }
 
-func (api TimesheetAPI) GetHolidayListHandler(context *gin.Context) {
-	var request HolidayRequest
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	holidayList, err := api.TimesheetRepository.GetHolidayList(request.Month)
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	context.JSON(http.StatusOK, holidayList)
-}
-
 func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
 	requestToken := context.GetHeader("Authorization")
 	splitToken := strings.Split(requestToken, "Bearer ")
