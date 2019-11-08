@@ -324,10 +324,10 @@ function showSummaryByID() {
     var memberIDByCookie = getCookie("member_id")
 
     var src = "https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FBangkok&amp;src=ZW4udGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGgudGgjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%230B8043&amp;color=%230B8043&amp;showTz=0&amp;showPrint=0&amp;showCalendars=0&amp;showTabs=0&amp;showNav=0&amp;dates=";
-            var startDate = year.toString()+month.toString()+("0" + firstDay.getDate()).slice(-2)
-            var endDate = year.toString()+month.toString()+("0" + lastDay.getDate()).slice(-2)
+    var startDate = year.toString()+month.toString()+("0" + firstDay.getDate()).slice(-2)
+    var endDate = year.toString()+month.toString()+("0" + lastDay.getDate()).slice(-2)
     
-            var googleCalendarURL = "<iframe src=\""+src+startDate+"/"+endDate+"\" style=\"border-width:0\" width=\"600\" height=\"400\" frameborder=\"0\" scrolling=\"no\"></iframe>";
+    var googleCalendarURL = "<iframe src=\""+src+startDate+"/"+endDate+"\" style=\"border-width:0\" width=\"600\" height=\"400\" frameborder=\"0\" scrolling=\"no\"></iframe>";
     
     if (date == null || memberID == null) {
         alert("โปรดกรอกข้อมูลให้ครบถ้วน");
@@ -727,17 +727,17 @@ function setCookie(cname, cvalue, exdays) {
 
 async function setInitialHome(){    
     var loginButton = "<a id=\"button_login\" href=\"/login\">Login Google</a>"
-    var logoutButton = "<input type=\"button\" value=\"logout\"/>"
+    var logoutButton = "<input id=\"button_logout\" type=\"button\" value=\"logout\"/>"
 
     $(document).ready(function(){
         if (getCookie("oauthstate") != ""){
-            $("#button_logout").html(logoutButton);
+            $("#logout").html(logoutButton);
             showProfile();
             if (getCookie("access_token") == ""){
                 logout();
                 if (deleteOauthState()){
                     document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                    window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
+                    window.location.replace("/home")
                 };
             }
             $("#button_logout").click(function(){
