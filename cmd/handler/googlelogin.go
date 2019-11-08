@@ -100,7 +100,10 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 func generateStateOauthCookie(writer http.ResponseWriter) string {
 	var expiration = time.Now().Add(365 * 24 * time.Hour)
 	bytes := make([]byte, 16)
-	rand.Read(bytes)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		log.Println(err.Error())
+	}
 	state := base64.URLEncoding.EncodeToString(bytes)
 	cookie := http.Cookie{Name: "oauthstate", Value: state, Expires: expiration}
 	http.SetCookie(writer, &cookie)
