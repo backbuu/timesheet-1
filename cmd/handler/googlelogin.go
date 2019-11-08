@@ -43,16 +43,6 @@ func OauthGoogleLogin(context *gin.Context) {
 	context.Redirect(http.StatusTemporaryRedirect, url)
 }
 
-// func (api TimesheetAPI) GetNewAccessToken(context *gin.Context) {
-// 	request := RefreshTokenRequest{
-// 		ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
-// 		ClientSecret: os.Getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
-// 		RefreshToken: "1//0g5_PVHVkEHZQCgYIARAAGBASNwF-L9Irhkfqgbi_3NLg0tQifpojpdkFax23p4GAtTKO-CkFTj8AZjCJc4IrQ2bU73Cdl-6ZkqM",
-// 		GrantType:    "refresh_token",
-// 	}
-// 	context.JSON(http.StatusOK, request)
-// }
-
 func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
 	requestToken := context.GetHeader("Authorization")
 	splitToken := strings.Split(requestToken, "Bearer ")
@@ -99,7 +89,8 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		Expiry:       token.Expiry,
 	})
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		context.Redirect(http.StatusInternalServerError, "/home")
+		return
 	}
 	cookie := http.Cookie{Name: "access_token", Value: token.AccessToken, Expires: time.Now().Add(365 * 24 * time.Hour)}
 	http.SetCookie(context.Writer, &cookie)

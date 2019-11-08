@@ -732,7 +732,12 @@ async function setInitialHome(){
     $(document).ready(function(){
         if (getCookie("oauthstate") != ""){
             $("#button_logout").html(logoutButton);
-            showProfile();  
+            showProfile();
+            if (getCookie("access_token") == ""){
+                if (deleteOauthState()){
+                    window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
+                };
+            }
             $("#button_logout").click(function(){
                 logout();
                 if (deleteOauthState()){
@@ -770,42 +775,6 @@ function deleteOauthState(){
     request.send();
     return true
 }
-
-// function refreshTokenRequest(){
-//     var request = new XMLHttpRequest();
-//     var url = "/getNewAccessToken";
-//     request.open("POST", url, true);
-//     request.setRequestHeader("Content-Type", "application/json");
-//     request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
-//     request.onreadystatechange = function () {
-//         if (request.readyState === 4 && request.status === 200) {
-//             var json = JSON.parse(request.responseText);
-//             var clientID = json.client_id
-//             var clientSecret = json.client_secret
-//             var refreshToken = json.refresh_token
-//             var grantType = json.grant_type
-//             getNewAccessToken(clientID,clientSecret,refreshToken,grantType)
-//         }
-//     }
-//     request.send(); 
-// }
-
-// function getNewAccessToken(clientID,clientSecret,refreshToken,grantType){
-//     var request = new XMLHttpRequest();
-//     var url = "https://www.googleapis.com/oauth2/v4/token";
-//     request.open("POST", url, true);
-//     request.setRequestHeader("Content-Type", "application/json");
-//     request.onreadystatechange = function () {
-//         if (request.readyState === 4 && request.status === 200) {
-//             var json = JSON.parse(request.responseText);
-//             var accessToken = json.access_token;
-//             var expiresIn = json.expires_in;
-//             var tokenType = json.token_type
-//         }
-//     }
-//     var data = JSON.stringify({"client_id":clientID,"client_secret":clientSecret,"refresh_token":refreshToken,"grant_type":grantType});
-//     request.send(data); 
-// }
 
 function topFunction() {
     document.body.scrollTop = 0;
