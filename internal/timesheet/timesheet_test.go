@@ -574,8 +574,8 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthor
 	expected := "Unauthorized"
 	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
 	memberID := "071"
-	os.Setenv("FIX_TIME", "2018-12-01 12:00:00")
-	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	os.Setenv("FIX_TIME", "20181201120000")
+	expiry, _ := time.Parse("20060102150405", "20181201090000")
 	mockRepository := new(mockinternal.MockRepository)
 	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
@@ -594,8 +594,8 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthor
 	expected := "Unauthorized"
 	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
 	memberID := "008"
-	os.Setenv("FIX_TIME", "2018-12-01 12:00:00")
-	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	os.Setenv("FIX_TIME", "20181201120000")
+	expiry, _ := time.Parse("20060102150405", "20181201090000")
 	mockRepository := new(mockinternal.MockRepository)
 	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
@@ -614,8 +614,8 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(
 	expected := "Success"
 	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
 	memberID := "071"
-	os.Setenv("FIX_TIME", "2018-12-01 08:30:00")
-	expiry, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
+	os.Setenv("FIX_TIME", "20181201083000")
+	expiry, _ := time.Parse("20060102150405", "20181201090000")
 	mockRepository := new(mockinternal.MockRepository)
 	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",

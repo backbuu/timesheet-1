@@ -129,7 +129,7 @@ func (timesheet Timesheet) VerifyAuthentication(accessToken string, memberID str
 
 func now() time.Time {
 	if os.Getenv("FIX_TIME") != "" {
-		fixedTime, _ := time.Parse("2006-01-02 15:04:05", os.Getenv("FIX_TIME"))
+		fixedTime, _ := time.Parse("20060102150405", os.Getenv("FIX_TIME"))
 		return fixedTime
 	}
 	return time.Now()
