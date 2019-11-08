@@ -45,32 +45,6 @@ INSERT INTO `authentications` VALUES ('071','logintest535@gmail.com','https://lh
 UNLOCK TABLES;
 
 --
--- Table structure for table `holidays`
---
-
-DROP TABLE IF EXISTS `holidays`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `holidays` (
-  `id` int(11) NOT NULL,
-  `day` int(11) DEFAULT NULL,
-  `month` int(11) DEFAULT NULL,
-  `name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `holidays`
---
-
-LOCK TABLES `holidays` WRITE;
-/*!40000 ALTER TABLE `holidays` DISABLE KEYS */;
-INSERT INTO `holidays` VALUES (1,1,1,'วันขึ้นปีใหม่'),(2,6,4,'วันพระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช \nและวันที่ระลึกมหาจักรีบรมราชวงศ์'),(3,13,4,'วันสงกรานต์'),(4,14,4,'วันสงกรานต์'),(5,15,4,'วันสงกรานต์'),(6,16,4,'วันสงกรานต์'),(7,1,5,'วันแรงงานแห่งชาติ'),(8,3,6,'วันเฉลิมพระชนมพรรษา \nสมเด็จพระนางเจ้าสุทิดา พัชรสุธาพิมลลักษณ พระบรมราชินี'),(9,28,7,'วันเฉลิมพระชนมพรรษา \nพระบาทสมเด็จพระปรเมนทรรามาธิบดีศรีสินทรมหาวชิราลงกรณ\nพระวชิรเกล้าเจ้าอยู่หัว'),(10,12,8,'วันเฉลิมพระชนมพรรษา\nสมเด็จพระนางเจ้าสิริกิติ์ พระบรมราชินีนาถ \nพระบรมราชชนนีพันปีหลวง'),(11,13,10,'วันคล้ายวันสวรรคต\nพระบาทสมเด็จพระบรมชนกาธิเบศร \nมหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร '),(12,23,10,'วันปิยมหาราช'),(13,5,12,'วันคล้ายวันพระบรมราชสมภพของ\nพระบาทสมเด็จพระบรมชนกาธิเบศร\nมหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร \nวันชาติ และวันพ่อแห่งชาติ'),(14,10,12,'วันพระราชทานรัฐธรรมนูญ'),(15,31,12,'วันสิ้นปี');
-/*!40000 ALTER TABLE `holidays` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `incomes`
 --
 
@@ -133,7 +107,7 @@ CREATE TABLE `members` (
   `status` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `travel_expense` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-04 11:04:24
+-- Dump completed on 2019-11-08  2:43:34
