@@ -726,7 +726,7 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 async function setInitialHome(){    
-    var loginButton = "<a href=\"/login\">Login Google</a>"
+    var loginButton = "<a id=\"button_login\" href=\"/login\">Login Google</a>"
     var logoutButton = "<input type=\"button\" value=\"logout\"/>"
 
     $(document).ready(function(){
@@ -734,7 +734,9 @@ async function setInitialHome(){
             $("#button_logout").html(logoutButton);
             showProfile();
             if (getCookie("access_token") == ""){
+                logout();
                 if (deleteOauthState()){
+                    document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
                     window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
                 };
             }
@@ -746,7 +748,7 @@ async function setInitialHome(){
                 };
             });
         }else{  
-            $("#button_login").html(loginButton);
+            $("#login").html(loginButton);
         } 
     });
 }
