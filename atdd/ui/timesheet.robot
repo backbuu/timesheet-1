@@ -19,11 +19,47 @@ ${URL_PAYMENTS}    http://localhost:8080/home
     ใส่วันที่โอนเงิน    5    28/12/2018
     ใส่หมายเหตุ    5     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
     กดปุ่มเปลี่ยนสถานะ    5
+    ใส่เดือนและปีที่ต้องการดูสรุปผล    12\t2018
+    กดปุ่มยืนยันดูสรุปผล 
+    ตรวจสอบสถานะการโอน    5    ถูกต้อง    28/12/2018     ค่าตั๋วที่ออกไปก่อน = 169,380.00 บาท
+
+ดูสรุปค่าจ้างรายบุคคล และสามารถเพิ่มค่าจ้างรายวัน สำเร็จ
+    ใส่เดือนและปีที่ต้องการดูสรุปผลรายบุคคล    12\t2018
+    ใส่ชื่อที่ต้องการดูสรุปผลรายบุคคล     TEST LOGIN
+    กดปุ่มยืนยันดูสรุปค่าจ้างรายบุคคล
+    เข้าสู่หน้าสรุปผลค่าจ้างรายบุคคลเดือนและปีนั้น    12-DECEMBER2018-TIMESHEET
+    เข้าสู่หน้าสรุปผลค่าจ้างรายบุคคลของเดือนและปีนั้น    Test Login    logintest535@gmail.com
+    ชั่วโมงการทำงานทั้งหมด    08:00:00
+    ค่าจ้างทั้งหมดเป็น    0.00    0.00    0.00    0.00    0.00
+    ใส่วันที่ต้องการเพิ่มค่าจ้างรายวัน    28
+    ใส่เวลาเริ่มงานช่วงเช้า    090000
+    ใส่เวลาจบงานช่วงเช้า    120000
+    ใส่เวลาเริ่มงานช่วงบ่าย    130000
+    ใส่เวลาจบงานช่วงบ่าย    180000
+    ใส่ชั่วโมงการทำงานล่วงเวลา    0
+    ใส่ชั่วโมงการทำงานรวมของวัน    080000
+    ใส่ค่า Coaching Customer Charging (THB)    ฿ 15,000.00
+    ใส่ค่า Coaching Payment Rate (THB)    ฿ 10,000.00
+    ใส่ค่า Training Wage (THB)    ฿ 0.00
+    ใส่ค่า Other Wage (THB)    ฿ 0.00
+    ใส่บริษัทที่เป็นผู้รับผิดชอบ    Shuhari
+    ใส่คำอธิบายสถานที่หรือหมายเหตุ    Siam Chamnankit and SHR operation
+    กดปุ่มยืนยันเพิ่มค่าจ้างรายวัน
+
+แก้ไขข้อมูลพนักงาน สำเร็จ
+    กดปุ่มแก้ไขข้อมูลพนักงาน
+    เข้าสู่หน้าแก้ไขข้อมูลของพนักงานต้องเจอข้อมูลพนักกงาน สามาถแก้ไขได้    0    siam_chamnankit    ทดสอบ เข้าสู่ระบบ    Test Login    logintest535@gmail.com    0.00    0.00    0.00    0.00    0.00    0.00    5    salary    0.00
+    ใส่เงินเดือน    0    30000
+    กดยืนยันการแก้ไขข้อมูล    0
+    กดปุ้มย้อนกลับ
+    กดปุ่ม logout
     ปิด Browser
+
 
 ***Keywords***
 เปิด Browser 
     Open Browser    ${URL_PAYMENTS}    chrome
+    Maximize Browser Window
 
 กดปุ่มเข้าสู่ระบบ
     Click Element    id=button_login
@@ -123,19 +159,16 @@ ${URL_PAYMENTS}    http://localhost:8080/home
     Select From List By Label    id=id    ${id}
 
 กดปุ่มยืนยันดูสรุปค่าจ้างรายบุคคล
-    Scroll Element Into View    id=button_show_summary_by_id
     Click Element    id=button_show_summary_by_id
     
 เข้าสู่หน้าสรุปผลค่าจ้างรายบุคคลของเดือนและปีนั้น
-    [Arguments]    ${name}    ${email}    ${overtime_rate}    ${rate_per_day}    ${rate_per_hour}    ${month}    ${full_month}    ${year}
+    [Arguments]    ${name}    ${email}
     Element Text Should Be    id=member_name_eng    ${name}
     Element Text Should Be    id=email    ${email}
-    Element Text Should Be    id=overtime_rate    ${overtime_rate}
-    Element Text Should Be    id=rate_per_day    ${rate_per_day}
-    Element Text Should Be    id=rate_per_hour    ${rate_per_hour}
-    Element Text Should Be    id=month    ${month}
-    Element Text Should Be    id=full_month    ${full_month}
-    Element Text Should Be    id=year    ${year}
+
+เข้าสู่หน้าสรุปผลค่าจ้างรายบุคคลเดือนและปีนั้น
+    [Arguments]    ${title}
+    Element Text Should Be    id=title_timesheet_by_id    ${title}
 
 ชั่วโมงการทำงานทั้งหมด
     [Arguments]    ${total_hours}
@@ -205,17 +238,18 @@ ${URL_PAYMENTS}    http://localhost:8080/home
     Click Element    id=button_add_income_item
 
 กดปุ่มคำนวณสรุปผลค่าจ้าง
-    Click Element    id=button_calculate_payment
+    Wait Until Element Is Visible   id=button_calculate_payment
+    Click Button    id=button_calculate_payment
 
 กดปุ่มแก้ไขข้อมูลพนักงาน
     Click Element    id=button_edit_member
 
-เข้าสู่หน้าแก้ไขข้อมูลของพนักงานต้องเจอข้อมูลพนักกงาน
+เข้าสู่หน้าแก้ไขข้อมูลของพนักงานต้องเจอข้อมูลพนักกงาน สามาถแก้ไขได้
     [Arguments]    ${id}    ${company}    ${name_th}    ${name_eng}    ${email}    ${overtime_rate}    ${rate_per_day}    ${rate_per_hour}    ${salary}    ${income_tax_1}    ${social_security}    ${income_tax_53_percentage}    ${status}    ${travel_expense}
     Element Text Should Be    id=company_id_${id}    ${company}
-    Textfield Should Contain    id=member_name_th_id_${id}    ${name_th}
-    Textfield Should Contain    id=member_name_eng_id_${id}    ${name_eng}
-    Textfield Should Contain    id=email_id_${id}    ${email}
+    Element Text Should Be    id=member_name_th_id_${id}    ${name_th}
+    Element Text Should Be    id=member_name_eng_id_${id}    ${name_eng}
+    Element Text Should Be    id=email_id_${id}    ${email}
     Textfield Should Contain    id=overtime_rate_id_${id}    ${overtime_rate}
     Textfield Should Contain    id=rate_per_day_id_${id}    ${rate_per_day}
     Textfield Should Contain    id=rate_per_hour_id_${id}    ${rate_per_hour}
@@ -233,6 +267,12 @@ ${URL_PAYMENTS}    http://localhost:8080/home
 กดยืนยันการแก้ไขข้อมูล
     [Arguments]    ${id}
     Click Element    button_edit_member_id_${id}
- 
+
+กดปุ้มย้อนกลับ
+    Click Element    id=button_back
+
+กดปุ่ม logout
+    Click Element    id=button_logout
+
 ปิด Browser
     Close Browser
