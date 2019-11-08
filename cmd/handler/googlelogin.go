@@ -89,7 +89,7 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		Expiry:       token.Expiry,
 	})
 	if err != nil {
-		context.Redirect(http.StatusInternalServerError, "/home")
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	cookie := http.Cookie{Name: "access_token", Value: token.AccessToken, Expires: time.Now().Add(365 * 24 * time.Hour)}
