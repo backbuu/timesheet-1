@@ -277,3 +277,22 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 	}
 	context.Status(http.StatusOK)
 }
+
+func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
+	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email := claims["email"].(string)
+	profile, err := api.Repository.GetProfileByEmail(email)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, profile)
+}
