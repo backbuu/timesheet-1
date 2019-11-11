@@ -55,6 +55,11 @@ type HolidayRequest struct {
 	Month int `json:"month"`
 }
 
+type SummaryInYearRequest struct {
+	MemberID string `json:"member_id"`
+	Year     int    `json:"year"`
+}
+
 type TimesheetAPI struct {
 	Timesheet             timesheet.TimesheetGateways
 	Repository            repository.TimesheetRepositoryGateways
@@ -248,4 +253,19 @@ func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusOK, profile)
+}
+
+func (api TimesheetAPI) ShowSummaryInYearHandler(context *gin.Context) {
+	var request SummaryInYearRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	summaryTransactionTimesheet, err := api.Timesheet.GetSummaryInYearByID(request.MemberID, request.Year)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, summaryTransactionTimesheet)
 }
