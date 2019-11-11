@@ -10,7 +10,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	"time"
 	"timesheet/internal/model"
@@ -46,15 +45,7 @@ func OauthGoogleLogin(context *gin.Context) {
 }
 
 func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	err := api.TimesheetRepository.DeleteAuthentication(requestToken)
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	cookie := &http.Cookie{Name: "access_token", Value: "", Path: "/", Expires: time.Unix(0, 0), HttpOnly: true}
+	cookie := &http.Cookie{Name: "id_token", Value: "", Path: "/", Expires: time.Unix(0, 0), HttpOnly: true}
 	http.SetCookie(context.Writer, cookie)
 	context.Status(http.StatusOK)
 }
@@ -82,7 +73,7 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
 		return
 	}
-	err = api.TimesheetRepository.UpdatePictureToMembers(userInfo.Picture, userInfo.Email)
+	err = api.Repository.UpdatePictureToMembers(userInfo.Picture, userInfo.Email)
 	if err != nil {
 		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
 		return
