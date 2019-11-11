@@ -19,7 +19,7 @@ integration_test:
 acceptance_test:
 	docker-compose up -d
 	sleep 30
-	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
+	FIX_TIME=20181201120000 && docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
 	sleep 10
 	newman run atdd/api/showSummaryTimesheetSuccess.json
 	newman run atdd/api/showTimeSheetByIDSuccess.json
