@@ -36,7 +36,8 @@ func main() {
 		Timesheet: timesheet.Timesheet{
 			Repository: timesheetRepository,
 		},
-		TimesheetRepository: timesheetRepository,
+		Repository:            timesheetRepository,
+		RepositoryToTimesheet: timesheetRepository,
 	}
 
 	router := gin.Default()
