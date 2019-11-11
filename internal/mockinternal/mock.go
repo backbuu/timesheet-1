@@ -39,3 +39,8 @@ func (mock *MockRepositoryToTimesheet) GetTransactionTimesheets(memberID string,
 	argument := mock.Called(memberID, year)
 	return argument.Get(0).([]model.TransactionTimesheet), argument.Error(1)
 }
+
+func (mock *MockRepositoryToTimesheet) GetMemberIDByEmail(email string) (string, error) {
+	argument := mock.Called(email)
+	return argument.String(0), argument.Error(1)
+}

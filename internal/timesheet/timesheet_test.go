@@ -570,62 +570,53 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
+func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_Expiry_1538384400_MemberID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
 	expected := "Unauthorized"
-	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
+	email := "logintest535@gmail.com"
+	expiry := 1538384400.00
 	memberID := "071"
 	os.Setenv("FIX_TIME", "20181201120000")
-	expiry, _ := time.Parse("20060102150405", "20181201090000")
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
-		MemberID: "071",
-		Expiry:   expiry,
-	}, nil)
+	mockRepositoryToTimesheet.On("GetMemberIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(accessToken, memberID)
+	actual := timesheet.VerifyAuthentication(email, expiry, memberID)
 
 	assert.Equal(t, expected, actual)
 }
 
 func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthorized(t *testing.T) {
 	expected := "Unauthorized"
-	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
+	email := "logintest535@gmail.com"
+	expiry := 1538384400.00
 	memberID := "008"
 	os.Setenv("FIX_TIME", "20181201120000")
-	expiry, _ := time.Parse("20060102150405", "20181201090000")
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
-		MemberID: "071",
-		Expiry:   expiry,
-	}, nil)
+	mockRepositoryToTimesheet.On("GetMemberIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(accessToken, memberID)
+	actual := timesheet.VerifyAuthentication(email, expiry, memberID)
 
 	assert.Equal(t, expected, actual)
 }
 
 func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(t *testing.T) {
 	expected := "Success"
-	accessToken := "ya29.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw"
 	memberID := "071"
 	os.Setenv("FIX_TIME", "20181201083000")
-	expiry, _ := time.Parse("20060102150405", "20181201090000")
+	email := "logintest535@gmail.com"
+	expiry := 1569920400.00
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
-		MemberID: "071",
-		Expiry:   expiry,
-	}, nil)
+	mockRepositoryToTimesheet.On("GetMemberIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(accessToken, memberID)
+	actual := timesheet.VerifyAuthentication(email, expiry, memberID)
 
 	assert.Equal(t, expected, actual)
 }

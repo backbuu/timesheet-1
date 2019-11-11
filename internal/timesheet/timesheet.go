@@ -18,7 +18,7 @@ type TimesheetGateways interface {
 	CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
 	CalculatePayment(incomes []model.Incomes) model.Timesheet
 	GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error)
-	VerifyAuthentication(accessToken string, memberID string) string
+	VerifyAuthentication(email string, expiry float64, memberID string) string
 }
 
 type Timesheet struct {
@@ -116,12 +116,12 @@ func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (mod
 		PaymentWage:                   payment.PaymentWage}, nil
 }
 
-func (timesheet Timesheet) VerifyAuthentication(accessToken string, memberID string) string {
-	authentication, err := timesheet.Repository.GetVerifyAuthenticationByAccessToken(accessToken)
+func (timesheet Timesheet) VerifyAuthentication(email string, expiry float64, memberIDRequest string) string {
+	memberIDByEmail, err := timesheet.Repository.GetMemberIDByEmail(email)
 	if err != nil {
 		return err.Error()
 	}
-	if authentication.MemberID != memberID || authentication.Expiry.Before(now()) {
+	if memberIDByEmail != memberIDRequest || time.Unix(int64(expiry), 0).Before(now()) {
 		return "Unauthorized"
 	}
 	return "Success"
