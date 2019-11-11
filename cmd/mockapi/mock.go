@@ -94,6 +94,11 @@ func (mock *MockRepositoryToTimesheet) GetTimesheet(memberID string, year, month
 	return argument.Get(0).(model.Timesheet), argument.Error(1)
 }
 
+func (mock *MockRepositoryToTimesheet) GetMemberIDByEmail(email string) (string, error) {
+	argument := mock.Called(email)
+	return argument.String(0), argument.Error(1)
+}
+
 type MockTimesheet struct {
 	mock.Mock
 }
@@ -113,7 +118,7 @@ func (mock *MockTimesheet) GetSummaryByID(memberID string, year, month int) (mod
 	return argument.Get(0).(model.SummaryTimesheet), argument.Error(1)
 }
 
-func (mock *MockTimesheet) VerifyAuthentication(accessToken string, memberID string) string {
-	argument := mock.Called(accessToken, memberID)
+func (mock *MockTimesheet) VerifyAuthentication(email string, expiry float64, memberID string) string {
+	argument := mock.Called(email, expiry, memberID)
 	return argument.String(0)
 }
