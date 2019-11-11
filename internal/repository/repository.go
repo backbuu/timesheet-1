@@ -22,6 +22,7 @@ type TimesheetRepositoryGateways interface {
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
 	UpdatePictureToMembers(picture, email string) error
+	GetProfileByEmail(email string) (model.Profile, error)
 }
 
 type TimesheetRepositoryGatewaysToTimesheet interface {
