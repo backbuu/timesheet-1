@@ -83,3 +83,8 @@ func (mock *MockRepository) GetVerifyAuthenticationByAccessToken(accessToken str
 	argument := mock.Called(accessToken)
 	return argument.Get(0).(model.VerifyAuthentication), argument.Error(1)
 }
+
+func (mock *MockRepository) UpdatePictureToMembers(picture, email string) error {
+	argument := mock.Called(picture, email)
+	return argument.Error(0)
+}
