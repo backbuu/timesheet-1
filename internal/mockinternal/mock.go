@@ -30,7 +30,7 @@ func (mock *MockRepository) GetMemberListByMemberID(memberID string) ([]model.Me
 	return argument.Get(0).([]model.Member), argument.Error(1)
 }
 
-func (mock *MockRepository) VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error {
+func (mock *MockRepository) VerifyTransactionTimesheet(transactionTimesheetList []model.TransactionTimesheet) error {
 	argument := mock.Called(transactionTimesheetList)
 	return argument.Error(0)
 }
