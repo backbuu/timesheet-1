@@ -145,7 +145,7 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		return
 	}
 	transactionTimesheetList := api.Timesheet.CalculatePaymentSummary(memberList, incomeList, request.Year, request.Month)
-	err = api.TimesheetRepository.VerifyTransactionTimsheet(transactionTimesheetList)
+	err = api.TimesheetRepository.VerifyTransactionTimesheet(transactionTimesheetList)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
