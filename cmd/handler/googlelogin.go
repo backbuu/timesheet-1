@@ -21,6 +21,8 @@ import (
 )
 
 const oauthGoogleUrlAPI = "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
+const daysInYear = 365
+const hoursInDay = 24
 
 var googleOauthConfig = &oauth2.Config{
 	RedirectURL:  "http://localhost:8080/callback",
@@ -93,13 +95,13 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	cookie := http.Cookie{Name: "access_token", Value: token.AccessToken, Expires: time.Now().Add(365 * 24 * time.Hour)}
+	cookie := http.Cookie{Name: "access_token", Value: token.AccessToken, Expires: time.Now().Add(daysInYear * hoursInDay * time.Hour)}
 	http.SetCookie(context.Writer, &cookie)
 	context.Redirect(http.StatusTemporaryRedirect, "/home")
 }
 
 func generateStateOauthCookie(writer http.ResponseWriter) string {
-	var expiration = time.Now().Add(365 * 24 * time.Hour)
+	var expiration = time.Now().Add(daysInYear * hoursInDay * time.Hour)
 	bytes := make([]byte, 16)
 	_, err := rand.Read(bytes)
 	if err != nil {
