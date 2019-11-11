@@ -22,7 +22,7 @@ type TimesheetGateways interface {
 }
 
 type Timesheet struct {
-	Repository repository.TimesheetRepositoryGateways
+	Repository repository.TimesheetRepositoryGatewaysToTimesheet
 }
 
 func (timesheet Timesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
