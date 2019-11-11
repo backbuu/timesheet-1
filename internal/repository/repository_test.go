@@ -561,3 +561,17 @@ func Test_DeleteAuthentication_Input_AccessToken_Should_Be_No_Error(t *testing.T
 
 	assert.Equal(t, nil, err)
 }
+
+func Test_UpdatePictureToMembers_Input_Email_prathan_scrum123_com_And_Picture_Should_Be_No_Error(t *testing.T) {
+	email := "prathan@scrum123.com"
+	picture := "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	err := repository.UpdatePictureToMembers(picture, email)
+
+	assert.Equal(t, nil, err)
+}
