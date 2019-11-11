@@ -198,7 +198,7 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
+func Test_VerifyTransactionTimesheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
 	transactionTimesheetList := []model.TransactionTimesheet{
 		{
 			MemberID:               "001",
@@ -249,12 +249,12 @@ func Test_VerifyTransactionTimsheet_Input_Transaction_MemberID_001_Should_Be_Cre
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.VerifyTransactionTimsheet(transactionTimesheetList)
+	err := repository.VerifyTransactionTimesheet(transactionTimesheetList)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTransactionTimsheet_Input_TransactionID_006201912shuhari_TransactionTimesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
+func Test_CreateTransactionTimesheet_Input_TransactionID_006201912shuhari_TransactionTimesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
 	transactionID := "006201912shuhari"
 	transactionTimesheet := model.TransactionTimesheet{
 		MemberID:               "006",
@@ -283,12 +283,12 @@ func Test_CreateTransactionTimsheet_Input_TransactionID_006201912shuhari_Transac
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.CreateTransactionTimsheet(transactionTimesheet, transactionID)
+	err := repository.CreateTransactionTimesheet(transactionTimesheet, transactionID)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateTransactionTimsheet_Input_TransactionID_001201911shuhari_TransactionTimesheet_MemberID_001_Should_Be_No_Error(t *testing.T) {
+func Test_UpdateTransactionTimesheet_Input_TransactionID_001201911shuhari_TransactionTimesheet_MemberID_001_Should_Be_No_Error(t *testing.T) {
 	transactionID := "001201911shuhari"
 	transactionTimesheet := model.TransactionTimesheet{
 		MemberID:              "001",
@@ -315,12 +315,12 @@ func Test_UpdateTransactionTimsheet_Input_TransactionID_001201911shuhari_Transac
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
+	err := repository.UpdateTransactionTimesheet(transactionTimesheet, transactionID)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTimsheet_Input_MemberID_006_Month_12_Year_2019_Should_Be_No_Error(t *testing.T) {
+func Test_CreateTimesheet_Input_MemberID_006_Month_12_Year_2019_Should_Be_No_Error(t *testing.T) {
 	memberID := "006"
 	month := 12
 	year := 2019
@@ -335,7 +335,7 @@ func Test_CreateTimsheet_Input_MemberID_006_Month_12_Year_2019_Should_Be_No_Erro
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateTimsheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
+func Test_UpdateTimesheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
 	timesheet := model.Timesheet{
 		TotalHours:                    "120:30:30",
 		TotalCoachingCustomerCharging: 90000.00,
@@ -358,7 +358,7 @@ func Test_UpdateTimsheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should_
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetTimsheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(t *testing.T) {
+func Test_GetTimesheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(t *testing.T) {
 	expected := model.Timesheet{
 		ID:                            "003201712",
 		MemberID:                      "003",
