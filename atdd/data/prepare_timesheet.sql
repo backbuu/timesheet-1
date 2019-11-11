@@ -107,6 +107,7 @@ CREATE TABLE `members` (
   `social_security` float DEFAULT NULL,
   `status` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `travel_expense` float DEFAULT NULL,
+  `picture` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -117,7 +118,7 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (1,'001','siam_chamnankit','ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',0,15000,1875,80000,5000,10,0,'wage',0),(2,'001','shuhari','ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',0,15000,1875,0,0,10,0,'wage',0),(3,'002','shuhari','นารีนารถ เนรัญชร','Nareenart Narunchon','nareenart@scrum123.com',0,0,0,25000,0,5,750,'salary',1500),(4,'003','siam_chamnankit','สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',0,15000,1875,15000,0,10,750,'wage',0),(5,'003','shuhari','สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',0,15000,1875,40000,5000,10,0,'wage',0),(6,'004','siam_chamnankit','ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',0,15000,1875,40000,5000,10,0,'wage',0),(7,'004','shuhari','ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',0,15000,1875,0,0,10,0,'wage',0),(8,'005','shuhari','อภิพล สุขเกลอ','Apipol sukgler','golf.apipol@scrum123.com',0,0,0,40000,1200,5,750,'salary',1500),(9,'006','shuhari','ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',0,0,0,25000,0,5,750,'salary',1500),(10,'006','siam_chamnankit','ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',0,15000,1875,25000,0,5,750,'wage',0),(11,'007','siam_chamnankit','ทดสอบ เข้าสู่ระบบ','Test Login','logintest535@gmail.com',0,0,0,0,0,5,0,'salary',0),(12,'007','shuhari','ทดสอบ เข้าสู่ระบบ','Test Login','logintest535@gmail.com',0,0,0,0,0,5,0,'salary',0),(13,'008','shuhari','กานต์วัฒน์ วงศ์อุดม','Karnawat Wongudom','karnawat@scrum123.com',0,0,0,26000,0,5,750,'salary',1500);
+INSERT INTO `members` VALUES (1,'001','siam_chamnankit','ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',0,15000,1875,80000,5000,10,0,'wage',0,NULL),(2,'001','shuhari','ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',0,15000,1875,0,0,10,0,'wage',0,NULL),(3,'002','shuhari','นารีนารถ เนรัญชร','Nareenart Narunchon','nareenart@scrum123.com',0,0,0,25000,0,5,750,'salary',1500,NULL),(4,'003','siam_chamnankit','สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',0,15000,1875,15000,0,10,750,'wage',0,NULL),(5,'003','shuhari','สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',0,15000,1875,40000,5000,10,0,'wage',0,NULL),(6,'004','siam_chamnankit','ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',0,15000,1875,40000,5000,10,0,'wage',0,NULL),(7,'004','shuhari','ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',0,15000,1875,0,0,10,0,'wage',0,NULL),(8,'005','shuhari','อภิพล สุขเกลอ','Apipol sukgler','golf.apipol@scrum123.com',0,0,0,40000,1200,5,750,'salary',1500,NULL),(9,'006','shuhari','ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',0,0,0,25000,0,5,750,'salary',1500,NULL),(10,'006','siam_chamnankit','ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',0,15000,1875,25000,0,5,750,'wage',0,NULL),(11,'007','siam_chamnankit','ทดสอบ เข้าสู่ระบบ','Test Login','logintest535@gmail.com',0,0,0,0,0,5,0,'salary',0,NULL),(12,'007','shuhari','ทดสอบ เข้าสู่ระบบ','Test Login','logintest535@gmail.com',0,0,0,0,0,5,0,'salary',0,NULL),(13,'008','shuhari','กานต์วัฒน์ วงศ์อุดม','Karnawat Wongudom','karnawat@scrum123.com',0,0,0,26000,0,5,750,'salary',1500,NULL);
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-08  9:21:02
+-- Dump completed on 2019-11-11  5:27:45
