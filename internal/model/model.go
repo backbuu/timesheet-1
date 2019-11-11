@@ -96,6 +96,7 @@ type Member struct {
 	IncomeTax53Percentage int     `db:"income_tax_53_percentage" json:"income_tax_53_percentage"`
 	Status                string  `db:"status" json:"status"`
 	TravelExpense         float64 `db:"travel_expense" json:"travel_expense"`
+	Picture               string  `db:"picture" json:"picture"`
 }
 
 type Authentication struct {
