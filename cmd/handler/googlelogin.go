@@ -68,7 +68,7 @@ func DeleteOauthStateCookie(context *gin.Context) {
 func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 	oauthState, _ := context.Request.Cookie("oauthstate")
 	if context.Request.FormValue("state") != oauthState.Value {
-		context.Redirect(http.StatusTemporaryRedirect, "/home?error=invalid_oauth_google_state")
+		context.Redirect(http.StatusInternalServerError, "/home?error=invalid_oauth_google_state")
 		return
 	}
 	token, err := getToken(context.Request.FormValue("code"))
