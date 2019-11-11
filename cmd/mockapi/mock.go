@@ -65,6 +65,11 @@ func (mock *MockRepository) UpdatePictureToMembers(picture, email string) error 
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) GetProfileByEmail(email string) (model.Profile, error) {
+	argument := mock.Called(email)
+	return argument.Get(0).(model.Profile), argument.Error(1)
+}
+
 type MockRepositoryToTimesheet struct {
 	mock.Mock
 }
