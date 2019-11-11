@@ -243,3 +243,14 @@ func (repository TimesheetRepository) UpdatePictureToMembers(picture, email stri
 	}
 	return nil
 }
+
+func (repository TimesheetRepository) GetProfileByEmail(email string) (model.Profile, error) {
+	var profile model.Profile
+	query := `SELECT member_id, picture FROM members WHERE email LIKE ?`
+	err := repository.DatabaseConnection.Get(&profile, query, email)
+	profile.Email = email
+	if err != nil {
+		return profile, err
+	}
+	return profile, nil
+}
