@@ -407,8 +407,8 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		TotalOtherWage:                0.00,
 		PaymentWage:                   80000.00,
 	}
-	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepository.On("GetMemberListByMemberID", "003").Return([]model.Member{
+	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "003").Return([]model.Member{
 		{
 			ID:                    4,
 			MemberID:              "003",
@@ -445,7 +445,7 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		},
 	}, nil)
 
-	mockRepository.On("GetIncomes", "003", 2019, 12).Return([]model.Incomes{
+	mockRepositoryToTimesheet.On("GetIncomes", "003", 2019, 12).Return([]model.Incomes{
 		{
 			ID:                       61,
 			MemberID:                 "003",
@@ -486,7 +486,7 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		},
 	}, nil)
 
-	mockRepository.On("GetTimesheet", "003", 2019, 12).Return(model.Timesheet{
+	mockRepositoryToTimesheet.On("GetTimesheet", "003", 2019, 12).Return(model.Timesheet{
 		ID:                            "003201912",
 		MemberID:                      "003",
 		Month:                         12,
@@ -499,10 +499,10 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		PaymentWage:                   80000.00,
 	}, nil)
 
-	mockRepository.On("CreateTimesheet", "003", 2019, 12).Return(nil)
+	mockRepositoryToTimesheet.On("CreateTimesheet", "003", 2019, 12).Return(nil)
 
 	timesheet := Timesheet{
-		Repository: mockRepository,
+		Repository: mockRepositoryToTimesheet,
 	}
 	memberID := "003"
 	year := 2019
@@ -533,8 +533,8 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 		PaymentWage:                   0.00,
 	}
 
-	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepository.On("GetMemberListByMemberID", "002").Return([]model.Member{
+	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "002").Return([]model.Member{
 		{
 			ID:                    3,
 			MemberID:              "002",
@@ -554,11 +554,11 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 		},
 	}, nil)
 
-	mockRepository.On("GetIncomes", "002", 2019, 12).Return([]model.Incomes(nil), nil)
-	mockRepository.On("GetTimesheet", "002", 2019, 12).Return(model.Timesheet{}, errors.New("sql: no rows in result set"))
-	mockRepository.On("CreateTimesheet", "002", 2019, 12).Return(nil)
+	mockRepositoryToTimesheet.On("GetIncomes", "002", 2019, 12).Return([]model.Incomes(nil), nil)
+	mockRepositoryToTimesheet.On("GetTimesheet", "002", 2019, 12).Return(model.Timesheet{}, errors.New("sql: no rows in result set"))
+	mockRepositoryToTimesheet.On("CreateTimesheet", "002", 2019, 12).Return(nil)
 	timesheet := Timesheet{
-		Repository: mockRepository,
+		Repository: mockRepositoryToTimesheet,
 	}
 	memberID := "002"
 	year := 2019
@@ -576,13 +576,13 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthor
 	memberID := "071"
 	os.Setenv("FIX_TIME", "20181201120000")
 	expiry, _ := time.Parse("20060102150405", "20181201090000")
-	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
+	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
 		Expiry:   expiry,
 	}, nil)
 	timesheet := Timesheet{
-		Repository: mockRepository,
+		Repository: mockRepositoryToTimesheet,
 	}
 
 	actual := timesheet.VerifyAuthentication(accessToken, memberID)
@@ -596,13 +596,13 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthor
 	memberID := "008"
 	os.Setenv("FIX_TIME", "20181201120000")
 	expiry, _ := time.Parse("20060102150405", "20181201090000")
-	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
+	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
 		Expiry:   expiry,
 	}, nil)
 	timesheet := Timesheet{
-		Repository: mockRepository,
+		Repository: mockRepositoryToTimesheet,
 	}
 
 	actual := timesheet.VerifyAuthentication(accessToken, memberID)
@@ -616,13 +616,13 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(
 	memberID := "071"
 	os.Setenv("FIX_TIME", "20181201083000")
 	expiry, _ := time.Parse("20060102150405", "20181201090000")
-	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
+	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
 		Expiry:   expiry,
 	}, nil)
 	timesheet := Timesheet{
-		Repository: mockRepository,
+		Repository: mockRepositoryToTimesheet,
 	}
 
 	actual := timesheet.VerifyAuthentication(accessToken, memberID)
