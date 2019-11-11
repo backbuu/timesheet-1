@@ -22,6 +22,7 @@ type TimesheetRepositoryGateways interface {
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
 	UpdatePictureToMembers(picture, email string) error
+	GetProfileByEmail(email string) (model.Profile, error)
 }
 
 type TimesheetRepositoryGatewaysToTimesheet interface {
@@ -29,7 +30,6 @@ type TimesheetRepositoryGatewaysToTimesheet interface {
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	CreateTimesheet(memberID string, year int, month int) error
-	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
 	GetTransactionTimesheets(memberID string, year int) ([]model.TransactionTimesheet, error)
 	GetMemberIDByEmail(email string) (string, error)
 }
@@ -254,4 +254,15 @@ func (repository TimesheetRepository) GetTransactionTimesheets(memberID string, 
 		return []model.TransactionTimesheet{}, err
 	}
 	return transactionTimesheetList, nil
+}
+
+func (repository TimesheetRepository) GetProfileByEmail(email string) (model.Profile, error) {
+	var profile model.Profile
+	query := `SELECT member_id, picture FROM members WHERE email LIKE ?`
+	err := repository.DatabaseConnection.Get(&profile, query, email)
+	profile.Email = email
+	if err != nil {
+		return profile, err
+	}
+	return profile, nil
 }

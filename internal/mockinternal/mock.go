@@ -20,11 +20,6 @@ func (mock *MockRepositoryToTimesheet) GetMemberListByMemberID(memberID string) 
 	return argument.Get(0).([]model.Member), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error) {
-	argument := mock.Called(accessToken)
-	return argument.Get(0).(model.VerifyAuthentication), argument.Error(1)
-}
-
 func (mock *MockRepositoryToTimesheet) CreateTimesheet(memberID string, year int, month int) error {
 	argument := mock.Called(memberID, year, month)
 	return argument.Error(0)

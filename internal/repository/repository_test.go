@@ -543,3 +543,21 @@ func Test_GetTransactionTimesheets_Input_MemberID_001_Year_2017_Should_Be_Transa
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
+
+func Test_GetProfileByEmail_Input_Email_nareenart_scrum123_com_Should_Be_MemberID_002_And_Picture(t *testing.T) {
+	expected := model.Profile{
+		MemberID: "002",
+		Email:    "nareenart@scrum123.com",
+		Picture:  "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
+	}
+	email := "nareenart@scrum123.com"
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual, err := repository.GetProfileByEmail(email)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}

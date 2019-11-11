@@ -65,6 +65,11 @@ func (mock *MockRepository) UpdatePictureToMembers(picture, email string) error 
 	return argument.Error(0)
 }
 
+func (mock *MockRepository) GetProfileByEmail(email string) (model.Profile, error) {
+	argument := mock.Called(email)
+	return argument.Get(0).(model.Profile), argument.Error(1)
+}
+
 type MockRepositoryToTimesheet struct {
 	mock.Mock
 }
@@ -77,11 +82,6 @@ func (mock *MockRepositoryToTimesheet) GetIncomes(memberID string, year, month i
 func (mock *MockRepositoryToTimesheet) GetMemberListByMemberID(memberID string) ([]model.Member, error) {
 	argument := mock.Called(memberID)
 	return argument.Get(0).([]model.Member), argument.Error(1)
-}
-
-func (mock *MockRepositoryToTimesheet) GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error) {
-	argument := mock.Called(accessToken)
-	return argument.Get(0).(model.VerifyAuthentication), argument.Error(1)
 }
 
 func (mock *MockRepositoryToTimesheet) CreateTimesheet(memberID string, year int, month int) error {

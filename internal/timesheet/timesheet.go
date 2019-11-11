@@ -19,6 +19,7 @@ type TimesheetGateways interface {
 	CalculatePayment(incomes []model.Incomes) model.Timesheet
 	GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error)
 	VerifyAuthentication(email string, expiry float64, memberID string) string
+	GetSummaryInYearByID(memberID string, year int) (model.SummaryTransactionTimesheet, error)
 }
 
 type Timesheet struct {
@@ -240,4 +241,25 @@ func calculateTotalTrainingWageByCompany(incomeList []model.Incomes, company str
 		}
 	}
 	return totalTrainingWage
+}
+
+func (timesheet Timesheet) GetSummaryInYearByID(memberID string, year int) (model.SummaryTransactionTimesheet, error) {
+	var transactionTimesheetList []model.TransactionTimesheet
+	transactionTimesheetList, err := timesheet.Repository.GetTransactionTimesheets(memberID, year)
+	if err != nil {
+		return model.SummaryTransactionTimesheet{}, err
+	}
+	return model.SummaryTransactionTimesheet{
+		MemberID:               memberID,
+		Year:                   year,
+		TransactionTimesheets:  transactionTimesheetList,
+		TotalCoachingInYear:    0.00,
+		TotalTrainingInYear:    0.00,
+		TotalOtherInYear:       0.00,
+		TotalIncomesInYear:     0.00,
+		TotalSalaryInYear:      0.00,
+		TotalNetSalaryInYear:   0.00,
+		TotalWageInYear:        0.00,
+		TotalNetWageInYear:     0.00,
+		TotalNetTransferInYear: 0.00}, nil
 }
