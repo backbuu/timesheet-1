@@ -15,21 +15,24 @@ const (
 
 type TimesheetRepositoryGateways interface {
 	GetSummary(year, month int) ([]model.TransactionTimesheet, error)
-	GetMemberListByMemberID(memberID string) ([]model.Member, error)
-	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
 	VerifyTransactionTimesheet(transactionTimesheetList []model.TransactionTimesheet) error
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
-	CreateTimesheet(memberID string, year int, month int) error
-	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
 	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
 	GetProfileByAccessToken(accessToken string) (model.Profile, error)
 	DeleteAuthentication(accessToken string) error
-	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
 	UpdatePictureToMembers(picture, email string) error
+}
+
+type TimesheetRepositoryGatewaysToTimesheet interface {
+	GetMemberListByMemberID(memberID string) ([]model.Member, error)
+	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
+	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
+	CreateTimesheet(memberID string, year int, month int) error
+	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
 }
 
 type TimesheetRepository struct {
