@@ -142,7 +142,6 @@ func calculateTotalHours(incomeList []model.Incomes) string {
 	for _, income := range incomeList {
 		toltalHours += income.EndTimeAM.Sub(income.StartTimeAM)
 		toltalHours += income.EndTimePM.Sub(income.StartTimePM)
-		overtime += income.Overtime
 	}
 	hours := toltalHours.Hours() + float64(overtime)
 	minutes := math.Mod(toltalHours.Minutes(), oneHour)

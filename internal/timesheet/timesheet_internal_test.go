@@ -9,7 +9,7 @@ import (
 )
 
 func Test_CalculateTotalHour_Input_IncomeList_Should_Be_Time_18_00_00(t *testing.T) {
-	expected := "18:00:00"
+	expected := "17:00:00"
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -20,14 +20,12 @@ func Test_CalculateTotalHour_Input_IncomeList_Should_Be_Time_18_00_00(t *testing
 			EndTimeAM:   endTimeAM,
 			StartTimePM: startTimePM,
 			EndTimePM:   endTimePM,
-			Overtime:    1,
 		},
 		{
 			StartTimeAM: startTimeAM,
 			EndTimeAM:   endTimeAM,
 			StartTimePM: startTimePM,
 			EndTimePM:   endTimePM,
-			Overtime:    0,
 		},
 	}
 
