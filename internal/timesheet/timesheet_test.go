@@ -620,3 +620,84 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(
 
 	assert.Equal(t, expected, actual)
 }
+
+func Test_GetSummaryInYearByID_Input_MemberID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
+	expected := model.SummaryTransactionTimesheet{
+		MemberID: "001",
+		Year:     2017,
+		TransactionTimesheets: []model.TransactionTimesheet{
+			{
+				ID:                     "001201712siam_chamnankit",
+				MemberID:               "001",
+				MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+				Month:                  12,
+				Year:                   2017,
+				Company:                "siam_chamnankit",
+				Coaching:               85000.00,
+				Training:               30000.00,
+				Other:                  40000.00,
+				TotalIncomes:           155000.00,
+				Salary:                 80000.00,
+				IncomeTax1:             5000.00,
+				SocialSecurity:         0.00,
+				NetSalary:              75000.00,
+				Wage:                   75000.00,
+				IncomeTax53Percentage:  10,
+				IncomeTax53:            7500.00,
+				NetWage:                67500.00,
+				NetTransfer:            142500.00,
+				StatusCheckingTransfer: "รอการตรวจสอบ",
+				DateTransfer:           "",
+				Comment:                "",
+			},
+		},
+		TotalCoachingInYear:    0.00,
+		TotalTrainingInYear:    0.00,
+		TotalOtherInYear:       0.00,
+		TotalIncomesInYear:     0.00,
+		TotalSalaryInYear:      0.00,
+		TotalNetSalaryInYear:   0.00,
+		TotalWageInYear:        0.00,
+		TotalNetWageInYear:     0.00,
+		TotalNetTransferInYear: 0.00,
+	}
+
+	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetTransactionTimesheets", "001", 2017).Return([]model.TransactionTimesheet{
+		{
+			ID:                     "001201712siam_chamnankit",
+			MemberID:               "001",
+			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			Month:                  12,
+			Year:                   2017,
+			Company:                "siam_chamnankit",
+			Coaching:               85000.00,
+			Training:               30000.00,
+			Other:                  40000.00,
+			TotalIncomes:           155000.00,
+			Salary:                 80000.00,
+			IncomeTax1:             5000.00,
+			SocialSecurity:         0.00,
+			NetSalary:              75000.00,
+			Wage:                   75000.00,
+			IncomeTax53Percentage:  10,
+			IncomeTax53:            7500.00,
+			NetWage:                67500.00,
+			NetTransfer:            142500.00,
+			StatusCheckingTransfer: "รอการตรวจสอบ",
+			DateTransfer:           "",
+			Comment:                "",
+		},
+	}, nil)
+
+	timesheet := Timesheet{
+		Repository: mockRepositoryToTimesheet,
+	}
+	memberID := "001"
+	year := 2017
+
+	actual, err := timesheet.GetSummaryInYearByID(memberID, year)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}

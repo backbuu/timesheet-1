@@ -139,3 +139,18 @@ type VerifyAuthentication struct {
 	MemberID string    `db:"member_id" json:"member_id"`
 	Expiry   time.Time `db:"expiry" json:"expiry"`
 }
+
+type SummaryTransactionTimesheet struct {
+	MemberID               string                 `json:"member_id"`
+	Year                   int                    `json:"year"`
+	TransactionTimesheets  []TransactionTimesheet `json:"transaction_timesheets"`
+	TotalCoachingInYear    float64                `json:"total_coaching_in_year"`
+	TotalTrainingInYear    float64                `json:"total_training_in_year"`
+	TotalOtherInYear       float64                `json:"total_other_in_year"`
+	TotalIncomesInYear     float64                `json:"total_incomes_in_year"`
+	TotalSalaryInYear      float64                `json:"total_salary_in_year"`
+	TotalNetSalaryInYear   float64                `json:"total_net_salary_in_year"`
+	TotalWageInYear        float64                `json:"total_wage_in_year"`
+	TotalNetWageInYear     float64                `json:"total_net_wage_in_year"`
+	TotalNetTransferInYear float64                `json:"total_net_transfer_in_year"`
+}

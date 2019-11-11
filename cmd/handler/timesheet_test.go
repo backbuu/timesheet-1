@@ -595,3 +595,66 @@ func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, string(actual))
 }
+
+func Test_ShowSummaryInYearHandler_Input_MemberID_001_Year_2017_Should_Be_TransactionTimesheet(t *testing.T) {
+	expected := `{"member_id":"001","year":2017,"transaction_timesheets":[{"id":"001201812siam_chamnankit","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2017,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
+	summaryInYearRequest := SummaryInYearRequest{
+		MemberID: "001",
+		Year:     2017,
+	}
+	jsonRequest, _ := json.Marshal(summaryInYearRequest)
+	request := httptest.NewRequest("POST", "/showSummaryInYear", bytes.NewBuffer(jsonRequest))
+	writer := httptest.NewRecorder()
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("GetSummaryInYearByID", "001", 2017).Return(model.SummaryTransactionTimesheet{
+		MemberID: "001",
+		Year:     2017,
+		TransactionTimesheets: []model.TransactionTimesheet{
+			{
+				ID:                     "001201812siam_chamnankit",
+				MemberID:               "001",
+				MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+				Month:                  12,
+				Year:                   2017,
+				Company:                "siam_chamnankit",
+				Coaching:               85000.00,
+				Training:               30000.00,
+				Other:                  40000.00,
+				TotalIncomes:           155000.00,
+				Salary:                 80000.00,
+				IncomeTax1:             5000.00,
+				SocialSecurity:         0.00,
+				NetSalary:              75000.00,
+				Wage:                   75000.00,
+				IncomeTax53Percentage:  10,
+				IncomeTax53:            7500.00,
+				NetWage:                67500.00,
+				NetTransfer:            142500.00,
+				StatusCheckingTransfer: "รอการตรวจสอบ",
+				DateTransfer:           "",
+				Comment:                "",
+			},
+		},
+		TotalCoachingInYear:    85000.00,
+		TotalTrainingInYear:    30000.00,
+		TotalOtherInYear:       40000.00,
+		TotalIncomesInYear:     155000.00,
+		TotalSalaryInYear:      80000.00,
+		TotalNetSalaryInYear:   75000.00,
+		TotalWageInYear:        75000.00,
+		TotalNetWageInYear:     67500.00,
+		TotalNetTransferInYear: 142500.00,
+	}, nil)
+
+	api := TimesheetAPI{
+		Timesheet: mockTimesheet,
+	}
+	testRoute := gin.Default()
+	testRoute.POST("/showSummaryInYear", api.ShowSummaryInYearHandler)
+	testRoute.ServeHTTP(writer, request)
+	response := writer.Result()
+	actual, err := ioutil.ReadAll(response.Body)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, string(actual))
+}

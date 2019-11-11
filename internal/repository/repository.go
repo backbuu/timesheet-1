@@ -35,6 +35,7 @@ type TimesheetRepositoryGatewaysToTimesheet interface {
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	CreateTimesheet(memberID string, year int, month int) error
+	GetTransactionTimesheets(memberID string, year int) ([]model.TransactionTimesheet, error)
 	GetMemberIDByEmail(email string) (string, error)
 }
 
@@ -255,6 +256,16 @@ func (repository TimesheetRepository) UpdatePictureToMembers(picture, email stri
 		return err
 	}
 	return nil
+}
+
+func (repository TimesheetRepository) GetTransactionTimesheets(memberID string, year int) ([]model.TransactionTimesheet, error) {
+	var transactionTimesheetList []model.TransactionTimesheet
+	query := `SELECT * FROM transactions WHERE member_id = ? AND year = ?`
+	err := repository.DatabaseConnection.Select(&transactionTimesheetList, query, memberID, year)
+	if err != nil {
+		return []model.TransactionTimesheet{}, err
+	}
+	return transactionTimesheetList, nil
 }
 
 func (repository TimesheetRepository) GetProfileByEmail(email string) (model.Profile, error) {
