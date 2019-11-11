@@ -183,7 +183,6 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
-	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	requestIncome := IncomeRequest{
 		Year:     2018,
 		Month:    12,
@@ -194,8 +193,6 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
-			TotalHours:               totalHours,
 			CoachingCustomerCharging: 15000.00,
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
@@ -219,8 +216,6 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 		EndTimeAM:                endTimeAM,
 		StartTimePM:              startTimePM,
 		EndTimePM:                endTimePM,
-		Overtime:                 0,
-		TotalHours:               totalHours,
 		CoachingCustomerCharging: 15000.00,
 		CoachingPaymentRate:      10000.00,
 		TrainingWage:             0.00,
