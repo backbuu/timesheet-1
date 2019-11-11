@@ -2,6 +2,7 @@ package repository
 
 import (
 	"strconv"
+	"time"
 	"timesheet/internal/model"
 
 	"github.com/jmoiron/sqlx"
@@ -11,6 +12,10 @@ const (
 	initialStatusCheckingTransfer = "รอการตรวจสอบ"
 	initialDateTransfer           = ""
 	initialComment                = ""
+
+	workingHours = 8
+	oneMinute    = 60
+	oneHour      = 60
 )
 
 type TimesheetRepositoryGateways interface {
@@ -53,10 +58,17 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 		coaching_customer_charging, coaching_payment_rate,
 		training_wage, other_wage, company, description)
 		VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? )`
+	toltalHours := income.EndTimeAM.Sub(income.StartTimeAM)
+	toltalHours += income.EndTimePM.Sub(income.StartTimePM)
+	var overtime float64
+	if toltalHours > workingHours {
+		overtime = toltalHours.Hours() - workingHours
+	}
+	toltalHoursInDay := time.Date(2006, 1, 2, int(toltalHours.Hours()), int(toltalHours.Minutes())%oneHour, int(toltalHours.Seconds())%oneMinute, 0, time.UTC)
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAM,
-		income.EndTimeAM, income.StartTimePM, income.EndTimePM, income.Overtime,
-		income.TotalHours, income.CoachingCustomerCharging, income.CoachingPaymentRate,
+		income.EndTimeAM, income.StartTimePM, income.EndTimePM, overtime,
+		toltalHoursInDay, income.CoachingCustomerCharging, income.CoachingPaymentRate,
 		income.TrainingWage, income.OtherWage, income.Company, income.Description)
 	err := transaction.Commit()
 	if err != nil {
