@@ -94,6 +94,11 @@ func (mock *MockRepositoryToTimesheet) GetTimesheet(memberID string, year, month
 	return argument.Get(0).(model.Timesheet), argument.Error(1)
 }
 
+func (mock *MockRepositoryToTimesheet) GetTransactionTimesheets(memberID string, year int) ([]model.TransactionTimesheet, error) {
+	argument := mock.Called(memberID, year)
+	return argument.Get(0).([]model.TransactionTimesheet), argument.Error(1)
+}
+
 type MockTimesheet struct {
 	mock.Mock
 }
