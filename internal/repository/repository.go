@@ -33,6 +33,7 @@ type TimesheetRepositoryGatewaysToTimesheet interface {
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	CreateTimesheet(memberID string, year int, month int) error
 	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
+	GetMemberIDByEmail(email string) (string, error)
 }
 
 type TimesheetRepository struct {
