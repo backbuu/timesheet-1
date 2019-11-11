@@ -407,7 +407,7 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		TotalOtherWage:                0.00,
 		PaymentWage:                   80000.00,
 	}
-	mockRepository := new(mockinternal.MockRepository)
+	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepository.On("GetMemberListByMemberID", "003").Return([]model.Member{
 		{
 			ID:                    4,
@@ -533,7 +533,7 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 		PaymentWage:                   0.00,
 	}
 
-	mockRepository := new(mockinternal.MockRepository)
+	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepository.On("GetMemberListByMemberID", "002").Return([]model.Member{
 		{
 			ID:                    3,
@@ -576,7 +576,7 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthor
 	memberID := "071"
 	os.Setenv("FIX_TIME", "20181201120000")
 	expiry, _ := time.Parse("20060102150405", "20181201090000")
-	mockRepository := new(mockinternal.MockRepository)
+	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
 		Expiry:   expiry,
@@ -596,7 +596,7 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthor
 	memberID := "008"
 	os.Setenv("FIX_TIME", "20181201120000")
 	expiry, _ := time.Parse("20060102150405", "20181201090000")
-	mockRepository := new(mockinternal.MockRepository)
+	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
 		Expiry:   expiry,
@@ -616,7 +616,7 @@ func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(
 	memberID := "071"
 	os.Setenv("FIX_TIME", "20181201083000")
 	expiry, _ := time.Parse("20060102150405", "20181201090000")
-	mockRepository := new(mockinternal.MockRepository)
+	mockRepository := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepository.On("GetVerifyAuthenticationByAccessToken", mock.Anything).Return(model.VerifyAuthentication{
 		MemberID: "071",
 		Expiry:   expiry,
