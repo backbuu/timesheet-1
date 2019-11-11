@@ -56,8 +56,9 @@ type HolidayRequest struct {
 }
 
 type TimesheetAPI struct {
-	Timesheet           timesheet.TimesheetGateways
-	TimesheetRepository repository.TimesheetRepositoryGateways
+	Timesheet             timesheet.TimesheetGateways
+	Repository            repository.TimesheetRepositoryGateways
+	RepositoryToTimesheet repository.TimesheetRepositoryGatewaysToTimesheet
 }
 
 func (api TimesheetAPI) GetSummaryByIDHandler(context *gin.Context) {
@@ -82,7 +83,7 @@ func (api TimesheetAPI) GetSummaryHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	transactionTimesheetList, err := api.TimesheetRepository.GetSummary(request.Year, request.Month)
+	transactionTimesheetList, err := api.Repository.GetSummary(request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -105,7 +106,7 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		context.Status(http.StatusUnauthorized)
 		return
 	}
-	err = api.TimesheetRepository.CreateIncome(request.Year, request.Month, request.MemberID, request.Incomes)
+	err = api.Repository.CreateIncome(request.Year, request.Month, request.MemberID, request.Incomes)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -128,24 +129,24 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		context.Status(http.StatusUnauthorized)
 		return
 	}
-	incomeList, err := api.TimesheetRepository.GetIncomes(request.MemberID, request.Year, request.Month)
+	incomeList, err := api.RepositoryToTimesheet.GetIncomes(request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	timesheet := api.Timesheet.CalculatePayment(incomeList)
-	err = api.TimesheetRepository.UpdateTimesheet(timesheet, request.MemberID, request.Year, request.Month)
+	err = api.Repository.UpdateTimesheet(timesheet, request.MemberID, request.Year, request.Month)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	memberList, err := api.TimesheetRepository.GetMemberListByMemberID(request.MemberID)
+	memberList, err := api.RepositoryToTimesheet.GetMemberListByMemberID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	transactionTimesheetList := api.Timesheet.CalculatePaymentSummary(memberList, incomeList, request.Year, request.Month)
-	err = api.TimesheetRepository.VerifyTransactionTimesheet(transactionTimesheetList)
+	err = api.Repository.VerifyTransactionTimesheet(transactionTimesheetList)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -168,7 +169,7 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 		context.Status(http.StatusUnauthorized)
 		return
 	}
-	err = api.TimesheetRepository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
+	err = api.Repository.UpdateStatusTransfer(request.TransactionID, request.Status, request.Date, request.Comment)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -191,7 +192,7 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 		context.Status(http.StatusUnauthorized)
 		return
 	}
-	err = api.TimesheetRepository.DeleteIncome(request.IncomeID)
+	err = api.Repository.DeleteIncome(request.IncomeID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -206,7 +207,7 @@ func (api TimesheetAPI) ShowMemberDetailsByIDHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	memberList, err := api.TimesheetRepository.GetMemberListByMemberID(request.MemberID)
+	memberList, err := api.RepositoryToTimesheet.GetMemberListByMemberID(request.MemberID)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -229,7 +230,7 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 		context.Status(http.StatusUnauthorized)
 		return
 	}
-	err = api.TimesheetRepository.UpdateMemberDetails(request)
+	err = api.Repository.UpdateMemberDetails(request)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -241,7 +242,7 @@ func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
 	requestToken := context.GetHeader("Authorization")
 	splitToken := strings.Split(requestToken, "Bearer ")
 	requestToken = splitToken[1]
-	profile, err := api.TimesheetRepository.GetProfileByAccessToken(requestToken)
+	profile, err := api.Repository.GetProfileByAccessToken(requestToken)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

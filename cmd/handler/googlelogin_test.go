@@ -21,7 +21,7 @@ func Test_OauthGoogleLogout_Input_AccessToken_Should_Be_200(t *testing.T) {
 	mockRepository.On("DeleteAuthentication", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{
-		TimesheetRepository: mockRepository,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/logout", api.OauthGoogleLogout)

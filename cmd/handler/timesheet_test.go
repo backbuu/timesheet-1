@@ -164,7 +164,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 	}, nil)
 
 	api := TimesheetAPI{
-		TimesheetRepository: mockRepository,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/showSummaryTimesheet", api.GetSummaryHandler)
@@ -228,8 +228,8 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	}).Return(nil)
 
 	api := TimesheetAPI{
-		Timesheet:           mockTimesheet,
-		TimesheetRepository: mockRepository,
+		Timesheet:  mockTimesheet,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/addIncomeItem", api.CreateIncomeHandler)
@@ -258,8 +258,9 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
-	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("GetIncomes", "001", 2018, 12).Return([]model.Incomes{
+
+	mockRepositoryToTimesheet := new(mockapi.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetIncomes", "001", 2018, 12).Return([]model.Incomes{
 		{
 			Day:                      19,
 			StartTimeAM:              startTimeAM,
@@ -301,9 +302,10 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		PaymentWage:                   195000.00,
 	})
 
+	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateTimesheet", mock.Anything, "001", 2018, 12).Return(nil)
 
-	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
+	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
 			ID:                    1,
 			MemberID:              "001",
@@ -383,8 +385,9 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	mockRepository.On("VerifyTransactionTimesheet", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{
-		Timesheet:           mockTimesheet,
-		TimesheetRepository: mockRepository,
+		Timesheet:             mockTimesheet,
+		Repository:            mockRepository,
+		RepositoryToTimesheet: mockRepositoryToTimesheet,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/calculatePayment", api.CalculatePaymentHandler)
@@ -414,8 +417,8 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 	mockTimesheet.On("VerifyAuthentication", mock.Anything, "004").Return("Success")
 
 	api := TimesheetAPI{
-		Timesheet:           mockTimesheet,
-		TimesheetRepository: mockRepository,
+		Timesheet:  mockTimesheet,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/updateStatusCheckingTransfer", api.UpdateStatusCheckingTransferHandler)
@@ -442,8 +445,8 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	mockRepository.On("DeleteIncome", 47).Return(nil)
 
 	api := TimesheetAPI{
-		Timesheet:           mockTimesheet,
-		TimesheetRepository: mockRepository,
+		Timesheet:  mockTimesheet,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/deleteIncomeItem", api.DeleteIncomeHandler)
@@ -454,7 +457,7 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 }
 
 func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetails(t *testing.T) {
-	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0},{"id":2,"member_id":"001","company":"shuhari","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0}]`
+	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"member_id":"001","company":"shuhari","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
 	memberRequest := MemberRequest{
 		MemberID: "001",
 	}
@@ -462,8 +465,8 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	request := httptest.NewRequest("POST", "/showMemberDetailsByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 
-	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("GetMemberListByMemberID", "001").Return([]model.Member{
+	mockRepositoryToTimesheet := new(mockapi.MockRepositoryToTimesheet)
+	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "001").Return([]model.Member{
 		{
 			ID:                    1,
 			MemberID:              "001",
@@ -480,6 +483,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 			IncomeTax53Percentage: 10,
 			Status:                "wage",
 			TravelExpense:         0.00,
+			Picture:               "",
 		},
 		{
 			ID:                    2,
@@ -497,11 +501,12 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 			IncomeTax53Percentage: 10,
 			Status:                "wage",
 			TravelExpense:         0.00,
+			Picture:               "",
 		},
 	}, nil)
 
 	api := TimesheetAPI{
-		TimesheetRepository: mockRepository,
+		RepositoryToTimesheet: mockRepositoryToTimesheet,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/showMemberDetailsByID", api.ShowMemberDetailsByIDHandler)
@@ -557,8 +562,8 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	}).Return(nil)
 
 	api := TimesheetAPI{
-		Timesheet:           mockTimesheet,
-		TimesheetRepository: mockRepository,
+		Timesheet:  mockTimesheet,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.POST("/updateMemberDetails", api.UpdateMemberDetailsHandler)
@@ -582,7 +587,7 @@ func Test_GetProfileHandler_Input_AccessToken_Should_Be_Profile(t *testing.T) {
 	}, nil)
 
 	api := TimesheetAPI{
-		TimesheetRepository: mockRepository,
+		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
 	testRoute.GET("/showProfile", api.GetProfileHandler)
