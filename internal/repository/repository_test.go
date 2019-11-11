@@ -106,6 +106,7 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 			IncomeTax53Percentage: 10,
 			TravelExpense:         0.00,
 			Status:                "wage",
+			Picture:               "",
 		},
 		{
 			ID:                    2,
@@ -123,6 +124,7 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 			IncomeTax53Percentage: 10,
 			TravelExpense:         0.00,
 			Status:                "wage",
+			Picture:               "",
 		},
 	}
 	memberID := "001"
