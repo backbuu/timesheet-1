@@ -68,40 +68,33 @@ func DeleteOauthStateCookie(context *gin.Context) {
 func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 	oauthState, _ := context.Request.Cookie("oauthstate")
 	if context.Request.FormValue("state") != oauthState.Value {
-		log.Println("invalid oauth google state")
-		context.Redirect(http.StatusTemporaryRedirect, "/home")
+		context.Redirect(http.StatusTemporaryRedirect, "/home?error=invalid_oauth_google_state")
 		return
 	}
 	token, err := getToken(context.Request.FormValue("code"))
 	if err != nil {
-		log.Println(err.Error())
-		context.Redirect(http.StatusTemporaryRedirect, "/home")
+		context.Redirect(http.StatusInternalServerError, "/home?error=code_exchange_wrong"+err.Error())
 		return
 	}
-	log.Panicln(token)
+
 	userInfo, err := getUserDataFromGoogle(token.AccessToken)
 	if err != nil {
-		log.Println(err.Error())
-		context.Redirect(http.StatusTemporaryRedirect, "/home")
+		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
 		return
 	}
-	err = api.TimesheetRepository.CreateAuthentication(userInfo, model.Token{
-		AccessToken:  token.AccessToken,
-		TokenType:    token.TokenType,
-		RefreshToken: token.RefreshToken,
-		Expiry:       token.Expiry,
-	})
+	err = api.TimesheetRepository.UpdatePictureToMembers(userInfo.Picture, userInfo.Email)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
 		return
 	}
-	cookie := http.Cookie{Name: "access_token", Value: token.AccessToken, Expires: time.Now().Add(daysInYear * hoursInDay * time.Hour)}
+	var expiration = now().Add(daysInYear * hoursInDay * time.Hour)
+	cookie := http.Cookie{Name: "id_token", Value: token.Extra("id_token").(string), Expires: expiration}
 	http.SetCookie(context.Writer, &cookie)
 	context.Redirect(http.StatusTemporaryRedirect, "/home")
 }
 
 func generateStateOauthCookie(writer http.ResponseWriter) string {
-	var expiration = time.Now().Add(daysInYear * hoursInDay * time.Hour)
+	var expiration = now().Add(daysInYear * hoursInDay * time.Hour)
 	bytes := make([]byte, 16)
 	_, err := rand.Read(bytes)
 	if err != nil {
@@ -114,11 +107,7 @@ func generateStateOauthCookie(writer http.ResponseWriter) string {
 }
 
 func getToken(code string) (*oauth2.Token, error) {
-	token, err := googleOauthConfig.Exchange(context.Background(), code)
-	if err != nil {
-		return nil, fmt.Errorf("code exchange wrong: %s", err.Error())
-	}
-	return token, nil
+	return googleOauthConfig.Exchange(context.Background(), code)
 }
 
 func getUserDataFromGoogle(accessToken string) (model.UserInfo, error) {
@@ -137,4 +126,12 @@ func getUserDataFromGoogle(accessToken string) (model.UserInfo, error) {
 		return userInfo, fmt.Errorf("failed unmashal response: %s", err.Error())
 	}
 	return userInfo, nil
+}
+
+func now() time.Time {
+	if os.Getenv("FIX_TIME") != "" {
+		fixedTime, _ := time.Parse("20060102150405", os.Getenv("FIX_TIME"))
+		return fixedTime
+	}
+	return time.Now()
 }
