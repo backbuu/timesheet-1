@@ -380,7 +380,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		},
 	})
 
-	mockRepository.On("VerifyTransactionTimsheet", mock.Anything).Return(nil)
+	mockRepository.On("VerifyTransactionTimesheet", mock.Anything).Return(nil)
 
 	api := TimesheetAPI{
 		Timesheet:           mockTimesheet,
