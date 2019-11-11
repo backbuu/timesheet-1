@@ -31,16 +31,9 @@ var googleOauthConfig = &oauth2.Config{
 	Endpoint:     google.Endpoint,
 }
 
-type RefreshTokenRequest struct {
-	ClientID     string `json:"client_id"`
-	ClientSecret string `json:"client_secret"`
-	RefreshToken string `json:"refresh_token"`
-	GrantType    string `json:"grant_type"`
-}
-
 func OauthGoogleLogin(context *gin.Context) {
 	oauthState := generateStateOauthCookie(context.Writer)
-	url := googleOauthConfig.AuthCodeURL(oauthState, oauth2.AccessTypeOffline)
+	url := googleOauthConfig.AuthCodeURL(oauthState)
 	context.Redirect(http.StatusTemporaryRedirect, url)
 }
 
@@ -67,7 +60,6 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		context.Redirect(http.StatusInternalServerError, "/home?error=code_exchange_wrong"+err.Error())
 		return
 	}
-
 	userInfo, err := getUserDataFromGoogle(token.AccessToken)
 	if err != nil {
 		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
