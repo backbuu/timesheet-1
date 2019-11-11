@@ -561,3 +561,44 @@ func Test_DeleteAuthentication_Input_AccessToken_Should_Be_No_Error(t *testing.T
 
 	assert.Equal(t, nil, err)
 }
+
+func Test_GetTransactionTimesheets_Input_MemberID_001_Year_2017_Should_Be_TransactionTimesheetList(t *testing.T) {
+	expected := []model.TransactionTimesheet{
+		{
+			ID:                     "001201712siam_chamnankit",
+			MemberID:               "001",
+			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			Month:                  12,
+			Year:                   2017,
+			Company:                "siam_chamnankit",
+			Coaching:               85000.00,
+			Training:               30000.00,
+			Other:                  40000.00,
+			TotalIncomes:           155000.00,
+			Salary:                 80000.00,
+			IncomeTax1:             5000.00,
+			SocialSecurity:         0.00,
+			NetSalary:              75000.00,
+			Wage:                   75000.00,
+			IncomeTax53Percentage:  10,
+			IncomeTax53:            7500.00,
+			NetWage:                67500.00,
+			NetTransfer:            142500.00,
+			StatusCheckingTransfer: "รอการตรวจสอบ",
+			DateTransfer:           "",
+			Comment:                "",
+		},
+	}
+	memberID := "001"
+	year := 2017
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual, err := repository.GetTransactionTimesheets(memberID, year)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, expected, actual)
+}
