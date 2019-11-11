@@ -2,11 +2,11 @@ package handler
 
 import (
 	"net/http"
-	"strings"
 	"timesheet/internal/model"
 	"timesheet/internal/repository"
 	"timesheet/internal/timesheet"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -98,10 +98,14 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	requestHeader := context.GetHeader("Authorization")
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email := claims["email"].(string)
+	expiry := claims["exp"].(float64)
+	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
 		return
@@ -121,10 +125,14 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	requestHeader := context.GetHeader("Authorization")
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email := claims["email"].(string)
+	expiry := claims["exp"].(float64)
+	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
 		return
@@ -161,10 +169,14 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	requestHeader := context.GetHeader("Authorization")
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email := claims["email"].(string)
+	expiry := claims["exp"].(float64)
+	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
 		return
@@ -184,10 +196,14 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	requestHeader := context.GetHeader("Authorization")
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email := claims["email"].(string)
+	expiry := claims["exp"].(float64)
+	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
 		return
@@ -222,10 +238,14 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
-	status := api.Timesheet.VerifyAuthentication(requestToken, request.MemberID)
+	requestHeader := context.GetHeader("Authorization")
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email := claims["email"].(string)
+	expiry := claims["exp"].(float64)
+	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
 		return
@@ -240,8 +260,6 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 
 func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
 	requestToken := context.GetHeader("Authorization")
-	splitToken := strings.Split(requestToken, "Bearer ")
-	requestToken = splitToken[1]
 	profile, err := api.Repository.GetProfileByAccessToken(requestToken)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
