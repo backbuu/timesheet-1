@@ -18,7 +18,7 @@ type TimesheetRepositoryGateways interface {
 	GetMemberListByMemberID(memberID string) ([]model.Member, error)
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	CreateIncome(year, month int, memberID string, income model.Incomes) error
-	VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error
+	VerifyTransactionTimesheet(transactionTimesheetList []model.TransactionTimesheet) error
 	UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error
 	CreateTimesheet(memberID string, year int, month int) error
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
@@ -83,7 +83,7 @@ func (repository TimesheetRepository) GetMemberListByMemberID(memberID string) (
 	return memberList, nil
 }
 
-func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimesheetList []model.TransactionTimesheet) error {
+func (repository TimesheetRepository) VerifyTransactionTimesheet(transactionTimesheetList []model.TransactionTimesheet) error {
 	for _, transactionTimesheet := range transactionTimesheetList {
 		query := `SELECT COUNT(id) FROM transactions WHERE id LIKE ?`
 		var count int
@@ -93,12 +93,12 @@ func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimes
 			return err
 		}
 		if count == 0 {
-			err = repository.CreateTransactionTimsheet(transactionTimesheet, transactionID)
+			err = repository.CreateTransactionTimesheet(transactionTimesheet, transactionID)
 			if err != nil {
 				return err
 			}
 		}
-		err = repository.UpdateTransactionTimsheet(transactionTimesheet, transactionID)
+		err = repository.UpdateTransactionTimesheet(transactionTimesheet, transactionID)
 		if err != nil {
 			return err
 		}
@@ -106,7 +106,7 @@ func (repository TimesheetRepository) VerifyTransactionTimsheet(transactionTimes
 	return nil
 }
 
-func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
+func (repository TimesheetRepository) CreateTransactionTimesheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
 	query := `INSERT INTO transactions (id, member_id, month, year, company, member_name_th, coaching, 
 		training, other, total_incomes, salary, income_tax_1, social_security, net_salary, wage, 
 		income_tax_53_percentage, income_tax_53, net_wage, net_transfer, status_checking_transfer, date_transfer, comment) 
@@ -126,7 +126,7 @@ func (repository TimesheetRepository) CreateTransactionTimsheet(transactionTimes
 	return nil
 }
 
-func (repository TimesheetRepository) UpdateTransactionTimsheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
+func (repository TimesheetRepository) UpdateTransactionTimesheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
 	query := `UPDATE transactions SET coaching = ?, training = ?, other = ?, total_incomes = ?, salary = ?, 
 		income_tax_1 = ?, social_security = ?, net_salary = ?, wage = ?, income_tax_53_percentage = ?, 
 		income_tax_53 = ?, net_wage = ?, net_transfer = ? WHERE id = ?`
