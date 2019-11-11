@@ -99,6 +99,10 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		return
 	}
 	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
 		return []byte(""), nil
 	})
@@ -126,6 +130,10 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		return
 	}
 	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
 		return []byte(""), nil
 	})
@@ -170,6 +178,10 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 		return
 	}
 	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
 		return []byte(""), nil
 	})
@@ -197,6 +209,10 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 		return
 	}
 	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
 		return []byte(""), nil
 	})
@@ -239,6 +255,10 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 		return
 	}
 	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
 		return []byte(""), nil
 	})
