@@ -45,7 +45,6 @@ func main() {
 	router.GET("/callback", api.OauthGoogleCallback)
 	router.POST("/logout", api.OauthGoogleLogout)
 	router.GET("/deleteOauthState", handler.DeleteOauthStateCookie)
-	router.GET("/showProfile", api.GetProfileHandler)
 	router.POST("/showSummaryTimesheet", api.GetSummaryHandler)
 	router.POST("/addIncomeItem", api.CreateIncomeHandler)
 	router.POST("/calculatePayment", api.CalculatePaymentHandler)

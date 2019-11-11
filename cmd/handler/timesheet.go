@@ -257,13 +257,3 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 	}
 	context.Status(http.StatusOK)
 }
-
-func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
-	requestToken := context.GetHeader("Authorization")
-	profile, err := api.Repository.GetProfileByAccessToken(requestToken)
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	context.JSON(http.StatusOK, profile)
-}

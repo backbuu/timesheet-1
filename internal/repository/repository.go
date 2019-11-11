@@ -21,9 +21,6 @@ type TimesheetRepositoryGateways interface {
 	UpdateStatusTransfer(transactionID, status, date, comment string) error
 	DeleteIncome(incomeID int) error
 	UpdateMemberDetails(memberDetails model.Member) error
-	CreateAuthentication(userInfo model.UserInfo, token model.Token) error
-	GetProfileByAccessToken(accessToken string) (model.Profile, error)
-	DeleteAuthentication(accessToken string) error
 	UpdatePictureToMembers(picture, email string) error
 }
 
@@ -32,7 +29,6 @@ type TimesheetRepositoryGatewaysToTimesheet interface {
 	GetIncomes(memberID string, year, month int) ([]model.Incomes, error)
 	GetTimesheet(memberID string, year, month int) (model.Timesheet, error)
 	CreateTimesheet(memberID string, year int, month int) error
-	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
 	GetMemberIDByEmail(email string) (string, error)
 }
 
@@ -235,54 +231,6 @@ func (repository TimesheetRepository) GetMemberIDByEmail(email string) (string, 
 		return memberID, err
 	}
 	return memberID, nil
-}
-
-func (repository TimesheetRepository) CreateAuthentication(userInfo model.UserInfo, token model.Token) error {
-	memberID, err := repository.GetMemberIDByEmail(userInfo.Email)
-	if err != nil {
-		return err
-	}
-	query := `INSERT INTO authentications (member_id, email, picture, access_token, token_type, refresh_token, expiry) 
-		VALUES (?, ?, ?, ?, ?, ?, ?)`
-	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, memberID, userInfo.Email, userInfo.Picture, token.AccessToken, token.TokenType,
-		token.RefreshToken, token.Expiry)
-	err = transaction.Commit()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (repository TimesheetRepository) GetProfileByAccessToken(accessToken string) (model.Profile, error) {
-	var profile model.Profile
-	query := `SELECT member_id, email, picture FROM authentications WHERE access_token LIKE ?`
-	err := repository.DatabaseConnection.Get(&profile, query, accessToken)
-	if err != nil {
-		return profile, err
-	}
-	return profile, nil
-}
-
-func (repository TimesheetRepository) DeleteAuthentication(accessToken string) error {
-	query := `DELETE FROM authentications WHERE access_token LIKE ?`
-	transaction := repository.DatabaseConnection.MustBegin()
-	transaction.MustExec(query, accessToken)
-	err := transaction.Commit()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (repository TimesheetRepository) GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error) {
-	var authentication model.VerifyAuthentication
-	query := `SELECT member_id, expiry FROM authentications WHERE access_token LIKE ?`
-	err := repository.DatabaseConnection.Get(&authentication, query, accessToken)
-	if err != nil {
-		return authentication, err
-	}
-	return authentication, nil
 }
 
 func (repository TimesheetRepository) UpdatePictureToMembers(picture, email string) error {
