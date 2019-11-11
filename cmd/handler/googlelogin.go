@@ -76,6 +76,7 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		context.Redirect(http.StatusTemporaryRedirect, "/home")
 		return
 	}
+	log.Panicln(token)
 	userInfo, err := getUserDataFromGoogle(token.AccessToken)
 	if err != nil {
 		log.Println(err.Error())
