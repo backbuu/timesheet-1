@@ -29,6 +29,7 @@ type TimesheetRepositoryGateways interface {
 	GetProfileByAccessToken(accessToken string) (model.Profile, error)
 	DeleteAuthentication(accessToken string) error
 	GetVerifyAuthenticationByAccessToken(accessToken string) (model.VerifyAuthentication, error)
+	UpdatePictureToMembers(picture, email string) error
 }
 
 type TimesheetRepository struct {
@@ -278,4 +279,15 @@ func (repository TimesheetRepository) GetVerifyAuthenticationByAccessToken(acces
 		return authentication, err
 	}
 	return authentication, nil
+}
+
+func (repository TimesheetRepository) UpdatePictureToMembers(picture, email string) error {
+	query := `UPDATE members SET picture = ? WHERE email = ?`
+	transaction := repository.DatabaseConnection.MustBegin()
+	transaction.MustExec(query, picture, email)
+	err := transaction.Commit()
+	if err != nil {
+		return err
+	}
+	return nil
 }
