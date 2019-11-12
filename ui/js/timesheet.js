@@ -303,7 +303,7 @@ function calculatePayment() {
     window.location.replace(window.location.href); 
 }
 
-async function showSummaryByID() {
+function showSummaryByID() {
     setCurrentDate();
     var urlString = window.location.href
     var url = new URL(urlString);
@@ -339,7 +339,7 @@ async function showSummaryByID() {
     var url = "/showTimesheetByID";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = await function () {
+    request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
             var memberNameENG = json.member_name_eng;
@@ -377,6 +377,8 @@ async function showSummaryByID() {
                 }
                 $("#table_timesheet").html(incomeList);
             }
+
+            
             $("#member_name_eng").html(memberNameENG);
             $("#email").html(email);
             $("#thours").html(totalHours);
@@ -387,8 +389,9 @@ async function showSummaryByID() {
             $("#payment_wage").html(paymentWage.toFixed(2));             
             if(memberID == memberIDByCookie){
                 $("#th_button_calculate").html("<input class=\"button\" type=\"button\" id=\"button_calculate_payment\" value=\"คำนวณ\" onclick=\"calculatePayment()\"/>"); 
+                $("#google_calendar").html(googleCalendarURL); 
             }
-            $("#google_calendar").html(googleCalendarURL); 
+            
         }
     }
 
@@ -429,62 +432,46 @@ function setTableBodyAddIncomeItem(){
     var params = new URLSearchParams(url.search);
     memberID = params.get("id");
     var memberIDByCookie = getCookie("member_id")
-    var tableBody = `<tr>
-        <th>Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Coaching Customer Charging (THB)</th>
-        <th>Coaching Payment Rate (THB)</th>
-        <th>Training Wage (THB)</th>
-        <th>Other Wage (THB)</th>
-        <th>Company</th>
-        <th colspan="2">Description</th>
-        <th></th>
-    </tr>
-    <tr>
-        <td><input type="date" id="day"></td>
-        <td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td>
-        <td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td>
-        <td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td>
-        <td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td>;
-        <td><select id="coaching_customer_charging" value=0.00>
-            <option value=0.00>฿ 0.00</option>
-            <option value=5000.00>฿ 5,000.00</option>
-            <option value=7500.00>฿ 7,500.00</option>
-            <option value=10000.00>฿ 10,000.00</option>
-            <option value=15000.00>฿ 15,000.00</option>
-        </select></td>
-        <td><select id="coaching_payment_rate" value=0.00>
-            <option value=0.00>฿ 0.00</option>
-            <option value=5000.00>฿ 5,000.00</option>
-            <option value=7500.00>฿ 7,500.00</option>
+    var tableBody = `<tr><th>Date</th><td><input type="date" id="day"></td></tr>
+    <tr><th>Start Time</th><td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td></tr>
+    <tr><th>End Time</th><td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td></tr>
+    <tr><th>Start Time</th><td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td></tr>
+    <tr><th>End Time</th><td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td></tr>
+    <tr><th>Coaching Customer Charging (THB)</th><td><select id="coaching_customer_charging" value=0.00>
+        <option value=0.00>฿ 0.00</option>
+        <option value=5000.00>฿ 5,000.00</option>
+        <option value=7500.00>฿ 7,500.00</option>
         <option value=10000.00>฿ 10,000.00</option>
         <option value=15000.00>฿ 15,000.00</option>
-        </select></td>
-        <td><select id="training_wage" value=0.00>
-            <option value=0.00>฿ 0.00</option>
-            <option value=1000.00>฿ 1,000.00</option>
-            <option value=2000.00>฿ 2,000.00</option>
-            <option value=3000.00>฿ 3,000.00</option>
-            <option value=5000.00>฿ 5,000.00</option>
-            <option value=10000.00>฿ 10,000.00</option>
-        </select></td>
-        <td><select id="other_wage" value=0.00>
-            <option value=0.00>฿ 0.00</option>
-            <option value=2000.00>฿ 2,000.00</option>
-            <option value=5000.00>฿ 5,000.00</option>
-            <option value=7500.00>฿ 7,500.00</option>
-            <option value=10000.00>฿ 10,000.00</option>
-        </select></td>
-        <td><select id="company">
-            <option value="siam_chamnankit">Siam Chamnankit</option>
-            <option value="shuhari">Shuhari</option>
-        </select></td>
-        <td><input type="text" id="description" placeholder="Description" ></td>
-        <td><input class="button" type="submit" id="button_add_income_item" value="ยืนยัน" onclick="addIncomeItem()"/></td>
-    </tr>`;
+        </select></td></tr>
+    <tr><th>Coaching Payment Rate (THB)</th><td><select id="coaching_payment_rate" value=0.00>
+        <option value=0.00>฿ 0.00</option>
+        <option value=5000.00>฿ 5,000.00</option>
+        <option value=7500.00>฿ 7,500.00</option>
+        <option value=10000.00>฿ 10,000.00</option>
+        <option value=15000.00>฿ 15,000.00</option>
+    </select></td></tr>
+    <tr><th>Training Wage (THB)</th><td><select id="training_wage" value=0.00>
+        <option value=0.00>฿ 0.00</option>
+        <option value=1000.00>฿ 1,000.00</option>
+        <option value=2000.00>฿ 2,000.00</option>
+        <option value=3000.00>฿ 3,000.00</option>
+        <option value=5000.00>฿ 5,000.00</option>
+        <option value=10000.00>฿ 10,000.00</option>
+    </select></td></tr>
+    <tr><th>Other Wage (THB)</th><td><select id="other_wage" value=0.00>
+        <option value=0.00>฿ 0.00</option>
+        <option value=2000.00>฿ 2,000.00</option>
+        <option value=5000.00>฿ 5,000.00</option>
+        <option value=7500.00>฿ 7,500.00</option>
+        <option value=10000.00>฿ 10,000.00</option>
+    </select></td></tr>
+    <tr><th>Company</th><td><select id="company">
+        <option value="siam_chamnankit">Siam Chamnankit</option>
+        <option value="shuhari">Shuhari</option>
+    </select></td></tr>
+    <tr><th>Description</th><td><input type="text" id="description" placeholder="Description"></td></tr>
+    <tr><td colspan="2"><input class="button" type="submit" id="button_add_income_item" value="เพิ่ม" onclick="addIncomeItem()"/></td></tr>`;
     $(document).ready(function(){
         if(memberIDByCookie == memberID){
             $("#table_addIncomeItem").html(tableBody);  

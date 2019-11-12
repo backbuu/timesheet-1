@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+.content {
+    padding: 30px 10px 1400px 10px;
+}
+
 #button_to_top {
     display: none;
     position: fixed;
@@ -22,30 +26,30 @@
     background-color: #555;
 }
 
-.header{
-    background-color:#e27d60;
-    height:6vw;
-}
-
 .table_details tr{
     font-size: 20px;
     text-align: left;
+
+}
+.center {
+    text-align: center;
 }
 
 .table {
     color: #ffffff;
-    text-align: center;
     background-color: #5aaebd;
-    border-collapse: collapse;
+    /* text-align: center;border-collapse: collapse; */
 }
 
 .table th{
+    color: #ffffff;
     background-color: #0f697c;
-    border: 0.2vw solid #ffffff;
+    border: 1px solid #ffffff;
 }
 
 .table td{
-    border: 0.2vw solid #ffffff;
+    color: black;
+    border: 1px solid #ffffff;
 }
 
 #income_company_shuhari {
@@ -75,8 +79,8 @@
 
 .table_details {
     color: #07343d;
-    padding-left: 8vw;
-    padding-right: 4vw;
+     padding-left: 20px;
+    padding-right: 40px; 
 }
 
 .button {
@@ -95,7 +99,7 @@
     background-color: #0f697c;
     color: #ffffff;
     text-align: center;
-    font-size: 1.2vw;
+    font-size: 12px;
     width: 100%;
 }
 
@@ -114,4 +118,49 @@ body {
     border-top-right-radius: 50% 50%;
     border-bottom-right-radius: 50% 50%;
     border-bottom-left-radius: 50% 50%;
+}
+
+
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  [class*="col-"] {
+    float: right;
+    padding: 15px;
+  }
+  
+  /* For mobile phones: */
+  [class*="col-"] {
+    width: 100%;
+  }
+  
+  @media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 50%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(37, 36, 36);
+    color: white;
+    text-align: center;
+    height: 10%;
 }
