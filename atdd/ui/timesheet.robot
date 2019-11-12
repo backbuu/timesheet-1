@@ -31,13 +31,11 @@ ${URL_PAYMENTS}    http://localhost:8080/home
     เข้าสู่หน้าสรุปผลค่าจ้างรายบุคคลของเดือนและปีนั้น    Test Login    logintest535@gmail.com
     ชั่วโมงการทำงานทั้งหมด    08:00:00
     ค่าจ้างทั้งหมดเป็น    0.00    0.00    0.00    0.00    0.00
-    ใส่วันที่ต้องการเพิ่มค่าจ้างรายวัน    28
+    ใส่วันที่ต้องการเพิ่มค่าจ้างรายวัน    28122018
     ใส่เวลาเริ่มงานช่วงเช้า    090000
     ใส่เวลาจบงานช่วงเช้า    120000
     ใส่เวลาเริ่มงานช่วงบ่าย    130000
     ใส่เวลาจบงานช่วงบ่าย    180000
-    ใส่ชั่วโมงการทำงานล่วงเวลา    0
-    ใส่ชั่วโมงการทำงานรวมของวัน    080000
     ใส่ค่า Coaching Customer Charging (THB)    ฿ 15,000.00
     ใส่ค่า Coaching Payment Rate (THB)    ฿ 10,000.00
     ใส่ค่า Training Wage (THB)    ฿ 0.00
@@ -54,7 +52,6 @@ ${URL_PAYMENTS}    http://localhost:8080/home
     กดปุ้มย้อนกลับ
     กดปุ่ม logout
     ปิด Browser
-
 
 ***Keywords***
 เปิด Browser 
@@ -184,7 +181,7 @@ ${URL_PAYMENTS}    http://localhost:8080/home
 
 ใส่วันที่ต้องการเพิ่มค่าจ้างรายวัน
     [Arguments]    ${day}
-    Select From List By Label    id=day    ${day}
+    Input Text    id=day    ${day}
 
 ใส่เวลาเริ่มงานช่วงเช้า
     [Arguments]    ${time}
@@ -201,14 +198,6 @@ ${URL_PAYMENTS}    http://localhost:8080/home
 ใส่เวลาจบงานช่วงบ่าย
     [Arguments]    ${time}
     Input Text    id=end_time_pm    ${time}
-
-ใส่ชั่วโมงการทำงานล่วงเวลา
-    [Arguments]    ${hour}
-    Input Text    id=overtime    ${hour}
-
-ใส่ชั่วโมงการทำงานรวมของวัน
-    [Arguments]    ${time}
-    Input Text    id=total_hours    ${time}
 
 ใส่ค่า Coaching Customer Charging (THB)
     [Arguments]    ${amount}
@@ -266,9 +255,13 @@ ${URL_PAYMENTS}    http://localhost:8080/home
 
 กดยืนยันการแก้ไขข้อมูล
     [Arguments]    ${id}
-    Click Element    button_edit_member_id_${id}
+    Scroll Element Into View    id=button_edit_member_id_${id}
+    Click Element    id=button_edit_member_id_${id}
 
 กดปุ้มย้อนกลับ
+    Click Element    id=button_to_top
+    Scroll Element Into View    id=button_back
+    Wait Until Element Is Visible   id=button_back
     Click Element    id=button_back
 
 กดปุ่ม logout
