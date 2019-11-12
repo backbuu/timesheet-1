@@ -103,17 +103,7 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestHeader := context.GetHeader("Authorization")
-	if requestHeader == "" {
-		context.Status(http.StatusUnauthorized)
-		return
-	}
-	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
-		return []byte(""), nil
-	})
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
-	expiry := claims["exp"].(float64)
+	email, expiry := getEmailAndExpiryFromHeaderAuthorization(context)
 	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
@@ -134,17 +124,7 @@ func (api TimesheetAPI) CalculatePaymentHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestHeader := context.GetHeader("Authorization")
-	if requestHeader == "" {
-		context.Status(http.StatusUnauthorized)
-		return
-	}
-	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
-		return []byte(""), nil
-	})
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
-	expiry := claims["exp"].(float64)
+	email, expiry := getEmailAndExpiryFromHeaderAuthorization(context)
 	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
@@ -182,17 +162,7 @@ func (api TimesheetAPI) UpdateStatusCheckingTransferHandler(context *gin.Context
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestHeader := context.GetHeader("Authorization")
-	if requestHeader == "" {
-		context.Status(http.StatusUnauthorized)
-		return
-	}
-	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
-		return []byte(""), nil
-	})
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
-	expiry := claims["exp"].(float64)
+	email, expiry := getEmailAndExpiryFromHeaderAuthorization(context)
 	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
@@ -213,17 +183,7 @@ func (api TimesheetAPI) DeleteIncomeHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestHeader := context.GetHeader("Authorization")
-	if requestHeader == "" {
-		context.Status(http.StatusUnauthorized)
-		return
-	}
-	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
-		return []byte(""), nil
-	})
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
-	expiry := claims["exp"].(float64)
+	email, expiry := getEmailAndExpiryFromHeaderAuthorization(context)
 	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
@@ -259,17 +219,7 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	requestHeader := context.GetHeader("Authorization")
-	if requestHeader == "" {
-		context.Status(http.StatusUnauthorized)
-		return
-	}
-	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
-		return []byte(""), nil
-	})
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
-	expiry := claims["exp"].(float64)
+	email, expiry := getEmailAndExpiryFromHeaderAuthorization(context)
 	status := api.Timesheet.VerifyAuthentication(email, expiry, request.MemberID)
 	if status != "Success" {
 		context.Status(http.StatusUnauthorized)
@@ -284,16 +234,7 @@ func (api TimesheetAPI) UpdateMemberDetailsHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
-	requestHeader := context.GetHeader("Authorization")
-	if requestHeader == "" {
-		context.Status(http.StatusUnauthorized)
-		return
-	}
-	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
-		return []byte(""), nil
-	})
-	claims := token.Claims.(jwt.MapClaims)
-	email := claims["email"].(string)
+	email, _ := getEmailAndExpiryFromHeaderAuthorization(context)
 	profile, err := api.Repository.GetProfileByEmail(email)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -315,4 +256,21 @@ func (api TimesheetAPI) ShowSummaryInYearHandler(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusOK, summaryTransactionTimesheet)
+}
+
+func getEmailAndExpiryFromHeaderAuthorization(context *gin.Context) (string, float64) {
+	var email string
+	var expiry float64
+	requestHeader := context.GetHeader("Authorization")
+	if requestHeader == "" {
+		context.Status(http.StatusUnauthorized)
+		return email, expiry
+	}
+	token, _ := jwt.Parse(requestHeader, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	claims := token.Claims.(jwt.MapClaims)
+	email = claims["email"].(string)
+	expiry = claims["exp"].(float64)
+	return email, expiry
 }
