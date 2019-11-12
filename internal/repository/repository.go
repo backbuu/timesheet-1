@@ -65,7 +65,7 @@ func (repository TimesheetRepository) CreateIncome(year, month int, memberID str
 	if toltalHours > workingHours {
 		overtime = toltalHours.Hours() - workingHours
 	}
-	toltalHoursInDay := time.Date(2006, 1, 2, int(toltalHours.Hours()), int(toltalHours.Minutes())%oneHour, int(toltalHours.Seconds())%oneMinute, 0, time.UTC)
+	toltalHoursInDay := time.Date(year, time.Month(month), income.Day, int(toltalHours.Hours()), int(toltalHours.Minutes())%oneHour, int(toltalHours.Seconds())%oneMinute, 0, time.UTC)
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAM,
 		income.EndTimeAM, income.StartTimePM, income.EndTimePM, overtime,
