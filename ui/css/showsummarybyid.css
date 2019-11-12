@@ -67,12 +67,6 @@
     background-color: #a13422;
 }
 
-#button_edit_member {
-    background-color: #f36e31;
-    color: white;
-    font-size: 16px;
-}
-
 #button_edit_member:hover {
     background-color: #a13422;
 }
