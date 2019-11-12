@@ -137,7 +137,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer ya003.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJzb21raWF0QHNjcnVtMTIzLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiS3lVd2dtclNjNGRGN1h0WjktNUpUdyIsImlhdCI6MTU3MzUzNDk1NiwiZXhwIjoxNTczNTQwOTgyLCJqdGkiOiI2NTRkOTEyNi0zNjA5LTRmZWUtYTg2MS01NmE1NjI4ZDQ1NzYifQ.Ks-sYG3nZv7LneHNY2_32ls0z310YMPUT-PcblmlXDk",
 								"type": "text"
 							}
 						],
@@ -186,7 +186,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer ya003.Il-vB2mB0hkAEN8KdupS3ZEaXBOHk6qhVntGSkeyAMz6KEoJOpwhfHHQF2KT9W2oiwE1op4pZiUuebKcQ1SBRgRlxMRJxB6Qjf0tl86C5Jdsf51thN-yqvZDBUmUx3hnqw",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJzb21raWF0QHNjcnVtMTIzLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiS3lVd2dtclNjNGRGN1h0WjktNUpUdyIsImlhdCI6MTU3MzUzNDk1NiwiZXhwIjoxNTczNTQwOTgyLCJqdGkiOiI2NTRkOTEyNi0zNjA5LTRmZWUtYTg2MS01NmE1NjI4ZDQ1NzYifQ.Ks-sYG3nZv7LneHNY2_32ls0z310YMPUT-PcblmlXDk",
 								"type": "text"
 							}
 						],
@@ -315,7 +315,7 @@
 									"});",
 									"",
 									"pm.test(\"Total hours should be 08:00:00\", function () {",
-									"    pm.expect(jsonData.incomes[10].total_hours).to.eql(\"2018-01-01T08:00:00Z\");",
+									"    pm.expect(jsonData.incomes[10].total_hours).to.eql(\"2018-12-18T08:00:00Z\");",
 									"});",
 									"",
 									"pm.test(\"Coaching customer charging should be 0\", function () {",
