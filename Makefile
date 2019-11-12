@@ -33,7 +33,7 @@ acceptance_test:
 robot_test:
 	docker-compose up -d
 	sleep 30
-	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet_ui.sql
+	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
 	sleep 10
 	robot atdd/ui/timesheet.robot
 	docker-compose down
@@ -43,6 +43,3 @@ down:
 
 seed:
 	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
-
-seed_ui:
-	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet_ui.sql
