@@ -231,6 +231,7 @@ ${URL_PAYMENTS}    http://localhost:8080/home
     Click Button    id=button_calculate_payment
 
 กดปุ่มแก้ไขข้อมูลพนักงาน
+    sleep  2s
     Click Element    id=button_edit_member
 
 เข้าสู่หน้าแก้ไขข้อมูลของพนักงานต้องเจอข้อมูลพนักกงาน สามาถแก้ไขได้
