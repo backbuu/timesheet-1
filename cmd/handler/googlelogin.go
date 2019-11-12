@@ -38,7 +38,7 @@ func OauthGoogleLogin(context *gin.Context) {
 }
 
 func (api TimesheetAPI) OauthGoogleLogout(context *gin.Context) {
-	cookie := &http.Cookie{Name: "id_token", Value: "", Path: "/", Expires: time.Unix(0, 0), HttpOnly: true}
+	cookie := &http.Cookie{Name: "id_token", Value: "", Path: "/", Expires: time.Unix(0, 0)}
 	http.SetCookie(context.Writer, cookie)
 	context.Status(http.StatusOK)
 }
