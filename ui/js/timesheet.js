@@ -1,3 +1,5 @@
+console.log(document.cookie);
+
 function showSummary(){
     var memberIDByCookie = getCookie("member_id")
     var date = $("#date_summary").val(); 
@@ -200,14 +202,14 @@ function updateStatusTransfer(index){
     var url = "/updateStatusCheckingTransfer";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
+    request.setRequestHeader("Authorization", getCookie("id_token"));
     request.onreadystatechange = function () {
         if (request.status === 401){
             alert("กรุณาเข้าสู่ระบบใหม่")
             logout();
             if (deleteOauthState()){
                 document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                window.location.replace("/home") 
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
             };
         }
     }
@@ -221,13 +223,12 @@ function addIncomeItem(){
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
     memberID = params.get("id");
-    date = params.get("date");
-    var fullDate = new Date(date);
-    var year = fullDate.getFullYear();
-    var month = fullDate.getMonth()+1;
 
-    var day = parseInt($("#day").val());
-
+    var full = $("#day").val()
+    var year = parseInt(full.split("-")[0]);
+    var month = parseInt(full.split("-")[1]);
+    var day = parseInt(full.split("-")[2]);
+    
     var fullStartTimeAm = $("#start_time_am").val();
     var startTimeAm = new Date("January 02, 2006 "+fullStartTimeAm+" UTC");
     
@@ -239,11 +240,6 @@ function addIncomeItem(){
 
     var fullEndTimePm = $("#end_time_pm").val();
     var endTimePm = new Date("January 02, 2006 "+fullEndTimePm+" UTC");
-
-    var overtime = parseInt($("#overtime").val());
-
-    var fullTotalHours = $("#total_hours").val();
-    var totalHours = new Date("January 02, 2006 "+fullTotalHours+" UTC");
 
     var coachingCustomerCharging = parseFloat($("#coaching_customer_charging").val());
 
@@ -261,18 +257,18 @@ function addIncomeItem(){
     var url = "/addIncomeItem";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
+    request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
             alert("กรุณาเข้าสู่ระบบใหม่")
             logout();
             if (deleteOauthState()){
                 document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                window.location.replace("/home") 
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en");
             };
         }
     }
-    var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"overtime":overtime,"total_hours":totalHours,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
+    var data = JSON.stringify({"year":year,"month":month,"member_id":memberID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company":company,"description":description}});
     request.send(data); 
     window.location.replace(window.location.href); 
 }
@@ -291,14 +287,14 @@ function calculatePayment() {
     var url = "/calculatePayment";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
+    request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
             alert("กรุณาเข้าสู่ระบบใหม่")
             logout();
             if (deleteOauthState()){
                 document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                window.location.replace("/home") 
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
             };
         }
     }
@@ -307,9 +303,8 @@ function calculatePayment() {
     window.location.replace(window.location.href); 
 }
 
-function showSummaryByID() {
+async function showSummaryByID() {
     setCurrentDate();
-    
     var urlString = window.location.href
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
@@ -339,11 +334,12 @@ function showSummaryByID() {
       $("#title_timesheet_by_id").text(month+"-"+monthNamesCapital[month-1]+year+"-TIMESHEET");  
     });
 
+    
     var request = new XMLHttpRequest();
     var url = "/showTimesheetByID";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = function () {
+    request.onreadystatechange = await function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
             var memberNameENG = json.member_name_eng;
@@ -374,7 +370,8 @@ function showSummaryByID() {
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"hidden\" id=\"member_id_"+i+"\" value=\""+json.incomes[i].member_id+"\">"
                     if (json.incomes[i].member_id == memberIDByCookie) {
-                        incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>";                    
+                        incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"ลบ\" onclick=\"deleteIncome("+i+")\"/>"+"</td>"; 
+                        setDateInIncomeFormat(json.incomes[i].day+1)
                     }
                     incomeList += "</tr>";
                 }
@@ -391,8 +388,7 @@ function showSummaryByID() {
             if(memberID == memberIDByCookie){
                 $("#th_button_calculate").html("<input class=\"button\" type=\"button\" id=\"button_calculate_payment\" value=\"คำนวณ\" onclick=\"calculatePayment()\"/>"); 
             }
-            $("#google_calendar").html(googleCalendarURL);
-            
+            $("#google_calendar").html(googleCalendarURL); 
         }
     }
 
@@ -409,6 +405,24 @@ function showSummaryByID() {
 
 }
 
+function setDateInIncomeFormat(lastIndex) {
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    date = params.get("date");
+    var fullDate = new Date(date);
+    var year = fullDate.getFullYear();
+    var month = fullDate.getMonth()+1;
+    if (lastIndex<10){
+        $("#day").val(year+"-"+month+"-0"+lastIndex); 
+    }else if (lastIndex>=10&&lastIndex<=31){
+        $("#day").val(year+"-"+month+"-"+lastIndex); 
+    }else{
+        $("#day").val(year+"-"+month+"-01"); 
+    }
+
+}
+
 function setTableBodyAddIncomeItem(){
     var urlString = window.location.href
     var url = new URL(urlString);
@@ -421,8 +435,6 @@ function setTableBodyAddIncomeItem(){
         <th>End Time</th>
         <th>Start Time</th>
         <th>End Time</th>
-        <th>Overtime</th>
-        <th>Total Hours</th>
         <th>Coaching Customer Charging (THB)</th>
         <th>Coaching Payment Rate (THB)</th>
         <th>Training Wage (THB)</th>
@@ -432,45 +444,11 @@ function setTableBodyAddIncomeItem(){
         <th></th>
     </tr>
     <tr>
-        <td><select id="day">
-        <option value=1>1</option>
-        <option value=2>2</option>
-        <option value=3>3</option>
-        <option value=4>4</option>
-        <option value=5>5</option>
-        <option value=6>6</option>
-        <option value=7>7</option>
-        <option value=8>8</option>
-        <option value=9>9</option>
-        <option value=10>10</option>
-        <option value=11>11</option>
-        <option value=12>12</option>
-        <option value=13>13</option>
-        <option value=14>14</option>
-        <option value=15>15</option>
-        <option value=16>16</option>
-        <option value=17>17</option>
-        <option value=18>18</option>
-        <option value=19>19</option>
-        <option value=20>20</option>
-        <option value=21>21</option>
-        <option value=22>22</option>
-        <option value=23>23</option>
-        <option value=24>24</option>
-        <option value=25>25</option>
-        <option value=26>26</option>
-        <option value=27>27</option>
-        <option value=28>28</option>
-        <option value=29>29</option>
-        <option value=30>30</option>
-        <option value=31>31</option>
-    </select></td>
+        <td><input type="date" id="day"></td>
         <td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td>
         <td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td>
         <td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td>
-        <td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td>
-        <td><input type="number" id="overtime" value=0 placeholder="Overtime"></td>
-        <td><input type="time" step="1" id="total_hours" value=08:00:00 placeholder="Total Hours"></td>
+        <td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td>;
         <td><select id="coaching_customer_charging" value=0.00>
             <option value=0.00>฿ 0.00</option>
             <option value=5000.00>฿ 5,000.00</option>
@@ -528,14 +506,14 @@ function deleteIncome(index){
     var url = "/deleteIncomeItem";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
+    request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
             alert("กรุณาเข้าสู่ระบบใหม่")
             logout();
             if (deleteOauthState()){
                 document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                window.location.replace("/home") 
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
             };
         }
     }
@@ -646,14 +624,14 @@ function editMemberDetails(index){
     var url = "/updateMemberDetails";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token")); 
+    request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
             alert("กรุณาเข้าสู่ระบบใหม่")
             logout();
             if (deleteOauthState()){
                 document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                window.location.replace("/home") 
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
             };
         }
     }
@@ -690,7 +668,7 @@ function showProfile(){
     var url = "/showProfile";
     request.open("GET", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
+    request.setRequestHeader("Authorization",getCookie("id_token"));
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
@@ -698,6 +676,13 @@ function showProfile(){
             setCookie("member_id",json.member_id,30)
             $("#picture_profile").html(picture);
             $("#email_profile").html(json.email);  
+        }
+        if (request.status === 401){
+            logout();
+            if (deleteOauthState()){
+                document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
+            };
         }
     }   
     request.send();
@@ -725,7 +710,7 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-async function setInitialHome(){    
+function setInitialHome(){    
     var loginButton = "<a id=\"button_login\" href=\"/login\">Login Google</a>"
     var logoutButton = "<input id=\"button_logout\" type=\"button\" value=\"logout\"/>"
 
@@ -733,11 +718,10 @@ async function setInitialHome(){
         if (getCookie("oauthstate") != ""){
             $("#logout").html(logoutButton);
             showProfile();
-            if (getCookie("access_token") == ""){
-                logout();
+            if (getCookie("id_token") == ""){
                 if (deleteOauthState()){
                     document.cookie = "member_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;";
-                    window.location.replace("/home")
+                    window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
                 };
             }
             $("#button_logout").click(function(){
@@ -758,7 +742,7 @@ function logout(){
     var url = "/logout";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Authorization", "Bearer "+getCookie("access_token"));
+    request.setRequestHeader("Authorization", getCookie("id_token"));
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {       
         }
