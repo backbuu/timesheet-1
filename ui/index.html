@@ -5,6 +5,7 @@
   <title>PAYMENTS</title>
   <meta name="google-signin-client_id" content="692575898397-dnt9sqi2jstddfepsng04p9ac4oj7p4n.apps.googleusercontent.com">
   <link rel="stylesheet" href="/home/css/index.css">
+  <link rel="stylesheet" href="/home/css/select.css">
   <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -13,47 +14,46 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>setCurrentDate();</script>
 <body>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">1.1.min.js"></script>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header page-scroll">
-            <a class="navbar-brand" id="title_timesheet"></a>
-            <div class="nav navbar-nav navbar-right" id="picture_profile"></div>
-            <div id="email_profile"></div>
-            <div id="logout"></div>
-            <div id="login"></div>
-        </div>
+  <div class="header">
+    <a class="logo" id="title_timesheet"></a>
+    <div class="header-right">
+      <a id="picture_profile"></a>
+      <a id="email_profile"></a>
+      <a id="logout"></a>
+      <a id="login"></a>
     </div>
-</nav>
+  </div>
+  
+  <form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
+      <input type="month" id="date" name="date">
+        <select name="id" id="id">
+          <option value="" selected disabled hidden>รายชื่อ</option>
+          <option value="007">TEST LOGIN</option>
+          <option value="015">PRUTH</option>
+          <option value="001">PRATHAN</option>
+          <option value="004">THAWATCHAI</option>
+          <option value="003">SOMKIAT</option>
+          <option value="008">CHAMNAN</option>
+          <option value="009">CHONNIKAN</option>
+          <option value="010">CHITPONG</option>
+          <option value="011">NATHAWAT</option>
+          <option value="012">PICHAYA</option>
+          <option value="013">PICHAI</option>
+          <option value="002">NAREENART</option>
+          <option value="005">APIPOL</option>
+          <option value="006">PANUMARS</option>
+          <option value="014">NATTAKIT</option>      
+      </select>
+      <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
+  </form>
 
   <div class="seaching_summary">
     TIMESHEET :<input id="date_summary" name="date_summary" type="month">
     <input id="button_show_summary" type="submit" value="ยืนยัน" onclick="showSummary()"/>
   </div>
-  <form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
-    <input type="month" id="date" name="date">
-    <select name="id" id="id">
-      <option value="" selected disabled hidden>รายชื่อ</option>
-      <option value="007">TEST LOGIN</option>
-      <option value="015">PRUTH</option>
-      <option value="001">PRATHAN</option>
-      <option value="004">THAWATCHAI</option>
-      <option value="003">SOMKIAT</option>
-      <option value="008">CHAMNAN</option>
-      <option value="009">CHONNIKAN</option>
-      <option value="010">CHITPONG</option>
-      <option value="011">NATHAWAT</option>
-      <option value="012">PICHAYA</option>
-      <option value="013">PICHAI</option>
-      <option value="002">NAREENART</option>
-      <option value="005">APIPOL</option>
-      <option value="006">PANUMARS</option>
-      <option value="014">NATTAKIT</option>      
-    </select>
-    <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
-</form>
+  
   <h2 class="title_company">SIAM CHAMNANKIT</h2>
-  <table class="table_company" width="2100">
+  <table class="table_company" width="2200">
       <tr>
         <th rowspan="3">ลำดับที่</th>
         <th rowspan="3">พนักงาน</th>
@@ -96,7 +96,7 @@
         <tbody id="table_siam_chamnankit"></tbody>
     </table>
   <h2 class="title_company">SHUHARI</h2>
-  <table class="table_company" border="0.5" width="2100">
+  <table class="table_company" width="2200">
       <tr>
         <th rowspan="3">ลำดับที่</th>
         <th rowspan="3">พนักงาน</th>
@@ -139,5 +139,8 @@
         <tbody id="table_shuhari"></tbody>
   </table>
   <button onclick="topFunction()" id="button_to_top" title="Go to top">Top</button>
+
+  <div class="footer">
+  </div>
 </body>
 </html>
