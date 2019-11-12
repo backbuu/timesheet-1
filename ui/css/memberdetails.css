@@ -5,17 +5,6 @@
     padding: 30px 50px 200px 50px;
 }
 
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgb(37, 36, 36);
-    color: white;
-    text-align: center;
-    height: 10%;
- }
-
 #button_to_top {
     display: none;
     position: fixed;
