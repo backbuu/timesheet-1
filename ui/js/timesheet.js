@@ -711,12 +711,12 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 function setInitialHome(){    
-    var loginButton = "<a id=\"button_login\" href=\"/login\">Login Google</a>"
-    var logoutButton = "<input id=\"button_logout\" type=\"button\" value=\"logout\"/>"
+    var loginButton = "<a id=\"button_login\" href=\"/login\"><span class=\"glyphicon glyphicon-log-in\"></span> Login</a>"
+    var logoutButton = "<a id=\"button_logout\"><span class=\"glyphicon glyphicon-log-in\"></span> Logout</a>"
 
     $(document).ready(function(){
         if (getCookie("oauthstate") != ""){
-            $("#logout").html(logoutButton);
+            $("#login").html(logoutButton);
             showProfile();
             if (getCookie("id_token") == ""){
                 if (deleteOauthState()){
