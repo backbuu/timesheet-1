@@ -141,11 +141,17 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 }
 
 func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(t *testing.T) {
-	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
-	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
-	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
-	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
-	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
+	startTimeAMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 09:00:00")
+	endTimeAMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 12:00:00")
+	startTimePMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 13:00:00")
+	endTimePMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 18:00:00")
+	totalHoursDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 08:00:00")
+
+	startTimeAMDay12, _ := time.Parse("2006-01-02 15:04:05", "2018-12-12 09:00:00")
+	endTimeAMDay12, _ := time.Parse("2006-01-02 15:04:05", "2018-12-12 12:00:00")
+	startTimePMDay12, _ := time.Parse("2006-01-02 15:04:05", "2018-12-12 13:00:00")
+	endTimePMDay12, _ := time.Parse("2006-01-02 15:04:05", "2018-12-12 18:00:00")
+	totalHoursDay12, _ := time.Parse("2006-01-02 15:04:05", "2018-12-12 08:00:00")
 	expected := []model.Incomes{
 		{
 			ID:                       58,
@@ -153,12 +159,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 			Month:                    12,
 			Year:                     2019,
 			Day:                      11,
-			StartTimeAM:              startTimeAM,
-			EndTimeAM:                endTimeAM,
-			StartTimePM:              startTimePM,
-			EndTimePM:                endTimePM,
+			StartTimeAM:              startTimeAMDay11,
+			EndTimeAM:                endTimeAMDay11,
+			StartTimePM:              startTimePMDay11,
+			EndTimePM:                endTimePMDay11,
 			Overtime:                 0,
-			TotalHours:               totalHours,
+			TotalHours:               totalHoursDay11,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
@@ -171,12 +177,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 			Month:                    12,
 			Year:                     2019,
 			Day:                      12,
-			StartTimeAM:              startTimeAM,
-			EndTimeAM:                endTimeAM,
-			StartTimePM:              startTimePM,
-			EndTimePM:                endTimePM,
+			StartTimeAM:              startTimeAMDay12,
+			EndTimeAM:                endTimeAMDay12,
+			StartTimePM:              startTimePMDay12,
+			EndTimePM:                endTimePMDay12,
 			Overtime:                 0,
-			TotalHours:               totalHours,
+			TotalHours:               totalHoursDay12,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
