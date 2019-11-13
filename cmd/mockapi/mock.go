@@ -123,8 +123,8 @@ func (mock *MockTimesheet) GetSummaryByID(employeeID string, year, month int) (m
 	return argument.Get(0).(model.SummaryTimesheet), argument.Error(1)
 }
 
-func (mock *MockTimesheet) VerifyAuthentication(email string, expiry float64, employeeID string) string {
-	argument := mock.Called(email, expiry, employeeID)
+func (mock *MockTimesheet) VerifyAuthentication(email string, IDTokenExpirationTime float64, employeeID string) string {
+	argument := mock.Called(email, IDTokenExpirationTime, employeeID)
 	return argument.String(0)
 }
 
