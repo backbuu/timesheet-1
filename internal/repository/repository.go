@@ -55,20 +55,16 @@ func (repository TimesheetRepository) GetSummary(year, month int) ([]model.Trans
 
 func (repository TimesheetRepository) CreateIncome(year, month int, memberID string, income model.Incomes) error {
 	query := `INSERT INTO incomes (member_id, month, year, day, start_time_am,
-		end_time_am, start_time_pm, end_time_pm, overtime, total_hours,
+		end_time_am, start_time_pm, end_time_pm, total_hours,
 		coaching_customer_charging, coaching_payment_rate,
 		training_wage, other_wage, company, description)
-		VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? )`
+		VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? )`
 	toltalHours := income.EndTimeAM.Sub(income.StartTimeAM)
 	toltalHours += income.EndTimePM.Sub(income.StartTimePM)
-	var overtime float64
-	if toltalHours > workingHours {
-		overtime = toltalHours.Hours() - workingHours
-	}
 	toltalHoursInDay := time.Date(year, time.Month(month), income.Day, int(toltalHours.Hours()), int(toltalHours.Minutes())%oneHour, int(toltalHours.Seconds())%oneMinute, 0, time.UTC)
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberID, month, year, income.Day, income.StartTimeAM,
-		income.EndTimeAM, income.StartTimePM, income.EndTimePM, overtime,
+		income.EndTimeAM, income.StartTimePM, income.EndTimePM,
 		toltalHoursInDay, income.CoachingCustomerCharging, income.CoachingPaymentRate,
 		income.TrainingWage, income.OtherWage, income.Company, income.Description)
 	err := transaction.Commit()
@@ -224,10 +220,10 @@ func (repository TimesheetRepository) DeleteIncome(incomeID int) error {
 }
 
 func (repository TimesheetRepository) UpdateMemberDetails(memberDetails model.Member) error {
-	query := `UPDATE members SET member_name_th = ?, member_name_eng = ?, email = ?, overtime_rate = ?, rate_per_day = ?, rate_per_hour = ?, salary = ?, income_tax_1 = ?, social_security = ?, income_tax_53_percentage = ?, travel_expense = ?, status = ? WHERE id = ?`
+	query := `UPDATE members SET member_name_th = ?, member_name_eng = ?, email = ?, rate_per_day = ?, rate_per_hour = ?, salary = ?, income_tax_1 = ?, social_security = ?, income_tax_53_percentage = ?, travel_expense = ?, status = ? WHERE id = ?`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, memberDetails.MemberNameTH, memberDetails.MemberNameENG, memberDetails.Email,
-		memberDetails.OvertimeRate, memberDetails.RatePerDay, memberDetails.RatePerHour, memberDetails.Salary,
+		memberDetails.RatePerDay, memberDetails.RatePerHour, memberDetails.Salary,
 		memberDetails.IncomeTax1, memberDetails.SocialSecurity, memberDetails.IncomeTax53Percentage,
 		memberDetails.TravelExpense, memberDetails.Status, memberDetails.ID)
 	err := transaction.Commit()
