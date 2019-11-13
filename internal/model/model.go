@@ -6,8 +6,8 @@ import (
 
 type TransactionTimesheet struct {
 	ID                     string  `json:"id"`
-	MemberID               string  `db:"employee_id" json:"employee_id"`
-	MemberNameTH           string  `db:"employee_name_th" json:"employee_name_th"`
+	EmployeeID             string  `db:"employee_id" json:"employee_id"`
+	EmployeeNameTH         string  `db:"employee_name_th" json:"employee_name_th"`
 	Month                  int     `db:"month" json:"month"`
 	Year                   int     `db:"year" json:"year"`
 	CompanyID              int     `db:"company_id" json:"company_id"`
@@ -30,7 +30,7 @@ type TransactionTimesheet struct {
 }
 
 type SummaryTimesheet struct {
-	MemberNameENG                 string    `json:"employee_name_eng"`
+	EmployeeNameENG               string    `json:"employee_name_eng"`
 	Email                         string    `json:"email"`
 	RatePerDay                    float64   `json:"rate_per_day"`
 	RatePerHour                   float64   `json:"rate_per_hour"`
@@ -48,7 +48,7 @@ type SummaryTimesheet struct {
 
 type Incomes struct {
 	ID                       int       `json:"id"`
-	MemberID                 string    `db:"employee_id" json:"employee_id"`
+	EmployeeID               string    `db:"employee_id" json:"employee_id"`
 	Month                    int       `db:"month" json:"month"`
 	Year                     int       `db:"year" json:"year"`
 	Day                      int       `db:"day" json:"day"`
@@ -67,7 +67,7 @@ type Incomes struct {
 
 type Timesheet struct {
 	ID                            string  `json:"id"`
-	MemberID                      string  `db:"employee_id" json:"employee_id"`
+	EmployeeID                    string  `db:"employee_id" json:"employee_id"`
 	Month                         int     `db:"month" json:"month"`
 	Year                          int     `db:"year" json:"year"`
 	TotalHours                    string  `db:"total_hours" json:"total_hours"`
@@ -80,12 +80,12 @@ type Timesheet struct {
 	RatePerHour                   float64 `db:"rate_per_hour" json:"rate_per_hour"`
 }
 
-type Member struct {
+type Employee struct {
 	ID                    int     `json:"id"`
-	MemberID              string  `db:"employee_id" json:"employee_id"`
+	EmployeeID            string  `db:"employee_id" json:"employee_id"`
 	CompanyID             int     `db:"company_id" json:"company_id"`
-	MemberNameTH          string  `db:"employee_name_th" json:"employee_name_th"`
-	MemberNameENG         string  `db:"employee_name_eng" json:"employee_name_eng"`
+	EmployeeNameTH        string  `db:"employee_name_th" json:"employee_name_th"`
+	EmployeeNameENG       string  `db:"employee_name_eng" json:"employee_name_eng"`
 	Email                 string  `db:"email" json:"email"`
 	RatePerDay            float64 `db:"rate_per_day" json:"rate_per_day"`
 	RatePerHour           float64 `db:"rate_per_hour" json:"rate_per_hour"`
@@ -99,7 +99,7 @@ type Member struct {
 }
 
 type Authentication struct {
-	MemberID     string    `db:"employee_id" json:"employee_id"`
+	EmployeeID   string    `db:"employee_id" json:"employee_id"`
 	Email        string    `db:"email" json:"email"`
 	Picture      string    `db:"picture" json:"picture"`
 	AccessToken  string    `db:"access_token" json:"access_token"`
@@ -124,18 +124,18 @@ type UserInfo struct {
 }
 
 type Profile struct {
-	MemberID string `db:"employee_id" json:"employee_id"`
-	Email    string `db:"email" json:"email"`
-	Picture  string `db:"picture" json:"picture"`
+	EmployeeID string `db:"employee_id" json:"employee_id"`
+	Email      string `db:"email" json:"email"`
+	Picture    string `db:"picture" json:"picture"`
 }
 
 type VerifyAuthentication struct {
-	MemberID string    `db:"employee_id" json:"employee_id"`
-	Expiry   time.Time `db:"expiry" json:"expiry"`
+	EmployeeID string    `db:"employee_id" json:"employee_id"`
+	Expiry     time.Time `db:"expiry" json:"expiry"`
 }
 
 type SummaryTransactionTimesheet struct {
-	MemberID               string                 `json:"employee_id"`
+	EmployeeID             string                 `json:"employee_id"`
 	Year                   int                    `json:"year"`
 	TransactionTimesheets  []TransactionTimesheet `json:"transaction_timesheets"`
 	TotalCoachingInYear    float64                `json:"total_coaching_in_year"`
