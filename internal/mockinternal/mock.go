@@ -10,32 +10,32 @@ type MockRepositoryToTimesheet struct {
 	mock.Mock
 }
 
-func (mock *MockRepositoryToTimesheet) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockRepositoryToTimesheet) GetIncomes(employeeID string, year, month int) ([]model.Incomes, error) {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Get(0).([]model.Incomes), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetMemberListByMemberID(memberID string) ([]model.Member, error) {
-	argument := mock.Called(memberID)
-	return argument.Get(0).([]model.Member), argument.Error(1)
+func (mock *MockRepositoryToTimesheet) GetEmployeeListByEmployeeID(employeeID string) ([]model.Employee, error) {
+	argument := mock.Called(employeeID)
+	return argument.Get(0).([]model.Employee), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) CreateTimesheet(memberID string, year int, month int) error {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockRepositoryToTimesheet) CreateTimesheet(employeeID string, year int, month int) error {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Error(0)
 }
 
-func (mock *MockRepositoryToTimesheet) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockRepositoryToTimesheet) GetTimesheet(employeeID string, year, month int) (model.Timesheet, error) {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Get(0).(model.Timesheet), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetTransactionTimesheets(memberID string, year int) ([]model.TransactionTimesheet, error) {
-	argument := mock.Called(memberID, year)
+func (mock *MockRepositoryToTimesheet) GetTransactionTimesheets(employeeID string, year int) ([]model.TransactionTimesheet, error) {
+	argument := mock.Called(employeeID, year)
 	return argument.Get(0).([]model.TransactionTimesheet), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetMemberIDByEmail(email string) (string, error) {
+func (mock *MockRepositoryToTimesheet) GetEmployeeIDByEmail(email string) (string, error) {
 	argument := mock.Called(email)
 	return argument.String(0), argument.Error(1)
 }
