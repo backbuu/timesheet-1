@@ -102,7 +102,7 @@ func Test_GetSummaryByEmployeeIDHandler_Input_Year_2019_Month_12_EmployeeID_003_
 }
 
 func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `[{"id":"00120181201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company_id":2,"coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
+	expected := `[{"id":"00120181201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","month":12,"year":2018,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","month":12,"year":2018,"company_id":2,"coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
 	date := DateRequest{
 		Year:  2018,
 		Month: 12,
@@ -117,6 +117,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 			ID:                     "00120181201",
 			EmployeeID:             "001",
 			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:        "Prathan Dansakulcharoenkit",
 			Month:                  12,
 			Year:                   2018,
 			CompanyID:              1,
@@ -140,6 +141,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 			ID:                     "00120181202",
 			EmployeeID:             "001",
 			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:        "Prathan Dansakulcharoenkit",
 			Month:                  12,
 			Year:                   2018,
 			CompanyID:              2,
@@ -586,7 +588,7 @@ func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_
 }
 
 func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `{"employee_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2017,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
+	expected := `{"employee_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","month":12,"year":2017,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
 	summaryInYearRequest := SummaryInYearRequest{
 		EmployeeID: "001",
 		Year:       2017,
@@ -603,6 +605,7 @@ func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_Tran
 				ID:                     "00120171201",
 				EmployeeID:             "001",
 				EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
+				EmployeeNameENG:        "Prathan Dansakulcharoenkit",
 				Month:                  12,
 				Year:                   2017,
 				CompanyID:              1,
