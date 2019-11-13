@@ -18,7 +18,7 @@ import (
 )
 
 func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_SummaryTimesheet(t *testing.T) {
-	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
+	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shu_ha_ri","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shu_ha_ri","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
 	timesheetRequest := TimesheetRequest{
 		Year:     2019,
 		Month:    12,
@@ -57,7 +57,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shuhari",
+				Company:                  "shu_ha_ri",
 				Description:              "Technical Excellence at Khonkean",
 			},
 			{
@@ -75,7 +75,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shuhari",
+				Company:                  "shu_ha_ri",
 				Description:              "Technical Excellence at Khonkean",
 			},
 		},
@@ -102,7 +102,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 }
 
 func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `[{"id":"00120181201","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shuhari","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
+	expected := `[{"id":"00120181201","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shu_ha_ri","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
 	date := Date{
 		Year:  2018,
 		Month: 12,
@@ -142,7 +142,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2018,
-			Company:                "shuhari",
+			Company:                "shu_ha_ri",
 			Coaching:               0.00,
 			Training:               40000.00,
 			Other:                  0.00,
@@ -266,7 +266,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             40000.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			Company:                  "shu_ha_ri",
 			Description:              "[IMC]GSB: Agile Project Mgmt",
 		},
 		{
@@ -316,7 +316,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		{
 			ID:                    2,
 			MemberID:              "001",
-			Company:               "shuhari",
+			Company:               "shu_ha_ri",
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
@@ -355,7 +355,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                 12,
 			Year:                  2018,
-			Company:               "shuhari",
+			Company:               "shu_ha_ri",
 			Coaching:              0.00,
 			Training:              40000.00,
 			Other:                 0.00,
@@ -447,7 +447,7 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 }
 
 func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetails(t *testing.T) {
-	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"member_id":"001","company":"shuhari","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
+	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"member_id":"001","company":"shu_ha_ri","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
 	memberRequest := MemberRequest{
 		MemberID: "001",
 	}
@@ -477,7 +477,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 		{
 			ID:                    2,
 			MemberID:              "001",
-			Company:               "shuhari",
+			Company:               "shu_ha_ri",
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
