@@ -102,7 +102,6 @@ func (timesheet Timesheet) GetSummaryByID(memberID string, year, month int) (mod
 	return model.SummaryTimesheet{
 		MemberNameENG:                 memberList[initialIndex].MemberNameENG,
 		Email:                         memberList[initialIndex].Email,
-		OvertimeRate:                  memberList[initialIndex].OvertimeRate,
 		RatePerDay:                    memberList[initialIndex].RatePerDay,
 		RatePerHour:                   memberList[initialIndex].RatePerHour,
 		Year:                          year,
