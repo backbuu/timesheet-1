@@ -31,7 +31,7 @@
 }
 
 
-#button_edit_member{
+#button_edit_employee{
     background-color: #f36e31;
     color: #ffffff;
     font-size: 1.6vw;
@@ -54,7 +54,7 @@
     background-color:#21723e;
 }
 
-#table_member_details th{
+#table_employee_details th{
     color: #07343d;
     font-size: 18px;
     text-align: left;
@@ -62,7 +62,7 @@
     padding-right: 40px;
 }
 
-#table_member_details td{
+#table_employee_details td{
     color: #07343d;
     font-size: 18px;
     text-align: left;
