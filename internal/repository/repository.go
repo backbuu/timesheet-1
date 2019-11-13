@@ -156,14 +156,15 @@ func (repository TimesheetRepository) UpdateTransactionTimesheet(transactionTime
 
 func (repository TimesheetRepository) CreateTimesheet(employeeID string, year int, month int) error {
 	query := `INSERT INTO timesheets (id, employee_id, month, year, total_hours, total_coaching_customer_charging,
-		total_coaching_payment_rate, total_training_wage, total_other_wage, payment_wage) 
-		VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? )`
+		total_coaching_payment_rate, total_training_wage, total_other_wage, payment_wage, rate_per_day,rate_per_hour) 
+		VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ?, ? )`
 	transaction := repository.DatabaseConnection.MustBegin()
 	timesheetID := employeeID + strconv.Itoa(year) + strconv.Itoa(month)
-	var payment model.Timesheet
-	transaction.MustExec(query, timesheetID, employeeID, month, year, payment.TotalHours,
-		payment.TotalCoachingCustomerCharging, payment.TotalCoachingPaymentRate,
-		payment.TotalTrainigWage, payment.TotalOtherWage, payment.PaymentWage)
+	var timesheet model.Timesheet
+	transaction.MustExec(query, timesheetID, employeeID, month, year, timesheet.TotalHours,
+		timesheet.TotalCoachingCustomerCharging, timesheet.TotalCoachingPaymentRate,
+		timesheet.TotalTrainigWage, timesheet.TotalOtherWage, timesheet.PaymentWage,
+		timesheet.RatePerDay, timesheet.RatePerHour)
 	err := transaction.Commit()
 	if err != nil {
 		return err
