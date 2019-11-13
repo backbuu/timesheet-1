@@ -60,7 +60,7 @@ func (mock *MockRepository) DeleteAuthentication(accessToken string) error {
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) UpdatePictureToMembers(picture, email string) error {
+func (mock *MockRepository) UpdatePictureToemployees(picture, email string) error {
 	argument := mock.Called(picture, email)
 	return argument.Error(0)
 }
