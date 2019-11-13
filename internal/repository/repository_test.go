@@ -476,9 +476,9 @@ func Test_GetEmployeeIDByEmail_Input_Email_somkiat_scrum123_com_Should_Be_003(t 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetEmployeeIDByEmail_Input_Email_logintest535_gmail_com_Should_Be_007(t *testing.T) {
-	expected := "007"
-	email := "logintest535@gmail.com"
+func Test_GetEmployeeIDByEmail_Input_Email_nareenart_scrum123_com_Should_Be_002(t *testing.T) {
+	expected := "002"
+	email := "nareenart@scrum123.com"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
