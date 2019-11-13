@@ -15,8 +15,8 @@ func (mock *MockRepository) GetSummary(year, month int) ([]model.TransactionTime
 	return argument.Get(0).([]model.TransactionTimesheet), argument.Error(1)
 }
 
-func (mock *MockRepository) CreateIncome(year, month int, memberID string, income model.Incomes) error {
-	argument := mock.Called(year, month, memberID, income)
+func (mock *MockRepository) CreateIncome(year, month int, employeeID string, income model.Incomes) error {
+	argument := mock.Called(year, month, employeeID, income)
 	return argument.Error(0)
 }
 
@@ -25,8 +25,8 @@ func (mock *MockRepository) VerifyTransactionTimesheet(transactionTimesheetList 
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) UpdateTimesheet(timesheet model.Timesheet, memberID string, year, month int) error {
-	argument := mock.Called(timesheet, memberID, year, month)
+func (mock *MockRepository) UpdateTimesheet(timesheet model.Timesheet, employeeID string, year, month int) error {
+	argument := mock.Called(timesheet, employeeID, year, month)
 	return argument.Error(0)
 }
 
@@ -40,8 +40,8 @@ func (mock *MockRepository) DeleteIncome(incomeID int) error {
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) UpdateMemberDetails(memberDetails model.Member) error {
-	argument := mock.Called(memberDetails)
+func (mock *MockRepository) UpdateEmployeeDetails(employeeDetails model.Employee) error {
+	argument := mock.Called(employeeDetails)
 	return argument.Error(0)
 }
 
@@ -60,7 +60,7 @@ func (mock *MockRepository) DeleteAuthentication(accessToken string) error {
 	return argument.Error(0)
 }
 
-func (mock *MockRepository) UpdatePictureToMembers(picture, email string) error {
+func (mock *MockRepository) UpdatePictureToemployees(picture, email string) error {
 	argument := mock.Called(picture, email)
 	return argument.Error(0)
 }
@@ -74,32 +74,32 @@ type MockRepositoryToTimesheet struct {
 	mock.Mock
 }
 
-func (mock *MockRepositoryToTimesheet) GetIncomes(memberID string, year, month int) ([]model.Incomes, error) {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockRepositoryToTimesheet) GetIncomes(employeeID string, year, month int) ([]model.Incomes, error) {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Get(0).([]model.Incomes), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetMemberListByMemberID(memberID string) ([]model.Member, error) {
-	argument := mock.Called(memberID)
-	return argument.Get(0).([]model.Member), argument.Error(1)
+func (mock *MockRepositoryToTimesheet) GetEmployeeListByEmployeeID(employeeID string) ([]model.Employee, error) {
+	argument := mock.Called(employeeID)
+	return argument.Get(0).([]model.Employee), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) CreateTimesheet(memberID string, year int, month int) error {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockRepositoryToTimesheet) CreateTimesheet(employeeID string, year int, month int) error {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Error(0)
 }
 
-func (mock *MockRepositoryToTimesheet) GetTimesheet(memberID string, year, month int) (model.Timesheet, error) {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockRepositoryToTimesheet) GetTimesheet(employeeID string, year, month int) (model.Timesheet, error) {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Get(0).(model.Timesheet), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetTransactionTimesheets(memberID string, year int) ([]model.TransactionTimesheet, error) {
-	argument := mock.Called(memberID, year)
+func (mock *MockRepositoryToTimesheet) GetTransactionTimesheets(employeeID string, year int) ([]model.TransactionTimesheet, error) {
+	argument := mock.Called(employeeID, year)
 	return argument.Get(0).([]model.TransactionTimesheet), argument.Error(1)
 }
 
-func (mock *MockRepositoryToTimesheet) GetMemberIDByEmail(email string) (string, error) {
+func (mock *MockRepositoryToTimesheet) GetEmployeeIDByEmail(email string) (string, error) {
 	argument := mock.Called(email)
 	return argument.String(0), argument.Error(1)
 }
@@ -113,22 +113,22 @@ func (mock *MockTimesheet) CalculatePayment(incomes []model.Incomes) model.Times
 	return argument.Get(0).(model.Timesheet)
 }
 
-func (mock *MockTimesheet) CalculatePaymentSummary(member []model.Member, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
-	argument := mock.Called(member, incomes, year, month)
+func (mock *MockTimesheet) CalculatePaymentSummary(employee []model.Employee, incomes []model.Incomes, year, month int) []model.TransactionTimesheet {
+	argument := mock.Called(employee, incomes, year, month)
 	return argument.Get(0).([]model.TransactionTimesheet)
 }
 
-func (mock *MockTimesheet) GetSummaryByID(memberID string, year, month int) (model.SummaryTimesheet, error) {
-	argument := mock.Called(memberID, year, month)
+func (mock *MockTimesheet) GetSummaryByID(employeeID string, year, month int) (model.SummaryTimesheet, error) {
+	argument := mock.Called(employeeID, year, month)
 	return argument.Get(0).(model.SummaryTimesheet), argument.Error(1)
 }
 
-func (mock *MockTimesheet) VerifyAuthentication(email string, expiry float64, memberID string) string {
-	argument := mock.Called(email, expiry, memberID)
+func (mock *MockTimesheet) VerifyAuthentication(email string, expiry float64, employeeID string) string {
+	argument := mock.Called(email, expiry, employeeID)
 	return argument.String(0)
 }
 
-func (mock *MockTimesheet) GetSummaryInYearByID(memberID string, year int) (model.SummaryTransactionTimesheet, error) {
-	argument := mock.Called(memberID, year)
+func (mock *MockTimesheet) GetSummaryInYearByID(employeeID string, year int) (model.SummaryTransactionTimesheet, error) {
+	argument := mock.Called(employeeID, year)
 	return argument.Get(0).(model.SummaryTransactionTimesheet), argument.Error(1)
 }

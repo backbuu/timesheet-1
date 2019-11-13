@@ -17,12 +17,12 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_SummaryTimesheet(t *testing.T) {
-	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","overtime":0,"total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shuhari","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
+func Test_GetSummaryByEmployeeIDHandler_Input_Year_2019_Month_12_EmployeeID_003_Should_Be_SummaryTimesheet(t *testing.T) {
+	expected := `{"employee_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"employee_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company_id":2,"description":"Technical Excellence at Khonkean"},{"id":62,"employee_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company_id":2,"description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
 	timesheetRequest := TimesheetRequest{
-		Year:     2019,
-		Month:    12,
-		MemberID: "003",
+		Year:       2019,
+		Month:      12,
+		EmployeeID: "003",
 	}
 	jsonRequest, _ := json.Marshal(timesheetRequest)
 	request := httptest.NewRequest("POST", "/showTimesheetByID", bytes.NewBuffer(jsonRequest))
@@ -35,17 +35,16 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	mockTimesheet := new(mockapi.MockTimesheet)
 	mockTimesheet.On("GetSummaryByID", "003", 2019, 12).Return(model.SummaryTimesheet{
-		MemberNameENG: "Somkiat Puisungnoen",
-		Email:         "somkiat@scrum123.com",
-		OvertimeRate:  0.00,
-		RatePerDay:    15000.00,
-		RatePerHour:   1875.00,
-		Year:          2019,
-		Month:         12,
+		EmployeeNameENG: "Somkiat Puisungnoen",
+		Email:           "somkiat@scrum123.com",
+		RatePerDay:      15000.00,
+		RatePerHour:     1875.00,
+		Year:            2019,
+		Month:           12,
 		Incomes: []model.Incomes{
 			{
 				ID:                       61,
-				MemberID:                 "003",
+				EmployeeID:               "003",
 				Month:                    12,
 				Year:                     2019,
 				Day:                      1,
@@ -53,18 +52,17 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 				EndTimeAM:                endTimeAM,
 				StartTimePM:              startTimePM,
 				EndTimePM:                endTimePM,
-				Overtime:                 0,
 				TotalHours:               totalHours,
 				CoachingCustomerCharging: 0.00,
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shuhari",
+				CompanyID:                2,
 				Description:              "Technical Excellence at Khonkean",
 			},
 			{
 				ID:                       62,
-				MemberID:                 "003",
+				EmployeeID:               "003",
 				Month:                    12,
 				Year:                     2019,
 				Day:                      2,
@@ -72,13 +70,12 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 				EndTimeAM:                endTimeAM,
 				StartTimePM:              startTimePM,
 				EndTimePM:                endTimePM,
-				Overtime:                 0,
 				TotalHours:               totalHours,
 				CoachingCustomerCharging: 0.00,
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shuhari",
+				CompanyID:                2,
 				Description:              "Technical Excellence at Khonkean",
 			},
 		},
@@ -95,7 +92,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 		Timesheet: mockTimesheet,
 	}
 	testRoute := gin.Default()
-	testRoute.POST("/showTimesheetByID", api.GetSummaryByIDHandler)
+	testRoute.POST("/showTimesheetByID", api.GetSummaryByEmployeeIDHandler)
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
@@ -105,8 +102,8 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 }
 
 func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `[{"id":"001201812siam_chamnankit","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"001201812shuhari","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shuhari","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
-	date := Date{
+	expected := `[{"id":"00120181201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company_id":2,"coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
+	date := DateRequest{
 		Year:  2018,
 		Month: 12,
 	}
@@ -117,12 +114,12 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetSummary", 2018, 12).Return([]model.TransactionTimesheet{
 		{
-			ID:                     "001201812siam_chamnankit",
-			MemberID:               "001",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			ID:                     "00120181201",
+			EmployeeID:             "001",
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2018,
-			Company:                "siam_chamnankit",
+			CompanyID:              1,
 			Coaching:               85000.00,
 			Training:               30000.00,
 			Other:                  40000.00,
@@ -140,12 +137,12 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 			DateTransfer:           "",
 			Comment:                "",
 		}, {
-			ID:                     "001201812shuhari",
-			MemberID:               "001",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			ID:                     "00120181202",
+			EmployeeID:             "001",
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2018,
-			Company:                "shuhari",
+			CompanyID:              2,
 			Coaching:               0.00,
 			Training:               40000.00,
 			Other:                  0.00,
@@ -178,15 +175,15 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Should_Be_200(t *testing.T) {
+func Test_CreateIncomeHandler_Input_Year_2018_Month_12_EmployeeID_001_Income_Should_Be_200(t *testing.T) {
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
-	requestIncome := IncomeRequest{
-		Year:     2018,
-		Month:    12,
-		MemberID: "001",
+	requestIncome := CreateIncomeRequest{
+		Year:       2018,
+		Month:      12,
+		EmployeeID: "001",
 		Incomes: model.Incomes{
 			Day:                      28,
 			StartTimeAM:              startTimeAM,
@@ -197,7 +194,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -220,7 +217,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 		CoachingPaymentRate:      10000.00,
 		TrainingWage:             0.00,
 		OtherWage:                0.00,
-		Company:                  "siam_chamnankit",
+		CompanyID:                1,
 		Description:              "[KBTG] 2 Days Agile Project Management",
 	}).Return(nil)
 
@@ -236,11 +233,11 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 	assert.Equal(t, http.StatusCreated, response.StatusCode)
 }
 
-func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_Be_200(t *testing.T) {
+func Test_CalculatePaymentHandler_Input_EmployeeID_001_Year_2018_Month_12_Should_Be_200(t *testing.T) {
 	calculatePaymentRequest := CalculatePaymentRequest{
-		MemberID: "001",
-		Year:     2018,
-		Month:    12,
+		EmployeeID: "001",
+		Year:       2018,
+		Month:      12,
 	}
 	jsonRequest, _ := json.Marshal(calculatePaymentRequest)
 	request := httptest.NewRequest("POST", "/calculatePayment", bytes.NewBuffer(jsonRequest))
@@ -264,13 +261,12 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             40000.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			CompanyID:                2,
 			Description:              "[IMC]GSB: Agile Project Mgmt",
 		},
 		{
@@ -279,13 +275,12 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 130000.00,
 			CoachingPaymentRate:      85000.00,
 			TrainingWage:             30000.00,
 			OtherWage:                40000.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}, nil)
@@ -302,15 +297,14 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateTimesheet", mock.Anything, "001", 2018, 12).Return(nil)
 
-	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "001").Return([]model.Member{
+	mockRepositoryToTimesheet.On("GetEmployeeListByEmployeeID", "001").Return([]model.Employee{
 		{
 			ID:                    1,
-			MemberID:              "001",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             1,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                80000.00,
@@ -321,12 +315,11 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		},
 		{
 			ID:                    2,
-			MemberID:              "001",
-			Company:               "shuhari",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             2,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                0.00,
@@ -339,11 +332,11 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 
 	mockTimesheet.On("CalculatePaymentSummary", mock.Anything, mock.Anything, 2018, 12).Return([]model.TransactionTimesheet{
 		{
-			MemberID:              "001",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:            "001",
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                 12,
 			Year:                  2018,
-			Company:               "siam_chamnankit",
+			CompanyID:             1,
 			Coaching:              85000.00,
 			Training:              30000.00,
 			Other:                 40000.00,
@@ -358,11 +351,11 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			NetWage:               67500.00,
 			NetTransfer:           142500.00,
 		}, {
-			MemberID:              "001",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:            "001",
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                 12,
 			Year:                  2018,
-			Company:               "shuhari",
+			CompanyID:             2,
 			Coaching:              0.00,
 			Training:              40000.00,
 			Other:                 0.00,
@@ -394,10 +387,10 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 	assert.Equal(t, http.StatusOK, actual.StatusCode)
 }
 
-func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_Status_200(t *testing.T) {
+func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_00420191201_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_Status_200(t *testing.T) {
 	requestUpdate := UpdateStatusRequest{
-		MemberID:      "004",
-		TransactionID: "004201912siam_chamnankit",
+		EmployeeID:    "004",
+		TransactionID: "00420191201",
 		Status:        "โอนเงินเรียบร้อยแล้ว",
 		Date:          "30/12/2019",
 		Comment:       "หักค่าตั๋วเครื่องบิน",
@@ -408,7 +401,7 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 	request.Header.Add("Authorization", "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6ImxvZ2ludGVzdDUzNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzQ2NTc3NH0.FieIq3nqnEk4sKgNN3gOAHRat-Gj7ewvLV6ri9P4k1_PsoBOSL2brb02HAYrYFYl1NPFwymcp96j_5ZbZnV2k2JbhXvaocPc75pUO8pfzNzVzSp8JiU-OpqUb5CSoguJ6ejLTTGLzFkZ2Uu51GY0Kb_SNkSMGXHwIOlIdSx2UzqrfAqZAliSp_5D1Cp7Ot1I95uv0C79h3TB0ODY9zESsP4lF542ic9sseCt7KCfmoh9hq24OBW9nRLOPqXhOgInvvtqghQd2p7nv88GUdMuCOAFJZgg3_5zoLPkGBiAJcdwwcCoU-kd6r6mcxjKN2xbwFa4G5NskLzNRpUlJQpSRA")
 
 	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("UpdateStatusTransfer", "004201912siam_chamnankit", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
+	mockRepository.On("UpdateStatusTransfer", "00420191201", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
 
 	mockTimesheet := new(mockapi.MockTimesheet)
 	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "004").Return("Success")
@@ -427,8 +420,8 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_004201912siam_
 
 func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	requestDelete := DeleteIncomeRequest{
-		MemberID: "005",
-		IncomeID: 47,
+		EmployeeID: "005",
+		IncomeID:   47,
 	}
 	jsonRequest, _ := json.Marshal(requestDelete)
 	request := httptest.NewRequest("POST", "/deleteIncomeItem", bytes.NewBuffer(jsonRequest))
@@ -453,25 +446,24 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
 
-func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetails(t *testing.T) {
-	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"member_id":"001","company":"shuhari","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","overtime_rate":0,"rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
-	memberRequest := MemberRequest{
-		MemberID: "001",
+func Test_ShowEmployeeDetailsByEmployeeIDHandler_Input_EmployeeID_001_Should_Be_EmployeeDetails(t *testing.T) {
+	expected := `[{"id":1,"employee_id":"001","company_id":1,"employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"employee_id":"001","company_id":2,"employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
+	employeeRequest := EmployeeRequest{
+		EmployeeID: "001",
 	}
-	jsonRequest, _ := json.Marshal(memberRequest)
+	jsonRequest, _ := json.Marshal(employeeRequest)
 	request := httptest.NewRequest("POST", "/showMemberDetailsByID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 
 	mockRepositoryToTimesheet := new(mockapi.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "001").Return([]model.Member{
+	mockRepositoryToTimesheet.On("GetEmployeeListByEmployeeID", "001").Return([]model.Employee{
 		{
 			ID:                    1,
-			MemberID:              "001",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             1,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                80000.00,
@@ -484,12 +476,11 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 		},
 		{
 			ID:                    2,
-			MemberID:              "001",
-			Company:               "shuhari",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             2,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                0.00,
@@ -506,7 +497,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 		RepositoryToTimesheet: mockRepositoryToTimesheet,
 	}
 	testRoute := gin.Default()
-	testRoute.POST("/showMemberDetailsByID", api.ShowMemberDetailsByIDHandler)
+	testRoute.POST("/showMemberDetailsByID", api.ShowEmployeeDetailsByEmployeeIDHandler)
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
@@ -515,14 +506,13 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testing.T) {
-	requestUpdateMember := model.Member{
-		MemberID:              "001",
+func Test_UpdateEmployeeDetailsHandler_Input_Employee_Should_Be_Status_200(t *testing.T) {
+	requestUpdateEmployee := model.Employee{
+		EmployeeID:            "001",
 		ID:                    1,
-		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-		MemberNameENG:         "Prathan Dansakulcharoenkit",
+		EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+		EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 		Email:                 "prathan@scrum123.com",
-		OvertimeRate:          0.00,
 		RatePerDay:            15000.00,
 		RatePerHour:           1875.00,
 		Salary:                80000.00,
@@ -532,7 +522,7 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 		Status:                "wage",
 		TravelExpense:         0.00,
 	}
-	jsonRequest, _ := json.Marshal(requestUpdateMember)
+	jsonRequest, _ := json.Marshal(requestUpdateEmployee)
 	request := httptest.NewRequest("POST", "/updateMemberDetails", bytes.NewBuffer(jsonRequest))
 	request.Header.Add("Authorization", "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6ImxvZ2ludGVzdDUzNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzQ2NTc3NH0.FieIq3nqnEk4sKgNN3gOAHRat-Gj7ewvLV6ri9P4k1_PsoBOSL2brb02HAYrYFYl1NPFwymcp96j_5ZbZnV2k2JbhXvaocPc75pUO8pfzNzVzSp8JiU-OpqUb5CSoguJ6ejLTTGLzFkZ2Uu51GY0Kb_SNkSMGXHwIOlIdSx2UzqrfAqZAliSp_5D1Cp7Ot1I95uv0C79h3TB0ODY9zESsP4lF542ic9sseCt7KCfmoh9hq24OBW9nRLOPqXhOgInvvtqghQd2p7nv88GUdMuCOAFJZgg3_5zoLPkGBiAJcdwwcCoU-kd6r6mcxjKN2xbwFa4G5NskLzNRpUlJQpSRA")
 	writer := httptest.NewRecorder()
@@ -541,13 +531,12 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "001").Return("Success")
 
 	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("UpdateMemberDetails", model.Member{
+	mockRepository.On("UpdateEmployeeDetails", model.Employee{
 		ID:                    1,
-		MemberID:              "001",
-		MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-		MemberNameENG:         "Prathan Dansakulcharoenkit",
+		EmployeeID:            "001",
+		EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+		EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 		Email:                 "prathan@scrum123.com",
-		OvertimeRate:          0.00,
 		RatePerDay:            15000.00,
 		RatePerHour:           1875.00,
 		Salary:                80000.00,
@@ -563,7 +552,7 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 		Repository: mockRepository,
 	}
 	testRoute := gin.Default()
-	testRoute.POST("/updateMemberDetails", api.UpdateMemberDetailsHandler)
+	testRoute.POST("/updateMemberDetails", api.UpdateEmployeeDetailsHandler)
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 
@@ -571,16 +560,16 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 }
 
 func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_Profile(t *testing.T) {
-	expected := `{"member_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
+	expected := `{"employee_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
 	request := httptest.NewRequest("GET", "/showProfile", nil)
 	writer := httptest.NewRecorder()
 	request.Header.Add("Authorization", "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6ImxvZ2ludGVzdDUzNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzQ2NTc3NH0.FieIq3nqnEk4sKgNN3gOAHRat-Gj7ewvLV6ri9P4k1_PsoBOSL2brb02HAYrYFYl1NPFwymcp96j_5ZbZnV2k2JbhXvaocPc75pUO8pfzNzVzSp8JiU-OpqUb5CSoguJ6ejLTTGLzFkZ2Uu51GY0Kb_SNkSMGXHwIOlIdSx2UzqrfAqZAliSp_5D1Cp7Ot1I95uv0C79h3TB0ODY9zESsP4lF542ic9sseCt7KCfmoh9hq24OBW9nRLOPqXhOgInvvtqghQd2p7nv88GUdMuCOAFJZgg3_5zoLPkGBiAJcdwwcCoU-kd6r6mcxjKN2xbwFa4G5NskLzNRpUlJQpSRA")
 
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetProfileByEmail", "logintest535@gmail.com").Return(model.Profile{
-		MemberID: "007",
-		Email:    "logintest535@gmail.com",
-		Picture:  "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
+		EmployeeID: "007",
+		Email:      "logintest535@gmail.com",
+		Picture:    "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
 	}, nil)
 
 	api := TimesheetAPI{
@@ -596,27 +585,27 @@ func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_
 	assert.Equal(t, expected, string(actual))
 }
 
-func Test_ShowSummaryInYearHandler_Input_MemberID_001_Year_2017_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `{"member_id":"001","year":2017,"transaction_timesheets":[{"id":"001201812siam_chamnankit","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2017,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
+func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_TransactionTimesheet(t *testing.T) {
+	expected := `{"employee_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2017,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
 	summaryInYearRequest := SummaryInYearRequest{
-		MemberID: "001",
-		Year:     2017,
+		EmployeeID: "001",
+		Year:       2017,
 	}
 	jsonRequest, _ := json.Marshal(summaryInYearRequest)
 	request := httptest.NewRequest("POST", "/showSummaryInYear", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 	mockTimesheet := new(mockapi.MockTimesheet)
 	mockTimesheet.On("GetSummaryInYearByID", "001", 2017).Return(model.SummaryTransactionTimesheet{
-		MemberID: "001",
-		Year:     2017,
+		EmployeeID: "001",
+		Year:       2017,
 		TransactionTimesheets: []model.TransactionTimesheet{
 			{
-				ID:                     "001201812siam_chamnankit",
-				MemberID:               "001",
-				MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+				ID:                     "00120171201",
+				EmployeeID:             "001",
+				EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 				Month:                  12,
 				Year:                   2017,
-				Company:                "siam_chamnankit",
+				CompanyID:              1,
 				Coaching:               85000.00,
 				Training:               30000.00,
 				Other:                  40000.00,

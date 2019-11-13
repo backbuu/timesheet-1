@@ -13,14 +13,14 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_TransactionTimesheet(t *testing.T) {
+func Test_CalculatePaymentSummary_Input_Employee_EmployeeID_001_Should_Be_TransactionTimesheet(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			MemberID:              "001",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:            "001",
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			Year:                  2018,
 			Month:                 12,
-			Company:               "siam_chamnankit",
+			CompanyID:             1,
 			Coaching:              0.00,
 			Training:              155000.00,
 			Other:                 0.00,
@@ -36,11 +36,11 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			NetTransfer:           142500.00,
 		},
 		{
-			MemberID:              "001",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:            "001",
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			Year:                  2018,
 			Month:                 12,
-			Company:               "shuhari",
+			CompanyID:             2,
 			Coaching:              0.00,
 			Training:              20000.00,
 			Other:                 0.00,
@@ -56,14 +56,13 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			NetTransfer:           18000.00,
 		},
 	}
-	member := []model.Member{
+	employee := []model.Employee{
 		{
-			MemberID:              "001",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             1,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                80000.00,
@@ -73,12 +72,11 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			TravelExpense:         0.00,
 		},
 		{
-			MemberID:              "001",
-			Company:               "shuhari",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             2,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                0.00,
@@ -100,13 +98,12 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -115,13 +112,12 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             20000.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -129,19 +125,19 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Transactio
 	month := 12
 
 	timesheet := Timesheet{}
-	actual := timesheet.CalculatePaymentSummary(member, incomes, year, month)
+	actual := timesheet.CalculatePaymentSummary(employee, incomes, year, month)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One_TransactionTimesheet(t *testing.T) {
+func Test_CalculatePaymentSummary_Input_Employee_EmployeeID_001_Should_Be_Append_One_TransactionTimesheet(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			MemberID:              "001",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:            "001",
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			Year:                  2018,
 			Month:                 12,
-			Company:               "siam_chamnankit",
+			CompanyID:             1,
 			Coaching:              0.00,
 			Training:              155000.00,
 			Other:                 0.00,
@@ -157,14 +153,13 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 			NetTransfer:           142500.00,
 		},
 	}
-	member := []model.Member{
+	employee := []model.Employee{
 		{
-			MemberID:              "001",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             1,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                80000.00,
@@ -174,12 +169,11 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 			TravelExpense:         0.00,
 		},
 		{
-			MemberID:              "001",
-			Company:               "shuhari",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             2,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                0.00,
@@ -201,13 +195,12 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -215,19 +208,19 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_Append_One
 	month := 12
 
 	timesheet := Timesheet{}
-	actual := timesheet.CalculatePaymentSummary(member, incomes, year, month)
+	actual := timesheet.CalculatePaymentSummary(employee, incomes, year, month)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_TransactionTimesheet(t *testing.T) {
+func Test_CalculatePaymentSummary_Input_Employee_EmployeeID_002_Should_Be_TransactionTimesheet(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			MemberID:              "002",
-			MemberNameTH:          "นารีนารถ เนรัญชร",
+			EmployeeID:            "002",
+			EmployeeNameTH:        "นารีนารถ เนรัญชร",
 			Year:                  2018,
 			Month:                 12,
-			Company:               "shuhari",
+			CompanyID:             2,
 			Coaching:              0.00,
 			Training:              0.00,
 			Other:                 6500.00,
@@ -243,14 +236,13 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_Transactio
 			NetTransfer:           30425.00,
 		},
 	}
-	member := []model.Member{
+	employee := []model.Employee{
 		{
-			MemberID:              "002",
-			Company:               "shuhari",
-			MemberNameTH:          "นารีนารถ เนรัญชร",
-			MemberNameENG:         "Nareenart Narunchon",
+			EmployeeID:            "002",
+			CompanyID:             2,
+			EmployeeNameTH:        "นารีนารถ เนรัญชร",
+			EmployeeNameENG:       "Nareenart Narunchon",
 			Email:                 "nareenart@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            0.00,
 			RatePerHour:           0.00,
 			Salary:                25000.00,
@@ -273,13 +265,12 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_Transactio
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                5000.00,
-			Company:                  "shuhari",
+			CompanyID:                2,
 			Description:              "work at TN",
 		},
 	}
@@ -287,7 +278,7 @@ func Test_CalculatePaymentSummary_Input_Member_MemberID_002_Should_Be_Transactio
 	month := 12
 
 	timesheet := Timesheet{}
-	actual := timesheet.CalculatePaymentSummary(member, incomes, year, month)
+	actual := timesheet.CalculatePaymentSummary(employee, incomes, year, month)
 
 	assert.Equal(t, expected, actual)
 }
@@ -313,13 +304,12 @@ func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingP
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 15000.00,
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -328,13 +318,12 @@ func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingP
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             20000.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -345,24 +334,23 @@ func Test_CalculatePayment_Input_Income_CoachingCustomerCharging_15000_CoachingP
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_SummaryTimesheet(t *testing.T) {
+func Test_GetSummaryByID_Input_EmployeeID_003_Year_2019_Month_12_Should_Be_SummaryTimesheet(t *testing.T) {
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
 	endTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 18:00:00")
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	expected := model.SummaryTimesheet{
-		MemberNameENG: "Somkiat Puisungnoen",
-		Email:         "somkiat@scrum123.com",
-		OvertimeRate:  0.00,
-		RatePerDay:    15000.00,
-		RatePerHour:   1875.00,
-		Year:          2019,
-		Month:         12,
+		EmployeeNameENG: "Somkiat Puisungnoen",
+		Email:           "somkiat@scrum123.com",
+		RatePerDay:      15000.00,
+		RatePerHour:     1875.00,
+		Year:            2019,
+		Month:           12,
 		Incomes: []model.Incomes{
 			{
 				ID:                       61,
-				MemberID:                 "003",
+				EmployeeID:               "003",
 				Month:                    12,
 				Year:                     2019,
 				Day:                      1,
@@ -370,18 +358,17 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 				EndTimeAM:                endTimeAM,
 				StartTimePM:              startTimePM,
 				EndTimePM:                endTimePM,
-				Overtime:                 0,
 				TotalHours:               totalHours,
 				CoachingCustomerCharging: 0.00,
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shuhari",
+				CompanyID:                2,
 				Description:              "Technical Excellence at Khonkean",
 			},
 			{
 				ID:                       62,
-				MemberID:                 "003",
+				EmployeeID:               "003",
 				Month:                    12,
 				Year:                     2019,
 				Day:                      2,
@@ -389,13 +376,12 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 				EndTimeAM:                endTimeAM,
 				StartTimePM:              startTimePM,
 				EndTimePM:                endTimePM,
-				Overtime:                 0,
 				TotalHours:               totalHours,
 				CoachingCustomerCharging: 0.00,
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shuhari",
+				CompanyID:                2,
 				Description:              "Technical Excellence at Khonkean",
 			},
 		},
@@ -408,15 +394,14 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		PaymentWage:                   80000.00,
 	}
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "003").Return([]model.Member{
+	mockRepositoryToTimesheet.On("GetEmployeeListByEmployeeID", "003").Return([]model.Employee{
 		{
 			ID:                    4,
-			MemberID:              "003",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
-			MemberNameENG:         "Somkiat Puisungnoen",
+			EmployeeID:            "003",
+			CompanyID:             1,
+			EmployeeNameTH:        "สมเกียรติ ปุ๋ยสูงเนิน",
+			EmployeeNameENG:       "Somkiat Puisungnoen",
 			Email:                 "somkiat@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                15000.00,
@@ -428,12 +413,11 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 		},
 		{
 			ID:                    5,
-			MemberID:              "003",
-			Company:               "shuhari",
-			MemberNameTH:          "สมเกียรติ ปุ๋ยสูงเนิน",
-			MemberNameENG:         "Somkiat Puisungnoen",
+			EmployeeID:            "003",
+			CompanyID:             2,
+			EmployeeNameTH:        "สมเกียรติ ปุ๋ยสูงเนิน",
+			EmployeeNameENG:       "Somkiat Puisungnoen",
 			Email:                 "somkiat@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                40000.00,
@@ -448,7 +432,7 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 	mockRepositoryToTimesheet.On("GetIncomes", "003", 2019, 12).Return([]model.Incomes{
 		{
 			ID:                       61,
-			MemberID:                 "003",
+			EmployeeID:               "003",
 			Month:                    12,
 			Year:                     2019,
 			Day:                      1,
@@ -456,18 +440,17 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             40000.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			CompanyID:                2,
 			Description:              "Technical Excellence at Khonkean",
 		},
 		{
 			ID:                       62,
-			MemberID:                 "003",
+			EmployeeID:               "003",
 			Month:                    12,
 			Year:                     2019,
 			Day:                      2,
@@ -475,20 +458,19 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 			EndTimeAM:                endTimeAM,
 			StartTimePM:              startTimePM,
 			EndTimePM:                endTimePM,
-			Overtime:                 0,
 			TotalHours:               totalHours,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             40000.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			CompanyID:                2,
 			Description:              "Technical Excellence at Khonkean",
 		},
 	}, nil)
 
 	mockRepositoryToTimesheet.On("GetTimesheet", "003", 2019, 12).Return(model.Timesheet{
 		ID:                            "003201912",
-		MemberID:                      "003",
+		EmployeeID:                    "003",
 		Month:                         12,
 		Year:                          2019,
 		TotalHours:                    "16:00:00",
@@ -504,21 +486,20 @@ func Test_GetSummaryByID_Input_MemberID_003_Year_2019_Month_12_Should_Be_Summary
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
-	memberID := "003"
+	employeeID := "003"
 	year := 2019
 	month := 12
 
-	actual, err := timesheet.GetSummaryByID(memberID, year, month)
+	actual, err := timesheet.GetSummaryByID(employeeID, year, month)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_SummaryTimesheet_No_Incomes_And_Created_Timesheet(t *testing.T) {
+func Test_GetSummaryByID_Input_EmployeeID_002_Year_2019_Month_12_Should_Be_SummaryTimesheet_No_Incomes_And_Created_Timesheet(t *testing.T) {
 	expected := model.SummaryTimesheet{
-		MemberNameENG:                 "Nareenart Narunchon",
+		EmployeeNameENG:               "Nareenart Narunchon",
 		Email:                         "nareenart@scrum123.com",
-		OvertimeRate:                  0.00,
 		RatePerDay:                    0.00,
 		RatePerHour:                   0.00,
 		Year:                          2019,
@@ -534,15 +515,14 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 	}
 
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetMemberListByMemberID", "002").Return([]model.Member{
+	mockRepositoryToTimesheet.On("GetEmployeeListByEmployeeID", "002").Return([]model.Employee{
 		{
 			ID:                    3,
-			MemberID:              "002",
-			Company:               "shuhari",
-			MemberNameTH:          "นารีนารถ เนรัญชร",
-			MemberNameENG:         "Nareenart Narunchon",
+			EmployeeID:            "002",
+			CompanyID:             2,
+			EmployeeNameTH:        "นารีนารถ เนรัญชร",
+			EmployeeNameENG:       "Nareenart Narunchon",
 			Email:                 "nareenart@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            0.00,
 			RatePerHour:           0.00,
 			Salary:                25000.00,
@@ -560,79 +540,79 @@ func Test_GetSummaryByID_Input_MemberID_002_Year_2019_Month_12_Should_Be_Summary
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
-	memberID := "002"
+	employeeID := "002"
 	year := 2019
 	month := 12
 
-	actual, err := timesheet.GetSummaryByID(memberID, year, month)
+	actual, err := timesheet.GetSummaryByID(employeeID, year, month)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_Expiry_1538384400_MemberID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
+func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_Expiry_1538384400_EmployeeID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
 	expected := "Unauthorized"
 	email := "logintest535@gmail.com"
 	expiry := 1538384400.00
-	memberID := "071"
+	employeeID := "071"
 	os.Setenv("FIX_TIME", "20181201120000")
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetMemberIDByEmail", mock.Anything).Return("071", nil)
+	mockRepositoryToTimesheet.On("GetEmployeeIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(email, expiry, memberID)
+	actual := timesheet.VerifyAuthentication(email, expiry, employeeID)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Unauthorized(t *testing.T) {
+func Test_VerifyAuthentication_Input_AccessToken_EmployeeID_071_Should_Be_Unauthorized(t *testing.T) {
 	expected := "Unauthorized"
 	email := "logintest535@gmail.com"
 	expiry := 1538384400.00
-	memberID := "008"
+	employeeID := "008"
 	os.Setenv("FIX_TIME", "20181201120000")
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetMemberIDByEmail", mock.Anything).Return("071", nil)
+	mockRepositoryToTimesheet.On("GetEmployeeIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(email, expiry, memberID)
+	actual := timesheet.VerifyAuthentication(email, expiry, employeeID)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_AccessToken_MemberID_071_Should_Be_Success(t *testing.T) {
+func Test_VerifyAuthentication_Input_AccessToken_EmployeeID_071_Should_Be_Success(t *testing.T) {
 	expected := "Success"
-	memberID := "071"
+	employeeID := "071"
 	os.Setenv("FIX_TIME", "20181201083000")
 	email := "logintest535@gmail.com"
 	expiry := 1569920400.00
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
-	mockRepositoryToTimesheet.On("GetMemberIDByEmail", mock.Anything).Return("071", nil)
+	mockRepositoryToTimesheet.On("GetEmployeeIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(email, expiry, memberID)
+	actual := timesheet.VerifyAuthentication(email, expiry, employeeID)
 
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetSummaryInYearByID_Input_MemberID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
+func Test_GetSummaryInYearByID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
 	expected := model.SummaryTransactionTimesheet{
-		MemberID: "001",
-		Year:     2017,
+		EmployeeID: "001",
+		Year:       2017,
 		TransactionTimesheets: []model.TransactionTimesheet{
 			{
-				ID:                     "001201712siam_chamnankit",
-				MemberID:               "001",
-				MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+				ID:                     "00120171201",
+				EmployeeID:             "001",
+				EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 				Month:                  12,
 				Year:                   2017,
-				Company:                "siam_chamnankit",
+				CompanyID:              1,
 				Coaching:               85000.00,
 				Training:               30000.00,
 				Other:                  40000.00,
@@ -665,12 +645,12 @@ func Test_GetSummaryInYearByID_Input_MemberID_001_Year_2017_Should_Be_SummaryTra
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepositoryToTimesheet.On("GetTransactionTimesheets", "001", 2017).Return([]model.TransactionTimesheet{
 		{
-			ID:                     "001201712siam_chamnankit",
-			MemberID:               "001",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			ID:                     "00120171201",
+			EmployeeID:             "001",
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2017,
-			Company:                "siam_chamnankit",
+			CompanyID:              1,
 			Coaching:               85000.00,
 			Training:               30000.00,
 			Other:                  40000.00,
@@ -693,10 +673,10 @@ func Test_GetSummaryInYearByID_Input_MemberID_001_Year_2017_Should_Be_SummaryTra
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
-	memberID := "001"
+	employeeID := "001"
 	year := 2017
 
-	actual, err := timesheet.GetSummaryInYearByID(memberID, year)
+	actual, err := timesheet.GetSummaryInYearByID(employeeID, year)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)

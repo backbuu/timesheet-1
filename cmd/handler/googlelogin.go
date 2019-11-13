@@ -65,7 +65,7 @@ func (api TimesheetAPI) OauthGoogleCallback(context *gin.Context) {
 		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
 		return
 	}
-	err = api.Repository.UpdatePictureToMembers(userInfo.Picture, userInfo.Email)
+	err = api.Repository.UpdatePictureToemployees(userInfo.Picture, userInfo.Email)
 	if err != nil {
 		context.Redirect(http.StatusInternalServerError, "/home?error="+err.Error())
 		return
