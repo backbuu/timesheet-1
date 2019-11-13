@@ -118,13 +118,13 @@ func (repository TimesheetRepository) VerifyTransactionTimesheet(transactionTime
 }
 
 func (repository TimesheetRepository) CreateTransactionTimesheet(transactionTimesheet model.TransactionTimesheet, transactionID string) error {
-	query := `INSERT INTO transactions (id, employee_id, month, year, company_id, employee_name_th, coaching, 
+	query := `INSERT INTO transactions (id, employee_id, month, year, company_id, employee_name_th, employee_name_eng, coaching, 
 		training, other, total_incomes, salary, income_tax_1, social_security, net_salary, wage, 
 		income_tax_53_percentage, income_tax_53, net_wage, net_transfer, status_checking_transfer, date_transfer, comment) 
-		VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? , ? , ?, ? , ?)`
+		VALUES ( ? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ? ,? , ?, ? , ? , ?, ? , ?)`
 	transaction := repository.DatabaseConnection.MustBegin()
 	transaction.MustExec(query, transactionID, transactionTimesheet.EmployeeID, transactionTimesheet.Month,
-		transactionTimesheet.Year, transactionTimesheet.CompanyID, transactionTimesheet.EmployeeNameTH,
+		transactionTimesheet.Year, transactionTimesheet.CompanyID, transactionTimesheet.EmployeeNameTH, transactionTimesheet.EmployeeNameENG,
 		transactionTimesheet.Coaching, transactionTimesheet.Training, transactionTimesheet.Other,
 		transactionTimesheet.TotalIncomes, transactionTimesheet.Salary, transactionTimesheet.IncomeTax1,
 		transactionTimesheet.SocialSecurity, transactionTimesheet.NetSalary, transactionTimesheet.Wage,

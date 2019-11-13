@@ -8,6 +8,7 @@ type TransactionTimesheet struct {
 	ID                     string  `json:"id"`
 	EmployeeID             string  `db:"employee_id" json:"employee_id"`
 	EmployeeNameTH         string  `db:"employee_name_th" json:"employee_name_th"`
+	EmployeeNameENG        string  `db:"employee_name_eng" json:"employee_name_eng"`
 	Month                  int     `db:"month" json:"month"`
 	Year                   int     `db:"year" json:"year"`
 	CompanyID              int     `db:"company_id" json:"company_id"`
@@ -99,10 +100,10 @@ type Employee struct {
 }
 
 type Token struct {
-	AccessToken  string    `json:"access_token"`
-	TokenType    string    `json:"token_type"`
-	RefreshToken string    `json:"refresh_token"`
-	Expiry       time.Time `json:"expiry"`
+	AccessToken           string    `json:"access_token"`
+	TokenType             string    `json:"token_type"`
+	RefreshToken          string    `json:"refresh_token"`
+	IDTokenExpirationTime time.Time `json:"id_token_expiration_time"`
 }
 
 type UserInfo struct {
