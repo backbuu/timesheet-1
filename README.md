@@ -22,7 +22,7 @@ timesheet
 ## Test Function Name
 - ใช้รูปแบบการตั้งชื่อฟังก์ชันเป็นแบบ **Snake_Case** เช่น
 ```
-Test_CalculatePaymentSummary_Input_Member_MemberID_001_Should_Be_TransactionTimesheet
+Test_CalculatePaymentSummary_Input_Employee_EmployeeID_001_Should_Be_TransactionTimesheet
 ```
 
 ## Variable Name
@@ -33,7 +33,7 @@ salary, company, coachingPaymentRate
 
 - ชื่อตัวแปรเก็บค่าให้เติม "List" ต่อท้ายตัวแปรเสมอ เช่น
 ```
-memberList
+employeeList
 ```
 
 - ชื่อตัวแปร struct ให้ตั้งชื่อขึ้นต้นคำแรกด้วยตัวอักษรพิมพ์ใหญ่ ในรูปแบบ **camelCase** เช่น
@@ -50,7 +50,7 @@ OneMinute, ShuhariCompany
 
 ใช้เป็น **snakeCase** เช่น
 ```
-year, member_id
+year, employee_id
 ```
 
 ## ข้อตกลง Commit Message ร่วมกัน
