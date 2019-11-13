@@ -22,16 +22,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member english name should be Somkiat Puisungnoen\", function () {",
-									"    pm.expect(jsonData.member_name_eng).to.eql(\"Somkiat Puisungnoen\");",
+									"pm.test(\"Employee english name should be Somkiat Puisungnoen\", function () {",
+									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Somkiat Puisungnoen\");",
 									"});",
 									"",
 									"pm.test(\"Email should be somkiat@scrum123.com\", function () {",
 									"    pm.expect(jsonData.email).to.eql(\"somkiat@scrum123.com\");",
-									"});",
-									"",
-									"pm.test(\"Overtime rate should be 0\", function () {",
-									"    pm.expect(jsonData.overtime_rate).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Rate per day should be 15000\", function () {",
@@ -94,7 +90,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"003\"\n}"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/showTimesheetByID",
@@ -143,7 +139,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"003\",\n\t\"incomes\":{\n\t\t\"day\":18,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":10000,\n\t\t\"other_wage\":0,\n\t\t\"company\":\"siam_chamnankit\",\n\t\t\"description\":\"TDD with JAVA\"}\n}\n"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\",\n\t\"incomes\":{\n\t\t\"day\":18,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":10000,\n\t\t\"other_wage\":0,\n\t\t\"company_id\":1,\n\t\t\"description\":\"TDD with JAVA\"}\n}\n"
 						},
 						"url": {
 							"raw": "http://localhost:8080/addIncomeItem",
@@ -192,7 +188,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"member_id\":\"003\",\n\t\"year\":2018,\n\t\"month\":12\n}"
+							"raw": "{\n\t\"employee_id\":\"003\",\n\t\"year\":2018,\n\t\"month\":12\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/calculatePayment",
@@ -222,16 +218,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member english name should be Somkiat Puisungnoen\", function () {",
-									"    pm.expect(jsonData.member_name_eng).to.eql(\"Somkiat Puisungnoen\");",
+									"pm.test(\"Employee english name should be Somkiat Puisungnoen\", function () {",
+									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Somkiat Puisungnoen\");",
 									"});",
 									"",
 									"pm.test(\"Email should be somkiat@scrum123.com\", function () {",
 									"    pm.expect(jsonData.email).to.eql(\"somkiat@scrum123.com\");",
-									"});",
-									"",
-									"pm.test(\"Overtime rate should be 0\", function () {",
-									"    pm.expect(jsonData.overtime_rate).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Rate per day should be 15000\", function () {",
@@ -278,8 +270,8 @@
 									"    pm.expect(jsonData.payment_wage).to.eql(120000);",
 									"});",
 									"",
-									"pm.test(\"MemberID should be 003\", function () {",
-									"    pm.expect(jsonData.incomes[10].member_id).to.eql(\"003\");",
+									"pm.test(\"EmployeeID should be 003\", function () {",
+									"    pm.expect(jsonData.incomes[10].employee_id).to.eql(\"003\");",
 									"});",
 									"",
 									"pm.test(\"Month should be 12\", function () {",
@@ -310,10 +302,6 @@
 									"    pm.expect(jsonData.incomes[10].end_time_pm).to.eql(\"2018-01-01T18:00:00Z\");",
 									"});",
 									"",
-									"pm.test(\"Overtime should be 0\", function () {",
-									"    pm.expect(jsonData.incomes[10].overtime).to.eql(0);",
-									"});",
-									"",
 									"pm.test(\"Total hours should be 08:00:00\", function () {",
 									"    pm.expect(jsonData.incomes[10].total_hours).to.eql(\"2018-12-18T08:00:00Z\");",
 									"});",
@@ -334,8 +322,8 @@
 									"    pm.expect(jsonData.incomes[10].other_wage).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Company should be siam_chamnankit\", function () {",
-									"    pm.expect(jsonData.incomes[10].company).to.eql(\"siam_chamnankit\");",
+									"pm.test(\"CompanyID should be 1\", function () {",
+									"    pm.expect(jsonData.incomes[10].company_id).to.eql(1);",
 									"});",
 									"",
 									"pm.test(\"Description should be TDD with JAVA\", function () {",
@@ -359,7 +347,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"003\"\n}"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/showTimesheetByID",
