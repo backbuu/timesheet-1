@@ -18,7 +18,7 @@ type TimesheetGateways interface {
 	CalculatePaymentSummary(employee []model.Employee, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
 	CalculatePayment(incomes []model.Incomes) model.Timesheet
 	GetSummaryByID(employeeID string, year, month int) (model.SummaryTimesheet, error)
-	VerifyAuthentication(email string, expiry float64, employeeID string) string
+	VerifyAuthentication(email string, IDTokenExpirationTime float64, employeeID string) string
 	GetSummaryInYearByID(employeeID string, year int) (model.SummaryTransactionTimesheet, error)
 }
 
@@ -116,12 +116,12 @@ func (timesheet Timesheet) GetSummaryByID(employeeID string, year, month int) (m
 		PaymentWage:                   payment.PaymentWage}, nil
 }
 
-func (timesheet Timesheet) VerifyAuthentication(email string, expiry float64, employeeIDRequest string) string {
+func (timesheet Timesheet) VerifyAuthentication(email string, IDTokenExpirationTime float64, employeeIDRequest string) string {
 	employeeIDByEmail, err := timesheet.Repository.GetEmployeeIDByEmail(email)
 	if err != nil {
 		return err.Error()
 	}
-	if employeeIDByEmail != employeeIDRequest || time.Unix(int64(expiry), 0).Before(now()) {
+	if employeeIDByEmail != employeeIDRequest || time.Unix(int64(IDTokenExpirationTime), 0).Before(now()) {
 		return "Unauthorized"
 	}
 	return "Success"
