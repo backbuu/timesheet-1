@@ -13,9 +13,8 @@ const (
 	initialDateTransfer           = ""
 	initialComment                = ""
 
-	workingHours = 8
-	oneMinute    = 60
-	oneHour      = 60
+	oneMinute = 60
+	oneHour   = 60
 )
 
 type TimesheetRepositoryGateways interface {
@@ -45,7 +44,7 @@ type TimesheetRepository struct {
 
 func (repository TimesheetRepository) GetSummary(year, month int) ([]model.TransactionTimesheet, error) {
 	var transactionTimesheetList []model.TransactionTimesheet
-	query := `SELECT * FROM transactions WHERE year = ? AND month = ? ORDER BY employee_id ASC, company_id DESC`
+	query := `SELECT * FROM transactions WHERE year = ? AND month = ? ORDER BY employee_id ASC, company_id ASC`
 	err := repository.DatabaseConnection.Select(&transactionTimesheetList, query, year, month)
 	if err != nil {
 		return []model.TransactionTimesheet{}, err
