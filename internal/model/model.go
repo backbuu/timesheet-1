@@ -76,8 +76,8 @@ type Timesheet struct {
 	TotalTrainigWage              float64 `db:"total_training_wage" json:"total_training_wage"`
 	TotalOtherWage                float64 `db:"total_other_wage" json:"total_other_wage"`
 	PaymentWage                   float64 `db:"payment_wage" json:"payment_wage"`
-	RatePerDay                    float64 `json:"rate_per_day"`
-	RatePerHour                   float64 `json:"rate_per_hour"`
+	RatePerDay                    float64 `db:"rate_per_day" json:"rate_per_day"`
+	RatePerHour                   float64 `db:"rate_per_hour" json:"rate_per_hour"`
 }
 
 type Member struct {
