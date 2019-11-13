@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"strings"
 	"time"
 	"timesheet/internal/model"
 	"timesheet/internal/repository"
@@ -18,7 +19,7 @@ type TimesheetGateways interface {
 	CalculatePaymentSummary(employee []model.Employee, incomes []model.Incomes, year, month int) []model.TransactionTimesheet
 	CalculatePayment(incomes []model.Incomes) model.Timesheet
 	GetSummaryByID(employeeID string, year, month int) (model.SummaryTimesheet, error)
-	VerifyAuthentication(email string, expiry float64, employeeID string) string
+	VerifyAuthentication(email string, idTokenExpirationTime float64) bool
 	GetSummaryInYearByID(employeeID string, year int) (model.SummaryTransactionTimesheet, error)
 }
 
@@ -116,15 +117,14 @@ func (timesheet Timesheet) GetSummaryByID(employeeID string, year, month int) (m
 		PaymentWage:                   payment.PaymentWage}, nil
 }
 
-func (timesheet Timesheet) VerifyAuthentication(email string, expiry float64, employeeIDRequest string) string {
-	employeeIDByEmail, err := timesheet.Repository.GetEmployeeIDByEmail(email)
-	if err != nil {
-		return err.Error()
+func (timesheet Timesheet) VerifyAuthentication(email string, idTokenExpirationTime float64) bool {
+	emailAuthenticityList := []string{"welovebug.biz", "scrum123.com"}
+	for _, emailAuthenticityList := range emailAuthenticityList {
+		if emailAuthenticityList == strings.Split(email, "@")[1] && now().Before(time.Unix(int64(idTokenExpirationTime), 0)) {
+			return true
+		}
 	}
-	if employeeIDByEmail != employeeIDRequest || time.Unix(int64(expiry), 0).Before(now()) {
-		return "Unauthorized"
-	}
-	return "Success"
+	return false
 }
 
 func now() time.Time {

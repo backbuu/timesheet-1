@@ -204,7 +204,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_EmployeeID_001_Income_Sho
 	writer := httptest.NewRecorder()
 
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "001").Return("Success")
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("CreateIncome", 2018, 12, "001", model.Incomes{
@@ -245,7 +245,7 @@ func Test_CalculatePaymentHandler_Input_EmployeeID_001_Year_2018_Month_12_Should
 	writer := httptest.NewRecorder()
 
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "001").Return("Success")
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
@@ -404,7 +404,7 @@ func Test_UpdateStatusCheckingTransferHandler_Input_TransactionID_00420191201_St
 	mockRepository.On("UpdateStatusTransfer", "00420191201", "โอนเงินเรียบร้อยแล้ว", "30/12/2019", "หักค่าตั๋วเครื่องบิน").Return(nil)
 
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "004").Return("Success")
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	api := TimesheetAPI{
 		Timesheet:  mockTimesheet,
@@ -429,7 +429,7 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 	writer := httptest.NewRecorder()
 
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "005").Return("Success")
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("DeleteIncome", 47).Return(nil)
@@ -528,7 +528,7 @@ func Test_UpdateEmployeeDetailsHandler_Input_Employee_Should_Be_Status_200(t *te
 	writer := httptest.NewRecorder()
 
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything, "001").Return("Success")
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("UpdateEmployeeDetails", model.Employee{
@@ -559,16 +559,16 @@ func Test_UpdateEmployeeDetailsHandler_Input_Employee_Should_Be_Status_200(t *te
 	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
 
-func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_Profile(t *testing.T) {
-	expected := `{"employee_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
+func Test_GetProfileHandler_Input_Header_Email_nareenart_scrum123_com_Should_Be_Profile(t *testing.T) {
+	expected := `{"employee_id":"002","email":"nareenart@scrum123.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
 	request := httptest.NewRequest("GET", "/showProfile", nil)
 	writer := httptest.NewRecorder()
-	request.Header.Add("Authorization", "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6ImxvZ2ludGVzdDUzNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzQ2NTc3NH0.FieIq3nqnEk4sKgNN3gOAHRat-Gj7ewvLV6ri9P4k1_PsoBOSL2brb02HAYrYFYl1NPFwymcp96j_5ZbZnV2k2JbhXvaocPc75pUO8pfzNzVzSp8JiU-OpqUb5CSoguJ6ejLTTGLzFkZ2Uu51GY0Kb_SNkSMGXHwIOlIdSx2UzqrfAqZAliSp_5D1Cp7Ot1I95uv0C79h3TB0ODY9zESsP4lF542ic9sseCt7KCfmoh9hq24OBW9nRLOPqXhOgInvvtqghQd2p7nv88GUdMuCOAFJZgg3_5zoLPkGBiAJcdwwcCoU-kd6r6mcxjKN2xbwFa4G5NskLzNRpUlJQpSRA")
+	request.Header.Add("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6Im5hcmVlbmFydEBzY3J1bTEyMy5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzYzOTc3OCwianRpIjoiYzE5ZTRjZjAtMjhlZS00Zjc2LWFjMGQtYTU0MDdiZGY1MDcwIn0.ouNt1qPPz-86Mep9XedGF_D-xOCx42WG5dQPiZXf9vs")
 
 	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("GetProfileByEmail", "logintest535@gmail.com").Return(model.Profile{
-		EmployeeID: "007",
-		Email:      "logintest535@gmail.com",
+	mockRepository.On("GetProfileByEmail", "nareenart@scrum123.com").Return(model.Profile{
+		EmployeeID: "002",
+		Email:      "nareenart@scrum123.com",
 		Picture:    "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
 	}, nil)
 
