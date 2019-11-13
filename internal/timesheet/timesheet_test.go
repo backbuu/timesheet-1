@@ -550,10 +550,10 @@ func Test_GetSummaryByID_Input_EmployeeID_002_Year_2019_Month_12_Should_Be_Summa
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_Expiry_1538384400_EmployeeID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
+func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_IDTokenExpirationTime_1538384400_EmployeeID_071_Should_Be_Unauthorized_By_Expired(t *testing.T) {
 	expected := "Unauthorized"
 	email := "logintest535@gmail.com"
-	expiry := 1538384400.00
+	IDTokenExpirationTime := 1538384400.00
 	employeeID := "071"
 	os.Setenv("FIX_TIME", "20181201120000")
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
@@ -562,7 +562,7 @@ func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_Expiry_1538384
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(email, expiry, employeeID)
+	actual := timesheet.VerifyAuthentication(email, IDTokenExpirationTime, employeeID)
 
 	assert.Equal(t, expected, actual)
 }
@@ -570,7 +570,7 @@ func Test_VerifyAuthentication_Input_Email_logintest535_gmail_com_Expiry_1538384
 func Test_VerifyAuthentication_Input_AccessToken_EmployeeID_071_Should_Be_Unauthorized(t *testing.T) {
 	expected := "Unauthorized"
 	email := "logintest535@gmail.com"
-	expiry := 1538384400.00
+	IDTokenExpirationTime := 1538384400.00
 	employeeID := "008"
 	os.Setenv("FIX_TIME", "20181201120000")
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
@@ -579,7 +579,7 @@ func Test_VerifyAuthentication_Input_AccessToken_EmployeeID_071_Should_Be_Unauth
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(email, expiry, employeeID)
+	actual := timesheet.VerifyAuthentication(email, IDTokenExpirationTime, employeeID)
 
 	assert.Equal(t, expected, actual)
 }
@@ -589,14 +589,14 @@ func Test_VerifyAuthentication_Input_AccessToken_EmployeeID_071_Should_Be_Succes
 	employeeID := "071"
 	os.Setenv("FIX_TIME", "20181201083000")
 	email := "logintest535@gmail.com"
-	expiry := 1569920400.00
+	IDTokenExpirationTime := 1569920400.00
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
 	mockRepositoryToTimesheet.On("GetEmployeeIDByEmail", mock.Anything).Return("071", nil)
 	timesheet := Timesheet{
 		Repository: mockRepositoryToTimesheet,
 	}
 
-	actual := timesheet.VerifyAuthentication(email, expiry, employeeID)
+	actual := timesheet.VerifyAuthentication(email, IDTokenExpirationTime, employeeID)
 
 	assert.Equal(t, expected, actual)
 }
