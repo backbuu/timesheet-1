@@ -52,8 +52,8 @@ func main() {
 	router.POST("/showTimesheetByID", api.GetSummaryByEmployeeIDHandler)
 	router.POST("/updateStatusCheckingTransfer", api.UpdateStatusCheckingTransferHandler)
 	router.POST("/deleteIncomeItem", api.DeleteIncomeHandler)
-	router.POST("/showMemberDetailsByID", api.ShowEmployeeDetailsByEmployeeIDHandler)
-	router.POST("/updateMemberDetails", api.UpdateEmployeeDetailsHandler)
+	router.POST("/showEmployeeDetailsByID", api.ShowEmployeeDetailsByEmployeeIDHandler)
+	router.POST("/updateEmployeeDetails", api.UpdateEmployeeDetailsHandler)
 	router.StaticFS("/home", http.Dir("ui"))
 	log.Fatal(router.Run())
 }

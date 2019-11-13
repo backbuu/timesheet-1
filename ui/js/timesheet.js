@@ -495,7 +495,7 @@ function getEmployeeByID(){
     var employeeID =  params.get("id");
 
     var request = new XMLHttpRequest();
-    var url = "/showMemberDetailsByID";
+    var url = "/showEmployeeDetailsByID";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
@@ -564,7 +564,7 @@ function editEmployeeDetails(index){
     var travelExpense = parseFloat($("#travel_expense_id_"+index).val());
 
     var request = new XMLHttpRequest();
-    var url = "/updateMemberDetails";
+    var url = "/updateEmployeeDetails";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", getCookie("id_token")); 
