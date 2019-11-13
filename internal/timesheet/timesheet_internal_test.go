@@ -138,7 +138,7 @@ func Test_CalculateTotalCoachingCustomerCharging_Input_IncomeList_Should_Be_6000
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -152,7 +152,7 @@ func Test_CalculateTotalCoachingCustomerCharging_Input_IncomeList_Should_Be_6000
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -166,7 +166,7 @@ func Test_CalculateTotalCoachingCustomerCharging_Input_IncomeList_Should_Be_6000
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -176,9 +176,9 @@ func Test_CalculateTotalCoachingCustomerCharging_Input_IncomeList_Should_Be_6000
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalOtherWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri_TravelExpense_0_Should_Be_45000(t *testing.T) {
+func Test_CalculateTotalOtherWageBycompany_id_Input_IncomeList_companyID_2_TravelExpense_0_Should_Be_45000(t *testing.T) {
 	expected := 45000.00
-	company := "shu_ha_ri"
+	companyID := 2
 	travelExpense := 0.00
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
@@ -197,7 +197,7 @@ func Test_CalculateTotalOtherWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri_Tr
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -211,7 +211,7 @@ func Test_CalculateTotalOtherWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri_Tr
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                25000.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -225,12 +225,12 @@ func Test_CalculateTotalOtherWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri_Tr
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                20000.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
 
-	actual := calculateTotalOtherWageByCompany(incomeList, company, travelExpense)
+	actual := calculateTotalOtherWageByCompanyID(incomeList, companyID, travelExpense)
 
 	assert.Equal(t, expected, actual)
 }
@@ -254,7 +254,7 @@ func Test_CalculateTotalOtherWage_Input_IncomeList_Should_Be_55000(t *testing.T)
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                10000.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -268,7 +268,7 @@ func Test_CalculateTotalOtherWage_Input_IncomeList_Should_Be_55000(t *testing.T)
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                25000.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -282,7 +282,7 @@ func Test_CalculateTotalOtherWage_Input_IncomeList_Should_Be_55000(t *testing.T)
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                20000.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -292,9 +292,9 @@ func Test_CalculateTotalOtherWage_Input_IncomeList_Should_Be_55000(t *testing.T)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalCoachingPaymentRateByCompany_Input_IncomeList_Company_SiamChamnankit_Should_Be_10000(t *testing.T) {
+func Test_CalculateTotalCoachingPaymentRateBycompany_id_Input_IncomeList_companyID_1_Should_Be_10000(t *testing.T) {
 	expected := 10000.00
-	company := "siam_chamnankit"
+	companyID := 1
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -312,7 +312,7 @@ func Test_CalculateTotalCoachingPaymentRateByCompany_Input_IncomeList_Company_Si
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -326,7 +326,7 @@ func Test_CalculateTotalCoachingPaymentRateByCompany_Input_IncomeList_Company_Si
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -340,12 +340,12 @@ func Test_CalculateTotalCoachingPaymentRateByCompany_Input_IncomeList_Company_Si
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
 
-	actual := calculateTotalCoachingPaymentRateByCompany(incomeList, company)
+	actual := calculateTotalCoachingPaymentRateByCompanyID(incomeList, companyID)
 
 	assert.Equal(t, expected, actual)
 }
@@ -369,7 +369,7 @@ func Test_CalculateTotalCoachingPaymentRate_Input_IncomeList_Should_Be_20000(t *
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             155000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -383,7 +383,7 @@ func Test_CalculateTotalCoachingPaymentRate_Input_IncomeList_Should_Be_20000(t *
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -397,7 +397,7 @@ func Test_CalculateTotalCoachingPaymentRate_Input_IncomeList_Should_Be_20000(t *
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -407,9 +407,9 @@ func Test_CalculateTotalCoachingPaymentRate_Input_IncomeList_Should_Be_20000(t *
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CalculateTotalTrainingWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri_Should_Be_20000(t *testing.T) {
+func Test_CalculateTotalTrainingWageBycompany_id_Input_IncomeList_companyID_2_Should_Be_20000(t *testing.T) {
 	expected := 20000.00
-	company := "shu_ha_ri"
+	companyID := 2
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -427,7 +427,7 @@ func Test_CalculateTotalTrainingWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             10000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -441,7 +441,7 @@ func Test_CalculateTotalTrainingWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             10000.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -455,12 +455,12 @@ func Test_CalculateTotalTrainingWageByCompany_Input_IncomeList_Company_Shu_Ha_Ri
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             10000.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
 
-	actual := calculateTotalTrainingWageByCompany(incomeList, company)
+	actual := calculateTotalTrainingWageByCompanyID(incomeList, companyID)
 
 	assert.Equal(t, expected, actual)
 }
@@ -484,7 +484,7 @@ func Test_CalculateTotalTrainingWage_Input_IncomeList_Should_Be_30000(t *testing
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             10000.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -498,7 +498,7 @@ func Test_CalculateTotalTrainingWage_Input_IncomeList_Should_Be_30000(t *testing
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             10000.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 		{
@@ -512,7 +512,7 @@ func Test_CalculateTotalTrainingWage_Input_IncomeList_Should_Be_30000(t *testing
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             10000.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
