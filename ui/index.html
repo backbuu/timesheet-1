@@ -29,11 +29,11 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a style="text-align: center;">แสดง TIMESHEET รายบุคคล : </a></li>
+        <li><a style="text-align: center;">SHOW TIMESHEET : </a></li>
         <li><a style="text-align: center;"><form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
             <input type="month" id="date" name="date" style="color:black;">
               <select name="id" id="id" style="color:black;">
-                <option value="" selected disabled hidden>รายชื่อ</option>
+                <option value="" selected disabled hidden>Employee List</option>
                 <option value="007">TEST LOGIN</option>
                 <option value="015">PRUTH</option>
                 <option value="001">PRATHAN</option>
@@ -50,7 +50,7 @@
                 <option value="006">PANUMARS</option>
                 <option value="014">NATTAKIT</option>      
             </select>
-            <input type="submit" id="button_show_summary_by_id" value="ค้นหา"/>
+            <input type="submit" id="button_show_summary_by_id" value="SEARCH"/>
         </form></a></li>
         
       </ul>
@@ -65,97 +65,14 @@
 
 <div class="content">
     <div class="col-3 col-s-3 menu">
-      <ul><li style="text-align: center;">แสดง TIMESHEET ทั้งหมด</li><li style="text-align: center;"><input id="date_summary" name="date_summary" type="month" style="color:black;">
-      <input id="button_show_summary" type="submit" value="ยืนยัน" onclick="showSummary()"/></li></ul>
+      <ul><li style="text-align: center;">PAYMENTS</li>
+        <li style="text-align: center;"><input id="date_summary" name="date_summary" type="month" style="color:black;">
+      <input id="button_show_summary" type="submit" value="SEARCH" onclick="showSummary()"/></li></ul>
     </div>
   <br><br>
 
-  <h2 class="title_company">SIAM CHAMNANKIT</h2>
-  <table class="table_company" width="2200">
-      <tr>
-        <th rowspan="3">ลำดับที่</th>
-        <th rowspan="3">พนักงาน</th>
-        <th colspan="4">รายได้</th>
-        <th colspan="4"></th>
-        <th colspan="5">รายรับก้อนเงินค่าจ้าง หัก ณ ที่จ่าย ภ.ง.ด. 53</th>
-        <th rowspan="3">สถานะการตรวจสอบ</th>
-        <th rowspan="3">วันที่โอนเงิน</th>
-        <th rowspan="3" colspan="2">หมายเหตุ</th>
-        </tr> 
-        <tr>
-        <td>Coaching</td>
-        <td>Training</td>
-        <td>Other</td>
-        <td>รวม</td>
-        <td>เงินเดือน</td>
-        <td>หัก ณ ที่จ่าย ภ.ง.ด.1</td>
-        <td>หัก ประกันสังคม</td>
-        <td>ยอดสุทธิเงินเดือน</td>
-        <td>เงินค่าจ้าง</td>
-        <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
-        <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
-        <td>ยอดสุทธิค่าจ้าง</td>
-        <td>ยอดโอนเงินสุทธิ</td>
-        </tr>
-        <tr>
-        <td id="total_coaching_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_traning_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_other_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_incomes_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_salary_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_income_tax_1_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_social_security_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_net_salary_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_wage_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_income_tax_53_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_net_wage_siam_chamnankit">฿ 0.00 </td>
-        <td id="total_net_transfer_siam_chamnankit">฿ 0.00 </td>
-        </tr>
-        <tbody id="table_siam_chamnankit"></tbody>
-    </table>
-  <h2 class="title_company">SHUHARI</h2>
-  <table class="table_company" width="2200">
-      <tr>
-        <th rowspan="3">ลำดับที่</th>
-        <th rowspan="3">พนักงาน</th>
-        <th colspan="4">รายได้</th>
-        <th colspan="4"></th>
-        <th colspan="5">รายรับก้อนเงินค่าจ้าง หัก ณ ที่จ่าย ภ.ง.ด. 53</th>
-        <th rowspan="3">สถานะการตรวจสอบ</th>
-        <th rowspan="3">วันที่โอนเงิน</th>
-        <th rowspan="3" colspan="2">หมายเหตุ</th>
-         </tr> 
-        <tr>
-        <td>Coaching</td>
-        <td>Training</td>
-        <td>Other</td>
-        <td>รวม</td>
-        <td>เงินเดือน</td>
-        <td>หัก ณ ที่จ่าย ภ.ง.ด.1</td>
-        <td>หัก ประกันสังคม</td>
-        <td>ยอดสุทธิเงินเดือน</td>
-        <td>เงินค่าจ้าง</td>
-        <td rowspan="2">หัก ณ ที่จ่าย ภ.ง.ด.53 (ร้อยละ)</td>
-        <td>หัก ณ ที่จ่าย ภ.ง.ด.53</td>
-        <td>ยอดสุทธิค่าจ้าง</td>
-        <td>ยอดโอนเงินสุทธิ</td>
-        </tr>
-        <tr>
-        <td id="total_coaching_shuhari">฿ 0.00 </td>
-        <td id="total_traning_shuhari">฿ 0.00 </td>
-        <td id="total_other_shuhari">฿ 0.00 </td>
-        <td id="total_incomes_shuhari">฿ 0.00 </td>
-        <td id="total_salary_shuhari">฿ 0.00 </td>
-        <td id="total_income_tax_1_shuhari">฿ 0.00 </td>
-        <td id="total_social_security_shuhari">฿ 0.00 </td>
-        <td id="total_net_salary_shuhari">฿ 0.00 </td>
-        <td id="total_wage_shuhari">฿ 0.00 </td>
-        <td id="total_income_tax_53_shuhari">฿ 0.00 </td>
-        <td id="total_net_wage_shuhari">฿ 0.00 </td>
-        <td id="total_net_transferShuhari">฿ 0.00 </td>
-        </tr>
-        <tbody id="table_shuhari"></tbody>
-  </table>
+  <div id="table_company"></div>
+
   <button onclick="topFunction()" id="button_to_top" title="Go to top">Top</button>
 </div>
 </body>
