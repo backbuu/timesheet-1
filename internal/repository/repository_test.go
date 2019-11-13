@@ -15,7 +15,7 @@ import (
 func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			ID:                     "001201712siam_chamnankit",
+			ID:                     "00120171201",
 			MemberID:               "001",
 			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
@@ -68,7 +68,6 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 		EndTimeAM:                endTimeAM,
 		StartTimePM:              startTimePM,
 		EndTimePM:                endTimePM,
-		Overtime:                 0,
 		TotalHours:               totalHours,
 		CoachingCustomerCharging: 15000.00,
 		CoachingPaymentRate:      10000.00,
@@ -97,7 +96,6 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                80000.00,
@@ -111,11 +109,10 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 		{
 			ID:                    2,
 			MemberID:              "001",
-			Company:               "shuhari",
+			Company:               "shu_ha_ri",
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
-			OvertimeRate:          0.00,
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
 			Salary:                0.00,
@@ -163,13 +160,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 			EndTimeAM:                endTimeAMDay11,
 			StartTimePM:              startTimePMDay11,
 			EndTimePM:                endTimePMDay11,
-			Overtime:                 0,
 			TotalHours:               totalHoursDay11,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			Company:                  "shu_ha_ri",
 			Description:              "work at TN",
 		}, {
 			ID:                       59,
@@ -181,13 +177,12 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 			EndTimeAM:                endTimeAMDay12,
 			StartTimePM:              startTimePMDay12,
 			EndTimePM:                endTimePMDay12,
-			Overtime:                 0,
 			TotalHours:               totalHoursDay12,
 			CoachingCustomerCharging: 0.00,
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shuhari",
+			Company:                  "shu_ha_ri",
 			Description:              "work at TN",
 		},
 	}
@@ -212,7 +207,7 @@ func Test_VerifyTransactionTimesheet_Input_Transaction_MemberID_001_Should_Be_Cr
 			MemberID:               "001",
 			Month:                  12,
 			Year:                   2019,
-			Company:                "shuhari",
+			Company:                "shu_ha_ri",
 			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 			Coaching:               20000.00,
 			Training:               0.00,
@@ -262,14 +257,14 @@ func Test_VerifyTransactionTimesheet_Input_Transaction_MemberID_001_Should_Be_Cr
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTransactionTimesheet_Input_TransactionID_006201912shuhari_TransactionTimesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
-	transactionID := "006201912shuhari"
+func Test_CreateTransactionTimesheet_Input_TransactionID_00620191202_TransactionTimesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
+	transactionID := "00620191202"
 	transactionTimesheet := model.TransactionTimesheet{
 		MemberID:               "006",
 		MemberNameTH:           "ภาณุมาศ แสนโท",
 		Month:                  12,
 		Year:                   2019,
-		Company:                "shuhari",
+		Company:                "shu_ha_ri",
 		Coaching:               0.00,
 		Training:               0.00,
 		Other:                  6500.00,
@@ -296,13 +291,13 @@ func Test_CreateTransactionTimesheet_Input_TransactionID_006201912shuhari_Transa
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateTransactionTimesheet_Input_TransactionID_001201911shuhari_TransactionTimesheet_MemberID_001_Should_Be_No_Error(t *testing.T) {
-	transactionID := "001201911shuhari"
+func Test_UpdateTransactionTimesheet_Input_TransactionID_00120191102_TransactionTimesheet_MemberID_001_Should_Be_No_Error(t *testing.T) {
+	transactionID := "00120191102"
 	transactionTimesheet := model.TransactionTimesheet{
 		MemberID:              "001",
 		Month:                 11,
 		Year:                  2019,
-		Company:               "shuhari",
+		Company:               "shu_ha_ri",
 		Coaching:              10000.00,
 		Training:              10000.00,
 		Other:                 6500.00,
@@ -378,6 +373,8 @@ func Test_GetTimesheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet
 		TotalTrainigWage:              120000.00,
 		TotalOtherWage:                0.00,
 		PaymentWage:                   120000.00,
+		RatePerDay:                    15000.00,
+		RatePerHour:                   1875.00,
 	}
 	memberID := "003"
 	month := 12
@@ -429,7 +426,6 @@ func Test_UpdateMemberDetails_Input_Member_Should_Be_No_Error(t *testing.T) {
 		MemberNameTH:          "ภาณุมาศ แสนโท",
 		MemberNameENG:         "Panumars Seanto",
 		Email:                 "panumars@scrum123.com",
-		OvertimeRate:          0.00,
 		RatePerDay:            15000.00,
 		RatePerHour:           1875.00,
 		Salary:                25000.00,
@@ -512,7 +508,7 @@ func Test_UpdatePictureToMembers_Input_Email_prathan_scrum123_com_And_Picture_Sh
 func Test_GetTransactionTimesheets_Input_MemberID_001_Year_2017_Should_Be_TransactionTimesheetList(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			ID:                     "001201712siam_chamnankit",
+			ID:                     "00120171201",
 			MemberID:               "001",
 			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
