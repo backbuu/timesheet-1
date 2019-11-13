@@ -22,16 +22,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member english name should be Panumars Seanto\", function () {",
-									"    pm.expect(jsonData.member_name_eng).to.eql(\"Panumars Seanto\");",
+									"pm.test(\"Employee english name should be Panumars Seanto\", function () {",
+									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Panumars Seanto\");",
 									"});",
 									"",
 									"pm.test(\"Email should be panumars@scrum123.com\", function () {",
 									"    pm.expect(jsonData.email).to.eql(\"panumars@scrum123.com\");",
-									"});",
-									"",
-									"pm.test(\"Overtime rate should be 0\", function () {",
-									"    pm.expect(jsonData.overtime_rate).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Rate per day should be 0\", function () {",
@@ -94,7 +90,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"006\"\n}"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"006\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/showTimesheetByID",
@@ -143,7 +139,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":9,\n\t\"member_id\":\"006\",\n\t\"member_name_th\":\"ภาณุมาศ แสนโท\",\n\t\"member_name_eng\":\"Panumars Seanto\",\n\t\"email\":\"panumars@scrum123.com\",\n\t\"overtime_rate\":2000,\n\t\"rate_per_day\":15000,\n\t\"rate_per_hour\":1875,\n\t\"salary\":25000,\n\t\"income_tax_1\":0,\n\t\"social_security\":750,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":1500,\n\t\"status\":\"salary\"\n}"
+							"raw": "{\n\t\"id\":9,\n\t\"employee_id\":\"006\",\n\t\"employee_name_th\":\"ภาณุมาศ แสนโท\",\n\t\"employee_name_eng\":\"Panumars Seanto\",\n\t\"email\":\"panumars@scrum123.com\",\n\t\"rate_per_day\":15000,\n\t\"rate_per_hour\":1875,\n\t\"salary\":25000,\n\t\"income_tax_1\":0,\n\t\"social_security\":750,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":1500,\n\t\"status\":\"salary\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/updateMemberDetails",
@@ -173,16 +169,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member english name should be Panumars Seanto\", function () {",
-									"    pm.expect(jsonData.member_name_eng).to.eql(\"Panumars Seanto\");",
+									"pm.test(\"Employee english name should be Panumars Seanto\", function () {",
+									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Panumars Seanto\");",
 									"});",
 									"",
 									"pm.test(\"Email should be panumars@scrum123.com\", function () {",
 									"    pm.expect(jsonData.email).to.eql(\"panumars@scrum123.com\");",
-									"});",
-									"",
-									"pm.test(\"Overtime rate should be 2000\", function () {",
-									"    pm.expect(jsonData.overtime_rate).to.eql(2000);",
 									"});",
 									"",
 									"pm.test(\"Rate per day should be 15000\", function () {",
@@ -245,7 +237,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"006\"\n}"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"006\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/showTimesheetByID",
