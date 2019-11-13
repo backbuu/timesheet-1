@@ -18,7 +18,7 @@ import (
 )
 
 func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_SummaryTimesheet(t *testing.T) {
-	expected := `{"member_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"member_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shu_ha_ri","description":"Technical Excellence at Khonkean"},{"id":62,"member_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company":"shu_ha_ri","description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
+	expected := `{"employee_name_eng":"Somkiat Puisungnoen","email":"somkiat@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"year":2019,"month":12,"incomes":[{"id":61,"employee_id":"003","month":12,"year":2019,"day":1,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company_id":2,"description":"Technical Excellence at Khonkean"},{"id":62,"employee_id":"003","month":12,"year":2019,"day":2,"start_time_am":"2018-12-01T09:00:00Z","end_time_am":"2018-12-01T12:00:00Z","start_time_pm":"2018-12-01T13:00:00Z","end_time_pm":"2018-12-01T18:00:00Z","total_hours":"2018-12-01T08:00:00Z","coaching_customer_charging":0,"coaching_payment_rate":0,"training_wage":40000,"other_wage":0,"company_id":2,"description":"Technical Excellence at Khonkean"}],"timesheet_id":"003201912","total_hours":"16:00:00","total_coaching_customer_charging":0,"total_coaching_payment_rate":0,"total_training_wage":80000,"total_other_wage":0,"payment_wage":80000}`
 	timesheetRequest := TimesheetRequest{
 		Year:     2019,
 		Month:    12,
@@ -57,7 +57,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shu_ha_ri",
+				CompanyID:                2,
 				Description:              "Technical Excellence at Khonkean",
 			},
 			{
@@ -75,7 +75,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 				CoachingPaymentRate:      0.00,
 				TrainingWage:             40000.00,
 				OtherWage:                0.00,
-				Company:                  "shu_ha_ri",
+				CompanyID:                2,
 				Description:              "Technical Excellence at Khonkean",
 			},
 		},
@@ -102,7 +102,7 @@ func Test_GetSummaryByIDHandler_Input_Year_2019_Month_12_MemberID_003_Should_Be_
 }
 
 func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `[{"id":"00120181201","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company":"shu_ha_ri","coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
+	expected := `[{"id":"00120181201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""},{"id":"00120181202","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2018,"company_id":2,"coaching":0,"training":40000,"other":0,"total_incomes":40000,"salary":0,"income_tax_1":0,"social_security":0,"net_salary":0,"wage":40000,"income_tax_53_percentage":10,"income_tax_53":4000,"net_wage":36000,"net_transfer":36000,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}]`
 	date := Date{
 		Year:  2018,
 		Month: 12,
@@ -119,7 +119,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2018,
-			Company:                "siam_chamnankit",
+			CompanyID:              1,
 			Coaching:               85000.00,
 			Training:               30000.00,
 			Other:                  40000.00,
@@ -142,7 +142,7 @@ func Test_GetSummaryHandler_Input_Year_2018_Month_12_Should_Be_TransactionTimesh
 			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2018,
-			Company:                "shu_ha_ri",
+			CompanyID:              2,
 			Coaching:               0.00,
 			Training:               40000.00,
 			Other:                  0.00,
@@ -194,7 +194,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 			CoachingPaymentRate:      10000.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}
@@ -217,7 +217,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_MemberID_001_Income_Shoul
 		CoachingPaymentRate:      10000.00,
 		TrainingWage:             0.00,
 		OtherWage:                0.00,
-		Company:                  "siam_chamnankit",
+		CompanyID:                1,
 		Description:              "[KBTG] 2 Days Agile Project Management",
 	}).Return(nil)
 
@@ -266,7 +266,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             40000.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "[IMC]GSB: Agile Project Mgmt",
 		},
 		{
@@ -280,7 +280,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			CoachingPaymentRate:      85000.00,
 			TrainingWage:             30000.00,
 			OtherWage:                40000.00,
-			Company:                  "siam_chamnankit",
+			CompanyID:                1,
 			Description:              "[KBTG] 2 Days Agile Project Management",
 		},
 	}, nil)
@@ -301,7 +301,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		{
 			ID:                    1,
 			MemberID:              "001",
-			Company:               "siam_chamnankit",
+			CompanyID:             1,
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
@@ -316,7 +316,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 		{
 			ID:                    2,
 			MemberID:              "001",
-			Company:               "shu_ha_ri",
+			CompanyID:             2,
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
@@ -336,7 +336,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                 12,
 			Year:                  2018,
-			Company:               "siam_chamnankit",
+			CompanyID:             1,
 			Coaching:              85000.00,
 			Training:              30000.00,
 			Other:                 40000.00,
@@ -355,7 +355,7 @@ func Test_CalculatePaymentHandler_Input_MemberID_001_Year_2018_Month_12_Should_B
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                 12,
 			Year:                  2018,
-			Company:               "shu_ha_ri",
+			CompanyID:             2,
 			Coaching:              0.00,
 			Training:              40000.00,
 			Other:                 0.00,
@@ -447,7 +447,7 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 }
 
 func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetails(t *testing.T) {
-	expected := `[{"id":1,"member_id":"001","company":"siam_chamnankit","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"member_id":"001","company":"shu_ha_ri","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","member_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
+	expected := `[{"id":1,"employee_id":"001","company_id":1,"employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"employee_id":"001","company_id":2,"employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
 	memberRequest := MemberRequest{
 		MemberID: "001",
 	}
@@ -460,7 +460,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 		{
 			ID:                    1,
 			MemberID:              "001",
-			Company:               "siam_chamnankit",
+			CompanyID:             1,
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
@@ -477,7 +477,7 @@ func Test_ShowMemberDetailsByIDHandler_Input_MemberID_001_Should_Be_MemberDetail
 		{
 			ID:                    2,
 			MemberID:              "001",
-			Company:               "shu_ha_ri",
+			CompanyID:             2,
 			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
 			MemberNameENG:         "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
@@ -560,7 +560,7 @@ func Test_UpdateMemberDetailsHandler_Input_Member_Should_Be_Status_200(t *testin
 }
 
 func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_Profile(t *testing.T) {
-	expected := `{"member_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
+	expected := `{"employee_id":"007","email":"logintest535@gmail.com","picture":"https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"}`
 	request := httptest.NewRequest("GET", "/showProfile", nil)
 	writer := httptest.NewRecorder()
 	request.Header.Add("Authorization", "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6ImxvZ2ludGVzdDUzNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzQ2NTc3NH0.FieIq3nqnEk4sKgNN3gOAHRat-Gj7ewvLV6ri9P4k1_PsoBOSL2brb02HAYrYFYl1NPFwymcp96j_5ZbZnV2k2JbhXvaocPc75pUO8pfzNzVzSp8JiU-OpqUb5CSoguJ6ejLTTGLzFkZ2Uu51GY0Kb_SNkSMGXHwIOlIdSx2UzqrfAqZAliSp_5D1Cp7Ot1I95uv0C79h3TB0ODY9zESsP4lF542ic9sseCt7KCfmoh9hq24OBW9nRLOPqXhOgInvvtqghQd2p7nv88GUdMuCOAFJZgg3_5zoLPkGBiAJcdwwcCoU-kd6r6mcxjKN2xbwFa4G5NskLzNRpUlJQpSRA")
@@ -586,7 +586,7 @@ func Test_GetProfileHandler_Input_Header_Email_logintest535_gmail_com_Should_Be_
 }
 
 func Test_ShowSummaryInYearHandler_Input_MemberID_001_Year_2017_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `{"member_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","member_id":"001","member_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2017,"company":"siam_chamnankit","coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
+	expected := `{"employee_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","month":12,"year":2017,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
 	summaryInYearRequest := SummaryInYearRequest{
 		MemberID: "001",
 		Year:     2017,
@@ -605,7 +605,7 @@ func Test_ShowSummaryInYearHandler_Input_MemberID_001_Year_2017_Should_Be_Transa
 				MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
 				Month:                  12,
 				Year:                   2017,
-				Company:                "siam_chamnankit",
+				CompanyID:              1,
 				Coaching:               85000.00,
 				Training:               30000.00,
 				Other:                  40000.00,
