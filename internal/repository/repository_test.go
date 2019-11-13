@@ -16,11 +16,11 @@ func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *
 	expected := []model.TransactionTimesheet{
 		{
 			ID:                     "00120171201",
-			MemberID:               "001",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:             "001",
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2017,
-			Company:                "siam_chamnankit",
+			CompanyID:              1,
 			Coaching:               85000.00,
 			Training:               30000.00,
 			Other:                  40000.00,
@@ -53,7 +53,7 @@ func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *
 	assert.Equal(t, expected, actual)
 }
 
-func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No_Error(t *testing.T) {
+func Test_CreateIncome_Input_Year_2017_Month_12_EmployeeID_001_Income_Should_Be_No_Error(t *testing.T) {
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
 	endTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 12:00:00")
 	startTimePM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 13:00:00")
@@ -61,7 +61,7 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 	totalHours, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 08:00:00")
 	year := 2017
 	month := 12
-	memberID := "001"
+	employeeID := "001"
 	income := model.Incomes{
 		Day:                      28,
 		StartTimeAM:              startTimeAM,
@@ -73,7 +73,7 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 		CoachingPaymentRate:      10000.00,
 		TrainingWage:             0.00,
 		OtherWage:                0.00,
-		Company:                  "siam_chamnankit",
+		CompanyID:                1,
 		Description:              "[KBTG] 2 Days Agile Project Management",
 	}
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -82,19 +82,19 @@ func Test_CreateIncome_Input_Year_2017_Month_12_MemberID_001_Income_Should_Be_No
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.CreateIncome(year, month, memberID, income)
+	err := repository.CreateIncome(year, month, employeeID, income)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *testing.T) {
-	expected := []model.Member{
+func Test_GetEmployeeListByEmployeeID_Input_EmployeeID_001_Should_Be_EmployeeList(t *testing.T) {
+	expected := []model.Employee{
 		{
 			ID:                    1,
-			MemberID:              "001",
-			Company:               "siam_chamnankit",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             1,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
@@ -108,10 +108,10 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 		},
 		{
 			ID:                    2,
-			MemberID:              "001",
-			Company:               "shu_ha_ri",
-			MemberNameTH:          "ประธาน ด่านสกุลเจริญกิจ",
-			MemberNameENG:         "Prathan Dansakulcharoenkit",
+			EmployeeID:            "001",
+			CompanyID:             2,
+			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
 			RatePerDay:            15000.00,
 			RatePerHour:           1875.00,
@@ -124,20 +124,20 @@ func Test_GetMemberListByMemberID_Input_MemberID_001_Should_Be_MemberList(t *tes
 			Picture:               "",
 		},
 	}
-	memberID := "001"
+	employeeID := "001"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
 	defer databaseConnection.Close()
 	repository := TimesheetRepository{
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetMemberListByMemberID(memberID)
+	actual, err := repository.GetEmployeeListByEmployeeID(employeeID)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(t *testing.T) {
+func Test_GetIncomes_Input_EmployeeID_006_Year_2019_Month_12_Should_Be_IncomeList(t *testing.T) {
 	startTimeAMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 09:00:00")
 	endTimeAMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 12:00:00")
 	startTimePMDay11, _ := time.Parse("2006-01-02 15:04:05", "2018-12-11 13:00:00")
@@ -152,7 +152,7 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 	expected := []model.Incomes{
 		{
 			ID:                       58,
-			MemberID:                 "006",
+			EmployeeID:               "006",
 			Month:                    12,
 			Year:                     2019,
 			Day:                      11,
@@ -165,11 +165,11 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "work at TN",
 		}, {
 			ID:                       59,
-			MemberID:                 "006",
+			EmployeeID:               "006",
 			Month:                    12,
 			Year:                     2019,
 			Day:                      12,
@@ -182,11 +182,11 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 			CoachingPaymentRate:      0.00,
 			TrainingWage:             0.00,
 			OtherWage:                0.00,
-			Company:                  "shu_ha_ri",
+			CompanyID:                2,
 			Description:              "work at TN",
 		},
 	}
-	memberID := "006"
+	employeeID := "006"
 	month := 12
 	year := 2019
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
@@ -195,20 +195,20 @@ func Test_GetIncomes_Input_MemberID_006_Year_2019_Month_12_Should_Be_IncomeList(
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetIncomes(memberID, year, month)
+	actual, err := repository.GetIncomes(employeeID, year, month)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_VerifyTransactionTimesheet_Input_Transaction_MemberID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
+func Test_VerifyTransactionTimesheet_Input_Transaction_EmployeeID_001_Should_Be_Create_TransactionTimesheet_And_Update_TransactionTimesheet(t *testing.T) {
 	transactionTimesheetList := []model.TransactionTimesheet{
 		{
-			MemberID:               "001",
+			EmployeeID:             "001",
 			Month:                  12,
 			Year:                   2019,
-			Company:                "shu_ha_ri",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			CompanyID:              2,
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Coaching:               20000.00,
 			Training:               0.00,
 			Other:                  6500.00,
@@ -225,11 +225,11 @@ func Test_VerifyTransactionTimesheet_Input_Transaction_MemberID_001_Should_Be_Cr
 			StatusCheckingTransfer: "รอการตรวจสอบ",
 		},
 		{
-			MemberID:               "001",
+			EmployeeID:             "001",
 			Month:                  12,
 			Year:                   2019,
-			Company:                "siam_chamnankit",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			CompanyID:              1,
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Coaching:               30000.00,
 			Training:               0.00,
 			Other:                  6500.00,
@@ -257,14 +257,14 @@ func Test_VerifyTransactionTimesheet_Input_Transaction_MemberID_001_Should_Be_Cr
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTransactionTimesheet_Input_TransactionID_00620191202_TransactionTimesheet_MemberID_006_Should_Be_No_Error(t *testing.T) {
+func Test_CreateTransactionTimesheet_Input_TransactionID_00620191202_TransactionTimesheet_EmployeeID_006_Should_Be_No_Error(t *testing.T) {
 	transactionID := "00620191202"
 	transactionTimesheet := model.TransactionTimesheet{
-		MemberID:               "006",
-		MemberNameTH:           "ภาณุมาศ แสนโท",
+		EmployeeID:             "006",
+		EmployeeNameTH:         "ภาณุมาศ แสนโท",
 		Month:                  12,
 		Year:                   2019,
-		Company:                "shu_ha_ri",
+		CompanyID:              2,
 		Coaching:               0.00,
 		Training:               0.00,
 		Other:                  6500.00,
@@ -291,13 +291,13 @@ func Test_CreateTransactionTimesheet_Input_TransactionID_00620191202_Transaction
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateTransactionTimesheet_Input_TransactionID_00120191102_TransactionTimesheet_MemberID_001_Should_Be_No_Error(t *testing.T) {
+func Test_UpdateTransactionTimesheet_Input_TransactionID_00120191102_TransactionTimesheet_EmployeeID_001_Should_Be_No_Error(t *testing.T) {
 	transactionID := "00120191102"
 	transactionTimesheet := model.TransactionTimesheet{
-		MemberID:              "001",
+		EmployeeID:            "001",
 		Month:                 11,
 		Year:                  2019,
-		Company:               "shu_ha_ri",
+		CompanyID:             2,
 		Coaching:              10000.00,
 		Training:              10000.00,
 		Other:                 6500.00,
@@ -323,8 +323,8 @@ func Test_UpdateTransactionTimesheet_Input_TransactionID_00120191102_Transaction
 	assert.Equal(t, nil, err)
 }
 
-func Test_CreateTimesheet_Input_MemberID_006_Month_12_Year_2019_Should_Be_No_Error(t *testing.T) {
-	memberID := "006"
+func Test_CreateTimesheet_Input_EmployeeID_006_Month_12_Year_2019_Should_Be_No_Error(t *testing.T) {
+	employeeID := "006"
 	month := 12
 	year := 2019
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -333,12 +333,12 @@ func Test_CreateTimesheet_Input_MemberID_006_Month_12_Year_2019_Should_Be_No_Err
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.CreateTimesheet(memberID, year, month)
+	err := repository.CreateTimesheet(employeeID, year, month)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateTimesheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
+func Test_UpdateTimesheet_Input_Timesheet_EmployeeID_007_Year_2019_Month_12_Should_Be_No_Error(t *testing.T) {
 	timesheet := model.Timesheet{
 		TotalHours:                    "120:30:30",
 		TotalCoachingCustomerCharging: 90000.00,
@@ -347,7 +347,7 @@ func Test_UpdateTimesheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should
 		TotalOtherWage:                30000.00,
 		PaymentWage:                   60000.00,
 	}
-	memberID := "007"
+	employeeID := "007"
 	month := 12
 	year := 2019
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -356,15 +356,15 @@ func Test_UpdateTimesheet_Input_Timesheet_MemberID_007_Year_2019_Month_12_Should
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdateTimesheet(timesheet, memberID, year, month)
+	err := repository.UpdateTimesheet(timesheet, employeeID, year, month)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetTimesheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet(t *testing.T) {
+func Test_GetTimesheet_Input_EmployeeID_003_Month_12_Year_2017_Should_Be_Timesheet(t *testing.T) {
 	expected := model.Timesheet{
 		ID:                            "003201712",
-		MemberID:                      "003",
+		EmployeeID:                    "003",
 		Month:                         12,
 		Year:                          2017,
 		TotalHours:                    "88:00:00",
@@ -376,7 +376,7 @@ func Test_GetTimesheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet
 		RatePerDay:                    15000.00,
 		RatePerHour:                   1875.00,
 	}
-	memberID := "003"
+	employeeID := "003"
 	month := 12
 	year := 2017
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -385,14 +385,14 @@ func Test_GetTimesheet_Input_MemberID_003_Month_12_Year_2017_Should_Be_Timesheet
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetTimesheet(memberID, year, month)
+	actual, err := repository.GetTimesheet(employeeID, year, month)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_UpdateStatusTransfer_Input_TransactionID_004201912siam_chamnankit_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_No_Error(t *testing.T) {
-	transactionID := "004201912siam_chamnankit"
+func Test_UpdateStatusTransfer_Input_TransactionID_0042019121_Status_TransferSuccess_Date_30_12_2019_Comment_FlightTicket_Should_Be_No_Error(t *testing.T) {
+	transactionID := "0042019121"
 	status := "โอนเงินเรียบร้อยแล้ว"
 	date := "30/12/2019"
 	comment := "หักค่าตั๋วเครื่องบิน"
@@ -420,11 +420,11 @@ func Test_DeleteIncome_Input_IncomeID_47_Should_Be_No_Error(t *testing.T) {
 	assert.Equal(t, nil, err)
 }
 
-func Test_UpdateMemberDetails_Input_Member_Should_Be_No_Error(t *testing.T) {
-	memberDetails := model.Member{
+func Test_UpdateEmployeeDetails_Input_Employee_Should_Be_No_Error(t *testing.T) {
+	employeeDetails := model.Employee{
 		ID:                    10,
-		MemberNameTH:          "ภาณุมาศ แสนโท",
-		MemberNameENG:         "Panumars Seanto",
+		EmployeeNameTH:        "ภาณุมาศ แสนโท",
+		EmployeeNameENG:       "Panumars Seanto",
 		Email:                 "panumars@scrum123.com",
 		RatePerDay:            15000.00,
 		RatePerHour:           1875.00,
@@ -441,12 +441,12 @@ func Test_UpdateMemberDetails_Input_Member_Should_Be_No_Error(t *testing.T) {
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdateMemberDetails(memberDetails)
+	err := repository.UpdateEmployeeDetails(employeeDetails)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetMemberIDByEmail_Input_Email_prathan_scrum123_com_Should_Be_001(t *testing.T) {
+func Test_GetEmployeeIDByEmail_Input_Email_prathan_scrum123_com_Should_Be_001(t *testing.T) {
 	expected := "001"
 	email := "prathan@scrum123.com"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -455,13 +455,13 @@ func Test_GetMemberIDByEmail_Input_Email_prathan_scrum123_com_Should_Be_001(t *t
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetMemberIDByEmail(email)
+	actual, err := repository.GetEmployeeIDByEmail(email)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetMemberIDByEmail_Input_Email_somkiat_scrum123_com_Should_Be_003(t *testing.T) {
+func Test_GetEmployeeIDByEmail_Input_Email_somkiat_scrum123_com_Should_Be_003(t *testing.T) {
 	expected := "003"
 	email := "somkiat@scrum123.com"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -470,13 +470,13 @@ func Test_GetMemberIDByEmail_Input_Email_somkiat_scrum123_com_Should_Be_003(t *t
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetMemberIDByEmail(email)
+	actual, err := repository.GetEmployeeIDByEmail(email)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetMemberIDByEmail_Input_Email_logintest535_gmail_com_Should_Be_007(t *testing.T) {
+func Test_GetEmployeeIDByEmail_Input_Email_logintest535_gmail_com_Should_Be_007(t *testing.T) {
 	expected := "007"
 	email := "logintest535@gmail.com"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -485,13 +485,13 @@ func Test_GetMemberIDByEmail_Input_Email_logintest535_gmail_com_Should_Be_007(t 
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetMemberIDByEmail(email)
+	actual, err := repository.GetEmployeeIDByEmail(email)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_UpdatePictureToMembers_Input_Email_prathan_scrum123_com_And_Picture_Should_Be_No_Error(t *testing.T) {
+func Test_UpdatePictureToemployees_Input_Email_prathan_scrum123_com_And_Picture_Should_Be_No_Error(t *testing.T) {
 	email := "prathan@scrum123.com"
 	picture := "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
@@ -500,20 +500,20 @@ func Test_UpdatePictureToMembers_Input_Email_prathan_scrum123_com_And_Picture_Sh
 		DatabaseConnection: databaseConnection,
 	}
 
-	err := repository.UpdatePictureToMembers(picture, email)
+	err := repository.UpdatePictureToemployees(picture, email)
 
 	assert.Equal(t, nil, err)
 }
 
-func Test_GetTransactionTimesheets_Input_MemberID_001_Year_2017_Should_Be_TransactionTimesheetList(t *testing.T) {
+func Test_GetTransactionTimesheets_Input_EmployeeID_001_Year_2017_Should_Be_TransactionTimesheetList(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
 			ID:                     "00120171201",
-			MemberID:               "001",
-			MemberNameTH:           "ประธาน ด่านสกุลเจริญกิจ",
+			EmployeeID:             "001",
+			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			Month:                  12,
 			Year:                   2017,
-			Company:                "siam_chamnankit",
+			CompanyID:              1,
 			Coaching:               85000.00,
 			Training:               30000.00,
 			Other:                  40000.00,
@@ -532,7 +532,7 @@ func Test_GetTransactionTimesheets_Input_MemberID_001_Year_2017_Should_Be_Transa
 			Comment:                "",
 		},
 	}
-	memberID := "001"
+	employeeID := "001"
 	year := 2017
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet?parseTime=true")
 	defer databaseConnection.Close()
@@ -540,17 +540,17 @@ func Test_GetTransactionTimesheets_Input_MemberID_001_Year_2017_Should_Be_Transa
 		DatabaseConnection: databaseConnection,
 	}
 
-	actual, err := repository.GetTransactionTimesheets(memberID, year)
+	actual, err := repository.GetTransactionTimesheets(employeeID, year)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetProfileByEmail_Input_Email_nareenart_scrum123_com_Should_Be_MemberID_002_And_Picture(t *testing.T) {
+func Test_GetProfileByEmail_Input_Email_nareenart_scrum123_com_Should_Be_EmployeeID_002_And_Picture(t *testing.T) {
 	expected := model.Profile{
-		MemberID: "002",
-		Email:    "nareenart@scrum123.com",
-		Picture:  "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
+		EmployeeID: "002",
+		Email:      "nareenart@scrum123.com",
+		Picture:    "https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg",
 	}
 	email := "nareenart@scrum123.com"
 	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
