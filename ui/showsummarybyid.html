@@ -28,7 +28,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="/home" style="text-align: center;">HOME</a></li>
-        <li><a href="/home/memberdetails.html" id="button_edit_member" style="text-align: center;">PROFILE</a></li>
+        <li><a href="/home/employeedetails.html" id="button_edit_employee" style="text-align: center;">PROFILE</a></li>
         <li><a style="text-align: center;"><form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
                 <input type="month" id="date" name="date" style="color:black;">
               <select name="id" id="id" style="color:black;">
@@ -65,7 +65,7 @@
 <div class="content"> 
     <div><table class="table_details" style="color: black;">
     <tr>
-        <th>Name : </th><td id="member_name_eng"></td>
+        <th>Name : </th><td id="employee_name_eng"></td>
     </tr>
     <tr>
         <th>Email : </th><td id="email"></td>
@@ -97,11 +97,11 @@
         </tr>
         <tbody id="table_timesheet"></tbody>
         <tr>
-            <th colspan="6">Total Hours:</th>
-            <th colspan="7" id="thours"></th>
+            <th colspan="5">Total Hours:</th>
+            <th id="thours"></th>
         </tr>
         <tr>
-            <th colspan="6">Payment wage:</th>
+            <th colspan="5">Payment wage:</th>
             <th id="payment_wage"></th>
             <th id="total_coaching_customer_charging"></th>
             <th id="total_coaching_payment_rate"></th>
