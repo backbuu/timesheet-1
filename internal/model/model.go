@@ -98,21 +98,11 @@ type Employee struct {
 	Picture               string  `db:"picture" json:"picture"`
 }
 
-type Authentication struct {
-	EmployeeID   string    `db:"employee_id" json:"employee_id"`
-	Email        string    `db:"email" json:"email"`
-	Picture      string    `db:"picture" json:"picture"`
-	AccessToken  string    `db:"access_token" json:"access_token"`
-	TokenType    string    `db:"token_type" json:"token_type"`
-	RefreshToken string    `db:"refresh_token" json:"refresh_token"`
-	Expiry       time.Time `db:"expiry" json:"expiry"`
-}
-
 type Token struct {
-	AccessToken  string    `json:"access_token"`
-	TokenType    string    `json:"token_type"`
-	RefreshToken string    `json:"refresh_token"`
-	Expiry       time.Time `json:"expiry"`
+	AccessToken           string    `json:"access_token"`
+	TokenType             string    `json:"token_type"`
+	RefreshToken          string    `json:"refresh_token"`
+	IDTokenExpirationTime time.Time `json:"id_token_expiration_time"`
 }
 
 type UserInfo struct {
@@ -130,8 +120,8 @@ type Profile struct {
 }
 
 type VerifyAuthentication struct {
-	EmployeeID string    `db:"employee_id" json:"employee_id"`
-	Expiry     time.Time `db:"expiry" json:"expiry"`
+	EmployeeID            string    `json:"employee_id"`
+	IDTokenExpirationTime time.Time `json:"id_token_expiration_time"`
 }
 
 type SummaryTransactionTimesheet struct {
