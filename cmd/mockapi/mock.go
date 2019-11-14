@@ -70,10 +70,11 @@ func (mock *MockRepository) GetProfileByEmail(email string) (model.Profile, erro
 	return argument.Get(0).(model.Profile), argument.Error(1)
 }
 
-func (mock *MockRepository) VerifyIncomeRequest(employeeID string,companyID int) bool {
+func (mock *MockRepository) VerifyIncomeRequest(employeeID string, companyID int) bool {
 	argument := mock.Called(employeeID, companyID)
 	return argument.Bool(0)
 }
+
 type MockRepositoryToTimesheet struct {
 	mock.Mock
 }
@@ -132,7 +133,7 @@ func (mock *MockTimesheet) VerifyAuthentication(email string, idTokenExpirationT
 	return argument.Bool(0)
 }
 
-func (mock *MockTimesheet) GetSummaryInYearByID(employeeID string, year int) (model.SummaryTransactionTimesheet, error) {
+func (mock *MockTimesheet) GetSummaryInYearByEmployeeID(employeeID string, year int) (model.SummaryTransactionTimesheet, error) {
 	argument := mock.Called(employeeID, year)
 	return argument.Get(0).(model.SummaryTransactionTimesheet), argument.Error(1)
 }

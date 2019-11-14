@@ -592,7 +592,7 @@ func Test_GetProfileHandler_Input_Header_Email_nareenart_scrum123_com_Should_Be_
 }
 
 func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_TransactionTimesheet(t *testing.T) {
-	expected := `{"employee_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","month":12,"year":2017,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
+	expected := `{"employee_id":"001","year":2017,"transaction_timesheets":[{"id":"00120171201","employee_id":"001","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","month":12,"year":2017,"company_id":1,"coaching":85000,"training":30000,"other":40000,"total_incomes":155000,"salary":80000,"income_tax_1":5000,"social_security":0,"net_salary":75000,"wage":75000,"income_tax_53_percentage":10,"income_tax_53":7500,"net_wage":67500,"net_transfer":142500,"status_checking_transfer":"รอการตรวจสอบ","date_transfer":"","comment":""}],"total_coaching_in_year":85000,"total_training_in_year":30000,"total_other_in_year":40000,"total_incomes_in_year":155000,"total_salary_in_year":80000,"total_income_tax_1_in_year":5000,"total_social_security_in_year":0,"total_net_salary_in_year":75000,"total_wage_in_year":75000,"total_income_tax_53_in_year":7500,"total_net_wage_in_year":67500,"total_net_transfer_in_year":142500}`
 	summaryInYearRequest := SummaryInYearRequest{
 		EmployeeID: "001",
 		Year:       2017,
@@ -601,7 +601,7 @@ func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_Tran
 	request := httptest.NewRequest("POST", "/showSummaryInYear", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("GetSummaryInYearByID", "001", 2017).Return(model.SummaryTransactionTimesheet{
+	mockTimesheet.On("GetSummaryInYearByEmployeeID", "001", 2017).Return(model.SummaryTransactionTimesheet{
 		EmployeeID: "001",
 		Year:       2017,
 		TransactionTimesheets: []model.TransactionTimesheet{
@@ -631,15 +631,18 @@ func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_Tran
 				Comment:                "",
 			},
 		},
-		TotalCoachingInYear:    85000.00,
-		TotalTrainingInYear:    30000.00,
-		TotalOtherInYear:       40000.00,
-		TotalIncomesInYear:     155000.00,
-		TotalSalaryInYear:      80000.00,
-		TotalNetSalaryInYear:   75000.00,
-		TotalWageInYear:        75000.00,
-		TotalNetWageInYear:     67500.00,
-		TotalNetTransferInYear: 142500.00,
+		TotalCoachingInYear:       85000.00,
+		TotalTrainingInYear:       30000.00,
+		TotalOtherInYear:          40000.00,
+		TotalIncomesInYear:        155000.00,
+		TotalSalaryInYear:         80000.00,
+		TotalIncomeTax1InYear:     5000.00,
+		TotalSocialSecurityInYear: 0.00,
+		TotalNetSalaryInYear:      75000.00,
+		TotalWageInYear:           75000.00,
+		TotalIncomeTax53InYear:    7500.00,
+		TotalNetWageInYear:        67500.00,
+		TotalNetTransferInYear:    142500.00,
 	}, nil)
 
 	api := TimesheetAPI{

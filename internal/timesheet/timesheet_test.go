@@ -598,7 +598,7 @@ func Test_VerifyAuthentication_Input_Email_nuttaya_c_welovebug_biz_ID_Token_Expi
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetSummaryInYearByID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
+func Test_GetSummaryInYearByEmployeeID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
 	expected := model.SummaryTransactionTimesheet{
 		EmployeeID: "001",
 		Year:       2017,
@@ -628,15 +628,18 @@ func Test_GetSummaryInYearByID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryT
 				Comment:                "",
 			},
 		},
-		TotalCoachingInYear:    0.00,
-		TotalTrainingInYear:    0.00,
-		TotalOtherInYear:       0.00,
-		TotalIncomesInYear:     0.00,
-		TotalSalaryInYear:      0.00,
-		TotalNetSalaryInYear:   0.00,
-		TotalWageInYear:        0.00,
-		TotalNetWageInYear:     0.00,
-		TotalNetTransferInYear: 0.00,
+		TotalCoachingInYear:       85000.00,
+		TotalTrainingInYear:       30000.00,
+		TotalOtherInYear:          40000.00,
+		TotalIncomesInYear:        155000.00,
+		TotalSalaryInYear:         80000.00,
+		TotalIncomeTax1InYear:     5000.00,
+		TotalSocialSecurityInYear: 0.00,
+		TotalNetSalaryInYear:      75000.00,
+		TotalWageInYear:           75000.00,
+		TotalIncomeTax53InYear:    7500.00,
+		TotalNetWageInYear:        67500.00,
+		TotalNetTransferInYear:    142500.00,
 	}
 
 	mockRepositoryToTimesheet := new(mockinternal.MockRepositoryToTimesheet)
@@ -673,7 +676,7 @@ func Test_GetSummaryInYearByID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryT
 	employeeID := "001"
 	year := 2017
 
-	actual, err := timesheet.GetSummaryInYearByID(employeeID, year)
+	actual, err := timesheet.GetSummaryInYearByEmployeeID(employeeID, year)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
