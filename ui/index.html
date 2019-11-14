@@ -5,6 +5,7 @@
   <title>PAYMENTS</title>
   <meta name="google-signin-client_id" content="692575898397-dnt9sqi2jstddfepsng04p9ac4oj7p4n.apps.googleusercontent.com">
   <link rel="stylesheet" href="/home/css/index.css">
+  <link rel="stylesheet" href="/home/css/footer.css">
   <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -28,31 +29,7 @@
       <a class="navbar-brand" id="title_timesheet"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a style="text-align: center;">SHOW TIMESHEET : </a></li>
-        <li><a style="text-align: center;"><form id="form_show_summary_by_id" action="showsummarybyid.html" method="get">
-            <input type="month" id="date" name="date" style="color:black;">
-              <select name="id" id="id" style="color:black;">
-                <option value="" selected disabled hidden>Employee List</option>
-                <option value="015">PRUTH</option>
-                <option value="001">PRATHAN</option>
-                <option value="004">THAWATCHAI</option>
-                <option value="003">SOMKIAT</option>
-                <option value="008">CHAMNAN</option>
-                <option value="009">CHONNIKAN</option>
-                <option value="010">CHITPONG</option>
-                <option value="011">NATHAWAT</option>
-                <option value="012">PICHAYA</option>
-                <option value="013">PICHAI</option>
-                <option value="002">NAREENART</option>
-                <option value="005">APIPOL</option>
-                <option value="006">PANUMARS</option>
-                <option value="014">NATTAKIT</option>      
-            </select>
-            <input type="submit" id="button_show_summary_by_id" value="SEARCH"/>
-        </form></a></li>
-        
-      </ul>
+      <ul class="nav navbar-nav"></ul>
       <ul class="nav navbar-nav navbar-right">
         <li id="picture_profile" style="text-align: center;"></li>
         <li><a id="email_profile" style="text-align: center;"></a></li>
@@ -63,7 +40,10 @@
 </nav>
 
 <div class="content">
+    
+    
     <div class="col-3 col-s-3 menu">
+        <p hidden id="date_val"></p>
       <ul><li style="text-align: center;">PAYMENTS</li>
         <li style="text-align: center;"><input id="date_summary" name="date_summary" type="month" style="color:black;">
       <input id="button_show_summary" type="submit" value="SEARCH" onclick="showSummary()"/></li></ul>
@@ -75,6 +55,19 @@
   <button onclick="topFunction()" id="button_to_top" title="Go to top">Top</button>
 </div>
 
+<div class="footer">
+  <a href="/home" class="active">PAYMENTS</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('008')" id="employeeID008">PRUTH</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('001')" id="employeeID001">PRATHAN</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('004')" id="employeeID004">THAWATCHAI</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('003')" id="employeeID003">SOMKIAT</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('010')" id="employeeID010">KARAN</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('006')" id="employeeID006">PANUMARS</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('002')" id="employeeID002">NAREENART</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('005')" id="employeeID005">APIPOL</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('007')" id="employeeID007">KARNAWAT</a>
+  <a onclick="goToSummaryTimesheetByEmployeeID('008')" id="employeeID009">NUTTAYA</a>
+</div>
 
 </body>
 </html>
