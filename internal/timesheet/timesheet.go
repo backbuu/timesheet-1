@@ -324,3 +324,11 @@ func calculateTotalIncomeTax1InYearByEmployeeID(transactionTimesheetList []model
 	}
 	return totalIncomeTax1InYear
 }
+
+func calculateTotalSocialSecurityInYearByEmployeeID(transactionTimesheetList []model.TransactionTimesheet) float64 {
+	var totalSocialSecurityInYear float64
+	for _, transactionTimesheet := range transactionTimesheetList {
+		totalSocialSecurityInYear += transactionTimesheet.SocialSecurity
+	}
+	return totalSocialSecurityInYear
+}
