@@ -104,7 +104,7 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		context.Status(http.StatusUnauthorized)
 		return
 	}
-	if !api.Repository.VerifyIncomeRequest(request.EmployeeID,request.Incomes.CompanyID) {
+	if !api.Repository.VerifyIncomeRequest(request.EmployeeID, request.Incomes.CompanyID) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -245,7 +245,7 @@ func (api TimesheetAPI) ShowSummaryInYearHandler(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	summaryTransactionTimesheet, err := api.Timesheet.GetSummaryInYearByID(request.EmployeeID, request.Year)
+	summaryTransactionTimesheet, err := api.Timesheet.GetSummaryInYearByEmployeeID(request.EmployeeID, request.Year)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
