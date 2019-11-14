@@ -85,6 +85,7 @@ type Employee struct {
 	ID                    int     `json:"id"`
 	EmployeeID            string  `db:"employee_id" json:"employee_id"`
 	CompanyID             int     `db:"company_id" json:"company_id"`
+	CompanyName           string  `db:"company_name" json:"company_name"`
 	EmployeeNameTH        string  `db:"employee_name_th" json:"employee_name_th"`
 	EmployeeNameENG       string  `db:"employee_name_eng" json:"employee_name_eng"`
 	Email                 string  `db:"email" json:"email"`
