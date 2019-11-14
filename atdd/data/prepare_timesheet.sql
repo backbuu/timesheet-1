@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `companies`
+--
+
+DROP TABLE IF EXISTS `companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `companies` (
+  `company_id` int(1) NOT NULL,
+  `company_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `companies`
+--
+
+LOCK TABLES `companies` WRITE;
+/*!40000 ALTER TABLE `companies` DISABLE KEYS */;
+INSERT INTO `companies` VALUES (1,'Siam Chamnankit'),(2,'Shu Ha Ri'),(3,'We Love Bug');
+/*!40000 ALTER TABLE `companies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `employees`
 --
 
@@ -48,7 +72,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (1,'001',1,'ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',15000,1875,80000,5000,10,0,'wage',0,''),(2,'001',2,'ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',15000,1875,0,0,10,0,'wage',0,''),(3,'002',2,'นารีนารถ เนรัญชร','Nareenart Narunchon','nareenart@scrum123.com',0,0,25000,0,5,750,'salary',1500,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(4,'003',1,'สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',15000,1875,15000,0,10,750,'wage',0,''),(5,'003',2,'สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',15000,1875,40000,5000,10,0,'wage',0,''),(6,'004',1,'ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',15000,1875,40000,5000,10,0,'wage',0,''),(7,'004',2,'ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',15000,1875,0,0,10,0,'wage',0,''),(8,'005',2,'อภิพล สุขเกลอ','Apipol sukgler','golf.apipol@scrum123.com',0,0,40000,1200,5,750,'salary',1500,''),(9,'006',2,'ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',0,0,25000,0,5,750,'salary',1500,''),(10,'006',1,'ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',15000,1875,25000,0,5,750,'wage',0,''),(11,'007',1,'ทดสอบ เข้าสู่ระบบ','Test Login','logintest535@gmail.com',0,0,0,0,5,0,'salary',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(12,'007',2,'ทดสอบ เข้าสู่ระบบ','Test Login','logintest535@gmail.com',0,0,0,0,5,0,'salary',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(13,'008',2,'กานต์วัฒน์ วงศ์อุดม','Karnawat Wongudom','karnawat@scrum123.com',0,0,26000,0,5,750,'salary',1500,'');
+INSERT INTO `employees` VALUES (1,'001',1,'ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',15000,1875,80000,5000,10,0,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(2,'001',2,'ประธาน ด่านสกุลเจริญกิจ','Prathan Dansakulcharoenkit','prathan@scrum123.com',15000,1875,0,0,10,0,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(3,'002',2,'นารีนารถ เนรัญชร','Nareenart Narunchon','nareenart@scrum123.com',0,0,25000,0,5,750,'salary',1500,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(4,'003',1,'สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',15000,1875,15000,0,10,750,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(5,'003',2,'สมเกียรติ ปุ๋ยสูงเนิน','Somkiat Puisungnoen','somkiat@scrum123.com',15000,1875,40000,5000,10,0,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(6,'004',1,'ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',15000,1875,40000,5000,10,0,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(7,'004',2,'ธวัชชัย จงสุวรรณไพศาล','Thawatchai Jongsuwanpaisan','thawatchai@scrum123.com',15000,1875,0,0,10,0,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(8,'005',2,'อภิพล สุขเกลอ','Apipol sukgler','golf.apipol@scrum123.com',0,0,40000,1200,5,750,'salary',1500,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(9,'006',2,'ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',0,0,25000,0,5,750,'salary',1500,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(10,'006',1,'ภาณุมาศ แสนโท','Panumars Seanto','panumars@scrum123.com',15000,1875,25000,0,5,750,'wage',0,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg'),(12,'007',2,'กานต์วัฒน์ วงศ์อุดม','Karnawat Wongudom','karnawat@scrum123.com',0,0,26000,0,5,750,'salary',1500,'https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +144,7 @@ CREATE TABLE `timesheets` (
 
 LOCK TABLES `timesheets` WRITE;
 /*!40000 ALTER TABLE `timesheets` DISABLE KEYS */;
-INSERT INTO `timesheets` VALUES ('001201812','001',12,2018,'144:00:00',15000,75000,70000,40000,185000,15000,1875),('003201712','003',12,2017,'88:00:00',0,0,120000,0,120000,15000,1875),('003201812','003',12,2018,'80:00:00',0,0,11000,0,11000,15000,1875),('003201912','003',12,2019,'16:00:00',0,0,80000,0,80000,15000,1875),('005201812','005',12,2018,'120:00:00',0,0,0,5000,5000,0,0),('006201812','006',12,2018,'00:00:00',0,0,0,0,0,0,0),('007201812','007',12,2018,'08:00:00',0,0,0,0,0,0,0),('007201911','007',11,2019,'00:00:00',0,0,0,0,0,0,0),('007201912','007',12,2019,'120:30:30',90000,10000,20000,30000,60000,0,0);
+INSERT INTO `timesheets` VALUES ('001201812','001',12,2018,'144:00:00',15000,75000,70000,40000,185000,15000,1875),('002201812','002',12,2018,'112:00:00',0,0,0,0,0,0,0),('003201712','003',12,2017,'88:00:00',0,0,120000,0,120000,15000,1875),('003201812','003',12,2018,'80:00:00',0,0,11000,0,11000,15000,1875),('003201912','003',12,2019,'16:00:00',0,0,80000,0,80000,15000,1875),('005201812','005',12,2018,'120:00:00',0,0,0,5000,5000,0,0),('006201812','006',12,2018,'00:00:00',0,0,0,0,0,0,0),('007201812','007',12,2018,'08:00:00',0,0,0,0,0,0,0),('007201911','007',11,2019,'00:00:00',0,0,0,0,0,0,0),('007201912','007',12,2019,'120:30:30',90000,10000,20000,30000,60000,0,0);
 /*!40000 ALTER TABLE `timesheets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-13 10:13:00
+-- Dump completed on 2019-11-14  4:16:16
