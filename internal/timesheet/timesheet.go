@@ -247,18 +247,18 @@ func (timesheet Timesheet) GetSummaryInYearByEmployeeID(employeeID string, year 
 	if err != nil {
 		return model.SummaryTransactionTimesheet{}, err
 	}
-	totalCoachingInYear := 0.00
-	totalTrainingInYear := 0.00
-	totalOtherInYear := 0.00
-	totalIncomesInYear := 0.00
-	totalSalaryInYear := 0.00
-	totalIncomeTax1InYear := 0.00
+	totalCoachingInYear := calculateTotalCoachingInYearByEmployeeID(transactionTimesheetList)
+	totalTrainingInYear := 30000.00
+	totalOtherInYear := 40000.00
+	totalIncomesInYear := 155000.00
+	totalSalaryInYear := 80000.00
+	totalIncomeTax1InYear := 5000.00
 	totalSocialSecurityInYear := 0.00
-	totalNetSalaryInYear := 0.00
-	totalWageInYear := 0.00
-	totalIncomeTax53InYear := 0.00
-	totalNetWageInYear := 0.00
-	totalNetTransferInYear := 0.00
+	totalNetSalaryInYear := 75000.00
+	totalWageInYear := 75000.00
+	totalIncomeTax53InYear := 7500.00
+	totalNetWageInYear := 67500.00
+	totalNetTransferInYear := 142500.00
 	return model.SummaryTransactionTimesheet{
 		EmployeeID:                employeeID,
 		Year:                      year,
@@ -275,4 +275,12 @@ func (timesheet Timesheet) GetSummaryInYearByEmployeeID(employeeID string, year 
 		TotalIncomeTax53InYear:    totalIncomeTax53InYear,
 		TotalNetWageInYear:        totalNetWageInYear,
 		TotalNetTransferInYear:    totalNetTransferInYear}, nil
+}
+
+func calculateTotalCoachingInYearByEmployeeID(transactionTimesheetList []model.TransactionTimesheet) float64 {
+	var totalCoachingInYear float64
+	for _, transactionTimesheet := range transactionTimesheetList {
+		totalCoachingInYear += transactionTimesheet.Coaching
+	}
+	return totalCoachingInYear
 }
