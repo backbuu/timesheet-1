@@ -248,16 +248,19 @@ func (timesheet Timesheet) GetSummaryInYearByEmployeeID(employeeID string, year 
 		return model.SummaryTransactionTimesheet{}, err
 	}
 	return model.SummaryTransactionTimesheet{
-		EmployeeID:             employeeID,
-		Year:                   year,
-		TransactionTimesheets:  transactionTimesheetList,
-		TotalCoachingInYear:    0.00,
-		TotalTrainingInYear:    0.00,
-		TotalOtherInYear:       0.00,
-		TotalIncomesInYear:     0.00,
-		TotalSalaryInYear:      0.00,
-		TotalNetSalaryInYear:   0.00,
-		TotalWageInYear:        0.00,
-		TotalNetWageInYear:     0.00,
-		TotalNetTransferInYear: 0.00}, nil
+		EmployeeID:                employeeID,
+		Year:                      year,
+		TransactionTimesheets:     transactionTimesheetList,
+		TotalCoachingInYear:       0.00,
+		TotalTrainingInYear:       0.00,
+		TotalOtherInYear:          0.00,
+		TotalIncomesInYear:        0.00,
+		TotalSalaryInYear:         0.00,
+		TotalIncomeTax1InYear:     0.00,
+		TotalSocialSecurityInYear: 0.00,
+		TotalNetSalaryInYear:      0.00,
+		TotalWageInYear:           0.00,
+		TotalIncomeTax53InYear:    0.00,
+		TotalNetWageInYear:        0.00,
+		TotalNetTransferInYear:    0.00}, nil
 }
