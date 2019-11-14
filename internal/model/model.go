@@ -122,16 +122,19 @@ type Profile struct {
 }
 
 type SummaryTransactionTimesheet struct {
-	EmployeeID             string                 `json:"employee_id"`
-	Year                   int                    `json:"year"`
-	TransactionTimesheets  []TransactionTimesheet `json:"transaction_timesheets"`
-	TotalCoachingInYear    float64                `json:"total_coaching_in_year"`
-	TotalTrainingInYear    float64                `json:"total_training_in_year"`
-	TotalOtherInYear       float64                `json:"total_other_in_year"`
-	TotalIncomesInYear     float64                `json:"total_incomes_in_year"`
-	TotalSalaryInYear      float64                `json:"total_salary_in_year"`
-	TotalNetSalaryInYear   float64                `json:"total_net_salary_in_year"`
-	TotalWageInYear        float64                `json:"total_wage_in_year"`
-	TotalNetWageInYear     float64                `json:"total_net_wage_in_year"`
-	TotalNetTransferInYear float64                `json:"total_net_transfer_in_year"`
+	EmployeeID                string                 `json:"employee_id"`
+	Year                      int                    `json:"year"`
+	TransactionTimesheets     []TransactionTimesheet `json:"transaction_timesheets"`
+	TotalCoachingInYear       float64                `json:"total_coaching_in_year"`
+	TotalTrainingInYear       float64                `json:"total_training_in_year"`
+	TotalOtherInYear          float64                `json:"total_other_in_year"`
+	TotalIncomesInYear        float64                `json:"total_incomes_in_year"`
+	TotalSalaryInYear         float64                `json:"total_salary_in_year"`
+	TotalIncomeTax1InYear     float64                `json:"total_income_tax_1_in_year"`
+	TotalSocialSecurityInYear float64                `json:"total_social_security_in_year"`
+	TotalNetSalaryInYear      float64                `json:"total_net_salary_in_year"`
+	TotalWageInYear           float64                `json:"total_wage_in_year"`
+	TotalIncomeTax53InYear    float64                `json:"total_income_tax_53_in_year"`
+	TotalNetWageInYear        float64                `json:"total_net_wage_in_year"`
+	TotalNetTransferInYear    float64                `json:"total_net_transfer_in_year"`
 }
