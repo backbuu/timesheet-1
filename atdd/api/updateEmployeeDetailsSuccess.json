@@ -1,15 +1,15 @@
 {
 	"info": {
 		"_postman_id": "9c8555c6-0d57-448e-8e2d-37c0057081fb",
-		"name": "UpdateMemberDetailsSuccess",
+		"name": "UpdateEmployeeDetailsSuccess",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Update member details member ID 006 and Show timesheet by ID success",
+			"name": "Update employee details employee ID 006 and Show timesheet by employee ID success",
 			"item": [
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -93,21 +93,21 @@
 							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"006\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update member details",
+					"name": "Update employee details",
 					"event": [
 						{
 							"listen": "test",
@@ -142,21 +142,21 @@
 							"raw": "{\n\t\"id\":9,\n\t\"employee_id\":\"006\",\n\t\"employee_name_th\":\"ภาณุมาศ แสนโท\",\n\t\"employee_name_eng\":\"Panumars Seanto\",\n\t\"email\":\"panumars@scrum123.com\",\n\t\"rate_per_day\":15000,\n\t\"rate_per_hour\":1875,\n\t\"salary\":25000,\n\t\"income_tax_1\":0,\n\t\"social_security\":750,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":1500,\n\t\"status\":\"salary\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/updateMemberDetails",
+							"raw": "http://localhost:8080/updateEmployeeDetails",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"updateMemberDetails"
+								"updateEmployeeDetails"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -240,14 +240,14 @@
 							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"006\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
