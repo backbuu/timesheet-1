@@ -6,10 +6,10 @@
 	},
 	"item": [
 		{
-			"name": "Delete income item member ID 005 and Show timesheet by ID success",
+			"name": "Delete income item employee ID 005 and Show timesheet by employee ID success",
 			"item": [
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -94,14 +94,14 @@
 							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"005\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
@@ -206,7 +206,7 @@
 					"response": []
 				},
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -294,14 +294,14 @@
 							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"005\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
