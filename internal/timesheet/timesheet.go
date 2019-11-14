@@ -248,17 +248,17 @@ func (timesheet Timesheet) GetSummaryInYearByEmployeeID(employeeID string, year 
 		return model.SummaryTransactionTimesheet{}, err
 	}
 	totalCoachingInYear := calculateTotalCoachingInYearByEmployeeID(transactionTimesheetList)
-	totalTrainingInYear := 30000.00
-	totalOtherInYear := 40000.00
-	totalIncomesInYear := 155000.00
-	totalSalaryInYear := 80000.00
-	totalIncomeTax1InYear := 5000.00
-	totalSocialSecurityInYear := 0.00
-	totalNetSalaryInYear := 75000.00
-	totalWageInYear := 75000.00
-	totalIncomeTax53InYear := 7500.00
-	totalNetWageInYear := 67500.00
-	totalNetTransferInYear := 142500.00
+	totalTrainingInYear := calculateTotalTrainingInYearByEmployeeID(transactionTimesheetList)
+	totalOtherInYear := calculateTotalOtherInYearByEmployeeID(transactionTimesheetList)
+	totalIncomesInYear := calculateTotalIncomesInYearByEmployeeID(transactionTimesheetList)
+	totalSalaryInYear := calculateTotalSalaryInYearByEmployeeID(transactionTimesheetList)
+	totalIncomeTax1InYear := calculateTotalIncomeTax1InYearByEmployeeID(transactionTimesheetList)
+	totalSocialSecurityInYear := calculateTotalSocialSecurityInYearByEmployeeID(transactionTimesheetList)
+	totalNetSalaryInYear := calculateTotalNetSalaryInYearByEmployeeID(transactionTimesheetList)
+	totalWageInYear := calculateTotalWageInYearByEmployeeID(transactionTimesheetList)
+	totalIncomeTax53InYear := calculateTotalIncomeTax53InYearByEmployeeID(transactionTimesheetList)
+	totalNetWageInYear := calculateTotalNetWageInYearByEmployeeID(transactionTimesheetList)
+	totalNetTransferInYear := calculateTotalNetTransferInYearByEmployeeID(transactionTimesheetList)
 	return model.SummaryTransactionTimesheet{
 		EmployeeID:                employeeID,
 		Year:                      year,
