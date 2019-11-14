@@ -1,7 +1,9 @@
 * {
   box-sizing: border-box;
 }
-
+.yello {
+  background-color: yellow;
+}
 .green {
   background-color: #c6eed4;
   color: black;
@@ -83,6 +85,18 @@
     color: #07343d;
      padding-left: 20px;
     padding-right: 40px; 
+}
+
+.table_details th{
+  text-align: right;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.table_details td{
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .button {
