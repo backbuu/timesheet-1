@@ -15,7 +15,7 @@ import (
 func Test_GetSummary_Input_Year_2017_Month_12_Should_Be_TransactionTimesheet(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			ID:                     "00120171201",
+			ID:                     "0012017121",
 			EmployeeID:             "001",
 			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			EmployeeNameENG:        "Prathan Dansakulcharoenkit",
@@ -512,7 +512,7 @@ func Test_UpdatePictureToemployees_Input_Email_prathan_scrum123_com_And_Picture_
 func Test_GetTransactionTimesheets_Input_EmployeeID_001_Year_2017_Should_Be_TransactionTimesheetList(t *testing.T) {
 	expected := []model.TransactionTimesheet{
 		{
-			ID:                     "00120171201",
+			ID:                     "0012017121",
 			EmployeeID:             "001",
 			EmployeeNameTH:         "ประธาน ด่านสกุลเจริญกิจ",
 			EmployeeNameENG:        "Prathan Dansakulcharoenkit",
