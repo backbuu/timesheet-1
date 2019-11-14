@@ -104,6 +104,10 @@ func (api TimesheetAPI) CreateIncomeHandler(context *gin.Context) {
 		context.Status(http.StatusUnauthorized)
 		return
 	}
+	if !api.Repository.VerifyIncomeRequest(request.EmployeeID,request.Incomes.CompanyID) {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	err = api.Repository.CreateIncome(request.Year, request.Month, request.EmployeeID, request.Incomes)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
