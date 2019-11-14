@@ -247,20 +247,32 @@ func (timesheet Timesheet) GetSummaryInYearByEmployeeID(employeeID string, year 
 	if err != nil {
 		return model.SummaryTransactionTimesheet{}, err
 	}
+	totalCoachingInYear := 0.00
+	totalTrainingInYear := 0.00
+	totalOtherInYear := 0.00
+	totalIncomesInYear := 0.00
+	totalSalaryInYear := 0.00
+	totalIncomeTax1InYear := 0.00
+	totalSocialSecurityInYear := 0.00
+	totalNetSalaryInYear := 0.00
+	totalWageInYear := 0.00
+	totalIncomeTax53InYear := 0.00
+	totalNetWageInYear := 0.00
+	totalNetTransferInYear := 0.00
 	return model.SummaryTransactionTimesheet{
 		EmployeeID:                employeeID,
 		Year:                      year,
 		TransactionTimesheets:     transactionTimesheetList,
-		TotalCoachingInYear:       0.00,
-		TotalTrainingInYear:       0.00,
-		TotalOtherInYear:          0.00,
-		TotalIncomesInYear:        0.00,
-		TotalSalaryInYear:         0.00,
-		TotalIncomeTax1InYear:     0.00,
-		TotalSocialSecurityInYear: 0.00,
-		TotalNetSalaryInYear:      0.00,
-		TotalWageInYear:           0.00,
-		TotalIncomeTax53InYear:    0.00,
-		TotalNetWageInYear:        0.00,
-		TotalNetTransferInYear:    0.00}, nil
+		TotalCoachingInYear:       totalCoachingInYear,
+		TotalTrainingInYear:       totalTrainingInYear,
+		TotalOtherInYear:          totalOtherInYear,
+		TotalIncomesInYear:        totalIncomesInYear,
+		TotalSalaryInYear:         totalSalaryInYear,
+		TotalIncomeTax1InYear:     totalIncomeTax1InYear,
+		TotalSocialSecurityInYear: totalSocialSecurityInYear,
+		TotalNetSalaryInYear:      totalNetSalaryInYear,
+		TotalWageInYear:           totalWageInYear,
+		TotalIncomeTax53InYear:    totalIncomeTax53InYear,
+		TotalNetWageInYear:        totalNetWageInYear,
+		TotalNetTransferInYear:    totalNetTransferInYear}, nil
 }
