@@ -60,15 +60,15 @@ function showSummary(){
                 companyIndex = parseInt(json[index].company_id);
                 count[companyIndex]++;
                 table[companyIndex] += "<tr id=\"row_summary_id_"+index+"\">";
-                table[companyIndex] += "<td>"+count[companyIndex]+"</td>";
-                table[companyIndex] += "<td id=\"employee_name_eng_id_"+index+"\">"+json[index].employee_name_eng+"</td>";
+                table[companyIndex] += "<td style=\"text-align: center;\">"+count[companyIndex]+"</td>";
+                table[companyIndex] += "<td style=\"text-align: left;\" id=\"employee_name_eng_id_"+index+"\">"+json[index].employee_name_eng+"</td>";
                 table[companyIndex] += "<td id=\"coaching_id_"+index+"\">"+setFormatMoney(json[index].coaching)+"</td>";
                 totalCoaching[companyIndex] += json[index].coaching;
                 table[companyIndex] += "<td id=\"training_id_"+index+"\">"+setFormatMoney(json[index].training)+"</td>";
                 totalTraning[companyIndex] +=json[index].training;
                 table[companyIndex] += "<td id=\"other_id_"+index+"\">"+setFormatMoney(json[index].other)+"</td>";
                 totalOther[companyIndex] += json[index].other;
-                table[companyIndex] += "<td id=\"total_incomes_id_"+index+"\">"+setFormatMoney(json[index].total_incomes)+"</td>";
+                table[companyIndex] += "<td class=\"yello\" id=\"total_incomes_id_"+index+"\">"+setFormatMoney(json[index].total_incomes)+"</td>";
                 totalIncomes[companyIndex] += json[index].total_incomes;
                 table[companyIndex] += "<td id=\"salary_id_"+index+"\">"+setFormatMoney(json[index].salary)+"</td>";
                 totalSalary[companyIndex] += json[index].salary;
@@ -76,7 +76,7 @@ function showSummary(){
                 totalIncomeTax1[companyIndex] += json[index].income_tax_1;
                 table[companyIndex] += "<td id=\"social_security_id_"+index+"\">"+setFormatMoney(json[index].social_security)+"</td>";
                 totalSocialSecurity[companyIndex] += json[index].social_security;
-                table[companyIndex] += "<td id=\"net_salary_id_"+index+"\">"+setFormatMoney(json[index].net_salary)+"</td>";
+                table[companyIndex] += "<td class=\"yello\" id=\"net_salary_id_"+index+"\">"+setFormatMoney(json[index].net_salary)+"</td>";
                 totalNetSalary[companyIndex] += json[index].net_salary;
                 table[companyIndex] += "<td id=\"wage_id_"+index+"\">"+setFormatMoney(json[index].wage)+"</td>";
                 totalWage[companyIndex] += json[index].wage;
@@ -85,7 +85,7 @@ function showSummary(){
                 totalIncomeTax53[companyIndex] += json[index].income_tax_53;
                 table[companyIndex] += "<td id=\"net_wage_id_"+index+"\">"+setFormatMoney(json[index].net_wage)+"</td>";
                 totalNetWage[companyIndex] +=json[index].net_wage;
-                table[companyIndex] += "<td id=\"net_transfer_id_"+index+"\">"+setFormatMoney(json[index].net_transfer)+"</td>";
+                table[companyIndex] += "<td class=\"aqua\" id=\"net_transfer_id_"+index+"\">"+setFormatMoney(json[index].net_transfer)+"</td>";
                 totalNetTransfer[companyIndex] += json[index].net_transfer;
                 table[companyIndex] += "<td><select id=\"status_checking_transfer_"+index+"\"><option value=\""+json[index].status_checking_transfer+"\">"+json[index].status_checking_transfer+"</option>";
                 table[companyIndex] += "<option value=\"รอการตรวจสอบ\">รอการตรวจสอบ</option>";
@@ -115,48 +115,50 @@ function showSummary(){
                 if (table[index]!=null){
                     tableByCompany += "<table border=\"1\" class=\"table_company\" width=\"2200\">";
                     tableByCompany += "<tr>"
-                    tableByCompany += "<th rowspan=\"4\">No</th>"
-                    tableByCompany += "<tr><th rowspan=\"3\" id=\"company_name\">"+companyName[index]
+                    tableByCompany += "<th rowspan=\"4\" class=\"blue\" style=\"width:30px;\">No</th>"
+                    tableByCompany += "<tr><th rowspan=\"3\" id=\"company_name\" class=\"blue\" style=\"width:200px;\">"+companyName[index]
                     tableByCompany += "</th>"
-                    tableByCompany += "<th colspan=\"4\">Income</th>"
-                    tableByCompany += "<th colspan=\"4\"></th>"
-                    tableByCompany += "<th colspan=\"5\">Wage Income of Withholding Income Tax (P.N.D.53)</th>"
-                    tableByCompany += "<th rowspan=\"3\">Inspection Status</th>"
-                    tableByCompany += "<th rowspan=\"3\">Date For Transfer</th>"
-                    tableByCompany += "<th rowspan=\"3\" colspan=\"2\">Comment</th>"
+                    tableByCompany += "<th colspan=\"4\" class=\"turquoise\"\">Income</th>"
+                    tableByCompany += "<th colspan=\"4\" class=\"antiquewhite\"></th>"
+                    tableByCompany += "<th colspan=\"4\" class=\"green\">Wage Income of Withholding Income Tax (P.N.D.53)</th>"
+                    tableByCompany += "<th class=\"blue\"></th>"
+                    tableByCompany += "<th rowspan=\"3\" class=\"blue\">Inspection Status</th>"
+                    tableByCompany += "<th rowspan=\"3\" class=\"blue\">Date For Transfer</th>"
+                    tableByCompany += "<th rowspan=\"3\" class=\"blue\">Comment</th>"
+                    tableByCompany += "<th rowspan=\"3\" class=\"blue\"></th>"
                     tableByCompany += "</tr>"
                     tableByCompany += "<tr>"
                     if (companyName[index] != "SHU HA RI"){
-                        tableByCompany += "<td>Coaching</td>"
+                        tableByCompany += "<td class=\"turquoise\"\">Coaching</td>"
                     }else{
-                        tableByCompany += "<td>Wage</td>"
+                        tableByCompany += "<td class=\"turquoise\"\">Wage</td>"
                     }
-                    tableByCompany += "<td>Training</td>"
-                    tableByCompany += "<td>Other</td>"
-                    tableByCompany += "<td>ToTal Amount</td>"
-                    tableByCompany += "<td>Salary</td>"
-                    tableByCompany += "<td>Withholding Income Tax (P.N.D.1)</td>"
-                    tableByCompany += "<td>Social Security</td>"
-                    tableByCompany += "<td>Net Salary</td>"
-                    tableByCompany += "<td>Wage</td>"
-                    tableByCompany += "<td rowspan=\"2\">Withholding Income Tax Rate (P.N.D.53)</td>"
-                    tableByCompany += "<td>Withholding Income Tax (P.N.D.53)</td>"
-                    tableByCompany += "<td>Net Wage</td>"
-                    tableByCompany += "<td>Net Transfer Amount</td>"
+                    tableByCompany += "<td class=\"turquoise\"\">Training</td>"
+                    tableByCompany += "<td class=\"turquoise\"\">Other</td>"
+                    tableByCompany += "<td class=\"turquoise\">ToTal Amount</td>"
+                    tableByCompany += "<td class=\"antiquewhite\">Salary</td>"
+                    tableByCompany += "<td class=\"antiquewhite\">Withholding Income Tax (P.N.D.1)</td>"
+                    tableByCompany += "<td class=\"antiquewhite\">Social Security</td>"
+                    tableByCompany += "<td class=\"antiquewhite\">Net Salary</td>"
+                    tableByCompany += "<td class=\"green\">Wage</td>"
+                    tableByCompany += "<td rowspan=\"2\" class=\"green\">Withholding Income Tax Rate (P.N.D.53)</td>"
+                    tableByCompany += "<td class=\"green\">Withholding Income Tax (P.N.D.53)</td>"
+                    tableByCompany += "<td class=\"green\">Net Wage</td>"
+                    tableByCompany += "<td class=\"blue\">Net Transfer Amount</td>"
                     tableByCompany +=  "</tr>"                
                     tableByCompany +=  "<tr>"
-                    tableByCompany +=  "<td id=\"total_coaching\">"+setFormatMoney(totalCoaching[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_traning\">"+setFormatMoney(totalTraning[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_other\">"+setFormatMoney(totalOther[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_incomes\">"+setFormatMoney(totalIncomes[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_salary\">"+setFormatMoney(totalSalary[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_income_tax_1\">"+setFormatMoney(totalIncomeTax1[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_social_security\">"+setFormatMoney(totalSocialSecurity[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_net_salary\">"+setFormatMoney(totalNetSalary[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_wage\">"+setFormatMoney(totalWage[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_income_tax_53\">"+setFormatMoney(totalIncomeTax53[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_net_wage\">"+setFormatMoney(totalNetWage[index])+"</td>"
-                    tableByCompany +=  "<td id=\"total_net_transfer\">"+setFormatMoney(totalNetTransfer[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_coaching\" class=\"turquoise\"\">"+setFormatMoney(totalCoaching[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_traning\" class=\"turquoise\"\">"+setFormatMoney(totalTraning[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_other\" class=\"turquoise\"\">"+setFormatMoney(totalOther[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_incomes\" class=\"turquoise\"\">"+setFormatMoney(totalIncomes[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_salary\" class=\"antiquewhite\">"+setFormatMoney(totalSalary[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_income_tax_1\" class=\"antiquewhite\">"+setFormatMoney(totalIncomeTax1[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_social_security\" class=\"antiquewhite\">"+setFormatMoney(totalSocialSecurity[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_net_salary\" class=\"antiquewhite\">"+setFormatMoney(totalNetSalary[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_wage\" class=\"green\">"+setFormatMoney(totalWage[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_income_tax_53\" class=\"green\">"+setFormatMoney(totalIncomeTax53[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_net_wage\" class=\"green\"> "+setFormatMoney(totalNetWage[index])+"</td>"
+                    tableByCompany +=  "<td id=\"total_net_transfer\" class=\"blue\">"+setFormatMoney(totalNetTransfer[index])+"</td>"
                     tableByCompany +=  "</tr>"
                     tableByCompany +=  table[index];
                     tableByCompany +=  "</table><br><br>"
@@ -206,7 +208,19 @@ function updateStatusTransfer(index){
     window.location.replace(window.location.href)    
 }
 
-function addIncomeItem(){
+function createIncomeThenCalculatePayment(){
+    new Promise(function(resolve, reject) {
+        resolve(createIncome());
+      }).then(calculatePayment());
+}
+
+function deleteIncomeThenCalculatePayment(index){
+    new Promise(function(resolve, reject) {
+        resolve(deleteIncome(index));
+      }).then(calculatePayment());
+}
+
+function createIncome(){
     var urlString = window.location.href
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
@@ -240,25 +254,27 @@ function addIncomeItem(){
     var companyID = parseInt($("#company_id").val());
 
     var description = $("#description").val();
-    
+
     var request = new XMLHttpRequest();
     var url = "/createIncome";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
-        calculatePayment()
         if (request.status === 401){
             alert("Your session has been expired, please log in again.")
             logout();
             if (deleteOauthState()){
                 window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en");
             };
+        }else if (request.status === 500){
+            alert("Please fill out the information.")
+            return
         }
     }
     var data = JSON.stringify({"year":year,"month":month,"employee_id":employeeID,"incomes":{"day":day,"start_time_am":startTimeAm,"end_time_am":endTimeAm,"start_time_pm":startTimePm,"end_time_pm":endTimePm,"coaching_customer_charging":coachingCustomerCharging,"coaching_payment_rate":coachingPaymentRate,"training_wage":trainingWage,"other_wage":otherWage,"company_id":companyID,"description":description}});
     request.send(data); 
-    // window.location.replace(window.location.href); 
+    calculatePayment()
 }
 
 function calculatePayment() {
@@ -286,8 +302,8 @@ function calculatePayment() {
         }
     }
     var data = JSON.stringify({"employee_id":employeeID,"year":year,"month":month});
-    request.send(data); 
-    console.log(data);
+    request.send(data)
+    window.location.replace(window.location.href)
 }
 
 function showSummaryByID() {
@@ -321,7 +337,7 @@ function showSummaryByID() {
 
     
     var request = new XMLHttpRequest();
-    var url = "/showTimesheetByID";
+    var url = "/showTimesheetByEmployeeID";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
@@ -353,7 +369,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"hidden\" id=\"employee_id_"+i+"\" value=\""+json.incomes[i].employee_id+"\">"
-                    incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"DELETE\" onclick=\"deleteIncome("+i+")\"/>"+"</td>"; 
+                    incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"DELETE\" onclick=\"deleteIncomeThenCalculatePayment("+i+")\"/>"+"</td>"; 
                     setDateInIncomeFormat(json.incomes[i].day+1)
                     incomeList += "</tr>";
                 }
@@ -369,7 +385,6 @@ function showSummaryByID() {
             $("#total_trainig_wage").html(totalTrainigWage.toFixed(2)); 
             $("#total_other_wage").html(totalOtherWage.toFixed(2)); 
             $("#payment_wage").html(paymentWage.toFixed(2));             
-            $("#th_button_calculate").html("<input class=\"button\" type=\"button\" id=\"button_calculate_payment\" value=\"CALCULATE\" onclick=\"calculatePayment()\"/>"); 
             $("#google_calendar").html(googleCalendarURL); 
             
         }
@@ -451,7 +466,7 @@ function setTableBodyAddIncomeItem(){
         <option value=3>We love Bug</option>
     </select></td></tr>
     <tr><th>Description</th><td><input type="text" id="description" placeholder="Description"></td></tr>
-    <tr><td colspan="2"><input class="button" type="submit" id="button_add_income_item" value="ADD" onclick="addIncomeItem()"/></td></tr>`;
+    <tr><td colspan="2"><input class="button" type="submit" id="button_add_income_item" value="ADD" onclick="createIncomeThenCalculatePayment()"/></td></tr>`;
     $(document).ready(function(){
         $("#table_addIncomeItem").html(tableBody);  
     });    
@@ -482,20 +497,45 @@ function deleteIncome(index){
         }
     }
     var data = JSON.stringify({"id":incomeID,"employee_id":employeeID});
-    
     request.send(data);
     calculatePayment()
-    window.location.replace(window.location.href) 
 }
 
-function getEmployeeByID(){
-    var urlString = document.referrer;
+function goToProfilePage(){
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    var employeeID =  params.get("id");
+    if (employeeID != null){
+        location.href = "/home/employeedetails.html?id="+employeeID;
+    }else{
+        alert("Please fill out the information.")
+    }
+}
+
+function goToSummaryByIDBackPage(){
+    var urlString = window.location.href
     var url = new URL(urlString);
     var params = new URLSearchParams(url.search);
     var employeeID =  params.get("id");
 
+    var currentTime = new Date();
+    var currentYear = String(currentTime.getFullYear());
+    var currentMonth = String(currentTime.getMonth()+1);
+    var today = currentYear + "-" + currentMonth;
+    if (employeeID != null){
+        location.href = "/home/showsummarybyid.html?date="+today+"&id="+employeeID;
+    }
+}
+
+function getEmployeeByID(){
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    employeeID = params.get("id");
+
     var request = new XMLHttpRequest();
-    var url = "/showEmployeeDetailsByID";
+    var url = "/showEmployeeDetailsByEmployeeID";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
@@ -503,7 +543,7 @@ function getEmployeeByID(){
             var json = JSON.parse(request.responseText);
             var employee = "";
             for (var i = 0; i < json.length; i++) {
-                employee += "<table id =\"table_employee_details\">"
+                employee += "<table width=\"600\">"
                 employee += "<tr><th>Company Name</th><td id=\"company_id_"+i+"\">"+json[i].company_id+"</td></tr>";
                 employee += "<tr><th>Name (Thai)</th><td id=\"employee_name_th_id_"+i+"\">"+json[i].employee_name_th+"</td></tr>";
                 employee += "<tr><th>Name (English)</th><td id=\"employee_name_eng_id_"+i+"\">"+json[i].employee_name_eng+"</td></tr>";
@@ -532,6 +572,7 @@ function getEmployeeByID(){
                     employee += "<br><br><br>"
                 }
             }
+            
             $("#table_employee_details").html(employee);
         }
     }
@@ -583,6 +624,7 @@ function editEmployeeDetails(index){
         "status":status,"travel_expense":travelExpense}); 
     
     request.send(data);
+    window.location.replace(window.location.href)
 }
 
 function setCurrentDate(){
@@ -660,14 +702,12 @@ function setInitialHome(){
             showProfile();
             if (getCookie("id_token") == ""){
                 if (deleteOauthState()){
-
                     window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
                 };
             }
             $("#button_logout").click(function(){
                 logout();
                 if (deleteOauthState()){
-
                     window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
                 };
             });
