@@ -601,7 +601,7 @@ func Test_ShowSummaryInYearHandler_Input_EmployeeID_001_Year_2017_Should_Be_Tran
 	request := httptest.NewRequest("POST", "/showSummaryInYear", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 	mockTimesheet := new(mockapi.MockTimesheet)
-	mockTimesheet.On("GetSummaryInYearByID", "001", 2017).Return(model.SummaryTransactionTimesheet{
+	mockTimesheet.On("GetSummaryInYearByEmployeeID", "001", 2017).Return(model.SummaryTransactionTimesheet{
 		EmployeeID: "001",
 		Year:       2017,
 		TransactionTimesheets: []model.TransactionTimesheet{
