@@ -1,4 +1,6 @@
 function showSummary(){
+    
+    
     var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
@@ -6,7 +8,8 @@ function showSummary(){
 
     const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
       $(document).click(function(){
-        $("#title_timesheet").text(month+"-"+monthNames[month-1]+year+"-TIMESHEET");  
+        $("#title_timesheet").text(month+"-"+monthNames[month-1]+year+"-TIMESHEET"); 
+        $("#date_val").val(date); 
     });
     
     var request = new XMLHttpRequest();
@@ -306,6 +309,12 @@ function calculatePayment() {
     window.location.replace(window.location.href)
 }
 
+function goToSummaryTimesheetByEmployeeID(employeeID){
+    $(document).ready(function(){
+        location.href = "/home/showsummarybyid.html?date="+$("#date_val").val()+"&id="+employeeID;
+    });
+}
+
 function showSummaryByID() {
     setCurrentDate();
     var urlString = window.location.href
@@ -332,7 +341,8 @@ function showSummaryByID() {
 
     const monthNamesCapital = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     $(document).ready(function(){
-      $("#title_timesheet_by_id").text(month+"-"+monthNamesCapital[month-1]+year+"-TIMESHEET");  
+      $("#title_timesheet_by_id").text(month+"-"+monthNamesCapital[month-1]+year+"-TIMESHEET");
+      $("#date_val").val(date);
     });
 
     
@@ -634,6 +644,7 @@ function setCurrentDate(){
     var today = currentYear + "-" + currentMonth;
     $(document).ready(function(){
         $("#date_summary").val(today);  
+        $("#date_val").val(today);
         $("#date").val(today); 
         setInitialHome();
         if (window.location.pathname === "/home/"){
