@@ -1,6 +1,4 @@
 function showSummary(){
-    
-    
     var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
@@ -18,9 +16,7 @@ function showSummary(){
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
-            var json = JSON.parse(request.responseText);
-            console.log(json);
-            
+            var json = JSON.parse(request.responseText);            
             var table = [];
             var count = [];
             var totalCoaching = [];
@@ -105,7 +101,7 @@ function showSummary(){
                 if (companyIndex == 1){
                     companyName[companyIndex] = "Siam Chamnankit"
                 }else if (companyIndex == 2){
-                    companyName[companyIndex] = "SHU HA RI"
+                    companyName[companyIndex] = "Shu ha ri"
                 }else if (companyIndex == 3){
                     companyName[companyIndex] = "We Love Bug"
                 }else{
@@ -131,7 +127,7 @@ function showSummary(){
                     tableByCompany += "<th rowspan=\"3\" class=\"blue\"></th>"
                     tableByCompany += "</tr>"
                     tableByCompany += "<tr>"
-                    if (companyName[index] != "SHU HA RI"){
+                    if (companyName[index] != "Shu ha ri"){
                         tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Coaching</td>"
                     }else{
                         tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Wage</td>"
@@ -366,7 +362,7 @@ function showSummaryByID() {
             if (json.incomes !== null) {
                 for (var i = 0; i < json.incomes.length; i++) {
                     incomeList += "<tr id=\"income_company_"+json.incomes[i].company_id+"\">";
-                    incomeList += "<td>"+json.incomes[i].day+"</td>";
+                    incomeList += "<td class=\"dark_green\">"+json.incomes[i].day+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_am)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_am)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_pm)+"</td>";
@@ -376,7 +372,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+setFormatMoney(json.incomes[i].coaching_payment_rate)+"</td>";
                     incomeList += "<td>"+setFormatMoney(json.incomes[i].training_wage)+"</td>";
                     incomeList += "<td>"+setFormatMoney(json.incomes[i].other_wage)+"</td>";
-                    incomeList += "<td>"+json.incomes[i].description+"</td>";
+                    incomeList += "<td style=\"text-align: left;\">"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"hidden\" id=\"employee_id_"+i+"\" value=\""+json.incomes[i].employee_id+"\">"
                     incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"DELETE\" onclick=\"deleteIncomeThenCalculatePayment("+i+")\"/>"+"</td>"; 
@@ -472,7 +468,7 @@ function setTableBodyAddIncomeItem(){
     </select></td></tr>
     <tr><th>Company</th><td><select id="company_id">
         <option value=1>Siam Chamnankit</option>
-        <option value=2>SHU HA RI</option>
+        <option value=2>Shu ha ri</option>
         <option value=3>We love Bug</option>
     </select></td></tr>
     <tr><th>Description</th><td><input type="text" id="description" placeholder="Description"></td></tr>
@@ -554,7 +550,7 @@ function getEmployeeByID(){
             var employee = "";
             for (var i = 0; i < json.length; i++) {
                 employee += "<table width=\"600\">"
-                employee += "<tr><th>Company Name</th><td id=\"company_id_"+i+"\">"+json[i].company_id+"</td></tr>";
+                employee += "<tr><th>Company Name</th><td id=\"company_name_"+i+"\">"+json[i].company_name+"</td></tr>";
                 employee += "<tr><th>Name (Thai)</th><td id=\"employee_name_th_id_"+i+"\">"+json[i].employee_name_th+"</td></tr>";
                 employee += "<tr><th>Name (English)</th><td id=\"employee_name_eng_id_"+i+"\">"+json[i].employee_name_eng+"</td></tr>";
                 employee += "<tr><th>E-mail</th><td id=\"email_id_"+i+"\">"+json[i].email+"</td></tr>";
@@ -576,6 +572,7 @@ function getEmployeeByID(){
                 employee += "<tr><th>Travel Expenses</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense.toFixed(2)+"\"></td></tr>";
                 employee += "<input type=\"hidden\" id=\"employee_details_id_"+i+"\" value=\""+json[i].id+"\">";
                 employee += "<input type=\"hidden\" id=\"employee_id_"+i+"\" value=\""+employeeID+"\">";
+                employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
                 employee += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_employee_id_"+i+"\" value=\"EDIT\" onclick=\"editEmployeeDetails("+i+")\"></td></tr>";                                    
                 employee += "</table>"
                 if (i+1 < json.length) {
@@ -708,14 +705,13 @@ function setInitialHome(){
     var logoutButton = "<a id=\"button_logout\"><span class=\"glyphicon glyphicon-log-in\"></span> Logout</a>"
 
     $(document).ready(function(){
+        if (getCookie("id_token") == ""){
+                window.location.replace("/login")
+        }
         if (getCookie("oauthstate") != ""){
             $("#login").html(logoutButton);
             showProfile();
-            if (getCookie("id_token") == ""){
-                if (deleteOauthState()){
-                    window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-                };
-            }
+            
             $("#button_logout").click(function(){
                 logout();
                 if (deleteOauthState()){
