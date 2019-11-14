@@ -22,11 +22,11 @@ acceptance_test:
 	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
 	sleep 10
 	newman run atdd/api/showSummaryTimesheetSuccess.json
-	newman run atdd/api/showTimeSheetByIDSuccess.json
+	newman run atdd/api/showTimeSheetByEmployeeIDSuccess.json
 	newman run atdd/api/updateStatusCheckingTransferSuccess.json
 	newman run atdd/api/deleteIncomeItemSuccess.json
-	newman run atdd/api/showMemberDetailsByIDSuccess.json
-	newman run atdd/api/updateMemberDetailsSuccess.json
+	newman run atdd/api/showEmployeeDetailsByEmployeeIDSuccess.json
+	newman run atdd/api/updateEmployeeDetailsSuccess.json
 	newman run atdd/api/loginSuccess.json
 	docker-compose down
 
