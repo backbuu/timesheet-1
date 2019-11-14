@@ -209,7 +209,7 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_EmployeeID_001_Income_Sho
 	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	mockRepository := new(mockapi.MockRepository)
-	mockRepository.On("VerifyIncomeRequest","001", 1).Return(true)
+	mockRepository.On("VerifyIncomeRequest", "001", 1).Return(true)
 
 	mockRepository.On("CreateIncome", 2018, 12, "001", model.Incomes{
 		Day:                      28,
@@ -451,7 +451,7 @@ func Test_DeleteIncomeHandler_Input_IncomeID_47_Should_Be_200(t *testing.T) {
 }
 
 func Test_ShowEmployeeDetailsByEmployeeIDHandler_Input_EmployeeID_001_Should_Be_EmployeeDetails(t *testing.T) {
-	expected := `[{"id":1,"employee_id":"001","company_id":1,"employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"employee_id":"001","company_id":2,"employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
+	expected := `[{"id":1,"employee_id":"001","company_id":1,"company_name":"Siam Chamnankit","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":80000,"income_tax_1":5000,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""},{"id":2,"employee_id":"001","company_id":2,"company_name":"SHU HA RI","employee_name_th":"ประธาน ด่านสกุลเจริญกิจ","employee_name_eng":"Prathan Dansakulcharoenkit","email":"prathan@scrum123.com","rate_per_day":15000,"rate_per_hour":1875,"salary":0,"income_tax_1":0,"social_security":0,"income_tax_53_percentage":10,"status":"wage","travel_expense":0,"picture":""}]`
 	employeeRequest := EmployeeRequest{
 		EmployeeID: "001",
 	}
@@ -465,6 +465,7 @@ func Test_ShowEmployeeDetailsByEmployeeIDHandler_Input_EmployeeID_001_Should_Be_
 			ID:                    1,
 			EmployeeID:            "001",
 			CompanyID:             1,
+			CompanyName:           "Siam Chamnankit",
 			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
@@ -482,6 +483,7 @@ func Test_ShowEmployeeDetailsByEmployeeIDHandler_Input_EmployeeID_001_Should_Be_
 			ID:                    2,
 			EmployeeID:            "001",
 			CompanyID:             2,
+			CompanyName:           "SHU HA RI",
 			EmployeeNameTH:        "ประธาน ด่านสกุลเจริญกิจ",
 			EmployeeNameENG:       "Prathan Dansakulcharoenkit",
 			Email:                 "prathan@scrum123.com",
