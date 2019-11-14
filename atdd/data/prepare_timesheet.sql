@@ -35,7 +35,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'Siam Chamnankit'),(2,'Shu Ha Ri'),(3,'We Love Bug');
+INSERT INTO `companies` VALUES (1,'Siam Chamnankit'),(2,'SHU HA RI'),(3,'We Love Bug');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
