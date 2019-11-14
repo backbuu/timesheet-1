@@ -598,7 +598,7 @@ func Test_VerifyAuthentication_Input_Email_nuttaya_c_welovebug_biz_ID_Token_Expi
 	assert.Equal(t, expected, actual)
 }
 
-func Test_GetSummaryInYearByID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
+func Test_GetSummaryInYearByEmployeeID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryTransactionTimesheet(t *testing.T) {
 	expected := model.SummaryTransactionTimesheet{
 		EmployeeID: "001",
 		Year:       2017,
@@ -673,7 +673,7 @@ func Test_GetSummaryInYearByID_Input_EmployeeID_001_Year_2017_Should_Be_SummaryT
 	employeeID := "001"
 	year := 2017
 
-	actual, err := timesheet.GetSummaryInYearByID(employeeID, year)
+	actual, err := timesheet.GetSummaryInYearByEmployeeID(employeeID, year)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
