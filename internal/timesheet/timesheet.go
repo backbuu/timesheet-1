@@ -356,3 +356,11 @@ func calculateTotalIncomeTax53InYearByEmployeeID(transactionTimesheetList []mode
 	}
 	return totalIncomeTax53InYear
 }
+
+func calculateTotalNetWageInYearByEmployeeID(transactionTimesheetList []model.TransactionTimesheet) float64 {
+	var totalNetWageInYear float64
+	for _, transactionTimesheet := range transactionTimesheetList {
+		totalNetWageInYear += transactionTimesheet.NetWage
+	}
+	return totalNetWageInYear
+}
