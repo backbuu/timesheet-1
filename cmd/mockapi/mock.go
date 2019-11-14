@@ -70,6 +70,10 @@ func (mock *MockRepository) GetProfileByEmail(email string) (model.Profile, erro
 	return argument.Get(0).(model.Profile), argument.Error(1)
 }
 
+func (mock *MockRepository) VerifyIncomeRequest(employeeID string,companyID int) bool {
+	argument := mock.Called(employeeID, companyID)
+	return argument.Bool(0)
+}
 type MockRepositoryToTimesheet struct {
 	mock.Mock
 }

@@ -209,6 +209,8 @@ func Test_CreateIncomeHandler_Input_Year_2018_Month_12_EmployeeID_001_Income_Sho
 	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
 
 	mockRepository := new(mockapi.MockRepository)
+	mockRepository.On("VerifyIncomeRequest","001", 1).Return(true)
+
 	mockRepository.On("CreateIncome", 2018, 12, "001", model.Incomes{
 		Day:                      28,
 		StartTimeAM:              startTimeAM,
