@@ -2,6 +2,45 @@
   box-sizing: border-box;
 }
 
+.yello {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+.turquoise {
+  background-color: turquoise;
+  color: #ffffff;
+  font-weight: bold;
+  width: 90px;
+}
+
+.aqua {
+  background-color: aqua;
+  font-weight: bold;
+  width: 90px;
+}
+
+.blue {
+  background-color: blue;
+  color: #ffffff;
+  font-weight: bold;
+  width: 100px;
+}
+
+.antiquewhite {
+  background-color: antiquewhite;
+  color: black;
+  font-weight: bold;
+  width: 90px;
+}
+
+.green {
+  background-color: #c6eed4;
+  width: 90px;
+  color: black;
+  font-weight: bold;
+}
+
 #button_to_top {
     display: none;
     position: fixed;
@@ -31,17 +70,14 @@
 }
 
 .table_company th{
-    color: #ffffff;
     text-align: center;
-    background-color: #0f697c;
-    border: 0.5px solid white;
+    border: 0.5px solid black;
 }
 
 .table_company td{
-    color: #0a3d47;
-    text-align: center;
-    background-color: #5aaebd;
-    border: 0.5px solid white;
+    text-align: right;
+    border: 0.5px solid black;
+    padding-right: 2px;
 }
 
 #button_show_summary_by_id, #button_show_summary {
