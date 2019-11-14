@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Add income member ID 001 and Show summary timesheet success",
+			"name": "Add income employee ID 001 and Show summary timesheet success",
 			"item": [
 				{
 					"name": "Show summary timesheet",
@@ -522,7 +522,7 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Add income member ID 002 and Show summary timesheet success",
+			"name": "Add income employee ID 002 and Show summary timesheet success",
 			"item": [
 				{
 					"name": "Show summary timesheet",
