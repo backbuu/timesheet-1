@@ -292,3 +292,11 @@ func calculateTotalTrainingInYearByEmployeeID(transactionTimesheetList []model.T
 	}
 	return totalTrainingInYear
 }
+
+func calculateTotalOtherInYearByEmployeeID(transactionTimesheetList []model.TransactionTimesheet) float64 {
+	var totalOtherInYear float64
+	for _, transactionTimesheet := range transactionTimesheetList {
+		totalOtherInYear += transactionTimesheet.Other
+	}
+	return totalOtherInYear
+}
