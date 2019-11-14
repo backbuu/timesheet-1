@@ -47,7 +47,7 @@ func main() {
 	router.GET("/deleteOauthState", handler.DeleteOauthStateCookie)
 	router.GET("/showProfile", api.GetProfileHandler)
 	router.POST("/showSummaryTimesheet", api.GetSummaryHandler)
-	router.POST("/addIncomeItem", api.CreateIncomeHandler)
+	router.POST("/createIncome", api.CreateIncomeHandler)
 	router.POST("/calculatePayment", api.CalculatePaymentHandler)
 	router.POST("/showTimesheetByEmployeeID", api.GetSummaryByEmployeeIDHandler)
 	router.POST("/updateStatusCheckingTransfer", api.UpdateStatusCheckingTransferHandler)

@@ -242,7 +242,7 @@ function addIncomeItem(){
     var description = $("#description").val();
     
     var request = new XMLHttpRequest();
-    var url = "/addIncomeItem";
+    var url = "/createIncome";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization", getCookie("id_token")); 

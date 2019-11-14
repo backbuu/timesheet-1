@@ -568,3 +568,48 @@ func Test_GetProfileByEmail_Input_Email_nareenart_scrum123_com_Should_Be_Employe
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, actual)
 }
+
+func Test_VerifyIncomeRequest_Input_EmployeeID_001_Company_1_Should_Be_True(t *testing.T) {
+	expected := true
+	employeeID := "001"
+	companyID := 1
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual := repository.VerifyIncomeRequest(employeeID, companyID)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_VerifyIncomeRequest_Input_EmployeeID_002_Company_2_Should_Be_True(t *testing.T) {
+	expected := true
+	employeeID := "002"
+	companyID := 2
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual := repository.VerifyIncomeRequest(employeeID, companyID)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_VerifyIncomeRequest_Input_EmployeeID_002_Company_1_Should_Be_False(t *testing.T) {
+	expected := false
+	employeeID := "002"
+	companyID := 1
+	databaseConnection, _ := sqlx.Connect("mysql", "root:root@tcp(localhost:3306)/timesheet")
+	defer databaseConnection.Close()
+	repository := TimesheetRepository{
+		DatabaseConnection: databaseConnection,
+	}
+
+	actual := repository.VerifyIncomeRequest(employeeID, companyID)
+
+	assert.Equal(t, expected, actual)
+}

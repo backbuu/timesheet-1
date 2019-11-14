@@ -27,6 +27,7 @@ type TimesheetRepositoryGateways interface {
 	UpdateEmployeeDetails(employeeDetails model.Employee) error
 	UpdatePictureToemployees(picture, email string) error
 	GetProfileByEmail(email string) (model.Profile, error)
+	VerifyIncomeRequest(employeeID string, companyID int) bool
 }
 
 type TimesheetRepositoryGatewaysToTimesheet interface {
@@ -273,4 +274,17 @@ func (repository TimesheetRepository) GetProfileByEmail(email string) (model.Pro
 		return profile, err
 	}
 	return profile, nil
+}
+
+func (repository TimesheetRepository) VerifyIncomeRequest(employeeID string, companyID int) bool {
+	var count int
+	query := `SELECT COUNT(id) FROM employees WHERE employee_id LIKE ? AND company_id = ?`
+	err := repository.DatabaseConnection.Get(&count, query, employeeID, companyID)
+	if err != nil {
+		return false
+	}
+	if count == 0 {
+		return false
+	}
+	return true
 }
