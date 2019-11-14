@@ -340,3 +340,11 @@ func calculateTotalNetSalaryInYearByEmployeeID(transactionTimesheetList []model.
 	}
 	return totalNetSalaryInYear
 }
+
+func calculateTotalWageInYearByEmployeeID(transactionTimesheetList []model.TransactionTimesheet) float64 {
+	var totalWageInYear float64
+	for _, transactionTimesheet := range transactionTimesheetList {
+		totalWageInYear += transactionTimesheet.Wage
+	}
+	return totalWageInYear
+}
