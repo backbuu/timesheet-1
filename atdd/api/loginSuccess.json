@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Login member ID 007 success",
+			"name": "Login employee ID 002 success",
 			"item": [
 				{
 					"name": "Login",
@@ -75,12 +75,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member ID should be 007\", function () {",
-									"    pm.expect(jsonData.member_id).to.eql(\"007\");",
+									"pm.test(\"Employee ID should be 002\", function () {",
+									"    pm.expect(jsonData.employee_id).to.eql(\"002\");",
 									"});",
 									"",
-									"pm.test(\"Email should be logintest535@gmail.com\", function () {",
-									"    pm.expect(jsonData.email).to.eql(\"logintest535@gmail.com\");",
+									"pm.test(\"Email should be nareenart@scrum123.com\", function () {",
+									"    pm.expect(jsonData.email).to.eql(\"nareenart@scrum123.com\");",
 									"});",
 									"",
 									"pm.test(\"Picture should be https://lh4.googleusercontent.com/-nA86bkk5Icc/AAAAAAAAAAI/AAAAAAAAAAA/Wixwdu9UCfU/photo.jpg\", function () {",
@@ -96,7 +96,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
@@ -128,80 +128,84 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member ID should be 007\", function () {",
-									"    pm.expect(jsonData[8].member_id).to.eql(\"007\");",
+									"pm.test(\"Employee ID should be 002\", function () {",
+									"    pm.expect(jsonData[2].employee_id).to.eql(\"002\");",
 									"});",
 									"",
-									"pm.test(\"Member thai name should be ทดสอบ เข้าสู่ระบบ\", function () {",
-									"    pm.expect(jsonData[8].member_name_th).to.eql(\"ทดสอบ เข้าสู่ระบบ\");",
+									"pm.test(\"Employee thai name should be นารีนารถ เนรัญชร\", function () {",
+									"    pm.expect(jsonData[2].employee_name_th).to.eql(\"นารีนารถ เนรัญชร\");",
+									"});",
+									"",
+									"pm.test(\"Employee english name should be Nareenart Narunchon\", function () {",
+									"    pm.expect(jsonData[2].employee_name_eng).to.eql(\"Nareenart Narunchon\");",
 									"});",
 									"",
 									"pm.test(\"Year should be 2018\", function () {",
-									"    pm.expect(jsonData[8].year).to.eql(2018);",
+									"    pm.expect(jsonData[2].year).to.eql(2018);",
 									"});",
 									"",
 									"pm.test(\"Month should be 12\", function () {",
-									"    pm.expect(jsonData[8].month).to.eql(12);",
+									"    pm.expect(jsonData[2].month).to.eql(12);",
 									"});",
 									"",
-									"pm.test(\"Company should be shuhari\", function () {",
-									"    pm.expect(jsonData[8].company).to.eql(\"shuhari\");",
+									"pm.test(\"Company ID should be 2\", function () {",
+									"    pm.expect(jsonData[2].company_id).to.eql(2);",
 									"});",
 									"",
 									"pm.test(\"Coaching should be 0\", function () {",
-									"    pm.expect(jsonData[8].coaching).to.eql(0);",
+									"    pm.expect(jsonData[2].coaching).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Training should be 0\", function () {",
-									"    pm.expect(jsonData[8].training).to.eql(0);",
+									"    pm.expect(jsonData[2].training).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Other should be 0\", function () {",
-									"    pm.expect(jsonData[8].other).to.eql(0);",
+									"pm.test(\"Other should be 6500\", function () {",
+									"    pm.expect(jsonData[2].other).to.eql(6500);",
 									"});",
 									"",
-									"pm.test(\"Total income should be 0\", function () {",
-									"    pm.expect(jsonData[8].total_incomes).to.eql(0);",
+									"pm.test(\"Total income should be 6500\", function () {",
+									"    pm.expect(jsonData[2].total_incomes).to.eql(6500);",
 									"});",
 									"",
-									"pm.test(\"Salary should be 0\", function () {",
-									"    pm.expect(jsonData[8].salary).to.eql(0);",
+									"pm.test(\"Salary should be 25000\", function () {",
+									"    pm.expect(jsonData[2].salary).to.eql(25000);",
 									"});",
 									"",
 									"pm.test(\"Income tax 1 should be 0\", function () {",
-									"    pm.expect(jsonData[8].income_tax_1).to.eql(0);",
+									"    pm.expect(jsonData[2].income_tax_1).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Social security should be 0\", function () {",
-									"    pm.expect(jsonData[8].social_security).to.eql(0);",
+									"pm.test(\"Social security should be 750\", function () {",
+									"    pm.expect(jsonData[2].social_security).to.eql(750);",
 									"});",
 									"",
-									"pm.test(\"Net salary should be 0\", function () {",
-									"    pm.expect(jsonData[8].net_salary).to.eql(0);",
+									"pm.test(\"Net salary should be 24250\", function () {",
+									"    pm.expect(jsonData[2].net_salary).to.eql(24250);",
 									"});",
 									"",
-									"pm.test(\"Wage should be 0\", function () {",
-									"    pm.expect(jsonData[8].wage).to.eql(0);",
+									"pm.test(\"Wage should be 6500\", function () {",
+									"    pm.expect(jsonData[2].wage).to.eql(6500);",
 									"});",
 									"",
 									"pm.test(\"Income tax 53 percentage should be 5\", function () {",
-									"    pm.expect(jsonData[8].income_tax_53_percentage).to.eql(5);",
+									"    pm.expect(jsonData[2].income_tax_53_percentage).to.eql(5);",
 									"});",
 									"",
-									"pm.test(\"Income tax 53 should be 0\", function () {",
-									"    pm.expect(jsonData[8].income_tax_53).to.eql(0);",
+									"pm.test(\"Income tax 53 should be 325\", function () {",
+									"    pm.expect(jsonData[2].income_tax_53).to.eql(325);",
 									"});",
 									"",
-									"pm.test(\"Net wage should be 0\", function () {",
-									"    pm.expect(jsonData[8].net_wage).to.eql(0);",
+									"pm.test(\"Net wage should be 6175\", function () {",
+									"    pm.expect(jsonData[2].net_wage).to.eql(6175);",
 									"});",
 									"",
-									"pm.test(\"Net transfer should be 0\", function () {",
-									"    pm.expect(jsonData[8].net_transfer).to.eql(0);",
+									"pm.test(\"Net transfer should be 30425\", function () {",
+									"    pm.expect(jsonData[2].net_transfer).to.eql(30425);",
 									"});",
 									"",
 									"pm.test(\"Status checking transfer should be รอการตรวจสอบ\", function () {",
-									"    pm.expect(jsonData[8].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
+									"    pm.expect(jsonData[2].status_checking_transfer).to.eql(\"รอการตรวจสอบ\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -237,7 +241,7 @@
 					"response": []
 				},
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -250,16 +254,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member english name should be Test Login\", function () {",
-									"    pm.expect(jsonData.member_name_eng).to.eql(\"Test Login\");",
+									"pm.test(\"Employee english name should be Nareenart Narunchon\", function () {",
+									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Nareenart Narunchon\");",
 									"});",
 									"",
-									"pm.test(\"Email should be logintest535@gmail.com\", function () {",
-									"    pm.expect(jsonData.email).to.eql(\"logintest535@gmail.com\");",
-									"});",
-									"",
-									"pm.test(\"Overtime rate should be 0\", function () {",
-									"    pm.expect(jsonData.overtime_rate).to.eql(0);",
+									"pm.test(\"Email should be nareenart@scrum123.com\", function () {",
+									"    pm.expect(jsonData.email).to.eql(\"nareenart@scrum123.com\");",
 									"});",
 									"",
 									"pm.test(\"Rate per day should be 0\", function () {",
@@ -278,12 +278,12 @@
 									"    pm.expect(jsonData.year).to.eql(2018);",
 									"});",
 									"",
-									"pm.test(\"TimesheetID should be 007201812\", function () {",
-									"    pm.expect(jsonData.timesheet_id).to.eql(\"007201812\");",
+									"pm.test(\"TimesheetID should be 002201812\", function () {",
+									"    pm.expect(jsonData.timesheet_id).to.eql(\"002201812\");",
 									"});",
 									"",
-									"pm.test(\"Total hours per month should be 08:00:00\", function () {",
-									"    pm.expect(jsonData.total_hours).to.eql(\"08:00:00\");",
+									"pm.test(\"Total hours per month should be 120:00:00\", function () {",
+									"    pm.expect(jsonData.total_hours).to.eql(\"120:00:00\");",
 									"});",
 									"",
 									"pm.test(\"Total coaching customer charging should be 0\", function () {",
@@ -298,12 +298,12 @@
 									"    pm.expect(jsonData.total_training_wage).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Total other wage should be 0\", function () {",
-									"    pm.expect(jsonData.total_other_wage).to.eql(0);",
+									"pm.test(\"Total other wage should be 5000\", function () {",
+									"    pm.expect(jsonData.total_other_wage).to.eql(5000);",
 									"});",
 									"",
-									"pm.test(\"Payment wage should be 0\", function () {",
-									"    pm.expect(jsonData.payment_wage).to.eql(0);",
+									"pm.test(\"Payment wage should be 5000\", function () {",
+									"    pm.expect(jsonData.payment_wage).to.eql(5000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -322,17 +322,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"007\"\n}"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"002\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
@@ -365,13 +365,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"007\",\n\t\"incomes\":{\n\t\t\"day\":12,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":0,\n\t\t\"other_wage\":0,\n\t\t\"company\":\"shuhari\",\n\t\t\"description\":\"work at SCK Dojo\"}\n}\n"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"002\",\n\t\"incomes\":{\n\t\t\"day\":29,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":0,\n\t\t\"other_wage\":0,\n\t\t\"company_id\":2,\n\t\t\"description\":\"work at SCK Dojo\"}\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/addIncomeItem",
@@ -414,13 +414,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"member_id\":\"007\",\n\t\"year\":2018,\n\t\"month\":12\n}"
+							"raw": "{\n\t\"employee_id\":\"002\",\n\t\"year\":2018,\n\t\"month\":12\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/calculatePayment",
@@ -463,13 +463,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"member_id\":\"007\",\n\t\"id\":78\n}"
+							"raw": "{\n\t\"employee_id\":\"002\",\n\t\"id\":83\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/deleteIncomeItem",
@@ -512,13 +512,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"member_id\":\"007\",\n\t\"year\":2018,\n\t\"month\":12\n}"
+							"raw": "{\n\t\"employee_id\":\"002\",\n\t\"year\":2018,\n\t\"month\":12\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/calculatePayment",
@@ -561,13 +561,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"member_id\":\"007\",\n\t\"transaction_id\":\"007201812shuhari\",\n\t\"status\":\"โอนเงินเรียบร้อย\",\n\t\"date\":\"30/12/2018\",\n\t\"comment\":\"\"\n}"
+							"raw": "{\n\t\"employee_id\":\"002\",\n\t\"transaction_id\":\"0022018122\",\n\t\"status\":\"โอนเงินเรียบร้อย\",\n\t\"date\":\"30/12/2018\",\n\t\"comment\":\"\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/updateStatusCheckingTransfer",
@@ -584,7 +584,7 @@
 					"response": []
 				},
 				{
-					"name": "Update member details",
+					"name": "Update employee details",
 					"event": [
 						{
 							"listen": "test",
@@ -610,23 +610,23 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\":11,\n\t\"member_id\":\"007\",\n\t\"member_name_th\":\"ทดสอบ เข้าสู่ระบบ\",\n\t\"member_name_eng\":\"Test Login\",\n\t\"email\":\"logintest535@gmail.com\",\n\t\"overtime_rate\":2000,\n\t\"rate_per_day\":0,\n\t\"rate_per_hour\":0,\n\t\"salary\":0,\n\t\"income_tax_1\":0,\n\t\"social_security\":0,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":0,\n\t\"status\":\"salary\"\n}"
+							"raw": "{\n\t\"id\":3,\n\t\"employee_id\":\"002\",\n\t\"employee_name_th\":\"นารีนารถ เนรัญชร\",\n\t\"employee_name_eng\":\"Nareenart Narunchon\",\n\t\"email\":\"nareenart@scrum123.com\",\n\t\"rate_per_day\":0,\n\t\"rate_per_hour\":0,\n\t\"salary\":0,\n\t\"income_tax_1\":0,\n\t\"social_security\":0,\n\t\"income_tax_53_percentage\":5,\n\t\"travel_expense\":0,\n\t\"status\":\"wage\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/updateMemberDetails",
+							"raw": "http://localhost:8080/updateEmployeeDetails",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"updateMemberDetails"
+								"updateEmployeeDetails"
 							]
 						}
 					},
@@ -659,13 +659,13 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"member_id\":\"007\",\n\t\"year\":2018,\n\t\"month\":12\n}"
+							"raw": "{\n\t\"employee_id\":\"002\",\n\t\"year\":2018,\n\t\"month\":12\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/calculatePayment",
@@ -695,80 +695,80 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member ID should be 007\", function () {",
-									"    pm.expect(jsonData[8].member_id).to.eql(\"007\");",
+									"pm.test(\"Employee ID should be 002\", function () {",
+									"    pm.expect(jsonData[2].employee_id).to.eql(\"002\");",
 									"});",
 									"",
-									"pm.test(\"Member thai name should be ทดสอบ เข้าสู่ระบบ\", function () {",
-									"    pm.expect(jsonData[8].member_name_th).to.eql(\"ทดสอบ เข้าสู่ระบบ\");",
+									"pm.test(\"Employee thai name should be นารีนารถ เนรัญชร\", function () {",
+									"    pm.expect(jsonData[2].employee_name_th).to.eql(\"นารีนารถ เนรัญชร\");",
 									"});",
 									"",
 									"pm.test(\"Year should be 2018\", function () {",
-									"    pm.expect(jsonData[8].year).to.eql(2018);",
+									"    pm.expect(jsonData[2].year).to.eql(2018);",
 									"});",
 									"",
 									"pm.test(\"Month should be 12\", function () {",
-									"    pm.expect(jsonData[8].month).to.eql(12);",
+									"    pm.expect(jsonData[2].month).to.eql(12);",
 									"});",
 									"",
-									"pm.test(\"Company should be shuhari\", function () {",
-									"    pm.expect(jsonData[8].company).to.eql(\"shuhari\");",
+									"pm.test(\"Company ID should be 2\", function () {",
+									"    pm.expect(jsonData[2].company_id).to.eql(2);",
 									"});",
 									"",
 									"pm.test(\"Coaching should be 0\", function () {",
-									"    pm.expect(jsonData[8].coaching).to.eql(0);",
+									"    pm.expect(jsonData[2].coaching).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Training should be 0\", function () {",
-									"    pm.expect(jsonData[8].training).to.eql(0);",
+									"    pm.expect(jsonData[2].training).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Other should be 0\", function () {",
-									"    pm.expect(jsonData[8].other).to.eql(0);",
+									"pm.test(\"Other should be 5000\", function () {",
+									"    pm.expect(jsonData[2].other).to.eql(5000);",
 									"});",
 									"",
-									"pm.test(\"Total income should be 0\", function () {",
-									"    pm.expect(jsonData[8].total_incomes).to.eql(0);",
+									"pm.test(\"Total income should be 5000\", function () {",
+									"    pm.expect(jsonData[2].total_incomes).to.eql(5000);",
 									"});",
 									"",
 									"pm.test(\"Salary should be 0\", function () {",
-									"    pm.expect(jsonData[8].salary).to.eql(0);",
+									"    pm.expect(jsonData[2].salary).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Income tax 1 should be 0\", function () {",
-									"    pm.expect(jsonData[8].income_tax_1).to.eql(0);",
+									"    pm.expect(jsonData[2].income_tax_1).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Social security should be 0\", function () {",
-									"    pm.expect(jsonData[8].social_security).to.eql(0);",
+									"    pm.expect(jsonData[2].social_security).to.eql(0);",
 									"});",
 									"",
 									"pm.test(\"Net salary should be 0\", function () {",
-									"    pm.expect(jsonData[8].net_salary).to.eql(0);",
+									"    pm.expect(jsonData[2].net_salary).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Wage should be 0\", function () {",
-									"    pm.expect(jsonData[8].wage).to.eql(0);",
+									"pm.test(\"Wage should be 5000\", function () {",
+									"    pm.expect(jsonData[2].wage).to.eql(5000);",
 									"});",
 									"",
 									"pm.test(\"Income tax 53 percentage should be 5\", function () {",
-									"    pm.expect(jsonData[8].income_tax_53_percentage).to.eql(5);",
+									"    pm.expect(jsonData[2].income_tax_53_percentage).to.eql(5);",
 									"});",
 									"",
-									"pm.test(\"Income tax 53 should be 0\", function () {",
-									"    pm.expect(jsonData[8].income_tax_53).to.eql(0);",
+									"pm.test(\"Income tax 53 should be 250\", function () {",
+									"    pm.expect(jsonData[2].income_tax_53).to.eql(250);",
 									"});",
 									"",
-									"pm.test(\"Net wage should be 0\", function () {",
-									"    pm.expect(jsonData[8].net_wage).to.eql(0);",
+									"pm.test(\"Net wage should be 4750\", function () {",
+									"    pm.expect(jsonData[2].net_wage).to.eql(4750);",
 									"});",
 									"",
-									"pm.test(\"Net transfer should be 0\", function () {",
-									"    pm.expect(jsonData[8].net_transfer).to.eql(0);",
+									"pm.test(\"Net transfer should be 4750\", function () {",
+									"    pm.expect(jsonData[2].net_transfer).to.eql(4750);",
 									"});",
 									"",
 									"pm.test(\"Status checking transfer should be โอนเงินเรียบร้อย\", function () {",
-									"    pm.expect(jsonData[8].status_checking_transfer).to.eql(\"โอนเงินเรียบร้อย\");",
+									"    pm.expect(jsonData[2].status_checking_transfer).to.eql(\"โอนเงินเรียบร้อย\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -804,7 +804,7 @@
 					"response": []
 				},
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -817,16 +817,12 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Member english name should be Test Login\", function () {",
-									"    pm.expect(jsonData.member_name_eng).to.eql(\"Test Login\");",
+									"pm.test(\"Employee english name should be Nareenart Narunchon\", function () {",
+									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Nareenart Narunchon\");",
 									"});",
 									"",
-									"pm.test(\"Email should be logintest535@gmail.com\", function () {",
-									"    pm.expect(jsonData.email).to.eql(\"logintest535@gmail.com\");",
-									"});",
-									"",
-									"pm.test(\"Overtime rate should be 2000\", function () {",
-									"    pm.expect(jsonData.overtime_rate).to.eql(2000);",
+									"pm.test(\"Email should be nareenart@scrum123.com\", function () {",
+									"    pm.expect(jsonData.email).to.eql(\"nareenart@scrum123.com\");",
 									"});",
 									"",
 									"pm.test(\"Rate per day should be 0\", function () {",
@@ -845,12 +841,12 @@
 									"    pm.expect(jsonData.year).to.eql(2018);",
 									"});",
 									"",
-									"pm.test(\"TimesheetID should be 007201812\", function () {",
-									"    pm.expect(jsonData.timesheet_id).to.eql(\"007201812\");",
+									"pm.test(\"TimesheetID should be 002201812\", function () {",
+									"    pm.expect(jsonData.timesheet_id).to.eql(\"002201812\");",
 									"});",
 									"",
-									"pm.test(\"Total hours per month should be 8:00:00\", function () {",
-									"    pm.expect(jsonData.total_hours).to.eql(\"8:00:00\");",
+									"pm.test(\"Total hours per month should be 120:00:00\", function () {",
+									"    pm.expect(jsonData.total_hours).to.eql(\"120:00:00\");",
 									"});",
 									"",
 									"pm.test(\"Total coaching customer charging should be 0\", function () {",
@@ -865,12 +861,12 @@
 									"    pm.expect(jsonData.total_training_wage).to.eql(0);",
 									"});",
 									"",
-									"pm.test(\"Total other wage should be 0\", function () {",
-									"    pm.expect(jsonData.total_other_wage).to.eql(0);",
+									"pm.test(\"Total other wage should be 5000\", function () {",
+									"    pm.expect(jsonData.total_other_wage).to.eql(5000);",
 									"});",
 									"",
-									"pm.test(\"Payment wage should be 0\", function () {",
-									"    pm.expect(jsonData.payment_wage).to.eql(0);",
+									"pm.test(\"Payment wage should be 5000\", function () {",
+									"    pm.expect(jsonData.payment_wage).to.eql(5000);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -889,17 +885,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"member_id\":\"007\"\n}"
+							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"002\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
@@ -927,7 +923,7 @@
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA"
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM"
 							}
 						],
 						"url": {
@@ -966,7 +962,7 @@
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEwNjgyNGI3OWUzOTgyMzk0ZDVjZTdhYzc1YmY5MmNiYTMwYTJlMjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJsb2dpbnRlc3Q1MzVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1Mzg1NTZ9.nlwC0lrnXAuloFR8nH4fKA0fKwEg2EMU8zlPin3KLJqDvUb36dfDvwYg2QkuCQHsqcfJZYlRJIaee-YS7Eu0crIF9IaVDAsgrPamWG8VTQx0S42_qHLUMrTDc5x3afJYcxiNT25jnG29qKkNE5P8-7KOnwM__k5iw5Nmc8G2Ya5anTt7j3shlCWjpWQegnyLK4Kk2MYsAFHs6y0nHg0iMAQa8xc4R7cIST2T-4AmqIgIORhi4_K_cj_RK3MXcKcYFH4-Kry14wnnG9ZKwgXZJtUSSl7LEkvtOT_OmJd3Dm_dKVTc3LmER2HcFr7rs14wkqMiDdpX2bveMqCZ_zILCA"
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAyNTU2NjI5OTQ5LThuc2ZqcWdlcGE0djlqM3U1dTZma25lZ3YwaG1rOXVlLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwMzA2MTg5Mjg2MjAzOTk4MTMyIiwiZW1haWwiOiJuYXJlZW5hcnRAc2NydW0xMjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJLeVV3Z21yU2M0ZEY3WHRaOS01SlR3IiwiaWF0IjoxNTczNTM0OTU2LCJleHAiOjE1NzM1NDA4MTQsImp0aSI6ImMwY2MxNjUzLWRiMDktNGIzZi04MzhkLWIxZWM1YjI4OGQ1YiJ9.PZmB-GceX_FXdGtkKr05cx3WPhSKNDQqeMVsYlyI7LM"
 							}
 						],
 						"url": {
