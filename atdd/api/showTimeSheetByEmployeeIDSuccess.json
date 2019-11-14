@@ -1,15 +1,15 @@
 {
 	"info": {
 		"_postman_id": "9f60f182-6b32-447a-8bca-865f50f69e14",
-		"name": "ShowTimeSheetByIDSuccess",
+		"name": "ShowTimeSheetByEmployeeIDSuccess",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Add income member ID 003 and Show timesheet by ID success",
+			"name": "Add income employee ID 003 and Show timesheet by employee ID success",
 			"item": [
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -93,14 +93,14 @@
 							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
@@ -205,7 +205,7 @@
 					"response": []
 				},
 				{
-					"name": "Show timesheet by ID",
+					"name": "Show timesheet by employee ID",
 					"event": [
 						{
 							"listen": "test",
@@ -350,14 +350,14 @@
 							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/showTimesheetByID",
+							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"showTimesheetByID"
+								"showTimesheetByEmployeeID"
 							]
 						}
 					},
