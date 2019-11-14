@@ -86,7 +86,7 @@ func (repository TimesheetRepository) GetIncomes(employeeID string, year, month 
 
 func (repository TimesheetRepository) GetEmployeeListByEmployeeID(employeeID string) ([]model.Employee, error) {
 	var employeeList []model.Employee
-	query := `SELECT * FROM employees WHERE employee_id = ?`
+	query := `SELECT * FROM employees, companies WHERE employee_id = ? AND employees.company_id = companies.company_id`
 	err := repository.DatabaseConnection.Select(&employeeList, query, employeeID)
 	if err != nil {
 		return []model.Employee{}, err
