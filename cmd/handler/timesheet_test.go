@@ -25,7 +25,7 @@ func Test_GetSummaryByEmployeeIDHandler_Input_Year_2019_Month_12_EmployeeID_003_
 		EmployeeID: "003",
 	}
 	jsonRequest, _ := json.Marshal(timesheetRequest)
-	request := httptest.NewRequest("POST", "/showTimesheetByID", bytes.NewBuffer(jsonRequest))
+	request := httptest.NewRequest("POST", "/showTimesheetByEmployeeID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 
 	startTimeAM, _ := time.Parse("2006-01-02 15:04:05", "2018-12-01 09:00:00")
@@ -92,7 +92,7 @@ func Test_GetSummaryByEmployeeIDHandler_Input_Year_2019_Month_12_EmployeeID_003_
 		Timesheet: mockTimesheet,
 	}
 	testRoute := gin.Default()
-	testRoute.POST("/showTimesheetByID", api.GetSummaryByEmployeeIDHandler)
+	testRoute.POST("/showTimesheetByEmployeeID", api.GetSummaryByEmployeeIDHandler)
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
@@ -454,7 +454,7 @@ func Test_ShowEmployeeDetailsByEmployeeIDHandler_Input_EmployeeID_001_Should_Be_
 		EmployeeID: "001",
 	}
 	jsonRequest, _ := json.Marshal(employeeRequest)
-	request := httptest.NewRequest("POST", "/showEmployeeDetailsByID", bytes.NewBuffer(jsonRequest))
+	request := httptest.NewRequest("POST", "/showEmployeeDetailsByEmployeeID", bytes.NewBuffer(jsonRequest))
 	writer := httptest.NewRecorder()
 
 	mockRepositoryToTimesheet := new(mockapi.MockRepositoryToTimesheet)
@@ -499,7 +499,7 @@ func Test_ShowEmployeeDetailsByEmployeeIDHandler_Input_EmployeeID_001_Should_Be_
 		RepositoryToTimesheet: mockRepositoryToTimesheet,
 	}
 	testRoute := gin.Default()
-	testRoute.POST("/showEmployeeDetailsByID", api.ShowEmployeeDetailsByEmployeeIDHandler)
+	testRoute.POST("/showEmployeeDetailsByEmployeeID", api.ShowEmployeeDetailsByEmployeeIDHandler)
 	testRoute.ServeHTTP(writer, request)
 	response := writer.Result()
 	actual, err := ioutil.ReadAll(response.Body)
