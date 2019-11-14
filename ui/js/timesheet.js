@@ -120,7 +120,7 @@ function showSummary(){
                     tableByCompany += "</th>"
                     tableByCompany += "<th colspan=\"4\" class=\"turquoise\"\">Income</th>"
                     tableByCompany += "<th colspan=\"4\" class=\"antiquewhite\"></th>"
-                    tableByCompany += "<th colspan=\"4\" class=\"green\">Wage Income of Withholding Income Tax (P.N.D.53)</th>"
+                    tableByCompany += "<th colspan=\"4\" class=\"green\" >Wage Income of Withholding Income Tax (P.N.D.53)</th>"
                     tableByCompany += "<th class=\"blue\"></th>"
                     tableByCompany += "<th rowspan=\"3\" class=\"blue\">Inspection Status</th>"
                     tableByCompany += "<th rowspan=\"3\" class=\"blue\">Date For Transfer</th>"
@@ -129,22 +129,22 @@ function showSummary(){
                     tableByCompany += "</tr>"
                     tableByCompany += "<tr>"
                     if (companyName[index] != "SHU HA RI"){
-                        tableByCompany += "<td class=\"turquoise\"\">Coaching</td>"
+                        tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Coaching</td>"
                     }else{
-                        tableByCompany += "<td class=\"turquoise\"\">Wage</td>"
+                        tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Wage</td>"
                     }
-                    tableByCompany += "<td class=\"turquoise\"\">Training</td>"
-                    tableByCompany += "<td class=\"turquoise\"\">Other</td>"
-                    tableByCompany += "<td class=\"turquoise\">ToTal Amount</td>"
-                    tableByCompany += "<td class=\"antiquewhite\">Salary</td>"
-                    tableByCompany += "<td class=\"antiquewhite\">Withholding Income Tax (P.N.D.1)</td>"
-                    tableByCompany += "<td class=\"antiquewhite\">Social Security</td>"
-                    tableByCompany += "<td class=\"antiquewhite\">Net Salary</td>"
-                    tableByCompany += "<td class=\"green\">Wage</td>"
-                    tableByCompany += "<td rowspan=\"2\" class=\"green\">Withholding Income Tax Rate (P.N.D.53)</td>"
-                    tableByCompany += "<td class=\"green\">Withholding Income Tax (P.N.D.53)</td>"
-                    tableByCompany += "<td class=\"green\">Net Wage</td>"
-                    tableByCompany += "<td class=\"blue\">Net Transfer Amount</td>"
+                    tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Training</td>"
+                    tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Other</td>"
+                    tableByCompany += "<td class=\"turquoise\" style=\"text-align: center;\">ToTal Amount</td>"
+                    tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Salary</td>"
+                    tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Withholding Income Tax (P.N.D.1)</td>"
+                    tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Social Security</td>"
+                    tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Net Salary</td>"
+                    tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Wage</td>"
+                    tableByCompany += "<td rowspan=\"2\" class=\"green\" style=\"text-align: center;\">Withholding Income Tax Rate (P.N.D.53)</td>"
+                    tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Withholding Income Tax (P.N.D.53)</td>"
+                    tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Net Wage</td>"
+                    tableByCompany += "<td class=\"blue\" style=\"text-align: center;\">Net Transfer Amount</td>"
                     tableByCompany +=  "</tr>"                
                     tableByCompany +=  "<tr>"
                     tableByCompany +=  "<td id=\"total_coaching\" class=\"turquoise\"\">"+setFormatMoney(totalCoaching[index])+"</td>"
@@ -180,7 +180,7 @@ function showSummary(){
 }
 
 function setFormatMoney(amount){
-    return "฿ "+amount.toFixed(2)
+    return "฿ "+ amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 function updateStatusTransfer(index){
@@ -362,10 +362,10 @@ function showSummaryByID() {
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_pm)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_pm)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].total_hours)+"</td>";
-                    incomeList += "<td>"+json.incomes[i].coaching_customer_charging.toFixed(2)+"</td>";
-                    incomeList += "<td>"+json.incomes[i].coaching_payment_rate.toFixed(2)+"</td>";
-                    incomeList += "<td>"+json.incomes[i].training_wage.toFixed(2)+"</td>";
-                    incomeList += "<td>"+json.incomes[i].other_wage.toFixed(2)+"</td>";
+                    incomeList += "<td>"+setFormatMoney(json.incomes[i].coaching_customer_charging)+"</td>";
+                    incomeList += "<td>"+setFormatMoney(json.incomes[i].coaching_payment_rate)+"</td>";
+                    incomeList += "<td>"+setFormatMoney(json.incomes[i].training_wage)+"</td>";
+                    incomeList += "<td>"+setFormatMoney(json.incomes[i].other_wage)+"</td>";
                     incomeList += "<td>"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"hidden\" id=\"employee_id_"+i+"\" value=\""+json.incomes[i].employee_id+"\">"
@@ -380,11 +380,11 @@ function showSummaryByID() {
             $("#employee_name_eng").html(employeeNameENG);
             $("#email").html(email);
             $("#thours").html(totalHours);
-            $("#total_coaching_customer_charging").html(totalCoachingCustomerCharging.toFixed(2));
-            $("#total_coaching_payment_rate").html(totalCoachingPaymentRate.toFixed(2));
-            $("#total_trainig_wage").html(totalTrainigWage.toFixed(2)); 
-            $("#total_other_wage").html(totalOtherWage.toFixed(2)); 
-            $("#payment_wage").html(paymentWage.toFixed(2));             
+            $("#total_coaching_customer_charging").html(setFormatMoney(totalCoachingCustomerCharging));
+            $("#total_coaching_payment_rate").html(setFormatMoney(totalCoachingPaymentRate));
+            $("#total_trainig_wage").html(setFormatMoney(totalTrainigWage)); 
+            $("#total_other_wage").html(setFormatMoney(totalOtherWage)); 
+            $("#payment_wage").html(setFormatMoney(paymentWage));             
             $("#google_calendar").html(googleCalendarURL); 
             
         }

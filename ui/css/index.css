@@ -78,6 +78,7 @@
     text-align: right;
     border: 0.5px solid black;
     padding-right: 2px;
+    padding-left: 3px;
 }
 
 #button_show_summary_by_id, #button_show_summary {
@@ -185,3 +186,5 @@ body {
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 }
+
+
