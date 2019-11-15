@@ -14,7 +14,7 @@ function showSummary(){
     var url = "/showSummaryTimesheet";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = function () {
+    request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
             var json = JSON.parse(request.responseText);            
             var table = [];
@@ -134,7 +134,7 @@ function showSummary(){
                     }
                     tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Training</td>"
                     tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Other</td>"
-                    tableByCompany += "<td class=\"turquoise\" style=\"text-align: center;\">ToTal Amount</td>"
+                    tableByCompany += "<td class=\"turquoise\" style=\"text-align: center;\">Total Amount</td>"
                     tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Salary</td>"
                     tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Withholding Income Tax P.N.D.1</td>"
                     tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Social Security</td>"
@@ -199,11 +199,8 @@ function updateStatusTransfer(index){
     request.setRequestHeader("Authorization", getCookie("id_token"));
     request.onreadystatechange = function () {
         if (request.status === 401){
-            alert("Your session has been expired, please log in again.")
             logout();
-            if (deleteOauthState()){
-                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-            };
+            deleteOauthState()
         }
     }
     var data = JSON.stringify({"employee_id":employeeID,"transaction_id":transactionID,"status":statusTransfer,"date":dateTransfer,"comment":comment});
@@ -297,11 +294,8 @@ function calculatePayment() {
     request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
-            alert("Your session has been expired, please log in again.")
             logout();
-            if (deleteOauthState()){
-                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-            };
+            deleteOauthState();
         }
     }
     var data = JSON.stringify({"employee_id":employeeID,"year":year,"month":month});
@@ -347,12 +341,11 @@ function showSummaryByID() {
       $("#date_val").val(date);
     });
 
-    
     var request = new XMLHttpRequest();
     var url = "/showTimesheetByEmployeeID";
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = function () {
+    request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
             var employeeNameENG = json.employee_name_eng;
@@ -455,11 +448,8 @@ function deleteIncome(index){
     request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
-            alert("Your session has been expired, please log in again.")
             logout();
-            if (deleteOauthState()){
-                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-            };
+            deleteOauthState()
         }
     }
     var data = JSON.stringify({"id":incomeID,"employee_id":employeeID});
@@ -492,6 +482,74 @@ function goToSummaryByIDBackPage(){
     if (employeeID != null){
         location.href = "/home/showsummarybyid.html?date="+today+"&id="+employeeID;
     }
+}
+
+function goToPaymentSummaryAnnualPage(){
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    var employeeID =  params.get("id");
+    $("#date_val").val(date); 
+    location.href = "/home/paymentsummaryannual.html?id="+employeeID+"&year="+$("#date_val").val().split("-")[0];
+}
+
+function paymentSummaryAnnual(){
+    var urlString = window.location.href
+    var url = new URL(urlString);
+    var params = new URLSearchParams(url.search);
+    var employeeID = params.get("id");
+    var year = parseInt(params.get("year"));
+
+    var request = new XMLHttpRequest();
+    var url = "/showSummaryInYear";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            var table = "";
+            const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+            for (var index = 0; index < json.transaction_timesheets.length; index++) {  
+                table += "<tr id=\"row_summary_in_year_id_"+index+"\">";
+                table += "<td style=\"text-align: left;\" id=\"month_name_id_"+index+"\">"+monthNames[json.transaction_timesheets[index].month-1]+"</td>";
+                table += "<td style=\"text-align: left;\" id=\"company_name_"+index+"\">"+json.transaction_timesheets[index].company_id+"</td>";
+                table += "<td id=\"coaching_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].coaching)+"</td>";
+                table += "<td id=\"training_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].training)+"</td>";
+                table += "<td id=\"other_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].other)+"</td>";
+                table += "<td class=\"yello\" id=\"total_incomes_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].total_incomes)+"</td>";
+                table += "<td id=\"salary_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].salary)+"</td>";
+                table += "<td id=\"income_tax_1_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].income_tax_1)+"</td>";
+                table += "<td id=\"social_security_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].social_security)+"</td>";
+                table += "<td class=\"yello\" id=\"net_salary_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].net_salary)+"</td>";
+                table += "<td id=\"wage_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].wage)+"</td>";
+                table += "<td id=\"income_tax_53_percentage_id_"+index+"\">"+json.transaction_timesheets[index].income_tax_53_percentage+"&#37</td>";
+                table += "<td id=\"income_tax_53_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].income_tax_53)+"</td>";
+                table += "<td id=\"net_wage_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].net_wage)+"</td>";
+                table += "<td class=\"aqua\" id=\"net_transfer_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].net_transfer)+"</td>";
+                table += "<td id=\"status_checking_transfer_"+index+"\">"+json.transaction_timesheets[index].status_checking_transfer+"</td>";
+                table += "<td id=\"date_transfer_"+index+"\">"+json.transaction_timesheets[index].date_transfer+"</td>";
+                table += "<td id=\"comment_"+index+"\">"+json.transaction_timesheets[index].comment+"</td></tr>";
+            }
+            
+            $("#employee_name_eng").html(json.transaction_timesheets[0].employee_name_eng); 
+            $("#payment_year_summary_annual").html(json.year); 
+            $("#table_summary_in_year").html(table); 
+            $("#total_coaching_in_year").html(setFormatMoney(json.total_coaching_in_year)); 
+            $("#total_income_tax_1_in_year").html(setFormatMoney(json.total_income_tax_1_in_year)); 
+            $("#total_income_tax_53_in_year").html(setFormatMoney(json.total_income_tax_53_in_year)); 
+            $("#total_incomes_in_year").html(setFormatMoney(json.total_incomes_in_year)); 
+            $("#total_net_salary_in_year").html(setFormatMoney(json.total_net_salary_in_year)); 
+            $("#total_net_transfer_in_year").html(setFormatMoney(json.total_net_transfer_in_year)); 
+            $("#total_net_wage_in_year").html(setFormatMoney(json.total_net_wage_in_year)); 
+            $("#total_other_in_year").html(setFormatMoney(json.total_other_in_year)); 
+            $("#total_salary_in_year").html(setFormatMoney(json.total_salary_in_year)); 
+            $("#total_social_security_in_year").html(setFormatMoney(json.total_social_security_in_year)); 
+            $("#total_training_in_year").html(setFormatMoney(json.total_training_in_year)); 
+            $("#total_wage_in_year").html(setFormatMoney(json.total_wage_in_year));  
+        }
+    }   
+    var data = JSON.stringify({"employee_id":employeeID,"year":year});
+    request.send(data);
 }
 
 function getEmployeeByID(){
@@ -535,7 +593,7 @@ function getEmployeeByID(){
                 employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
                 employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
                 employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
-                employee += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_employee_id_"+i+"\" value=\"EDIT\" onclick=\"editEmployeeDetails("+i+")\"></td></tr>";                                    
+                employee += "<tr><td></td><td><input class=\"btn btn-primary mb-2\" type=\"submit\" id=\"button_edit_employee_id_"+i+"\" value=\"EDIT\" onclick=\"editEmployeeDetails("+i+")\"></td></tr>";                                    
                 employee += "</table>"
                 if (i+1 < json.length) {
                     employee += "<br><br><br>"
@@ -580,11 +638,8 @@ function editEmployeeDetails(index){
     request.setRequestHeader("Authorization", getCookie("id_token")); 
     request.onreadystatechange = function () {
         if (request.status === 401){
-            alert("Your session has been expired, please log in again.")
             logout();
-            if (deleteOauthState()){
-                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-            };
+            deleteOauthState()
         }
     }
     var data = JSON.stringify({"id":id,"employee_id":employeeID,"employee_name_th":employeeNameTH,"employee_name_eng":employeeNameENG,
@@ -624,17 +679,17 @@ function showProfile(){
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader("Authorization",getCookie("id_token"));
     request.onreadystatechange = function () {
+        if (request.status === 401){
+            logout();
+            if(deleteOauthState()){
+                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
+            };
+        }
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
             var picture = "<img class=\"circular--square\" src=\""+json.picture+"\">"
             $("#picture_profile").html(picture);
             $("#email_profile").html(json.email);  
-        }
-        if (request.status === 401){
-            logout();
-            if (deleteOauthState()){
-                window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-            };
         }
     }   
     request.send();
