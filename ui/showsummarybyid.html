@@ -28,7 +28,6 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="/home" style="text-align: center;">HOME</a></li>
         <li><a onclick="goToProfilePage()" id="button_edit_employee" style="text-align: center;">EDIT EMPLOYEE INFO</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -42,12 +41,21 @@
 
 <div class="content">
     <p hidden id="date_val"></p>
-    <div class="col-12"><table class="table_details" style="color: black;">
+    <div><table class="table_details" style="color: black;">
     <tr>
-        <th>Name : </th><td id="employee_name_eng"></td>
+        <th>Name: </th><td class="yello" id="employee_name_eng"></td><th>Email: </th><td class="yello" id="email"></td>
     </tr>
     <tr>
-        <th>Email : </th><td id="email"></td>
+      <th colspan="2">Rate Per Day: </th><td id="rate_per_day"></td>
+    </tr>
+    <tr>
+      <th colspan="2">Rate Per Hour: </th><td id="rate_per_hour"></td>
+    </tr>
+    <tr>
+      <th colspan="2">Month: </th><td id="month_number"></td><td id="month_name"></td>
+    </tr>
+    <tr>
+      <th colspan="2">Year: </th><td id="year"></td>
     </tr>
     </table></div>
     <div class="col-3 navbar-right">
@@ -59,39 +67,42 @@
         </table>
     </div>
 
-<div class="col-12" style="text-align: center;border-collapse: collapse;">
+  <div>
     <table class="table">
         <tr>
-            <th>Date</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Total Hours</th>
-            <th>Coaching Customer Charging (THB)</th>
-            <th>Coaching Payment Rate (THB)</th>
-            <th>Training Wage (THB)</th>
-            <th>Other Wage (THB)</th>
-            <th colspan="2">Description</th>
+            <th style="min-width: 20px;">Date</th>
+            <th style="min-width: 90px;">Start Time</th>
+            <th style="min-width: 90px;">End Time</th>
+            <th style="min-width: 90px;">Start Time</th>
+            <th style="min-width: 90px;">End Time</th>
+            <th style="min-width: 110px;">Total Hours (hrs)</th>
+            <th style="min-width: 160px;">Coaching Customer Charging</th>
+            <th style="min-width: 160px;">Coaching Payment Rate</th>
+            <th style="min-width: 160px;">Training Wage (THB)</th>
+            <th style="min-width: 160px;">Other Wage (THB)</th>
+            <th style="min-width: 500px;">Description</th>
+            <th style="min-width: 100px;"></th>
         </tr>
         <tbody id="table_timesheet"></tbody>
         <tr>
-            <th colspan="5">Total Hours:</th>
-            <th id="thours"></th>
+            <th style="text-align: right;" colspan="5">Total Hours:</th>
+            <th style="text-align: right;" id="thours"></th>
+            <th colspan="6"></th>
         </tr>
         <tr>
-            <th colspan="5">Payment wage:</th>
-            <th id="payment_wage"></th>
-            <th id="total_coaching_customer_charging"></th>
-            <th id="total_coaching_payment_rate"></th>
-            <th id="total_trainig_wage"></th>
-            <th id="total_other_wage"></th>
+            <th style="text-align: right;" colspan="5">Payment wage:</th>
+            <th style="text-align: right;" id="payment_wage"></th>
+            <th style="text-align: right;" id="total_coaching_customer_charging"></th>
+            <th style="text-align: right;" id="total_coaching_payment_rate"></th>
+            <th style="text-align: right;" id="total_trainig_wage"></th>
+            <th style="text-align: right;" id="total_other_wage"></th>
             <th id="th_button_calculate" colspan="2"></th>
         </tr>
     </table>
-    </div>
+  </div>
     <button onclick="topFunction()" id="button_to_top" title="Go to top">Top</button>
 </div>
+
 <div class="footer">
     <a href="/home" class="active">PAYMENTS</a>
     <a onclick="goToSummaryTimesheetByEmployeeID('008')" id="employeeID008">PRUTH</a>

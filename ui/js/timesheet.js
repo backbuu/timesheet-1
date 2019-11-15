@@ -1,6 +1,4 @@
 function showSummary(){
-    
-    
     var date = $("#date_summary").val(); 
     var fullDate = new Date(date);
     var year = fullDate.getFullYear();
@@ -18,9 +16,7 @@ function showSummary(){
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) { 
-            var json = JSON.parse(request.responseText);
-            console.log(json);
-            
+            var json = JSON.parse(request.responseText);            
             var table = [];
             var count = [];
             var totalCoaching = [];
@@ -105,7 +101,7 @@ function showSummary(){
                 if (companyIndex == 1){
                     companyName[companyIndex] = "Siam Chamnankit"
                 }else if (companyIndex == 2){
-                    companyName[companyIndex] = "SHU HA RI"
+                    companyName[companyIndex] = "Shu ha ri"
                 }else if (companyIndex == 3){
                     companyName[companyIndex] = "We Love Bug"
                 }else{
@@ -131,7 +127,7 @@ function showSummary(){
                     tableByCompany += "<th rowspan=\"3\" class=\"blue\"></th>"
                     tableByCompany += "</tr>"
                     tableByCompany += "<tr>"
-                    if (companyName[index] != "SHU HA RI"){
+                    if (companyName[index] != "Shu ha ri"){
                         tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Coaching</td>"
                     }else{
                         tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Wage</td>"
@@ -140,12 +136,12 @@ function showSummary(){
                     tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Other</td>"
                     tableByCompany += "<td class=\"turquoise\" style=\"text-align: center;\">ToTal Amount</td>"
                     tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Salary</td>"
-                    tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Withholding Income Tax (P.N.D.1)</td>"
+                    tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Withholding Income Tax P.N.D.1</td>"
                     tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Social Security</td>"
                     tableByCompany += "<td class=\"antiquewhite\" style=\"text-align: center;\">Net Salary</td>"
                     tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Wage</td>"
-                    tableByCompany += "<td rowspan=\"2\" class=\"green\" style=\"text-align: center;\">Withholding Income Tax Rate (P.N.D.53)</td>"
-                    tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Withholding Income Tax (P.N.D.53)</td>"
+                    tableByCompany += "<td rowspan=\"2\" class=\"green\" style=\"text-align: center;\">Withholding Income Tax Rate P.N.D.53</td>"
+                    tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Withholding Income Tax P.N.D.53</td>"
                     tableByCompany += "<td class=\"green\" style=\"text-align: center;\">Net Wage</td>"
                     tableByCompany += "<td class=\"blue\" style=\"text-align: center;\">Net Transfer Amount</td>"
                     tableByCompany +=  "</tr>"                
@@ -184,6 +180,10 @@ function showSummary(){
 
 function setFormatMoney(amount){
     return "฿ "+ amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+function setFormatMoneyNoBath(amount){
+    return amount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 function updateStatusTransfer(index){
@@ -339,9 +339,11 @@ function showSummaryByID() {
         location.href = document.referrer
     }
 
+    const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
     const monthNamesCapital = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE","JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     $(document).ready(function(){
       $("#title_timesheet_by_id").text(month+"-"+monthNamesCapital[month-1]+year+"-TIMESHEET");
+      $("#month_name").html(monthNames[month-1]);
       $("#date_val").val(date);
     });
 
@@ -355,6 +357,8 @@ function showSummaryByID() {
             var json = JSON.parse(request.responseText);
             var employeeNameENG = json.employee_name_eng;
 		    var email = json.email;
+		    var ratePerDay = json.rate_per_day;
+		    var ratePerHour = json.rate_per_hour;
 		    var totalHours = json.total_hours;
 		    var totalCoachingCustomerCharging = json.total_coaching_customer_charging;
             var totalCoachingPaymentRate = json.total_coaching_payment_rate;
@@ -366,7 +370,7 @@ function showSummaryByID() {
             if (json.incomes !== null) {
                 for (var i = 0; i < json.incomes.length; i++) {
                     incomeList += "<tr id=\"income_company_"+json.incomes[i].company_id+"\">";
-                    incomeList += "<td>"+json.incomes[i].day+"</td>";
+                    incomeList += "<td class=\"dark_green\">"+json.incomes[i].day+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_am)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].end_time_am)+"</td>";
                     incomeList += "<td>"+convertTimestampToTime(json.incomes[i].start_time_pm)+"</td>";
@@ -376,7 +380,7 @@ function showSummaryByID() {
                     incomeList += "<td>"+setFormatMoney(json.incomes[i].coaching_payment_rate)+"</td>";
                     incomeList += "<td>"+setFormatMoney(json.incomes[i].training_wage)+"</td>";
                     incomeList += "<td>"+setFormatMoney(json.incomes[i].other_wage)+"</td>";
-                    incomeList += "<td>"+json.incomes[i].description+"</td>";
+                    incomeList += "<td style=\"text-align: left;\">"+json.incomes[i].description+"</td>";
                     incomeList += "<td><input type=\"hidden\" id=\"income_id_"+i+"\" value=\""+json.incomes[i].id+"\">"
                     incomeList += "<input type=\"hidden\" id=\"employee_id_"+i+"\" value=\""+json.incomes[i].employee_id+"\">"
                     incomeList += "<input id=\"button_delete\" type=\"submit\" value=\"DELETE\" onclick=\"deleteIncomeThenCalculatePayment("+i+")\"/>"+"</td>"; 
@@ -385,9 +389,12 @@ function showSummaryByID() {
                 }
                 $("#table_timesheet").html(incomeList);
             }
-
-            
             $("#employee_name_eng").html(employeeNameENG);
+            $("#rate_per_day").html(setFormatMoneyNoBath(ratePerDay));
+            $("#rate_per_hour").html(ratePerHour);
+            $("#month_number").html(month);
+            $("#year").html(year);
+
             $("#email").html(email);
             $("#thours").html(totalHours);
             $("#total_coaching_customer_charging").html(setFormatMoney(totalCoachingCustomerCharging));
@@ -446,6 +453,7 @@ function setTableBodyAddIncomeItem(){
         <option value=5000.00>฿ 5,000.00</option>
         <option value=7500.00>฿ 7,500.00</option>
         <option value=10000.00>฿ 10,000.00</option>
+        <option value=12000.00>฿ 12,000.00</option>
         <option value=15000.00>฿ 15,000.00</option>
         </select></td></tr>
     <tr><th>Coaching Payment Rate (THB)</th><td><select id="coaching_payment_rate" value=0.00>
@@ -453,6 +461,7 @@ function setTableBodyAddIncomeItem(){
         <option value=5000.00>฿ 5,000.00</option>
         <option value=7500.00>฿ 7,500.00</option>
         <option value=10000.00>฿ 10,000.00</option>
+        <option value=12000.00>฿ 12,000.00</option>
         <option value=15000.00>฿ 15,000.00</option>
     </select></td></tr>
     <tr><th>Training Wage (THB)</th><td><select id="training_wage" value=0.00>
@@ -462,6 +471,9 @@ function setTableBodyAddIncomeItem(){
         <option value=3000.00>฿ 3,000.00</option>
         <option value=5000.00>฿ 5,000.00</option>
         <option value=10000.00>฿ 10,000.00</option>
+        <option value=15000.00>฿ 15,000.00</option>
+        <option value=20000.00>฿ 20,000.00</option>
+        <option value=25000.00>฿ 25,000.00</option>
     </select></td></tr>
     <tr><th>Other Wage (THB)</th><td><select id="other_wage" value=0.00>
         <option value=0.00>฿ 0.00</option>
@@ -472,7 +484,7 @@ function setTableBodyAddIncomeItem(){
     </select></td></tr>
     <tr><th>Company</th><td><select id="company_id">
         <option value=1>Siam Chamnankit</option>
-        <option value=2>SHU HA RI</option>
+        <option value=2>Shu ha ri</option>
         <option value=3>We love Bug</option>
     </select></td></tr>
     <tr><th>Description</th><td><input type="text" id="description" placeholder="Description"></td></tr>
@@ -554,16 +566,16 @@ function getEmployeeByID(){
             var employee = "";
             for (var i = 0; i < json.length; i++) {
                 employee += "<table width=\"600\">"
-                employee += "<tr><th>Company Name</th><td id=\"company_id_"+i+"\">"+json[i].company_id+"</td></tr>";
+                employee += "<tr><th>Company Name</th><td id=\"company_name_"+i+"\">"+json[i].company_name+"</td></tr>";
                 employee += "<tr><th>Name (Thai)</th><td id=\"employee_name_th_id_"+i+"\">"+json[i].employee_name_th+"</td></tr>";
                 employee += "<tr><th>Name (English)</th><td id=\"employee_name_eng_id_"+i+"\">"+json[i].employee_name_eng+"</td></tr>";
                 employee += "<tr><th>E-mail</th><td id=\"email_id_"+i+"\">"+json[i].email+"</td></tr>";
-                employee += "<tr><th>Rate Per Day</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day.toFixed(2)+"\"></td></tr>";
-                employee += "<tr><th>Rate Per Hour</th><td><input type=\"number\" id=\"rate_per_hour_id_"+i+"\" value=\""+json[i].rate_per_hour.toFixed(2)+"\"></td></tr>";
-                employee += "<tr><th>Salary</th><td><input type=\"number\" id=\"salary_id_"+i+"\" value=\""+json[i].salary.toFixed(2)+"\"></td></tr>";
-                employee += "<tr><th>Withholding Income Tax (P.N.D.1)</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1.toFixed(2)+"\"></td></tr>";
+                employee += "<tr><th>Rate Per Day (THB)</th><td><input type=\"number\" id=\"rate_per_day_id_"+i+"\" value=\""+json[i].rate_per_day.toFixed(2)+"\"></td></tr>";
+                employee += "<tr><th>Rate Per Hour (THB)</th><td><input type=\"number\" id=\"rate_per_hour_id_"+i+"\" value=\""+json[i].rate_per_hour+"\"></td></tr>";
+                employee += "<tr><th>Salary (THB)</th><td><input type=\"number\" id=\"salary_id_"+i+"\" value=\""+json[i].salary.toFixed(2)+"\"></td></tr>";
+                employee += "<tr><th>Withholding Income Tax P.N.D.1 (THB)</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1.toFixed(2)+"\"></td></tr>";
                 employee += "<tr><th>Social Security Tax</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security.toFixed(2)+"\"></td></tr>";
-                employee += "<tr><th>Withholding Income Tax Percentage (P.N.D.53)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
+                employee += "<tr><th>Withholding Income Tax Rate P.N.D.53 (Percentage)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
                 employee += "<tr><th>Type of Income</th><td><select id=\"status_id_"+i+"\">";
                 if (json[i].status == "wage"){
                     employee += "<option value=\""+json[i].status+"\">ค่าจ้างรายวัน (wage)</option>";
@@ -573,9 +585,12 @@ function getEmployeeByID(){
                     employee += "<option value=\"wage\">ค่าจ้างรายวัน (wage)</option>";
                 }
                 employee += "</select></td></tr>";
-                employee += "<tr><th>Travel Expenses</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense.toFixed(2)+"\"></td></tr>";
+                employee += "<tr><th>Travel Expenses (THB)</th><td><input type=\"number\" id=\"travel_expense_id_"+i+"\" value=\""+json[i].travel_expense.toFixed(2)+"\"></td></tr>";
                 employee += "<input type=\"hidden\" id=\"employee_details_id_"+i+"\" value=\""+json[i].id+"\">";
                 employee += "<input type=\"hidden\" id=\"employee_id_"+i+"\" value=\""+employeeID+"\">";
+                employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
+                employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
+                employee += "<input type=\"hidden\" d=\"company_id_"+i+"\" value=\""+json[i].company_id+"\">";
                 employee += "<tr><td></td><td><input class=\"button\" type=\"submit\" id=\"button_edit_employee_id_"+i+"\" value=\"EDIT\" onclick=\"editEmployeeDetails("+i+")\"></td></tr>";                                    
                 employee += "</table>"
                 if (i+1 < json.length) {
@@ -708,14 +723,13 @@ function setInitialHome(){
     var logoutButton = "<a id=\"button_logout\"><span class=\"glyphicon glyphicon-log-in\"></span> Logout</a>"
 
     $(document).ready(function(){
+        if (getCookie("id_token") == ""){
+                window.location.replace("/login")
+        }
         if (getCookie("oauthstate") != ""){
             $("#login").html(logoutButton);
             showProfile();
-            if (getCookie("id_token") == ""){
-                if (deleteOauthState()){
-                    window.location.replace("https://mail.google.com/mail/u/0/?logout&hl=en")
-                };
-            }
+            
             $("#button_logout").click(function(){
                 logout();
                 if (deleteOauthState()){
