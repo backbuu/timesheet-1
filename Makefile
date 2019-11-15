@@ -28,6 +28,7 @@ acceptance_test:
 	newman run atdd/api/showEmployeeDetailsByEmployeeIDSuccess.json
 	newman run atdd/api/updateEmployeeDetailsSuccess.json
 	newman run atdd/api/loginSuccess.json
+	newman run atdd/api/showSummaryInYearSuccess.json
 	docker-compose down
 
 robot_test:
