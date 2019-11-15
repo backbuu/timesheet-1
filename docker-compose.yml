@@ -8,11 +8,11 @@ services:
       GOOGLE_OAUTH_CLIENT_ID: 692575898397-dnt9sqi2jstddfepsng04p9ac4oj7p4n.apps.googleusercontent.com
       GOOGLE_OAUTH_CLIENT_SECRET: Bt67Uhhu9SVqvxR3uFRc6IjL
       FIX_TIME: 20181201120000
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root
-      DATABASE_HOST: my-mariadb
-      DATABASE_PORT: '3306'
-      DATABASE: timesheet
+      USERNAME_DATABASE: root
+      PASSWORD_DATABASE: root
+      HOST_DATABASE: my-mariadb
+      PORT_DATABASE: '3306'
+      DATABASE_NAME: timesheet
     build:
       context: .
     depends_on:
