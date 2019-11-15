@@ -54,6 +54,7 @@ func main() {
 	router.POST("/deleteIncomeItem", api.DeleteIncomeHandler)
 	router.POST("/showEmployeeDetailsByEmployeeID", api.ShowEmployeeDetailsByEmployeeIDHandler)
 	router.POST("/updateEmployeeDetails", api.UpdateEmployeeDetailsHandler)
+	router.POST("/showSummaryInYear", api.ShowSummaryInYearHandler)
 	router.StaticFS("/home", http.Dir("ui"))
 	log.Fatal(router.Run())
 }

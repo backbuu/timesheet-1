@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "8db8643b-2dda-458d-91de-a90b33864298",
+		"name": "ShowSummaryInYear",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Show summary in year",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3636bed5-84d6-45b0-a6af-15cf075abfb0",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Employee ID should be 008\", function () {",
+							"    pm.expect(jsonData.employee_id).to.eql(\"008\");",
+							"});",
+							"",
+							"pm.test(\"Year should be 2018\", function () {",
+							"    pm.expect(jsonData.year).to.eql(2018);",
+							"});",
+							"",
+							"pm.test(\"Transaction timesheets ID should be 0082018121\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].id).to.eql(\"0082018121\");",
+							"});",
+							"",
+							"pm.test(\"Employee name thai should be พฤทธิ์ อุดมพฤกษ์\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].employee_name_th).to.eql(\"พฤทธิ์ อุดมพฤกษ์\");",
+							"});",
+							"",
+							"pm.test(\"Employee name english should be Pruth Udompruge\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].employee_name_eng).to.eql(\"Pruth Udompruge\");",
+							"});",
+							"",
+							"pm.test(\"Transaction timesheets month should be 12\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].month).to.eql(12);",
+							"});",
+							"",
+							"pm.test(\"Transaction timesheets year should be 2018\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].year).to.eql(2018);",
+							"});",
+							"",
+							"pm.test(\"Company ID should be 1\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].company_id).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Coaching should be 130000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].coaching).to.eql(130000);",
+							"});",
+							"",
+							"pm.test(\"Training should be 0\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].training).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Other should be 10000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].other).to.eql(10000);",
+							"});",
+							"",
+							"pm.test(\"Total incomes should be 140000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].total_incomes).to.eql(140000);",
+							"});",
+							"",
+							"pm.test(\"Salary should be 40000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].salary).to.eql(40000);",
+							"});",
+							"",
+							"pm.test(\"Income tax 1 should be 5000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].income_tax_1).to.eql(5000);",
+							"});",
+							"",
+							"pm.test(\"Social security should be 0\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].social_security).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Net salary should be 35000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].net_salary).to.eql(35000);",
+							"});",
+							"",
+							"pm.test(\"Net transfer should be 125000\", function () {",
+							"    pm.expect(jsonData.transaction_timesheets[0].net_transfer).to.eql(125000);",
+							"});",
+							"",
+							"pm.test(\"Total coaching in year should be 130000\", function () {",
+							"    pm.expect(jsonData.total_coaching_in_year).to.eql(130000);",
+							"});",
+							"",
+							"pm.test(\"Total training in year should be 0\", function () {",
+							"    pm.expect(jsonData.total_training_in_year).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Total other in year should be 10000\", function () {",
+							"    pm.expect(jsonData.total_other_in_year).to.eql(10000);",
+							"});",
+							"",
+							"pm.test(\"Total incomes in year should be 140000\", function () {",
+							"    pm.expect(jsonData.total_incomes_in_year).to.eql(140000);",
+							"});",
+							"",
+							"pm.test(\"Total income tax 1 should be 5000\", function () {",
+							"    pm.expect(jsonData.total_income_tax_1_in_year).to.eql(5000);",
+							"});",
+							"",
+							"pm.test(\"Total social security in year should be 0\", function () {",
+							"    pm.expect(jsonData.total_social_security_in_year).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"Total net salary in year should be 35000\", function () {",
+							"    pm.expect(jsonData.total_net_salary_in_year).to.eql(35000);",
+							"});",
+							"",
+							"pm.test(\"Total wage in year should be 100000\", function () {",
+							"    pm.expect(jsonData.total_wage_in_year).to.eql(100000);",
+							"});",
+							"",
+							"pm.test(\"Total income tax 53 should be 10000\", function () {",
+							"    pm.expect(jsonData.total_income_tax_53_in_year).to.eql(10000);",
+							"});",
+							"",
+							"pm.test(\"Total net wage in year should be 90000\", function () {",
+							"    pm.expect(jsonData.total_net_wage_in_year).to.eql(90000);",
+							"});",
+							"",
+							"pm.test(\"Total net transfer in year should be 125000\", function () {",
+							"    pm.expect(jsonData.total_net_transfer_in_year).to.eql(125000);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"employee_id\":\"008\",\n\t\"year\":2018\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/showSummaryInYear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"showSummaryInYear"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
