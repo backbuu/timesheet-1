@@ -52,8 +52,8 @@
 .table_details tr{
     font-size: 20px;
     text-align: left;
-
 }
+
 .center {
     text-align: center;
 }
@@ -88,6 +88,10 @@
 
 #button_edit_employee:hover {
     background-color: #a13422;
+}
+
+#button_summary_in_year:hover {
+  background-color: #a13422;
 }
 
 .table_details {
@@ -136,15 +140,6 @@ body {
     font-family: 'Sarabun', sans-serif;
     background-color: white;
 }
-
-.circular--square {
-    width:40px;
-    border-top-left-radius: 50% 50%;
-    border-top-right-radius: 50% 50%;
-    border-bottom-right-radius: 50% 50%;
-    border-bottom-left-radius: 50% 50%;
-}
-
 
 
 .row::after {

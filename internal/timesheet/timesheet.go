@@ -103,8 +103,8 @@ func (timesheet Timesheet) GetSummaryByID(employeeID string, year, month int) (m
 	return model.SummaryTimesheet{
 		EmployeeNameENG:               employeeList[initialIndex].EmployeeNameENG,
 		Email:                         employeeList[initialIndex].Email,
-		RatePerDay:                    employeeList[initialIndex].RatePerDay,
-		RatePerHour:                   employeeList[initialIndex].RatePerHour,
+		RatePerDay:                    payment.RatePerDay,
+		RatePerHour:                   payment.RatePerHour,
 		Year:                          year,
 		Month:                         month,
 		Incomes:                       incomeList,

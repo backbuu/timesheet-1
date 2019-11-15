@@ -473,6 +473,8 @@ func Test_GetSummaryByID_Input_EmployeeID_003_Year_2019_Month_12_Should_Be_Summa
 		EmployeeID:                    "003",
 		Month:                         12,
 		Year:                          2019,
+		RatePerDay:                    15000.00,
+		RatePerHour:                   1875.00,
 		TotalHours:                    "16:00:00",
 		TotalCoachingCustomerCharging: 0.00,
 		TotalCoachingPaymentRate:      0.00,

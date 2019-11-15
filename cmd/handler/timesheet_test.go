@@ -571,6 +571,9 @@ func Test_GetProfileHandler_Input_Header_Email_nareenart_scrum123_com_Should_Be_
 	writer := httptest.NewRecorder()
 	request.Header.Add("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2OTI1NzU4OTgzOTctZG50OXNxaTJqc3RkZGZlcHNuZzA0cDlhYzRvajdwNG4uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTAzMDYxODkyODYyMDM5OTgxMzIiLCJlbWFpbCI6Im5hcmVlbmFydEBzY3J1bTEyMy5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InRlWmZfdnZoVTQxQXBqTWdxbGFvX1EiLCJpYXQiOjE1NzM0NjIxNzQsImV4cCI6MTU3MzYzOTc3OCwianRpIjoiYzE5ZTRjZjAtMjhlZS00Zjc2LWFjMGQtYTU0MDdiZGY1MDcwIn0.ouNt1qPPz-86Mep9XedGF_D-xOCx42WG5dQPiZXf9vs")
 
+	mockTimesheet := new(mockapi.MockTimesheet)
+	mockTimesheet.On("VerifyAuthentication", mock.Anything, mock.Anything).Return(true)
+
 	mockRepository := new(mockapi.MockRepository)
 	mockRepository.On("GetProfileByEmail", "nareenart@scrum123.com").Return(model.Profile{
 		EmployeeID: "002",
@@ -579,6 +582,7 @@ func Test_GetProfileHandler_Input_Header_Email_nareenart_scrum123_com_Should_Be_
 	}, nil)
 
 	api := TimesheetAPI{
+		Timesheet:  mockTimesheet,
 		Repository: mockRepository,
 	}
 	testRoute := gin.Default()

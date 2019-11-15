@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PAYMENT SUMMARY ANNUAL</title>
+  <link rel="stylesheet" href="/home/css/footer.css"> 
+  <link rel="stylesheet" href="/home/css/index.css">
+  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<script src="js/timesheet.js"></script>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script>paymentSummaryAnnual();setCurrentDate();</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid" >
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" id="title_ayment_summary_annual">PAYMENT SUMMARY ANNUAL</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li id="picture_profile" style="text-align: center;"></li>
+        <li><a id="email_profile" style="text-align: center;"></a></li>
+        <li id="login" style="text-align: center;"></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="content">
+    <p hidden id="date_val"></p>
+  <div >
+    <table class="table_details" style="color: black;">
+      <tr>
+        <th>Name: </th><td class="yello" id="employee_name_eng"></td>
+      </tr>
+      <tr>
+        <th>Year: </th><td id="payment_year_summary_annual"></td>
+      </tr>
+    </table>
+  </div>
+<br><br><br>
+
+    <div>
+        <table border="1" class="table_company" width="2200">
+          <tr>
+            <th rowspan="4" class="blue" style="width: 100px;">Month</th>
+            <th rowspan="4" class="blue">Company</th>
+          <tr>
+            <th colspan="4" class="turquoise"">Income</th>
+            <th colspan="4" class="antiquewhite"></th>
+            <th colspan="4" class="green" >Wage Income of Withholding Income Tax (P.N.D.53)</th>
+            <th class="blue"></th>
+            <th rowspan="3" class="blue">Inspection Status</th>
+            <th rowspan="3" class="blue">Date For Transfer</th>
+            <th rowspan="3" class="blue">Comment</th>
+          </tr>
+          <tr>
+            <td class="turquoise"" style="text-align: center;">Coaching</td>
+            <td class="turquoise"" style="text-align: center;">Training</td>
+            <td class="turquoise"" style="text-align: center;">Other</td>
+            <td class="turquoise" style="text-align: center;">Total Amount</td>
+            <td class="antiquewhite" style="text-align: center;">Salary</td>
+            <td class="antiquewhite" style="text-align: center;">Withholding Income Tax P.N.D.1</td>
+            <td class="antiquewhite" style="text-align: center;">Social Security</td>
+            <td class="antiquewhite" style="text-align: center;">Net Salary</td>
+            <td class="green" style="text-align: center;">Wage</td>
+            <td rowspan="2" class="green" style="text-align: center;">Withholding Income Tax Rate P.N.D.53</td>
+            <td class="green" style="text-align: center;">Withholding Income Tax P.N.D.53</td>
+            <td class="green" style="text-align: center;">Net Wage</td>
+            <td class="blue" style="text-align: center;">Net Transfer Amount</td>
+          </tr>                
+          <tr>
+            
+            <td id="total_coaching_in_year" class="turquoise""></td>
+            <td id="total_training_in_year" class="turquoise""></td>
+            <td id="total_other_in_year" class="turquoise""></td>
+            <td id="total_incomes_in_year" class="turquoise""></td>
+            <td id="total_salary_in_year" class="antiquewhite"></td>
+            <td id="total_income_tax_1_in_year" class="antiquewhite"></td>
+            <td id="total_social_security_in_year" class="antiquewhite"></td>
+            <td id="total_net_salary_in_year" class="antiquewhite"></td>
+            <td id="total_net_wage_in_year" class="green"></td>
+            <td id="total_income_tax_53_in_year" class="green"></td>
+            <td id="total_net_wage_in_year" class="green"></td>
+            <td id="total_net_transfer_in_year" class="blue"></td>
+          </tr>
+            <tbody id="table_summary_in_year"></tbody>
+            </table><br><br>
+    </div>
+</div>
+
+<div class="footer">
+    <a href="/home" class="active">PAYMENTS</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('008')" id="employeeID008">PRUTH</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('001')" id="employeeID001">PRATHAN</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('004')" id="employeeID004">THAWATCHAI</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('003')" id="employeeID003">SOMKIAT</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('010')" id="employeeID010">KARAN</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('006')" id="employeeID006">PANUMARS</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('002')" id="employeeID002">NAREENART</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('005')" id="employeeID005">APIPOL</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('007')" id="employeeID007">KARNAWAT</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('009')" id="employeeID009">NUTTAYA</a>
+</div>
+</body>
+</html>

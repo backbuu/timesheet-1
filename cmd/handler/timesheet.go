@@ -229,7 +229,11 @@ func (api TimesheetAPI) UpdateEmployeeDetailsHandler(context *gin.Context) {
 }
 
 func (api TimesheetAPI) GetProfileHandler(context *gin.Context) {
-	email, _ := getEmailAndIDTokenExpirationTimeFromHeaderAuthorization(context)
+	email, idTokenExpirationTime := getEmailAndIDTokenExpirationTimeFromHeaderAuthorization(context)
+	if !api.Timesheet.VerifyAuthentication(email, idTokenExpirationTime) {
+		context.Status(http.StatusUnauthorized)
+		return
+	}
 	profile, err := api.Repository.GetProfileByEmail(email)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
