@@ -1,11 +1,11 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"timesheet/cmd/handler"
-	"timesheet/config"
 	"timesheet/internal/repository"
 	"timesheet/internal/timesheet"
 
@@ -14,17 +14,28 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+type DatabaseConfig struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Host     string `json:"host"`
+	Port     string `json:"port"`
+	Database string `json:"database"`
+}
+
+var databaseConfig = &DatabaseConfig{
+	Username: os.Getenv("DATABASE_USERNAME"),
+	Password: os.Getenv("DATABASE_PASSWORD"),
+	Host:     os.Getenv("DATABASE_HOST"),
+	Port:     os.Getenv("DATABASE_PORT"),
+	Database: os.Getenv("DATABASE"),
+}
+
+func (databaseConfig DatabaseConfig) getURI() string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", databaseConfig.Username, databaseConfig.Password, databaseConfig.Host, databaseConfig.Port, databaseConfig.Database)
+}
+
 func main() {
-	var databaseConfigPath string
-	flag.StringVar(&databaseConfigPath, "config", "./config/database.yml", "Database config path")
-	flag.Parse()
-
-	databaseConfig, err := config.SetupDatabaseConfig(databaseConfigPath)
-	if err != nil {
-		log.Fatal("Cannot read config", err.Error())
-	}
-
-	databaseConnection, err := sqlx.Connect("mysql", databaseConfig.GetURI())
+	databaseConnection, err := sqlx.Connect("mysql", databaseConfig.getURI())
 	if err != nil {
 		log.Fatal("Cannot connect database", err.Error())
 	}
