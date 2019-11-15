@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script>showSummaryByID();setTableBodyAddIncomeItem();</script>
+<script>showSummaryByID();</script>
 
 <body>
 <nav class="navbar navbar-inverse">
@@ -39,9 +39,10 @@
   </div>
 </nav>
 
+
 <div class="content">
     <p hidden id="date_val"></p>
-    <div><table class="table_details" style="color: black;">
+  <div><table class="table_details" style="color: black;">
     <tr>
         <th>Name: </th><td class="yello" id="employee_name_eng"></td><th>Email: </th><td class="yello" id="email"></td>
     </tr>
@@ -57,15 +58,95 @@
     <tr>
       <th colspan="2">Year: </th><td id="year"></td>
     </tr>
-    </table></div>
-    <div class="col-3 navbar-right">
-        <div id="google_calendar"></div>
+    </table>
+  </div>
+<br><br>
+<div>
+  <div class="col-3 navbar-right">
+      <div id="google_calendar"></div>
+  </div>
+
+  <div class="col-3">
+    <div class="form-inline">
+      <table class="table_create_income" > 
+        <tr><th colspan="2" style="text-align: center;background-color: cornsilk;"><h2>Timesheet Form</h2></th></tr>
+        <tr>
+          <th><label class="mb-2 mr-sm-2">Date:</label></th><td><input type="date" class="form-control mb-2 mr-sm-2" id="day"></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Start Time:</label></th><td><input type="time" class="form-control mb-2 mr-sm-2" step="1" id="start_time_am" value=09:00:00></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">End Time:</label></th><td><input type="time" class="form-control mb-2 mr-sm-2" step="1" id="end_time_am" value=12:00:00></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Start Time:</label></th><td><input type="time" class="form-control mb-2 mr-sm-2" step="1" id="start_time_pm" value=13:00:00></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">End Time:</label></th><td><input type="time" class="form-control mb-2 mr-sm-2" step="1" id="end_time_pm" value=18:00:00></td>
+        </tr>
+        <tr>
+          <th><label class="mb-2 mr-sm-2">Coaching Customer Charging (THB):</label></th><td><select id="coaching_customer_charging" value=0.00>
+            <option value=0.00>฿ 0.00</option>
+            <option value=5000.00>฿ 5,000.00</option>
+            <option value=7500.00>฿ 7,500.00</option>
+            <option value=10000.00>฿ 10,000.00</option>
+            <option value=12000.00>฿ 12,000.00</option>
+            <option value=15000.00>฿ 15,000.00</option>
+          </select></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Coaching Payment Rate (THB):</label></th><td><select id="coaching_payment_rate" value=0.00>
+                <option value=0.00>฿ 0.00</option>
+                <option value=5000.00>฿ 5,000.00</option>
+                <option value=7500.00>฿ 7,500.00</option>
+                <option value=10000.00>฿ 10,000.00</option>
+                <option value=12000.00>฿ 12,000.00</option>
+                <option value=15000.00>฿ 15,000.00</option>
+            </select></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Training Wage (THB):</label></th><td><select id="training_wage" value=0.00>
+                <option value=0.00>฿ 0.00</option>
+                <option value=1000.00>฿ 1,000.00</option>
+                <option value=2000.00>฿ 2,000.00</option>
+                <option value=3000.00>฿ 3,000.00</option>
+                <option value=5000.00>฿ 5,000.00</option>
+                <option value=10000.00>฿ 10,000.00</option>
+                <option value=15000.00>฿ 15,000.00</option>
+                <option value=20000.00>฿ 20,000.00</option>
+                <option value=25000.00>฿ 25,000.00</option>
+            </select></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Other Wage (THB):</label></th><td><select id="other_wage" value=0.00>
+                <option value=0.00>฿ 0.00</option>
+                <option value=2000.00>฿ 2,000.00</option>
+                <option value=5000.00>฿ 5,000.00</option>
+                <option value=7500.00>฿ 7,500.00</option>
+                <option value=10000.00>฿ 10,000.00</option>
+            </select></td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Company:</label></th><td>
+                <select id="company_id">
+                    <option value=1>Siam Chamnankit</option>
+                    <option value=2>Shu ha ri</option>
+                    <option value=3>We love Bug</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label class="mb-2 mr-sm-2">Description:</label></th><td><textarea id="description" cols="30" rows="5" placeholder="Description"></textarea></td>
+        </tr>
+        <tr>
+      <th></th><th><button style="text-align: right;" type="submit" class="btn btn-primary mb-2" id="button_add_income_item" onclick="createIncomeThenCalculatePayment()">ADD</button></th>
+        </tr>
+      </table>
     </div>
-    <div class="col-3 navbar-right" >
-        <table class="table">
-            <tbody id="table_addIncomeItem"></tbody>
-        </table>
-    </div>
+  </div>
+
+  <br><br><br>
 
   <div>
     <table class="table">
@@ -114,7 +195,7 @@
     <a onclick="goToSummaryTimesheetByEmployeeID('002')" id="employeeID002">NAREENART</a>
     <a onclick="goToSummaryTimesheetByEmployeeID('005')" id="employeeID005">APIPOL</a>
     <a onclick="goToSummaryTimesheetByEmployeeID('007')" id="employeeID007">KARNAWAT</a>
-    <a onclick="goToSummaryTimesheetByEmployeeID('008')" id="employeeID009">NUTTAYA</a>
+    <a onclick="goToSummaryTimesheetByEmployeeID('009')" id="employeeID009">NUTTAYA</a>
   </div>
 </body>
 </html>
