@@ -438,62 +438,6 @@ function setDateInIncomeFormat(lastIndex) {
 
 }
 
-function setTableBodyAddIncomeItem(){
-    var urlString = window.location.href
-    var url = new URL(urlString);
-    var params = new URLSearchParams(url.search);
-    employeeID = params.get("id");
-    var tableBody = `<tr><th>Date</th><td><input type="date" id="day"></td></tr>
-    <tr><th>Start Time</th><td><input type="time" step="1" id="start_time_am" value=09:00:00 placeholder="Start Time AM"></td></tr>
-    <tr><th>End Time</th><td><input type="time"  step="1" id="end_time_am" value=12:00:00 placeholder="End Time AM"></td></tr>
-    <tr><th>Start Time</th><td><input type="time" step="1" id="start_time_pm" value=13:00:00 placeholder="Start Time PM"></td></tr>
-    <tr><th>End Time</th><td><input type="time"  step="1" id="end_time_pm" value=18:00:00 placeholder="End Time PM"></td></tr>
-    <tr><th>Coaching Customer Charging (THB)</th><td><select id="coaching_customer_charging" value=0.00>
-        <option value=0.00>฿ 0.00</option>
-        <option value=5000.00>฿ 5,000.00</option>
-        <option value=7500.00>฿ 7,500.00</option>
-        <option value=10000.00>฿ 10,000.00</option>
-        <option value=12000.00>฿ 12,000.00</option>
-        <option value=15000.00>฿ 15,000.00</option>
-        </select></td></tr>
-    <tr><th>Coaching Payment Rate (THB)</th><td><select id="coaching_payment_rate" value=0.00>
-        <option value=0.00>฿ 0.00</option>
-        <option value=5000.00>฿ 5,000.00</option>
-        <option value=7500.00>฿ 7,500.00</option>
-        <option value=10000.00>฿ 10,000.00</option>
-        <option value=12000.00>฿ 12,000.00</option>
-        <option value=15000.00>฿ 15,000.00</option>
-    </select></td></tr>
-    <tr><th>Training Wage (THB)</th><td><select id="training_wage" value=0.00>
-        <option value=0.00>฿ 0.00</option>
-        <option value=1000.00>฿ 1,000.00</option>
-        <option value=2000.00>฿ 2,000.00</option>
-        <option value=3000.00>฿ 3,000.00</option>
-        <option value=5000.00>฿ 5,000.00</option>
-        <option value=10000.00>฿ 10,000.00</option>
-        <option value=15000.00>฿ 15,000.00</option>
-        <option value=20000.00>฿ 20,000.00</option>
-        <option value=25000.00>฿ 25,000.00</option>
-    </select></td></tr>
-    <tr><th>Other Wage (THB)</th><td><select id="other_wage" value=0.00>
-        <option value=0.00>฿ 0.00</option>
-        <option value=2000.00>฿ 2,000.00</option>
-        <option value=5000.00>฿ 5,000.00</option>
-        <option value=7500.00>฿ 7,500.00</option>
-        <option value=10000.00>฿ 10,000.00</option>
-    </select></td></tr>
-    <tr><th>Company</th><td><select id="company_id">
-        <option value=1>Siam Chamnankit</option>
-        <option value=2>Shu ha ri</option>
-        <option value=3>We love Bug</option>
-    </select></td></tr>
-    <tr><th>Description</th><td><input type="text" id="description" placeholder="Description"></td></tr>
-    <tr><td colspan="2"><input class="button" type="submit" id="button_add_income_item" value="ADD" onclick="createIncomeThenCalculatePayment()"/></td></tr>`;
-    $(document).ready(function(){
-        $("#table_addIncomeItem").html(tableBody);  
-    });    
-}
-
 function convertTimestampToTime(timestamp){
     var date = new Date(timestamp);
     datetext = date.toUTCString();

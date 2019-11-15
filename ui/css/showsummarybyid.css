@@ -20,6 +20,15 @@
     padding: 30px 10px 1600px 10px;
 }
 
+.table_create_income th{
+  text-align: right;
+  padding-right: 5px;
+}
+
+.table_create_income td{
+  padding-left: 5px;
+}
+
 #button_to_top {
     display: none;
     position: fixed;
