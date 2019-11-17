@@ -512,7 +512,13 @@ function paymentSummaryAnnual(){
             for (var index = 0; index < json.transaction_timesheets.length; index++) {  
                 table += "<tr id=\"row_summary_in_year_id_"+index+"\">";
                 table += "<td style=\"text-align: left;\" id=\"month_name_id_"+index+"\">"+monthNames[json.transaction_timesheets[index].month-1]+"</td>";
-                table += "<td style=\"text-align: left;\" id=\"company_name_"+index+"\">"+json.transaction_timesheets[index].company_id+"</td>";
+                if (json.transaction_timesheets[index].company_id == 1){
+                    table += "<td style=\"text-align: left;\" id=\"company_name_"+index+"\">Siam Chamnankit</td>";
+                }else if (json.transaction_timesheets[index].company_id == 2){
+                    table += "<td style=\"text-align: left;\" id=\"company_name_"+index+"\">Shu Ha Ri</td>";
+                }else {
+                    table += "<td style=\"text-align: left;\" id=\"company_name_"+index+"\">We Love Bug</td>";
+                }
                 table += "<td id=\"coaching_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].coaching)+"</td>";
                 table += "<td id=\"training_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].training)+"</td>";
                 table += "<td id=\"other_id_"+index+"\">"+setFormatMoney(json.transaction_timesheets[index].other)+"</td>";
