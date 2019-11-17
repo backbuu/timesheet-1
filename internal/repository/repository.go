@@ -12,6 +12,7 @@ const (
 	initialStatusCheckingTransfer = "รอการตรวจสอบ"
 	initialDateTransfer           = ""
 	initialComment                = ""
+	initialIndex                  = 0
 
 	oneMinute = 60
 	oneHour   = 60
@@ -155,17 +156,21 @@ func (repository TimesheetRepository) UpdateTransactionTimesheet(transactionTime
 }
 
 func (repository TimesheetRepository) CreateTimesheet(employeeID string, year int, month int) error {
+	var timesheet model.Timesheet
+	employee, err := repository.GetEmployeeListByEmployeeID(employeeID)
+	if err != nil {
+		return err
+	}
 	query := `INSERT INTO timesheets (id, employee_id, month, year, total_hours, total_coaching_customer_charging,
 		total_coaching_payment_rate, total_training_wage, total_other_wage, payment_wage, rate_per_day,rate_per_hour) 
 		VALUES ( ? , ? , ? ,? , ? ,? , ? ,? , ? ,? , ?, ? )`
 	transaction := repository.DatabaseConnection.MustBegin()
 	timesheetID := employeeID + strconv.Itoa(year) + strconv.Itoa(month)
-	var timesheet model.Timesheet
 	transaction.MustExec(query, timesheetID, employeeID, month, year, timesheet.TotalHours,
 		timesheet.TotalCoachingCustomerCharging, timesheet.TotalCoachingPaymentRate,
 		timesheet.TotalTrainigWage, timesheet.TotalOtherWage, timesheet.PaymentWage,
-		timesheet.RatePerDay, timesheet.RatePerHour)
-	err := transaction.Commit()
+		employee[initialIndex].RatePerDay, employee[initialIndex].RatePerHour)
+	err = transaction.Commit()
 	if err != nil {
 		return err
 	}
