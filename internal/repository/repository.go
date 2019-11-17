@@ -262,7 +262,7 @@ func (repository TimesheetRepository) UpdatePictureToemployees(picture, email st
 
 func (repository TimesheetRepository) GetTransactionTimesheets(employeeID string, year int) ([]model.TransactionTimesheet, error) {
 	var transactionTimesheetList []model.TransactionTimesheet
-	query := `SELECT * FROM transactions WHERE employee_id = ? AND year = ?`
+	query := `SELECT * FROM transactions WHERE employee_id = ? AND year = ? ORDER BY month ASC`
 	err := repository.DatabaseConnection.Select(&transactionTimesheetList, query, employeeID, year)
 	if err != nil {
 		return []model.TransactionTimesheet{}, err
