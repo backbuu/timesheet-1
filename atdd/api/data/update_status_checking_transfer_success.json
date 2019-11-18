@@ -1,0 +1,30 @@
+[
+    {
+        "employee_id":"004",
+        "transaction_id":"0042018121",
+        "status":"โอนเงินเรียบร้อย",
+        "date":"30/12/2018",
+        "comment":"หักค่าส่งพัสดุ",
+        "id": "0042018121",
+        "employee_name_th": "ธวัชชัย จงสุวรรณไพศาล",
+        "employee_name_eng": "Thawatchai Jongsuwanpaisan",
+        "month": 12,
+        "year": 2018,
+        "company_id": 1,
+        "coaching": 50000,
+        "training": 70000,
+        "other": 10000,
+        "total_incomes": 130000,
+        "salary": 40000,
+        "income_tax_1": 5000,
+        "social_security": 0,
+        "net_salary": 35000,
+        "wage": 90000,
+        "income_tax_53_percentage": 10,
+        "income_tax_53": 9000,
+        "net_wage": 81000,
+        "net_transfer": 116000,
+        "status_checking_transfer": "โอนเงินเรียบร้อย",
+        "date_transfer": "30/12/2018"
+    }
+]
