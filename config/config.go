@@ -18,7 +18,13 @@ func (databaseConfig DatabaseConfig) GetURI() string {
 }
 
 func SetupConfig() (DatabaseConfig, error) {
-	var databaseConfig DatabaseConfig
+	databaseConfig := DatabaseConfig{
+		Username: "root",
+		Password: "root",
+		Host:     "localhost",
+		Port:     "3306",
+		Database: "timesheet",
+	}
 
 	if os.Getenv("USERNAME_DATABASE") != "" {
 		databaseConfig.Username = os.Getenv("USERNAME_DATABASE")
