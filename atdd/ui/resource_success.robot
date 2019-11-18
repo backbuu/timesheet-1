@@ -9,7 +9,7 @@ ${BROWSER}    chrome
     Input Text    id=identifierId    nareenart@scrum123.com
     Click Element    id=identifierNext
     Wait Until Page Contains    ยินดีต้อนรับ
-    sleep  2s
+    Wait Until Element Is Visible    name=password
     Input Password    name=password    delight2538
     Click Element    id=passwordNext
 
@@ -94,7 +94,6 @@ ${BROWSER}    chrome
 
 เพิ่มค่าจ้างรายวันในส่วนของ Other Wage (THB)
     [Arguments]    ${DAY}    ${OTHER_WAGE}    ${COMPANY}    ${DESCRIPTION}
-    sleep  1s
     Input Text    id=day    ${DAY}
     Select From List By Label    id=other_wage    ${OTHER_WAGE}
     Select From List By Label    id=company_id    ${COMPANY}
