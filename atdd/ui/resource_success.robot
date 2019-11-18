@@ -121,11 +121,17 @@ ${BROWSER}    chrome
     Select From List By Value   id=status_id_${ID}    ${STATUS}
     Textfield Should Contain    id=travel_expense_id_${ID}    ${TRAVEL_EXPESE}
 
-แก้ไขข้อมูลเงินเดือนพนักงาน
-    [Arguments]    ${ID}    ${SALARY}
+แก้ไขข้อมูลพนักงาน
+    [Arguments]    ${ID}    ${RATE_PER_DAY}    ${RATE_PER_HOUR}    ${SALARY}    ${INCOME_TAX_1}    ${SOCIAL_SECURITY}    ${INCOME_TAX_53_PERCENTAGE}    ${STATUS}    ${TRAVEL_EXPESE}
+    Input Text    id=rate_per_day_id_${ID}    ${RATE_PER_DAY}
+    Input Text    id=rate_per_hour_id_${ID}    ${RATE_PER_HOUR}
     Input Text    id=salary_id_${ID}    ${SALARY}
-    Scroll Element Into View    id=button_edit_employee_id_${ID}
+    Input Text    id=income_tax_1_id_${ID}    ${INCOME_TAX_1}
+    Input Text    id=social_security_id_${ID}    ${SOCIAL_SECURITY}
+    Input Text    id=income_tax_53_percentage_id_${ID}    ${INCOME_TAX_53_PERCENTAGE}
+    Select From List By Label    id=status_id_${ID}    ${STATUS}
+    Input Text    id=travel_expense_id_${ID}    ${TRAVEL_EXPESE}
     Click Element    id=button_edit_employee_id_${ID}
-
+    
 ออกจากระบบ
     Click Element    id=button_logout
