@@ -50,3 +50,11 @@ func SetupConfig() (DatabaseConfig, error) {
 
 	return databaseConfig, nil
 }
+
+func GetCallbackURI() string {
+	host := "localhost:8080"
+	if os.Getenv("HOST_CALLBACK") != "" {
+		host = os.Getenv("HOST_CALLBACK")
+	}
+	return fmt.Sprintf("http://%s/callback", host)
+}
