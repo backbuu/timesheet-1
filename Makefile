@@ -36,7 +36,9 @@ robot_test:
 	sleep 30
 	docker exec -i my-mariadb mysql --user=root --password=root timesheet < atdd/data/prepare_timesheet.sql
 	sleep 10
-	robot atdd/ui/timesheet.robot
+	robot atdd/ui/summary_timesheet_success.robot
+	robot atdd/ui/summary_timesheet_by_id_success.robot
+	robot atdd/ui/edit_member_info_success.robot
 	docker-compose down
 
 down:

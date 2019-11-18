@@ -13,7 +13,7 @@ import (
 
 	"time"
 	"timesheet/internal/model"
-
+	"timesheet/config"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -24,7 +24,7 @@ const daysInYear = 365
 const hoursInDay = 24
 
 var googleOauthConfig = &oauth2.Config{
-	RedirectURL:  "http://localhost:8080/callback",
+	RedirectURL:  config.GetCallbackURI(),
 	ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
 	ClientSecret: os.Getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
 	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},

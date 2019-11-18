@@ -101,7 +101,7 @@ function showSummary(){
                 if (companyIndex == 1){
                     companyName[companyIndex] = "Siam Chamnankit"
                 }else if (companyIndex == 2){
-                    companyName[companyIndex] = "Shu ha ri"
+                    companyName[companyIndex] = "Shu Ha Ri"
                 }else if (companyIndex == 3){
                     companyName[companyIndex] = "We Love Bug"
                 }else{
@@ -127,7 +127,7 @@ function showSummary(){
                     tableByCompany += "<th rowspan=\"3\" class=\"blue\"></th>"
                     tableByCompany += "</tr>"
                     tableByCompany += "<tr>"
-                    if (companyName[index] != "Shu ha ri"){
+                    if (companyName[index] != "Shu Ha Ri"){
                         tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Coaching</td>"
                     }else{
                         tableByCompany += "<td class=\"turquoise\"\" style=\"text-align: center;\">Wage</td>"
@@ -211,7 +211,7 @@ function updateStatusTransfer(index){
 function createIncomeThenCalculatePayment(){
     new Promise(function(resolve, reject) {
         resolve(createIncome());
-      }).then(calculatePayment());
+    }).then(calculatePayment());
 }
 
 function deleteIncomeThenCalculatePayment(index){
@@ -584,7 +584,7 @@ function getEmployeeByID(){
                 employee += "<tr><th>Withholding Income Tax P.N.D.1 (THB)</th><td><input type=\"number\" id=\"income_tax_1_id_"+i+"\" value=\""+json[i].income_tax_1.toFixed(2)+"\"></td></tr>";
                 employee += "<tr><th>Social Security Tax</th><td><input type=\"number\" id=\"social_security_id_"+i+"\" value=\""+json[i].social_security.toFixed(2)+"\"></td></tr>";
                 employee += "<tr><th>Withholding Income Tax Rate P.N.D.53 (Percentage)</th><td><input type=\"number\" id=\"income_tax_53_percentage_id_"+i+"\" value=\""+json[i].income_tax_53_percentage+"\"></td></tr>";
-                employee += "<tr><th>Type of Income</th><td><select id=\"status_id_"+i+"\">";
+                employee += "<tr><th>Type of Income</th><td><select id=\"status_id_"+i+"\" value=\""+json[i].status+"\">";
                 if (json[i].status == "wage"){
                     employee += "<option value=\""+json[i].status+"\">ค่าจ้างรายวัน (wage)</option>";
                     employee += "<option value=\"salary\">เงินเดือน (salary)</option>";
