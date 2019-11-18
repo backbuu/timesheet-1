@@ -1,111 +1,13 @@
 {
 	"info": {
-		"_postman_id": "9f60f182-6b32-447a-8bca-865f50f69e14",
-		"name": "ShowTimeSheetByEmployeeIDSuccess",
+		"_postman_id": "71e82c1b-12d3-4eed-ae89-160e027141fb",
+		"name": "exShowTimeSheetByEmployeeIDSuccess",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Add income employee ID 003 and Show timesheet by employee ID success",
 			"item": [
-				{
-					"name": "Show timesheet by employee ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "85f5ed22-b649-4061-a1a2-63f85c1daaff",
-								"exec": [
-									"var jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Employee english name should be Somkiat Puisungnoen\", function () {",
-									"    pm.expect(jsonData.employee_name_eng).to.eql(\"Somkiat Puisungnoen\");",
-									"});",
-									"",
-									"pm.test(\"Email should be somkiat@scrum123.com\", function () {",
-									"    pm.expect(jsonData.email).to.eql(\"somkiat@scrum123.com\");",
-									"});",
-									"",
-									"pm.test(\"Rate per day should be 15000\", function () {",
-									"    pm.expect(jsonData.rate_per_day).to.eql(15000);",
-									"});",
-									"",
-									"pm.test(\"Rate per hour should be 1875\", function () {",
-									"    pm.expect(jsonData.rate_per_hour).to.eql(1875);",
-									"});",
-									"",
-									"pm.test(\"Year should be 2018\", function () {",
-									"    pm.expect(jsonData.year).to.eql(2018);",
-									"});",
-									"",
-									"pm.test(\"Month should be 12\", function () {",
-									"    pm.expect(jsonData.month).to.eql(12);",
-									"});",
-									"",
-									"pm.test(\"TimesheetID should be 003201812\", function () {",
-									"    pm.expect(jsonData.timesheet_id).to.eql(\"003201812\");",
-									"});",
-									"",
-									"pm.test(\"Total hours per month should be 80:00:00\", function () {",
-									"    pm.expect(jsonData.total_hours).to.eql(\"80:00:00\");",
-									"});",
-									"",
-									"pm.test(\"Total coaching customer charging should be 0\", function () {",
-									"    pm.expect(jsonData.total_coaching_customer_charging).to.eql(0);",
-									"});",
-									"",
-									"pm.test(\"Total coaching payment rate should be 0\", function () {",
-									"    pm.expect(jsonData.total_coaching_payment_rate).to.eql(0);",
-									"});",
-									"",
-									"pm.test(\"Total training wage should be 11000\", function () {",
-									"    pm.expect(jsonData.total_training_wage).to.eql(11000);",
-									"});",
-									"",
-									"pm.test(\"Total other wage should be 0\", function () {",
-									"    pm.expect(jsonData.total_other_wage).to.eql(0);",
-									"});",
-									"",
-									"pm.test(\"Payment wage should be 11000\", function () {",
-									"    pm.expect(jsonData.payment_wage).to.eql(11000);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:8080/showTimesheetByEmployeeID",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"showTimesheetByEmployeeID"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Create income item",
 					"event": [
@@ -139,7 +41,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"year\":2018,\n\t\"month\":12,\n\t\"employee_id\":\"003\",\n\t\"incomes\":{\n\t\t\"day\":18,\n\t\t\"start_time_am\":\"2018-01-01T09:00:00.000Z\",\n\t\t\"end_time_am\":\"2018-01-01T12:00:00.000Z\",\n\t\t\"start_time_pm\":\"2018-01-01T13:00:00.000Z\",\n\t\t\"end_time_pm\":\"2018-01-01T18:00:00.000Z\",\n\t\t\"coaching_customer_charging\":0,\n\t\t\"coaching_payment_rate\":0,\n\t\t\"training_wage\":10000,\n\t\t\"other_wage\":0,\n\t\t\"company_id\":1,\n\t\t\"description\":\"TDD with JAVA\"}\n}\n"
+							"raw": "{\n\t\"year\":{{year}},\n\t\"month\":{{month}},\n\t\"employee_id\":\"{{employee_id}}\",\n\t\"incomes\":{\n\t\t\"day\":{{day}},\n\t\t\"start_time_am\":\"{{start_time_am}}\",\n\t\t\"end_time_am\":\"{{end_time_am}}\",\n\t\t\"start_time_pm\":\"{{start_time_pm}}\",\n\t\t\"end_time_pm\":\"{{end_time_pm}}\",\n\t\t\"coaching_customer_charging\":{{coaching_customer_charging}},\n\t\t\"coaching_payment_rate\":{{coaching_payment_rate}},\n\t\t\"training_wage\":{{training_wage}},\n\t\t\"other_wage\":{{other_wage}},\n\t\t\"company_id\":{{company_id}},\n\t\t\"description\":\"{{description}}\"\n\t}\n}\n"
 						},
 						"url": {
 							"raw": "http://localhost:8080/createIncome",
@@ -188,7 +90,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"employee_id\":\"003\",\n\t\"year\":2018,\n\t\"month\":12\n}"
+							"raw": "{\n\t\"employee_id\":\"{{employee_id}}\",\n\t\"year\":{{year}},\n\t\"month\":{{month}}\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/calculatePayment",
